@@ -1,5 +1,5 @@
 CFLAGS = -Wall
-LDFLAGS = -static
+LDFLAGS = -z lazy
 
 .PHONY: all clean
 
