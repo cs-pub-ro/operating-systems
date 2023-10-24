@@ -41,6 +41,11 @@ test_multiple_malloc_free()
     PID=$!
     mem1=$(ps -o vsz --noheader --pid "$PID")
     sleep 2
+
+    if ! ps -p $PID > /dev/null; then
+        exit 1
+    fi
+
     mem2=$(ps -o vsz --noheader --pid "$PID")
     kill "$PID"
     kill -9 "$PID"
