@@ -26,14 +26,26 @@ bye:
 .global main
 
 main:
+    /* syscall calling in arm found at */
+    /* https://arm64.syscall.sh/ */
+
+    /* needed instructions: */
+
+    /* mov <register>, #<value> , moves an 8 bit value*/
+    /* ldr <register>, =<value>,loads a value, usually an address */
+    /* svc #<value>, syscall (use value 0 for syscall) */
+    /* ret , return*/
+
+
     /* Call write(1, "Hello, world!\n", 14). */
-    /* rax <- __NR_write (index of write syscall: 1) */
-    /* rdi <- first syscall argument (fd: 1) */
-    /* rsi <- second syscall argument (buffer: hello) */
-    /* rdx <- third syscall argument (length: 14) */
+    /* x8 <- __NR_write (index of write syscall: 64) */
+    /* x0 <- first syscall argument (fd: 1) */
+    /* x1 <- second syscall argument (buffer: hello) */
+    /* x2 <- third syscall argument (length: 14) */
+
 
     /* Call exit(0). */
-    /* rax <- __NR_exit (index of exit syscall: 60) */
-    /* rdi <- first syscall argument (error_code: 0) */
+    /* x8 <- __NR_exit (index of exit syscall: 93) */
+    /* x0 <- first syscall argument (error_code: 0) */
 
     ret
