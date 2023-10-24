@@ -48,7 +48,21 @@ test_malloc_free()
         exit 1
     fi
 
-    "$exec_file" &
+    touch "valgrind-out.txt"
+
+    valgrind --leak-check=full \
+         --verbose \
+         --log-file=valgrind-out.txt \
+         ./"$exec_file" &
+
+    if `grep -qE '(Invalid| bound array)' valgrind-out.txt`; then # test segmentation fault
+        echo "Sementation fault"
+        rm "valgrind-out.txt"
+        exit 1
+    fi
+
+    rm "valgrind-out.txt"
+
     sleep 1
     PID=$!
     mem1=$(ps -o vsz --noheader --pid "$PID")
