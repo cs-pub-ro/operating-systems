@@ -15,7 +15,10 @@
   </head>
   <body>
     <div class="reveal">
-      <div class="slides"><section  data-markdown><script type="text/template">
+      <div class="slides">
+        <section data-markdown data-separator="\r?\n---\r?\n" data-separator-vertical="\r?\n----\r?\n">
+          <textarea data-template>
+            
 
 # Software Stack
 
@@ -24,17 +27,29 @@
 1. [The Operating System](#3-TODO)
 1. [Types of Operating Systems](#4-TODO)
 1. [The Software Stack in Modern Systems](#5-TODO)
-</script></section><section  data-markdown><script type="text/template">
+
+---
+
 ## Software Stack
-</script></section><section ><section data-markdown><script type="text/template">
+
+---
+
 ![What We Have](media/hardware-software/1-hardware.svg)
-</script></section><section data-markdown><script type="text/template">
+
+----
+
 ![What We Want](media/hardware-software/2-features.svg)
-</script></section><section data-markdown><script type="text/template">
+
+----
+
 ![Have to Want](media/hardware-software/3-software.svg)
-</script></section><section data-markdown><script type="text/template">
+
+----
+
 ![Hardware + Software](media/software-use.svg)
-</script></section><section data-markdown><script type="text/template">
+
+----
+
 ### Flexibility of Software
 
 * Hardware provides basic actions
@@ -43,7 +58,9 @@
 <!-- .element: class="fragment" -->
 * Software bridges the gap between user demands and hardware possibility
 <!-- .element: class="fragment" -->
-</script></section><section data-markdown><script type="text/template">
+
+----
+
 ### Hardware vs Software
 
 | Hardware                         | Software                                   |
@@ -54,72 +71,102 @@
 | physical                         | virtual, easy to duplicate                 |
 | use once at a time               | reusable                                   |
 | monolithic                       | (de/re)composable                          |
-</script></section></section><section ><section data-markdown><script type="text/template">
+
+---
+
 ### Properties of Software
 
 * Reusability
 * Portability
 * Configurability / Flexibility
-</script></section><section data-markdown><script type="text/template">
+
+----
+
 ### Reusability
 
 <img src="media/software-reuse.png" alt="Reusability" width="60%" />
 <!-- https://medium.com/application-library-engineering-group/a-deep-dive-into-reusable-components-3788ca756390 -->
-</script></section><section data-markdown><script type="text/template">
+
+----
+
 ![Don't Reinvent the Wheel](media/dont-reinvent-the-wheel.jpeg)
 <!-- https://levelup.gitconnected.com/software-engineering-best-practices-for-reusing-in-software-development-6006f9d8d364 -->
-</script></section><section data-markdown><script type="text/template">
+
+----
+
 ### Portability
 
 ![Portability](media/portability.svg)
-</script></section><section data-markdown><script type="text/template">
+
+----
+
 ### Configurability
 
 Same software, different use cases
 
 ![Software Configurability](media/software-configurability.svg)
-</script></section></section><section ><section data-markdown><script type="text/template">
+
+---
+
 ### Interface and Implementation
 
 ![Inteface and Implementation](media/interface-implementation.svg)
-</script></section><section data-markdown><script type="text/template">
+
+----
+
 ### Interface and Implementation
 
 * different applications / use cases
 * diverse implementations
 * same interface
 * API - _Application Programming Interface_
-</script></section><section data-markdown><script type="text/template">
+
+----
+
 ### Portability vs Performance
 
 ![Portability vs Performance](media/portability-performance.svg)
-</script></section></section><section ><section data-markdown><script type="text/template">
+
+---
+
 ### Software Stack
 
 ![Software Stack](media/software-stack.svg)
-</script></section><section data-markdown><script type="text/template">
+
+----
+
 ### Software Stack
 
 * Each layer provides an interface to the upper layer
 * Richer set of features are implemented by the upper layers
 * Similar to the networking stack
-</script></section><section data-markdown><script type="text/template">
+
+----
+
 ### Android Software Stack
 
 <img src="media/android-software-stack.png" alt="Android Software Stack" width="40%" />
 <!-- https://www.pcloudy.com/android-and-ios-basics-and-comparison/ -->
-</script></section><section data-markdown><script type="text/template">
+
+----
+
 ### iOS Software Stack
 
 <img src="media/ios-software-stack.png" alt="iOS Software Stack" width="50%" />
 <!-- https://www.pcloudy.com/android-and-ios-basics-and-comparison/ -->
-</script></section><section data-markdown><script type="text/template">
+
+----
+
 ### Flutter Framework
 
 ![iOS Software Stack](media/flutter.png)
-<!-- https://buildflutter.com/how-flutter-works/ --></script></section></section><section ><section data-markdown><script type="text/template">
+<!-- https://buildflutter.com/how-flutter-works/ -->
+---
+
 ## Types of Software
-</script></section><section data-markdown><script type="text/template">
+
+----
+
 ### Usable vs Reusable
 
 * Software provides features by extending hardware
@@ -130,25 +177,35 @@ Same software, different use cases
 * Software components
   * Applications: usable
   * Libraries: reusable
-</script></section><section data-markdown><script type="text/template">
+
+----
+
 ### Applications
 
 ![Applications](media/applications.svg)
-</script></section><section data-markdown><script type="text/template">
+
+----
+
 ### Libraries
 
 ![Libraries](media/libraries.svg)
-</script></section><section data-markdown><script type="text/template">
+
+----
+
 ### Application Software and System Software
 
 ![Application and System Software](media/application-system-software.png)
 <!-- https://www.webopedia.com/definitions/systems-software/ -->
-</script></section><section data-markdown><script type="text/template">
+
+----
+
 ### Libraries and Frameworks
 
 ![Libraries and Frameworks](media/libraries-frameworks.png)
 <!-- https://medium.com/@MarcStevenCoder/build-reusable-frameworks-809438ef46e7 -->
-</script></section><section data-markdown><script type="text/template">
+
+----
+
 ### Applications and Libraries
 
 Common features / attributes
@@ -156,7 +213,9 @@ Common features / attributes
 * machine / binary code (for compiled programs)
 * data and instructions sections (`rodata`, `data`, `bss`, `text`)
 * stored as files in the filesystem
-</script></section><section data-markdown><script type="text/template">
+
+----
+
 ### Applications vs Libraries
 
 | Applications                     | Libraries                                  |
@@ -164,9 +223,13 @@ Common features / attributes
 | entry point (`main`, `_start`)   | exposed interface (API)                    |
 | usable                           | reusable                                   |
 | load-time                        | link-time and load-time                    |
-| used by system and user          | used by other applications or libraries    |</script></section></section><section  data-markdown><script type="text/template">
+| used by system and user          | used by other applications or libraries    |
+---
+
 ## Operating Systems
-</script></section><section ><section data-markdown><script type="text/template">
+
+---
+
 ### Need for Operating System (OS)
 
 * Hardware portability
@@ -177,24 +240,32 @@ Common features / attributes
   * Scheduling for multiple applications / processes
   * File system implementation
   * Networking stack
-</script></section><section data-markdown><script type="text/template">
+
+----
+
 ### OS Roles
 
 * Hardware abstraction
 * System services
 * Isolation between processes
 * Resource protection (memory, devices)
-</script></section></section><section ><section data-markdown><script type="text/template">
+
+---
+
 ### OS: Library-like Component
 
 ![OS Components](media/os-components.jpg)
 <!-- https://technologyrediscovery.net/compFund/obcat.comp.os.html -->
-</script></section><section data-markdown><script type="text/template">
+
+----
+
 ### System Call Interface
 
 ![OS Layers](media/os-layers.png)
 <!-- https://cse.buffalo.edu/~bina/cse321/fall2017/Lectures/Sept6System.html -->
-</script></section><section data-markdown><script type="text/template">
+
+----
+
 ### System Calls
 
 * API for the operating system
@@ -204,31 +275,41 @@ Common features / attributes
 * Typically standard
 * System call IDs with system call handlers
   * Linux: `/usr/include/x86_64-linux-gnu/asm/unistd_64.h`
-</script></section><section data-markdown><script type="text/template">
+
+----
+
 ### OS Perspective
 
 * Also called **kernel**
 * A software component that doesn't do work by itself
 * It serves applications, by providing an API - system (call) API
 * When a process invokes a kernel feature we say _the kernel runs on behalf of the process_
-</script></section></section><section ><section data-markdown><script type="text/template">
+
+---
+
 ### Privilege Domains
 
 * typically, there are multiple applications / processes
 * requirement for isolation
 * provider of isolation must be protected / privileged
 * privileged vs unprivileged actions
-</script></section><section data-markdown><script type="text/template">
+
+----
+
 ### OS in Privileged Domain
 
 Security role: _Reference Monitor_
 
 ![OS as Reference Monitor](media/os-reference-monitor.svg)
-</script></section><section data-markdown><script type="text/template">
+
+----
+
 ### User Mode, Kernel Mode
 
 ![User Mode / Kernel Mode](media/user-kernel-mode.png)
-</script></section><section data-markdown><script type="text/template">
+
+----
+
 ### User Mode vs Kernel Mode
 
 | User Mode                        | Kernel Mode                                |
@@ -238,7 +319,9 @@ Security role: _Reference Monitor_
 | may fault                        | critical                                   |
 | applications / processes         | kernel, drivers                            |
 | flexible, diverse                | specific, standard                         |
-</script></section><section data-markdown><script type="text/template">
+
+----
+
 ### Privileged vs Unprivileged Actions
 
 #### Unprivileged
@@ -252,20 +335,26 @@ Security role: _Reference Monitor_
 * I/O resource access (files, network, terminal, time)
 * memory allocation
 * inter-app communication
-</script></section><section data-markdown><script type="text/template">
+
+----
+
 ### TCB: Trusted Computing Base
 
 * The critical part of the system (wrt security)
 * Bugs in TCB jeopardize the whole system
 * Kernel, drivers, system services, system database, hardware, firmware
 * Hardware, hypervisor, control domain for virtualized environments
-</script></section></section><section ><section data-markdown><script type="text/template">
+
+---
+
 ### System Calls
 
 * Calls from application to kernel
 * Typically transfer control from user mode to kernel mode
 * Cause overhead (mode transfer)
-</script></section><section data-markdown><script type="text/template">
+
+----
+
 ### Kernel Code
 
 * Runs when system calls are made (application invokation) ...
@@ -274,17 +363,23 @@ Security role: _Reference Monitor_
 * It is a library (software component) that runs in privileged mode when invoked
   * by applications - via system calls
   * by I/O devices - via interrupts
-</script></section><section data-markdown><script type="text/template">
+
+----
+
 ### Implementing Kernel Mode
 
 Also called **supervisor mode**
 
 ![Dual Mode](media/dual-mode.jpeg)
-</script></section><section data-markdown><script type="text/template">
+
+----
+
 ### Standard C Library
 
 ![libc](media/libc.svg)
-</script></section><section data-markdown><script type="text/template">
+
+----
+
 ### C APIs
 
 * ANSI / ISO
@@ -297,7 +392,9 @@ Also called **supervisor mode**
 * Windows API
   * formerly Win32 API
   * <https://learn.microsoft.com/en-us/windows/win32/apiindex/windows-api-list>
-</script></section><section data-markdown><script type="text/template">
+
+----
+
 ### Library Calls vs System Calls
 
 | Library calls                    | System calls                               |
@@ -306,9 +403,13 @@ Also called **supervisor mode**
 | flexible, diverse                | specific, standard                         |
 | typical function calls           | typically cause mode switch                |
 | use standard C calling convetion | custom OS calling convention               |
-| generally portable               | OS-specific                                |</script></section></section><section  data-markdown><script type="text/template">
+| generally portable               | OS-specific                                |
+---
+
 ## Types of Operating Systems
-</script></section><section ><section data-markdown><script type="text/template">
+
+---
+
 ### Use Cases
 
 * Provide thin layer on top of hardware (generally embedded)
@@ -319,7 +420,9 @@ Also called **supervisor mode**
 * Large CPU / I/O / memory loads
 * High-Performance Computing (HPC)
 * Time constraints
-</script></section><section data-markdown><script type="text/template">
+
+----
+
 ### Requirements
 
 * A system call API is generally provided
@@ -328,7 +431,9 @@ Also called **supervisor mode**
   * Domain separation (privileged vs unprivileged)
 * Hardware mode for hypervisors: yes / no
 * Real-time features
-</script></section></section><section ><section data-markdown><script type="text/template">
+
+---
+
 ### OS Types
 
 * Embedded OSes
@@ -336,7 +441,9 @@ Also called **supervisor mode**
 * Microkernels
 * Monolithic Kernels
 * Hypervisors
-</script></section><section data-markdown><script type="text/template">
+
+----
+
 ### Embedded OSes
 
 * Typically run on small devices
@@ -344,7 +451,9 @@ Also called **supervisor mode**
 * Often does not require domain separation
 * OS closer to a library
 * Typically provide real-time features
-</script></section><section data-markdown><script type="text/template">
+
+----
+
 ### Single Address Space OSes
 
 * The OS and application linked together
@@ -352,23 +461,31 @@ Also called **supervisor mode**
 * Library OS + application code linked together
 * Unikernels
 * Can be run as VMs
-</script></section><section data-markdown><script type="text/template">
+
+----
+
 ### Unikraft
 
 ![Unikraft](media/unikraft.png)
 <!-- https://www.usenix.org/publications/loginonline/unikraft-and-coming-age-unikernels -->
-</script></section><section data-markdown><script type="text/template">
+
+----
+
 ### Microkernels
 
 * Small kernel (small TCB)
 * Components run as user space processes (scheduler, file system, network stack)
 * Increased security, increased overhead
-</script></section><section data-markdown><script type="text/template">
+
+----
+
 ### The L4 Microkernel
 
 ![L4](media/l4.png)
 <!-- https://www.researchgate.net/figure/Nizza-Security-Architecture-The-picture-illustrates-the-overall-architecture-of-Nizza_fig1_233765184 -->
-</script></section><section data-markdown><script type="text/template">
+
+----
+
 ### Monolithic Kernels
 
 * All components run in kernel mode
@@ -376,59 +493,84 @@ Also called **supervisor mode**
 * Extensible via loadable kernel-modules
 * Larger TCB when compared to microkernel
 * Increased performance (all in one place)
-</script></section><section data-markdown><script type="text/template">
+
+----
+
 ### The Linux Kernel
 
 ![Linux](media/linux-kernel.png)
 <!-- https://linux-kernel-labs.github.io/refs/heads/master/lectures/arch.html -->
-</script></section><section data-markdown><script type="text/template">
+
+----
+
 ### Hypervisors
 
 * Thin layer on top of hardware
 * Host OSes inside virtual machines
 * Typically require hardware features (e.g. Intel VT-x)
-</script></section><section data-markdown><script type="text/template">
+
+----
+
 ### Xen and KVM
 
 ![Xen](media/xen-kvm.jpeg)
-<!-- https://medium.com/@saisarathchandrap/virtualisation-at-alibaba-cloud-b20dea72efa1 --></script></section></section><section ><section data-markdown><script type="text/template">
+<!-- https://medium.com/@saisarathchandrap/virtualisation-at-alibaba-cloud-b20dea72efa1 -->
+---
+
 ## Modern Software Stacks
-</script></section><section data-markdown><script type="text/template">
+
+----
+
 ### Android Software Stack
 
 <img src="media/android-software-stack.png" alt="Android Software Stack" width="40%" />
 <!-- https://www.pcloudy.com/android-and-ios-basics-and-comparison/ -->
-</script></section><section data-markdown><script type="text/template">
+
+----
+
 ### iOS Software Stack
 
 <img src="media/ios-software-stack.png" alt="iOS Software Stack" width="50%" />
 <!-- https://www.pcloudy.com/android-and-ios-basics-and-comparison/ -->
-</script></section><section data-markdown><script type="text/template">
+
+----
+
 ### Windows Software Stack
 
 ![Windows](media/windows.png)
 <!-- https://medium.com/@putrasulung2108/windows-architecture-d2b022f136d3 -->
-</script></section><section data-markdown><script type="text/template">
+
+----
+
 ### macOS Software Stack
 
 ![macOS](media/macos.svg)
 <!-- https://en.wikipedia.org/wiki/Architecture_of_macOS -->
-</script></section><section data-markdown><script type="text/template">
+
+----
+
 ### Linux Software Stack
 
 ![Linux](media/linux.svg)
 <!-- https://en.wikipedia.org/wiki/Linux -->
-</script></section><section data-markdown><script type="text/template">
+
+----
+
 ### RIOT (IoT devices)
 
 ![Tock](media/riot.png)
 <!-- https://desosa.nl/projects/riot/2020/03/19/riot-from-vision-to-architecture.html -->
-</script></section><section data-markdown><script type="text/template">
+
+----
+
 ### Tock (low-power microcontrollers)
 
 <img src="media/tock.png" alt="Tock" width="60%" />
 <!-- https://www.tockos.org/documentation/design/ -->
-</script></section></section></div>
+
+          </textarea>
+        </section>
+      </div>
     </div>
 
     <script src="./dist/reveal.js"></script>
@@ -472,7 +614,7 @@ Also called **supervisor mode**
       // options from URL query string
       var queryOptions = Reveal().getQueryHash() || {};
 
-      var options = extend(defaultOptions, {"background-color":"aquamarine","transition":"none","slideNumber":true,"autoAnimateDuration":0}, queryOptions);
+      var options = extend(defaultOptions, {"background-color":"aquamarine","transition":"none","slideNumber":true,"autoAnimateDuration":0,"_":["slides.md"],"static":"_site"}, queryOptions);
     </script>
 
 
