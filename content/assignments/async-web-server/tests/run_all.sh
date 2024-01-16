@@ -38,7 +38,7 @@ BEGIN {
 }
 
 END {
-    printf "\n%66s  %3d/100\n", "Total:", sum;
+    printf "\n%s %3d/100\n", "Total:", sum;
 }'
 
 # Cleanup testing environment.
