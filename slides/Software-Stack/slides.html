@@ -21,11 +21,11 @@
 
 # Software Stack
 
-1. [The Software Stack](#1-TODO)
-1. [Types of Software](#2-TODO)
-1. [The Operating System](#3-TODO)
-1. [Types of Operating Systems](#4-TODO)
-1. [The Software Stack in Modern Systems](#5-TODO)
+1. [The Software Stack](#software-stack)
+1. [Types of Software](#types-of-software)
+1. [The Operating System](#operating-systems)
+1. [Types of Operating Systems](#types-of-operating-systems)
+1. [The Software Stack in Modern Systems](#modern-software-stacks)
 
 ---
 
@@ -33,29 +33,29 @@
 
 ---
 
-![What We Have](media/hardware-software/1-hardware.svg)
+![What We Have](../media/hardware-software/1-hardware.svg)
 
 ----
 
-![What We Want](media/hardware-software/2-features.svg)
+![What We Want](../media/hardware-software/2-features.svg)
 
 ----
 
-![Have to Want](media/hardware-software/3-software.svg)
+![Have to Want](../media/hardware-software/3-software.svg)
 
 ----
 
-![Hardware + Software](media/software-use.svg)
+![Hardware + Software](../media/software-use.svg)
 
 ----
 
 ### Flexibility of Software
 
-* Hardware provides basic actions
+- Hardware provides basic actions
 <!-- .element: class="fragment" -->
-* Users request rich features
+- Users request rich features
 <!-- .element: class="fragment" -->
-* Software bridges the gap between user demands and hardware possibility
+- Software bridges the gap between user demands and hardware possibility
 <!-- .element: class="fragment" -->
 
 ----
@@ -75,27 +75,27 @@
 
 ### Properties of Software
 
-* Reusability
-* Portability
-* Configurability / Flexibility
+- Reusability
+- Portability
+- Configurability / Flexibility
 
 ----
 
 ### Reusability
 
-<img src="media/software-reuse.png" alt="Reusability" width="60%" />
+<img src="../media/software-reuse.png" alt="Reusability" width="60%" />
 <!-- https://medium.com/application-library-engineering-group/a-deep-dive-into-reusable-components-3788ca756390 -->
 
 ----
 
-![Don't Reinvent the Wheel](media/dont-reinvent-the-wheel.jpeg)
+![Don't Reinvent the Wheel](../media/dont-reinvent-the-wheel.jpeg)
 <!-- https://levelup.gitconnected.com/software-engineering-best-practices-for-reusing-in-software-development-6006f9d8d364 -->
 
 ----
 
 ### Portability
 
-![Portability](media/portability.svg)
+![Portability](../media/portability.svg)
 
 ----
 
@@ -103,62 +103,62 @@
 
 Same software, different use cases
 
-![Software Configurability](media/software-configurability.svg)
+![Software Configurability](../media/software-configurability.svg)
 
 ---
 
 ### Interface and Implementation
 
-![Inteface and Implementation](media/interface-implementation.svg)
+![Interface and Implementation](../media/interface-implementation.svg)
 
 ----
 
 ### Interface and Implementation
 
-* different applications / use cases
-* diverse implementations
-* same interface
-* API - _Application Programming Interface_
+- different applications / use cases
+- diverse implementations
+- same interface
+- API - _Application Programming Interface_
 
 ----
 
 ### Portability vs Performance
 
-![Portability vs Performance](media/portability-performance.svg)
+![Portability vs Performance](../media/portability-performance.svg)
 
 ---
 
 ### Software Stack
 
-![Software Stack](media/software-stack.svg)
+![Software Stack](../media/software-stack.svg)
 
 ----
 
 ### Software Stack
 
-* Each layer provides an interface to the upper layer
-* Richer set of features are implemented by the upper layers
-* Similar to the networking stack
+- Each layer provides an interface to the upper layer
+- Richer set of features are implemented by the upper layers
+- Similar to the networking stack
 
 ----
 
 ### Android Software Stack
 
-<img src="media/android-software-stack.png" alt="Android Software Stack" width="40%" />
+<img src="../media/android-software-stack.png" alt="Android Software Stack" width="40%" />
 <!-- https://www.pcloudy.com/android-and-ios-basics-and-comparison/ -->
 
 ----
 
 ### iOS Software Stack
 
-<img src="media/ios-software-stack.png" alt="iOS Software Stack" width="50%" />
+<img src="../media/ios-software-stack.png" alt="iOS Software Stack" width="50%" />
 <!-- https://www.pcloudy.com/android-and-ios-basics-and-comparison/ -->
 
 ----
 
 ### Flutter Framework
 
-![iOS Software Stack](media/flutter.png)
+![iOS Software Stack](../media/flutter.png)
 <!-- https://buildflutter.com/how-flutter-works/ -->
 ---
 
@@ -168,39 +168,39 @@ Same software, different use cases
 
 ### Usable vs Reusable
 
-* Software provides features by extending hardware
-* Features are used by:
-  * users (as interactive applications / processes)
-  * system (as non-interactive services / processes)
-  * other applications (as reusable libraries)
-* Software components
-  * Applications: usable
-  * Libraries: reusable
+- Software provides features by extending hardware
+- Features are used by:
+  - users (as interactive applications / processes)
+  - system (as non-interactive services / processes)
+  - other applications (as reusable libraries)
+- Software components
+  - Applications: usable
+  - Libraries: reusable
 
 ----
 
 ### Applications
 
-![Applications](media/applications.svg)
+![Applications](../media/applications.svg)
 
 ----
 
 ### Libraries
 
-![Libraries](media/libraries.svg)
+![Libraries](../media/libraries.svg)
 
 ----
 
 ### Application Software and System Software
 
-![Application and System Software](media/application-system-software.png)
+![Application and System Software](../media/application-system-software.png)
 <!-- https://www.webopedia.com/definitions/systems-software/ -->
 
 ----
 
 ### Libraries and Frameworks
 
-![Libraries and Frameworks](media/libraries-frameworks.png)
+![Libraries and Frameworks](../media/libraries-frameworks.png)
 <!-- https://medium.com/@MarcStevenCoder/build-reusable-frameworks-809438ef46e7 -->
 
 ----
@@ -209,9 +209,9 @@ Same software, different use cases
 
 Common features / attributes
 
-* machine / binary code (for compiled programs)
-* data and instructions sections (`rodata`, `data`, `bss`, `text`)
-* stored as files in the filesystem
+- machine / binary code (for compiled programs)
+- data and instructions sections (`rodata`, `data`, `bss`, `text`)
+- stored as files in the filesystem
 
 ----
 
@@ -231,67 +231,67 @@ Common features / attributes
 
 ### Need for Operating System (OS)
 
-* Hardware portability
-  * Use different I/O devices (drivers)
-  * Run on different architectures
-* Core system features
-  * Memory management
-  * Scheduling for multiple applications / processes
-  * File system implementation
-  * Networking stack
+- Hardware portability
+  - Use different I/O devices (drivers)
+  - Run on different architectures
+- Core system features
+  - Memory management
+  - Scheduling for multiple applications / processes
+  - File system implementation
+  - Networking stack
 
 ----
 
 ### OS Roles
 
-* Hardware abstraction
-* System services
-* Isolation between processes
-* Resource protection (memory, devices)
+- Hardware abstraction
+- System services
+- Isolation between processes
+- Resource protection (memory, devices)
 
 ---
 
 ### OS: Library-like Component
 
-![OS Components](media/os-components.jpg)
+![OS Components](../media/os-components.jpg)
 <!-- https://technologyrediscovery.net/compFund/obcat.comp.os.html -->
 
 ----
 
 ### System Call Interface
 
-![OS Layers](media/os-layers.png)
+![OS Layers](../media/os-layers.png)
 <!-- https://cse.buffalo.edu/~bina/cse321/fall2017/Lectures/Sept6System.html -->
 
 ----
 
 ### System Calls
 
-* API for the operating system
-* Also called **system services**
-* Similar to library calls
-* Transfer control to the operating system code
-* Typically standard
-* System call IDs with system call handlers
-  * Linux: `/usr/include/x86_64-linux-gnu/asm/unistd_64.h`
+- API for the operating system
+- Also called **system services**
+- Similar to library calls
+- Transfer control to the operating system code
+- Typically standard
+- System call IDs with system call handlers
+  - Linux: `/usr/include/x86_64-linux-gnu/asm/unistd_64.h`
 
 ----
 
 ### OS Perspective
 
-* Also called **kernel**
-* A software component that doesn't do work by itself
-* It serves applications, by providing an API - system (call) API
-* When a process invokes a kernel feature we say _the kernel runs on behalf of the process_
+- Also called **kernel**
+- A software component that doesn't do work by itself
+- It serves applications, by providing an API - system (call) API
+- When a process invokes a kernel feature we say _the kernel runs on behalf of the process_
 
 ---
 
 ### Privilege Domains
 
-* typically, there are multiple applications / processes
-* requirement for isolation
-* provider of isolation must be protected / privileged
-* privileged vs unprivileged actions
+- typically, there are multiple applications / processes
+- requirement for isolation
+- provider of isolation must be protected / privileged
+- privileged vs unprivileged actions
 
 ----
 
@@ -299,13 +299,13 @@ Common features / attributes
 
 Security role: _Reference Monitor_
 
-![OS as Reference Monitor](media/os-reference-monitor.svg)
+![OS as Reference Monitor](../media/os-reference-monitor.svg)
 
 ----
 
 ### User Mode, Kernel Mode
 
-![User Mode / Kernel Mode](media/user-kernel-mode.png)
+![User Mode / Kernel Mode](../media/user-kernel-mode.png)
 
 ----
 
@@ -325,43 +325,43 @@ Security role: _Reference Monitor_
 
 #### Unprivileged
 
-* memory access (read, write)
-* logical and arithmetic operations
-* function calls
+- memory access (read, write)
+- logical and arithmetic operations
+- function calls
 
 #### Privileged
 
-* I/O resource access (files, network, terminal, time)
-* memory allocation
-* inter-app communication
+- I/O resource access (files, network, terminal, time)
+- memory allocation
+- inter-app communication
 
 ----
 
 ### TCB: Trusted Computing Base
 
-* The critical part of the system (wrt security)
-* Bugs in TCB jeopardize the whole system
-* Kernel, drivers, system services, system database, hardware, firmware
-* Hardware, hypervisor, control domain for virtualized environments
+- The critical part of the system (regarding security)
+- Bugs in TCB jeopardize the whole system
+- Kernel, drivers, system services, system database, hardware, firmware
+- Hardware, hypervisor, control domain for virtualized environments
 
 ---
 
 ### System Calls
 
-* Calls from application to kernel
-* Typically transfer control from user mode to kernel mode
-* Cause overhead (mode transfer)
+- Calls from application to kernel
+- Typically transfer control from user mode to kernel mode
+- Cause overhead (mode transfer)
 
 ----
 
 ### Kernel Code
 
-* Runs when system calls are made (application invokation) ...
-* ... or when interrupts are delivered (device actions)
-* It is not a process or an entity
-* It is a library (software component) that runs in privileged mode when invoked
-  * by applications - via system calls
-  * by I/O devices - via interrupts
+- Runs when system calls are made (application invocation) ...
+- ... or when interrupts are delivered (device actions)
+- It is not a process or an entity
+- It is a library (software component) that runs in privileged mode when invoked
+  - by applications - via system calls
+  - by I/O devices - via interrupts
 
 ----
 
@@ -369,40 +369,40 @@ Security role: _Reference Monitor_
 
 Also called **supervisor mode**
 
-![Dual Mode](media/dual-mode.jpeg)
+![Dual Mode](../media/dual-mode.jpeg)
 
 ----
 
 ### Standard C Library
 
-![libc](media/libc.svg)
+![libc](../media/libc.svg)
 
 ----
 
 ### C APIs
 
-* ANSI / ISO
-  * standard API, portable across OSes
-  * <https://www.iso-9899.info/wiki/The_Standard>
-* POSIX
-  * standard for UNIX-based OSes: Linux, \*BSD, macOS
-  * Windows has a POSIX API
-  * <https://pubs.opengroup.org/onlinepubs/9699919799>
-* Windows API
-  * formerly Win32 API
-  * <https://learn.microsoft.com/en-us/windows/win32/apiindex/windows-api-list>
+- ANSI / ISO
+  - standard API, portable across OSes
+  - <https://www.iso-9899.info/wiki/The_Standard>
+- POSIX
+  - standard for UNIX-based OSes: Linux, \*BSD, macOS
+  - Windows has a POSIX API
+  - <https://pubs.opengroup.org/onlinepubs/9699919799>
+- Windows API
+  - formerly Win32 API
+  - <https://learn.microsoft.com/en-us/windows/win32/apiindex/windows-api-list>
 
 ----
 
 ### Library Calls vs System Calls
 
-| Library calls                    | System calls                               |
-| :------------------------------: | :----------------------------------------: |
-| provided by libraries            | provided by operating system               |
-| flexible, diverse                | specific, standard                         |
-| typical function calls           | typically cause mode switch                |
-| use standard C calling convetion | custom OS calling convention               |
-| generally portable               | OS-specific                                |
+| Library calls                     | System calls                               |
+| :-------------------------------: | :----------------------------------------: |
+| provided by libraries             | provided by operating system               |
+| flexible, diverse                 | specific, standard                         |
+| typical function calls            | typically cause mode switch                |
+| use standard C calling convention | custom OS calling convention               |
+| generally portable                | OS-specific                                |
 ---
 
 ## Types of Operating Systems
@@ -411,108 +411,108 @@ Also called **supervisor mode**
 
 ### Use Cases
 
-* Provide thin layer on top of hardware (generally embedded)
-* Allow multitasking
-* Allow isolated multitasking
-* Multiple OSes on the same hardware (hypervisors)
-* Fast & transient runs (micro VMs, function-as-a-service - FaaS)
-* Large CPU / I/O / memory loads
-* High-Performance Computing (HPC)
-* Time constraints
+- Provide thin layer on top of hardware (generally embedded)
+- Allow multitasking
+- Allow isolated multitasking
+- Multiple OSes on the same hardware (hypervisors)
+- Fast & transient runs (micro VMs, function-as-a-service - FaaS)
+- Large CPU / I/O / memory loads
+- High-Performance Computing (HPC)
+- Time constraints
 
 ----
 
 ### Requirements
 
-* A system call API is generally provided
-* Multiprocessing / multithreading / scheduling: yes / no
-* Resource isolation between applications: yes / no
-  * Domain separation (privileged vs unprivileged)
-* Hardware mode for hypervisors: yes / no
-* Real-time features
+- A system call API is generally provided
+- Multiprocessing / multithreading / scheduling: yes / no
+- Resource isolation between applications: yes / no
+  - Domain separation (privileged vs unprivileged)
+- Hardware mode for hypervisors: yes / no
+- Real-time features
 
 ---
 
 ### OS Types
 
-* Embedded OSes
-* Single Address Space OSes
-* Microkernels
-* Monolithic Kernels
-* Hypervisors
+- Embedded OSes
+- Single Address Space OSes
+- Microkernels
+- Monolithic Kernels
+- Hypervisors
 
 ----
 
 ### Embedded OSes
 
-* Typically run on small devices
-  * low-power, low-memory
-* Often does not require domain separation
-* OS closer to a library
-* Typically provide real-time features
+- Typically run on small devices
+  - low-power, low-memory
+- Often does not require domain separation
+- OS closer to a library
+- Typically provide real-time features
 
 ----
 
 ### Single Address Space OSes
 
-* The OS and application linked together
-* Typically run in the same domain: no need for domain transitions
-* Library OS + application code linked together
-* Unikernels
-* Can be run as VMs
+- The OS and application linked together
+- Typically run in the same domain: no need for domain transitions
+- Library OS + application code linked together
+- Unikernels
+- Can be run as VMs
 
 ----
 
 ### Unikraft
 
-![Unikraft](media/unikraft.png)
+![Unikraft](../media/unikraft.png)
 <!-- https://www.usenix.org/publications/loginonline/unikraft-and-coming-age-unikernels -->
 
 ----
 
 ### Microkernels
 
-* Small kernel (small TCB)
-* Components run as user space processes (scheduler, file system, network stack)
-* Increased security, increased overhead
+- Small kernel (small TCB)
+- Components run as user space processes (scheduler, file system, network stack)
+- Increased security, increased overhead
 
 ----
 
 ### The L4 Microkernel
 
-![L4](media/l4.png)
+![L4](../media/l4.png)
 <!-- https://www.researchgate.net/figure/Nizza-Security-Architecture-The-picture-illustrates-the-overall-architecture-of-Nizza_fig1_233765184 -->
 
 ----
 
 ### Monolithic Kernels
 
-* All components run in kernel mode
-* Typical architecture of modern desktop / server systems
-* Extensible via loadable kernel-modules
-* Larger TCB when compared to microkernel
-* Increased performance (all in one place)
+- All components run in kernel mode
+- Typical architecture of modern desktop / server systems
+- Extensible via loadable kernel-modules
+- Larger TCB when compared to microkernel
+- Increased performance (all in one place)
 
 ----
 
 ### The Linux Kernel
 
-![Linux](media/linux-kernel.png)
+![Linux](../media/linux-kernel.png)
 <!-- https://linux-kernel-labs.github.io/refs/heads/master/lectures/arch.html -->
 
 ----
 
 ### Hypervisors
 
-* Thin layer on top of hardware
-* Host OSes inside virtual machines
-* Typically require hardware features (e.g. Intel VT-x)
+- Thin layer on top of hardware
+- Host OSes inside virtual machines
+- Typically require hardware features (e.g. Intel VT-x)
 
 ----
 
 ### Xen and KVM
 
-![Xen](media/xen-kvm.jpeg)
+![Xen](../media/xen-kvm.jpeg)
 <!-- https://medium.com/@saisarathchandrap/virtualisation-at-alibaba-cloud-b20dea72efa1 -->
 ---
 
@@ -522,49 +522,49 @@ Also called **supervisor mode**
 
 ### Android Software Stack
 
-<img src="media/android-software-stack.png" alt="Android Software Stack" width="40%" />
+<img src="../media/android-software-stack.png" alt="Android Software Stack" width="40%" />
 <!-- https://www.pcloudy.com/android-and-ios-basics-and-comparison/ -->
 
 ----
 
 ### iOS Software Stack
 
-<img src="media/ios-software-stack.png" alt="iOS Software Stack" width="50%" />
+<img src="../media/ios-software-stack.png" alt="iOS Software Stack" width="50%" />
 <!-- https://www.pcloudy.com/android-and-ios-basics-and-comparison/ -->
 
 ----
 
 ### Windows Software Stack
 
-![Windows](media/windows.png)
+![Windows](../media/windows.png)
 <!-- https://medium.com/@putrasulung2108/windows-architecture-d2b022f136d3 -->
 
 ----
 
 ### macOS Software Stack
 
-![macOS](media/macos.svg)
+![macOS](../media/macos.svg)
 <!-- https://en.wikipedia.org/wiki/Architecture_of_macOS -->
 
 ----
 
 ### Linux Software Stack
 
-![Linux](media/linux.svg)
+![Linux](../media/linux.svg)
 <!-- https://en.wikipedia.org/wiki/Linux -->
 
 ----
 
 ### RIOT (IoT devices)
 
-![Tock](media/riot.png)
+![Tock](../media/riot.png)
 <!-- https://desosa.nl/projects/riot/2020/03/19/riot-from-vision-to-architecture.html -->
 
 ----
 
 ### Tock (low-power microcontrollers)
 
-<img src="media/tock.png" alt="Tock" width="60%" />
+<img src="../media/tock.png" alt="Tock" width="60%" />
 <!-- https://www.tockos.org/documentation/design/ -->
 
           </textarea>
