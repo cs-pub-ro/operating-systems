@@ -1,5 +1,9 @@
 /* SPDX-License-Identifier: BSD-3-Clause */
 
+/*
+ * Useful socket macros and structures
+ */
+
 #ifndef SOCK_UTIL_H_
 #define SOCK_UTIL_H_	1
 

@@ -34,6 +34,51 @@ lab_structure:
       - libc.md
       - high-level-lang.md
       - app-investigation.md
+  - title: Lab 3 - Memory
+    filename: lab3.md
+    content:
+      - working-with-memory.md
+      - process-memory.md
+    tasks:
+      - memory-access.md
+      - memory-corruption.md
+      - memory-protection.md
+      - access-counter.md
+      - alloc-size.md
+      - copy.md
+      - memory-areas.md
+      - modify-areas.md
+      - static-dynamic.md
+      - page-mapper.md
+      - reference-counting.md
+    guides:
+      - memory-alloc.md
+      - memory-vuln.md
+  - title: Lab 4 - Investigate Memory
+    filename: lab4.md
+    content:
+      - investigate-memory.md
+    guides:
+      - app-investigation-deluge.md
+      - app-investigation-servo.md
+      - d-allocator.md
+      - git.md
+      - jemalloc.md
+      - memory-actions.md
+      - memory-leak.md
+  - title: Lab 5 - Memory Security
+    filename: lab5.md
+    content:
+      - memory-security.md
+    tasks:
+      - pointer-arithmetic-leak.md
+      - aslr.md
+      - stack-protector.md
+      - bypassing-stack-protector.md
+      - exec-shellcode.md
+    guides:
+      - buffer-overflow-leak.md
+      - buffer-overflow-overwrite.md
 
 make_assets:
   plugin: command
@@ -41,7 +86,7 @@ make_assets:
     command: make
     locations:
       - chapters/software-stack
-      - content/chapters/data/lecture
+      - chapters/data
       - content/chapters/compute/lecture
       - content/chapters/io/lecture
       - content/chapters/app-interact/lecture
@@ -103,25 +148,43 @@ docusaurus:
                   - Strcpy Syscall: strcpy-syscall.md
             - Lab 1 - Operating System Perspective: lab1.md
             - Lab 2 - Library Perspective: lab2.md
+      - Data:
+          path: /build/prepare_view/.view
+          extra:
+            - media
+          subsections:
+            - Slides: /build/embed_reveal/Data/Data.mdx
+            - Overview: /build/prepare_view/.view/data-overview.md
+            - Questions:
+                path: questions
+                subsections:
+                    - Memory Access: memory-access.md
+                    - Half page: half-page.md
+                    - Malloc Brk: malloc-brk.md
+                    - Malloc Mmap: malloc-mmap.md
+                    - Memory granularity: memory-granularity.md
+                    - Mmap file: mmap-file.md
+                    - Page Allocation: page-allocation.md
+                    - Operators: operators.md
+                    - Memory Leaks: memory-leaks.md
+                    - Valgrind Leaks: valgrind-leaks.md
+                    - Bypass Canary: bypass-canary.md
+                    - Memory Aslr: memory-aslr.md
+                    - Memory Regions Vars: memory-regions-vars.md
+                    - Memory Stack Protector: memory-stack-protector.md
+                    - Stack Layout: stack-layout.md
+                    - String buff over: string-buff-over.md
+                    - String strcpy: string-strcpy.md
+            - Lab 3 - Memory: lab3.md
+            - Lab 4 - Investigate Memory: lab4.md
+            - Lab 5 - Memory Security: lab5.md
       - Lecture:
           path: /build/embed_reveal
           subsections:
-            - Data: Data/Data.mdx
             - Compute: Compute/Compute.mdx
             - IO: IO/IO.mdx
             - Application Interaction: Application-Interaction/Application-Interaction.mdx
       # - Lab:
-      #   - Data:
-      #       path: content/chapters/data/lab/content
-      #       extra:
-      #         - ../quiz
-      #       subsections:
-      #         - Overview: overview.md
-      #         - Working with Memory: working-memory.md
-      #         - Process Memory: process-memory.md
-      #         - Investigate Memory: investigate-memory.md
-      #         - Memory Security: memory-security.md
-      #         - Arena: arena.md
       #   - Compute:
       #       path: content/chapters/compute/lab/content
       #       extra:
@@ -219,8 +282,8 @@ docusaurus:
       - Resources: misc/resources.md
     static_assets:
       - slides/Compute: /build/make_assets/content/chapters/compute/lecture/_site
+      - slides/Data: /build/make_assets/chapters/data/_site
       - slides/Software-Stack: /build/make_assets/chapters/software-stack/_site
-      - slides/Data: /build/make_assets/content/chapters/data/lecture/_site
       - slides/IO: /build/make_assets/content/chapters/io/lecture/_site
       - slides/Application-Interaction: /build/make_assets/content/chapters/app-interact/lecture/_site
     config_meta:
