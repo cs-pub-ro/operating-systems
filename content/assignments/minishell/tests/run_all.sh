@@ -7,7 +7,7 @@ script=./_test/run_test.sh
 
 exec_name="mini-shell"
 if test -z "$SRC_PATH"; then
-    SRC_PATH=$(pwd)/../src
+	SRC_PATH=$(pwd)/../src
 fi
 ln -fn "$SRC_PATH"/"$exec_name" .
 
@@ -18,7 +18,7 @@ bash "$script" init
 # bash "$script" check.
 
 for i in $(seq $first_test $last_test); do
-    bash "$script" "$i"
+	bash "$script" "$i"
 done | tee results.txt
 
 grep -a '\[.*\]$' results.txt | awk -F '[] /[]+' '
@@ -31,7 +31,7 @@ BEGIN {
 }
 
 END {
-    printf "\n%66s  %3d/100\n", "Total:", sum;
+    printf "\n%s %3d/100\n", "Total:", sum;
 }'
 
 # Cleanup testing environment.

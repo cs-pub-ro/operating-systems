@@ -2,7 +2,7 @@ topic/software-stack:
   - 'chapters/software-stack/**/*'
 
 topic/data:
-  - 'content/chapters/data/**/*'
+  - 'chapters/data/**/*'
 
 topic/compute:
   - 'content/chapters/compute/**/*'

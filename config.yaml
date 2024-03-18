@@ -176,6 +176,44 @@ docusaurus:
                               path: tasks/
                               subsections:
                                 - Applications/: app-investigation/
+      - Data:
+        - Slides: /build/embed_reveal/Data/Data.mdx
+        - Data Perspective:
+            subsections:
+              - Overview:
+                  path: chapters/data/overview/
+                  extra:
+                    - media/
+                  subsections:
+                    - Reading: reading/overview.md
+
+        - Data arena:
+           subsections:
+              - Arena:
+                  path: chapters/data/arena
+                  extra:
+                    - drills/questions/
+                    - drills/tasks/
+                  subsections:
+                    - Reading: reading/arena.md
+                    - Drills:
+                        path: drills/
+                        subsections:
+                          - Tasks:
+                              path: tasks/
+                              subsections:
+                                - Exec Shellcode/: exec-shellcode/
+                                - Access Counter/: access-counter/
+                                - Reference Counting/: reference-counting/
+                                - Page Mapper/: page-mapper/
+                          - Questions:
+                              path: questions/
+                              subsections:
+                                - Operators: operators.md
+
+
+
+                
       - Lecture:
           path: /build/embed_reveal
           subsections:
@@ -271,6 +309,20 @@ docusaurus:
             - System Process Monitoring Tool/: system-process-monitoring-tool.md
             - Network Configurations Manager/: network-configurations-manager.md
             - FaaS Application/: faas-application.md
+            - Industrial System/: industrial-system.md
+            - Blockchain System/: blockchain-system.md
+            - Supervisor-type Service/: supervisor-type-service.md
+            - Header Analysis Application/: header-analysis-application.md
+            - Extending an App Manager/: extending-an-app-manager.md
+            - Backup System/: backup-system.md
+            - File Changes Notifier/: file-changes-notifier.md
+            - Intrusion Detection System/: intrusion-detection-system.md
+            - Resource Monitor/: resource-monitor.md
+            - Library Warmer/: library-warmer.md
+            - Web GUI 1/: web-gui-1.md
+            - Web GUI 2/: web-gui-2.md
+            - Memory Deduplication/: memory-deduplication.md
+            - Cloud System/: cloud-system.md
       - Hackathons:
           path: content/assignments
           subsections:
