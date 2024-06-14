@@ -259,6 +259,10 @@ docusaurus:
       - Exams:
           path: chapters/general/drills/tasks
           subsections:
+            - 2024 Summer:
+                subsections:
+                  - Syscall Tracing/: syscall-tracing.md
+                  - Sysinfo Library/: sysinfo-library.md
             - Digital Forensics/: digital-forensics.md
             - Distributed System/: distributed-system.md
             - Aggregator Application/: aggregator-application.md
