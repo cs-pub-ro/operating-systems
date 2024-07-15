@@ -240,7 +240,9 @@ class ConfigParser:
 
         self.fileToLab = {}
         for id, lab in enumerate(self.data["lab_structure"]):
-            for c in lab["content"]:
+            tasks = lab["tasks"] if "tasks" in lab else []
+            guides = lab["guides"] if "guides" in lab else []
+            for c in lab["content"] + tasks + guides:
                 self.fileToLab[c] = f"lab{id+1}.md"
         return self.fileToLab
 

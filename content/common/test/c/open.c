@@ -1,4 +1,4 @@
-/* SPDX-License-Identifier: BSD-3-Clause */
+// SPDX-License-Identifier: BSD-3-Clause
 /*
  * Test case for common files: Makefile, logging, DIE, ERR macros.
  */
