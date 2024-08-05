@@ -40,142 +40,142 @@ docusaurus:
     structure:
       - Introduction: content/landing-page/README.md
       - Software Stack:
-        - Slides: /build/embed_reveal/Software-Stack/Software-Stack.mdx
-        - Lab 1 - Operating System Perspective:
-            subsections:
-              - Overview:
-                  path: chapters/software-stack/overview/
-                  extra:
-                    - media/
-                    - drills/questions/
-                  subsections:
-                    - Reading: reading/overview.md
-                    - Drills:
-                        path: drills/
-                        subsections:
-                          - Questions:
-                              path: questions/
-                              subsections:
-                                - Software: software.md
-              - Modern Software Stacks:
-                  path: chapters/software-stack/modern-software-stacks
-                  extra:
-                    - media/
-                  subsections:
-                    - Reading: reading/modern-sw-stack.md
-              - System Calls:
-                  path: chapters/software-stack/system-calls
-                  extra:
-                    - media/
-                    - drills/questions/
-                    - drills/tasks/
-                  subsections:
-                    - Reading:
-                        path: reading/
-                        subsections:
-                          - Basic System Calls: basic-syscall.md
-                          - System Call Wrapper: syscall-wrapper.md
-                          - Libcall-Syscall: libcall-syscall.md
-                    - Drills:
-                        path: drills/
-                        subsections:
-                          - Tasks:
-                              path: tasks/
-                              subsections:
-                                - Basic Syscall/: basic-syscall/
-                                - System Call Wrapper/: syscall-wrapper/
-                          - Questions:
-                              path: questions/
-                              subsections:
-                                - Libcall with Syscall: libcall-syscall.md
-                                - Syscall Wrappers: syscall-wrapper.md
-                                - Syscall ID: syscall-id.md
-                                - Syscall Tool: syscall-tool.md
-                                - Syscall Numbers: syscall-numbers.md
-        - Lab 2 - Library Perspective:
-            subsections:
-              - Libraries:
-                  path: chapters/software-stack/libraries
-                  extra:
-                    - media/
-                    - drills/questions/
-                  subsections:
-                    - Guides:
-                        path: guides/
-                        subsections:
-                          - Static-Dynamic/: static-dynamic/
-                    - Drills:
-                        path: drills/
-                        subsections:
-                          - Questions:
-                              path: questions/
-                              subsections:
-                                - Dynamic Libraries: dynamic-libraries.md
-                                - Static Executables: static-executables.md
-              - Libc:
-                  path: chapters/software-stack/libc
-                  extra:
-                    - media/
-                    - drills/questions/
-                    - drills/tasks/
-                  subsections:
-                    - Reading:
-                        path: reading/
-                        subsections:
-                          - Common Functions: common-functions.md
-                          - Libc: libc.md
-                    - Drills:
-                        path: drills/
-                        subsections:
-                          - Tasks:
-                              path: tasks/
-                              subsections:
-                                - Common Functions/: common-functions/
-                                - Libc/: libc/
-                          - Questions:
-                              path: questions/
-                              subsections:
-                                - printf System Call: printf-syscall.md
-                                - strcpy System Call: strcpy-syscall.md
-                                - printf vs write: printf-vs-write.md
-                                - malloc: malloc.md
-                                - Syscall Tool: syscall-tool.md
-              - High-Level Languages:
-                  path: chapters/software-stack/high-level-languages
-                  extra:
-                    - drills/questions/
-                  subsections:
-                    - Reading:
-                        path: reading/
-                        subsections:
-                          - High-Level Languages: high-level-lang.md
-                    - Drills:
-                        path: drills/
-                        subsections:
-                          - Tasks:
-                              path: tasks/
-                              subsections:
-                                - High-Level Languages/: high-level-lang/
-                          - Questions:
-                              path: questions/
-                              subsections:
-                                - Python Tools: python-tools.md
-              - Applications:
-                  path: chapters/software-stack/applications
-                  extra:
-                    - media/
-                  subsections:
-                    - Reading:
-                        path: reading/
-                        subsections:
-                          - Applications: app-investigate.md
-                    - Drills:
-                        path: drills/
-                        subsections:
-                          - Tasks:
-                              path: tasks/
-                              subsections:
-                                - Applications/: app-investigation/
+          - Slides: /build/embed_reveal/Software-Stack/Software-Stack.mdx
+          - Lab 1 - Operating System Perspective:
+              subsections:
+                - Overview:
+                    path: chapters/software-stack/overview/
+                    extra:
+                      - media/
+                      - drills/questions/
+                    subsections:
+                      - Reading: reading/overview.md
+                      - Drills:
+                          path: drills/
+                          subsections:
+                            - Questions:
+                                path: questions/
+                                subsections:
+                                  - Software: software.md
+                - Modern Software Stacks:
+                    path: chapters/software-stack/modern-software-stacks
+                    extra:
+                      - media/
+                    subsections:
+                      - Reading: reading/modern-sw-stack.md
+                - System Calls:
+                    path: chapters/software-stack/system-calls
+                    extra:
+                      - media/
+                      - drills/questions/
+                      - drills/tasks/
+                    subsections:
+                      - Reading:
+                          path: reading/
+                          subsections:
+                            - Basic System Calls: basic-syscall.md
+                            - System Call Wrapper: syscall-wrapper.md
+                            - Libcall-Syscall: libcall-syscall.md
+                      - Drills:
+                          path: drills/
+                          subsections:
+                            - Tasks:
+                                path: tasks/
+                                subsections:
+                                  - Basic Syscall/: basic-syscall/
+                                  - System Call Wrapper/: syscall-wrapper/
+                            - Questions:
+                                path: questions/
+                                subsections:
+                                  - Libcall with Syscall: libcall-syscall.md
+                                  - Syscall Wrappers: syscall-wrapper.md
+                                  - Syscall ID: syscall-id.md
+                                  - Syscall Tool: syscall-tool.md
+                                  - Syscall Numbers: syscall-numbers.md
+          - Lab 2 - Library Perspective:
+              subsections:
+                - Libraries:
+                    path: chapters/software-stack/libraries
+                    extra:
+                      - media/
+                      - drills/questions/
+                    subsections:
+                      - Guides:
+                          path: guides/
+                          subsections:
+                            - Static-Dynamic/: static-dynamic/
+                      - Drills:
+                          path: drills/
+                          subsections:
+                            - Questions:
+                                path: questions/
+                                subsections:
+                                  - Dynamic Libraries: dynamic-libraries.md
+                                  - Static Executables: static-executables.md
+                - Libc:
+                    path: chapters/software-stack/libc
+                    extra:
+                      - media/
+                      - drills/questions/
+                      - drills/tasks/
+                    subsections:
+                      - Reading:
+                          path: reading/
+                          subsections:
+                            - Common Functions: common-functions.md
+                            - Libc: libc.md
+                      - Drills:
+                          path: drills/
+                          subsections:
+                            - Tasks:
+                                path: tasks/
+                                subsections:
+                                  - Common Functions/: common-functions/
+                                  - Libc/: libc/
+                            - Questions:
+                                path: questions/
+                                subsections:
+                                  - printf System Call: printf-syscall.md
+                                  - strcpy System Call: strcpy-syscall.md
+                                  - printf vs write: printf-vs-write.md
+                                  - malloc: malloc.md
+                                  - Syscall Tool: syscall-tool.md
+                - High-Level Languages:
+                    path: chapters/software-stack/high-level-languages
+                    extra:
+                      - drills/questions/
+                    subsections:
+                      - Reading:
+                          path: reading/
+                          subsections:
+                            - High-Level Languages: high-level-lang.md
+                      - Drills:
+                          path: drills/
+                          subsections:
+                            - Tasks:
+                                path: tasks/
+                                subsections:
+                                  - High-Level Languages/: high-level-lang/
+                            - Questions:
+                                path: questions/
+                                subsections:
+                                  - Python Tools: python-tools.md
+                - Applications:
+                    path: chapters/software-stack/applications
+                    extra:
+                      - media/
+                    subsections:
+                      - Reading:
+                          path: reading/
+                          subsections:
+                            - Applications: app-investigate.md
+                      - Drills:
+                          path: drills/
+                          subsections:
+                            - Tasks:
+                                path: tasks/
+                                subsections:
+                                  - Applications/: app-investigation/
       - Lecture:
           path: /build/embed_reveal
           subsections:
@@ -184,68 +184,143 @@ docusaurus:
             - IO: IO/IO.mdx
             - Application Interaction: Application-Interaction/Application-Interaction.mdx
       - Lab:
-        - Setting up the Lab Environment: content/misc/lab-setup.md
-        - Data:
-            path: content/chapters/data/lab/content
-            extra:
-              - ../quiz
-            subsections:
-              - Overview: overview.md
-              - Working with Memory: working-memory.md
-              - Process Memory: process-memory.md
-              - Investigate Memory: investigate-memory.md
-              - Memory Security: memory-security.md
-              - Arena: arena.md
-        - Compute:
-            path: content/chapters/compute/lab/content
-            extra:
-              - ../media
-              - ../quiz
-            subsections:
-              - Overview: overview.md
-              - Hardware Perspective: hardware-perspective.md
-              - Processes: processes.md
-              - Threads: threads.md
-              - Processes-threads-apache2: processes-threads-apache2.md
-              - Copy-on-Write: copy-on-write.md
-              - Synchronization: synchronization.md
-              - User-Level Threads: user-level-threads.md
-              - Arena: arena.md
-        - IO:
-            path: content/chapters/io/lab/content
-            extra:
-              - ../media
-              - ../quiz
-            subsections:
-              - Overview: overview.md
-              - File Handlers: file-handlers.md
-              - File Descriptors: file-descriptors.md
-              - Redirections: redirections.md
-              - Pipes: pipes.md
-              - Local IO in Action: local-io-in-action.md
-              - Remote IO: remote-io.md
-              - Networking 101: networking-101.md
-              - Client-Server Model: client-server-model.md
-              - Beyond Network Sockets: beyond-network-sockets.md
-              - File Mappings: file-mappings.md
-              - IO Internals: io-internals.md
-              - Zero-Copy: zero-copy.md
-              - Asynchronous IO: async-io.md
-              - IO Multiplexing: io-multiplexing.md
-              - Arena: arena.md
-        - Application Interaction:
-            path: content/chapters/app-interact/lab/content
-            extra:
-              - ../media
-              - ../quiz
-            subsections:
-              - Overview: overview.md
-              - Time Server: time-server.md
-              - Password Cracker: password-cracker.md
-              - The X Window System: x-window-system.md
-              - D-Bus: dbus.md
-              - OS Cloud: os-cloud.md
-              - Arena: arena.md
+          - Setting up the Lab Environment: content/misc/lab-setup.md
+          - Data:
+              path: content/chapters/data/lab/content
+              extra:
+                - ../quiz
+              subsections:
+                - Overview: overview.md
+                - Working with Memory: working-memory.md
+                - Process Memory: process-memory.md
+                - Investigate Memory: investigate-memory.md
+                - Memory Security: memory-security.md
+                - Arena: arena.md
+          - Compute:
+              path: content/chapters/compute/lab/content
+              extra:
+                - ../media
+                - ../quiz
+              subsections:
+                - Overview: overview.md
+                - Hardware Perspective: hardware-perspective.md
+                - Processes: processes.md
+                - Threads: threads.md
+                - Processes-threads-apache2: processes-threads-apache2.md
+                - Copy-on-Write: copy-on-write.md
+                - Synchronization: synchronization.md
+                - User-Level Threads: user-level-threads.md
+                - Arena: arena.md
+          - IO:
+              path: content/chapters/io/lab/content
+              extra:
+                - ../media
+                - ../quiz
+              subsections:
+                - Overview: overview.md
+                - File Handlers: file-handlers.md
+                - File Descriptors: file-descriptors.md
+                - Redirections: redirections.md
+                - Pipes: pipes.md
+                - Local IO in Action: local-io-in-action.md
+                - Remote IO: remote-io.md
+                - Networking 101: networking-101.md
+                - Client-Server Model: client-server-model.md
+                - Beyond Network Sockets: beyond-network-sockets.md
+                - File Mappings: file-mappings.md
+                - IO Internals: io-internals.md
+                - Zero-Copy: zero-copy.md
+                - Asynchronous IO: async-io.md
+                - IO Multiplexing: io-multiplexing.md
+                - Arena: arena.md
+      - Application Interaction:
+          - Lab 12 - Application Interaction:
+              subsections:
+                - Overview:
+                    path: chapters/app-interact/overview/
+                    subsections:
+                      - Reading: reading/overview.md
+                - Time Server:
+                    path: chapters/app-interact/time-server
+                    extra:
+                      - drills/questions/
+                      - drills/tasks/
+                    subsections:
+                      - Reading: reading/time-server.md
+                      - Drills:
+                          path: drills/
+                          subsections:
+                            - Tasks:
+                                path: tasks/
+                                subsections:
+                                  - Time Server/: time-server/
+                            - Questions:
+                                path: questions/
+                                subsections:
+                                  - Time Server: time-server.md
+                                  - Time Server Interoperability: time-server-interop.md
+                - Password Cracker:
+                    path: chapters/app-interact/password-cracker
+                    extra:
+                      - drills/tasks/
+                    subsections:
+                      - Reading: reading/password-cracker.md
+                      - Drills:
+                          path: drills/
+                          subsections:
+                            - Tasks:
+                                path: tasks/
+                                subsections:
+                                  - Password Cracker/: password-cracker/
+                - The X Window System:
+                    path: chapters/app-interact/x-window-system
+                    extra:
+                      - media/
+                      - drills/questions/
+                    subsections:
+                      - Reading: reading/x-window-system.md
+                      - Drills:
+                          path: drills/
+                          subsections:
+                            - Questions:
+                                path: questions/
+                                subsections:
+                                  - Timer: timer.md
+                - D-Bus:
+                    path: chapters/app-interact/dbus
+                    extra:
+                      - media/
+                      - drills/tasks/
+                    subsections:
+                      - Reading: reading/dbus.md
+                      - Drills:
+                          path: drills/
+                          subsections:
+                            - Tasks:
+                                path: tasks/
+                                subsections:
+                                  - Dbus/: dbus/
+                - OS Cloud:
+                    path: chapters/app-interact/os-cloud
+                    extra:
+                      - media/
+                      - drills/questions/
+                      - drills/tasks/
+                    subsections:
+                      - Reading: reading/os-cloud.md
+                      - Drills:
+                          path: drills/
+                          subsections:
+                            - Tasks:
+                                path: tasks/
+                                subsections:
+                                  - OS Cloud/: os-cloud/
+                            - Questions:
+                                path: questions/
+                                subsections:
+                                  - Cgroups versus namespaces: cgroups-vs-namespaces.md
+                                  - Container versus VM: container-vs-vm.md
+                                  - VM Creation: vm-creation.md
       - Assignments:
           # These all have the same filename so we need to create separate
           # subdirectories for them, otherwise they will overwrite each other.
@@ -308,3 +383,4 @@ docusaurus:
       OCW: https://ocw.cs.pub.ro/courses/so
       Facebook: https://www.facebook.com/sisteme.de.operare/
     copyright_string: SO Team
+

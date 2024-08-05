@@ -159,25 +159,26 @@ On a closer look, we can even identify some strings from our notification, like 
 \0\0\0\0\377\377\377\377", iov_len=260}], msg_iovlen=1, msg_controllen=0,
 ```
 
-### Practice
+## D-Bus usage in Python
+Use the `dbus` python bindings to get the computer's battery level using a python script.
+You can start from the documentation [here](https://dbus.freedesktop.org/doc/dbus-python/tutorial.html#).
+You need to read the sections `Connecting to the Bus`, `Proxy objects`, and `Interfaces and methods`.
 
-Use D-Bus to find out the computer's battery level.
-There is the `org.freedesktop.UPower` interface on the system bus that can provide this information.
-<!-- markdownlint-disable MD101 -->
-The method you need to call is `org.freedesktop.DBus.Properties.Get` from the `/org/freedesktop/UPower/devices/DisplayDevice` object.
-<!-- markdownlint-enable MD101 -->
+There's also a skeleton you can use in `chapters/app-interact/arena/support/dbus/get_battery_level.py`.
 
-This method needs 2 arguments: an interface name and a property name.
-<!-- markdownlint-disable MD101 -->
-Those should be `org.freedesktop.UPower.Device` and `Percentage` respectively.
-<!-- markdownlint-enable MD101 -->
+In summary, your script will start by connecting to the `System Bus`.
+Then you'll use the `get_object` method to obtain a proxy object.
+On this proxy object, you can actually do the method call as explained [here](https://dbus.freedesktop.org/doc/dbus-python/tutorial.html#interfaces-and-methods):
 
-Then input all of the above into a `gdbus` call, which, if everything is correct, should output the battery percentage level as a number between 0 and 100.
+```text
+To call a method, call the method of the same name on the proxy object, passing in the interface name via the dbus_interface keyword argument
+```
 
-Note: if you are running on a desktop computer or inside a virtual machine, you will get the value `0.0`, because those systems don't have a battery.
+So, if you want to call the method `this.is.an.interface.method` with the arguments `A` and `B` you can do it like this:
 
-This task can also be solved in a python script.
-Check out the details in the [arena section](./arena.md#d-bus).
+```python
+result = proxy.method(A, B, dbus_interface = "this.is.an.interface")
+```
 
 ## Firefox
 
