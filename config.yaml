@@ -176,6 +176,44 @@ docusaurus:
                               path: tasks/
                               subsections:
                                 - Applications/: app-investigation/
+      - Data:
+        - Slides: /build/embed_reveal/Data/Data.mdx
+        - Data Perspective:
+            subsections:
+              - Overview:
+                  path: chapters/data/overview/
+                  extra:
+                    - media/
+                  subsections:
+                    - Reading: reading/overview.md
+
+        - Data arena:
+           subsections:
+              - Arena:
+                  path: chapters/data/arena
+                  extra:
+                    - drills/questions/
+                    - drills/tasks/
+                  subsections:
+                    - Reading: reading/arena.md
+                    - Drills:
+                        path: drills/
+                        subsections:
+                          - Tasks:
+                              path: tasks/
+                              subsections:
+                                - Exec Shellcode/: exec-shellcode/
+                                - Access Counter/: access-counter/
+                                - Reference Counting/: reference-counting/
+                                - Page Mapper/: page-mapper/
+                          - Questions:
+                              path: questions/
+                              subsections:
+                                - Operators: operators.md
+
+
+
+                
       - Lecture:
           path: /build/embed_reveal
           subsections:
