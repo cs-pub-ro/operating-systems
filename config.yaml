@@ -176,6 +176,7 @@ docusaurus:
                               path: tasks/
                               subsections:
                                 - Applications/: app-investigation/
+
       - Data:
         - Slides: /build/embed_reveal/Data/Data.mdx
         - Data Perspective:
@@ -186,6 +187,38 @@ docusaurus:
                     - media/
                   subsections:
                     - Reading: reading/overview.md
+
+        - Working With Memory:
+            subsections:
+              - Working with Memory:
+                  path: chapters/data/working-with-memory
+                  extra:
+                    - drills/questions/
+                    - drills/tasks/
+                    - drills/guides/
+                  subsections:
+                    - Reading:
+                        path: reading/
+                        subsections:
+                          - Working with Memory: working-with-memory.md
+                    - Drills:
+                        path: drills/
+                        subsections:
+                          - Tasks:
+                              path: tasks/
+                              subsections:
+                                - Memory Access/: memory-access/
+
+                          - Questions:
+                              path: questions/
+                              subsections:
+                                - Memory Access: memory-access.md
+
+                          - Guides:
+                              path: guides/
+                              subsections:
+                                - Memory Alloc/: memory-alloc/
+                                - Memory Vuln/: memory-vuln/
 
         - Data arena:
            subsections:
@@ -210,9 +243,6 @@ docusaurus:
                               path: questions/
                               subsections:
                                 - Operators: operators.md
-
-
-
                 
       - Lecture:
           path: /build/embed_reveal
