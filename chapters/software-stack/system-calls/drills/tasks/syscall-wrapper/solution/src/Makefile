@@ -1,7 +1,7 @@
 NASM = nasm
 CC = gcc
 CFLAGS = -fno-PIC -fno-stack-protector
-LDFLAGS = -nostdlib -no-pie -Wl,--entry=main -Wl,--build-id=none
+LDFLAGS = -no-pie
 
 .PHONY: all clean
 
@@ -11,7 +11,7 @@ main: main.o syscall.o
 
 main.o: main.c syscall.h
 
-syscall.o: syscall.s
+syscall.o: syscall.asm
 	$(NASM) -f elf64 -o $@ $<
 
 clean:

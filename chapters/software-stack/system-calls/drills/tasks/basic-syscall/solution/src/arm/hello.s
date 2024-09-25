@@ -26,6 +26,8 @@ bye:
 .global main
 
 main:
+
+    # TODO 11: print "Hello, world!"
     /* Call write(1, "Hello, world!\n", 14). */
     /* rax <- __NR_write (index of write syscall: 1) */
     /* rdi <- first syscall argument (fd: 1) */
@@ -37,11 +39,11 @@ main:
     mov x8, #64
     svc #0
 
+
+    # TODO 7: exit #
     /* Call exit(0). */
     /* rax <- __NR_exit (index of exit syscall: 60) */
     /* rdi <- first syscall argument (error_code: 0) */
     mov x0, #0
     mov x8, #93
     svc #0
-
-    ret

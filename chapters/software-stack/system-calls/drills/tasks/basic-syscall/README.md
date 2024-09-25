@@ -13,9 +13,9 @@ For debugging, use `strace` to trace the system calls from your program and make
 
    [Quiz 3](../drills/questions/syscall-numbers.md)
 
-1. Update the `hello.asm` and / or `hello.s` files to pause the execution of the program before the `exit` system call.
+1. Update the `hello.asm` and / or `hello.s` files to sleep before the `exit` system call.
 
-   You need to make the `sys_pause()` system call, with no arguments.
+   You need to make the `sys_nanosleep()` system call, with the `timespec` structure.
    Find its ID [here](https://blog.rchapman.org/posts/Linux_System_Call_Table_for_x86_64/).
 
 1. Update the `hello.asm` and / or `hello.s` files to read a message from standard input and print it to standard output.

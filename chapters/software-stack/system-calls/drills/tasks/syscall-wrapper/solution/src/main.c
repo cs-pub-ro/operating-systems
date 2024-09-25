@@ -1,9 +1,13 @@
 /* SPDX-License-Identifier: BSD-3-Clause */
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "./syscall.h"
 
 static void reverse_string(char *a, unsigned int len)
 {
+	/* TODO 9: reverse_string function */
 	unsigned int i, j;
 	char aux;
 
@@ -14,8 +18,9 @@ static void reverse_string(char *a, unsigned int len)
 	}
 }
 
-static unsigned int itoa(int n, char *a)
+static unsigned int os_itoa(int n, char *a)
 {
+	/* TODO 20: itoa function */
 	unsigned int num_digits = 0;
 	int digit;
 
@@ -39,8 +44,9 @@ static unsigned int itoa(int n, char *a)
 
 int main(void)
 {
-	char buffer[128];
-	int n;
+	char buffer[128], os_itoa_buff[10];
+	char aux_buff[10] = {};
+	int n, number = 12345;
 	int pid;
 	unsigned int num_digits;
 
@@ -52,9 +58,18 @@ int main(void)
 	write(1, "Here's your input back: ", 24);
 	write(1, buffer, n);
 
+	/* Test os_itoa() function. */
+	os_itoa(number, os_itoa_buff);
+	sprintf(aux_buff, "%d", number);
+	if (strcmp(aux_buff, os_itoa_buff) == 0)
+		write(1, "os_itoa() test passed!\n", 22);
+	else
+		write(1, "os_itoa() test failed!\n", 22);
+	write(1, "\n", 1);
+
 	/* Get and print the process ID. */
 	pid = getpid();
-	num_digits = itoa(pid, buffer);
+	num_digits = os_itoa(pid, buffer);
 	write(1, "PID: ", 5);
 	write(1, buffer, num_digits);
 	write(1, "\n", 1);
