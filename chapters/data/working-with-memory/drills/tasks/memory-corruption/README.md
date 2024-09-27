@@ -2,7 +2,7 @@
 
 For this practice item, you will need to identify the programming mistake that makes it possible to corrupt memory.
 
-Navigate to the 'memory-corruption/support/` folder.
+Navigate to the 'drills/tasks/memory-corruption/support/` folder.
 Inspect the source file `segfault.c`.
 
 1. What does the program do? (this could be a quiz in the final form)
@@ -16,3 +16,5 @@ Inspect the source file `segfault.c`.
 What is the expected result in each case?
 Why?
 Run the programs and see what happens.
+
+If you're having difficulties solving this exercise, go through [this](../../../reading/working-with-memory.md) reading material.

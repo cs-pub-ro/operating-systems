@@ -2,7 +2,7 @@
 
 ## Question Text
 
-What happens if we introduce the code `cp[2] = 't'` in the program located in the `memory-access/mem_access.c` file?
+What happens if we introduce the code `cp[2] = 't'` in the program located in the `drills/tasks/memory-access/mem_access.c` file?
 
 ## Question Answers
 

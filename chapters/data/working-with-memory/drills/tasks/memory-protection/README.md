@@ -1,16 +1,6 @@
 # Memory Protection
 
-Memory contents (both code and data) are separated into sections or zones.
-This makes it easier to manage.
-More than that, it allows different zones to have different permissions.
-This follows the [principle of least privilege](https://en.wikipedia.org/wiki/Principle_of_least_privilege) where only required permissions are part of a given section.
-
-Code is usually placed in a section (`.text`) with read and execute permissions;
-no write permissions.
-Variables are placed in different sections (`.data`, `.bss`, stack, heap) with read and write permissions;
-no execute permissions.
-
-Let's navigate to the `memory-protection/support/` directory and inspect the `mem_prot.c` source file.
+Let's navigate to the `drills/tasks/memory-protection/support/` directory and inspect the `mem_prot.c` source file.
 The file uses different access types for the `data` variable and the `do_nothing` function.
 
 Build it:
@@ -63,9 +53,11 @@ you have to create a new string.
 
 ## Practice
 
-Go to the `memory-protection/support/` folder and solve the practice items below.
+Go to the `drills/tasks/memory-protection/support/` folder and solve the practice items below.
 
 1. Add a variable named `ro` that you define as `const`.
    The variable will be placed on a read-only section (`.rodata`) such as that write and execution access would result in _Segmentation fault_.
 
    Access the `ro` variable and show that, indeed, for write and execution access, _Segmentation fault_ is issued.
+
+If you're having difficulties solving this exercise, go through [this](../../../reading/working-with-memory.md) reading material.

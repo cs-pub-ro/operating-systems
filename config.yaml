@@ -195,7 +195,7 @@ docusaurus:
                   extra:
                     - drills/questions/
                     - drills/tasks/
-                    - drills/guides/
+                    - guides/
                   subsections:
                     - Reading:
                         path: reading/
@@ -208,17 +208,19 @@ docusaurus:
                               path: tasks/
                               subsections:
                                 - Memory Access/: memory-access/
+                                - Memory Corruption/: memory-corruption/
+                                - Memory Protection/: memory-protection/
 
                           - Questions:
                               path: questions/
                               subsections:
                                 - Memory Access: memory-access.md
 
-                          - Guides:
-                              path: guides/
-                              subsections:
-                                - Memory Alloc/: memory-alloc/
-                                - Memory Vuln/: memory-vuln/
+                    - Guides:
+                        path: guides/
+                        subsections:
+                          - Memory Alloc/: memory-alloc/
+                          - Memory Vuln/: memory-vuln/
 
         - Data arena:
            subsections:

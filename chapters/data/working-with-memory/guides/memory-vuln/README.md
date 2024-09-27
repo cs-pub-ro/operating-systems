@@ -2,7 +2,7 @@
 
 The purpose of this exercise is to provide examples on how memory corruption may occur and what are the safety guards implemented by different programming languages.
 
-Navigate to the `memory-vuln/support/` directory.
+Navigate to the `guides/memory-vuln/support/` directory.
 It features 3 files, each showcasing what happens in case of actions that may lead to memory corruption.
 
 ## C
@@ -47,4 +47,3 @@ By doing so, the mechanical checks are enabled and a new set of criteria needs t
 Taking the address of a local, doing pointer arithmetic, reinterpret casts, calling non-`@safe` functions etc. are not allowed in `@safe` code.
 If any of these unsafe features are manually proven to be safe, the `@trusted` keyword may be used to disable the checks but still consider the code `@safe`.
 This is to allow writing system code, which by its nature is unsafe.
-
