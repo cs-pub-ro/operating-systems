@@ -90,72 +90,20 @@ The resident size is `1968K`, much smaller than the virtual size.
 Note how each region has a size multiple of `4K`, this has to do with the memory granularity.
 The operating system allocates memory in chunks of a predefined size (in our case `4K`) called pages.
 
-[Quiz](../quiz/half-page.md)
-
-### Practice
-
-Enter the `support/memory-areas/` directory.
-We investigate other programs.
-
-1. The `hello.c` program prints out a message and then sleeps.
-   Build it:
-
-   ```console
-   student@os:~/.../lab/support/memory-areas$ make
-   ```
-
-   then run it (it will block):
-
-   ```console
-   student@os:~/.../lab/support/memory-areas$ ./hello
-   Hello, world!
-   ```
-
-   In another terminal, use the command below to show the memory areas of the process:
-
-   ```console
-   student@os:~/.../lab/support/memory-areas$ pmap $(pidof hello)
-   8220:   ./hello
-   000055c0bef4b000      8K r-x-- hello
-   000055c0bf14c000      4K r---- hello
-   000055c0bf14d000      4K rw--- hello
-   000055c0bf454000    132K rw---   [ anon ]
-   00007f2a9e4a5000   1948K r-x-- libc-2.27.so
-   00007f2a9e68c000   2048K ----- libc-2.27.so
-   00007f2a9e88c000     16K r---- libc-2.27.so
-   00007f2a9e890000      8K rw--- libc-2.27.so
-   00007f2a9e892000     16K rw---   [ anon ]
-   00007f2a9e896000    164K r-x-- ld-2.27.so
-   00007f2a9ea8c000      8K rw---   [ anon ]
-   00007f2a9eabf000      4K r---- ld-2.27.so
-   00007f2a9eac0000      4K rw--- ld-2.27.so
-   00007f2a9eac1000      4K rw---   [ anon ]
-   00007ffee6471000    132K rw---   [ stack ]
-   00007ffee6596000     12K r----   [ anon ]
-   00007ffee6599000      4K r-x--   [ anon ]
-   ffffffffff600000      4K --x--   [ anon ]
-    total             4520K
-   ```
-
-   The output is similar, but with fewer dynamic libraries than `bash`, since they are not used by the program.
-
-1. Make a program in another language of your choice that prints `Hello, world!` and sleeps and investigate it with `pmap`.
-   Note that in the case of interpreted languages (Python, Lua, Perl, Ruby, PHP, JavaScript etc.) you have to investigate the interpreter process.
-
 ## Memory Layout of Statically-Linked and Dynamically-Linked Executables
 
 We want to see the difference in memory layout between the statically-linked and dynamically-linked executables.
 
-Enter the `support/static-dynamic/` directory and build the statically-linked and dynamically-linked executables `hello-static` and `hello-dynamic`:
+Enter the `drills/tasks/static-dynamic/support` directory and build the statically-linked and dynamically-linked executables `hello-static` and `hello-dynamic`:
 
 ```console
-student@os:~/.../lab/support/static-dynamic$ make
+student@os:~/.../drills/tasks/static-dynamic/support$ make
 ```
 
 Now, by running the two programs and inspecting them with `pmap` on another terminal, we get the output:
 
 ```console
-student@os:~/.../lab/support/static-dynamic$ pmap $(pidof hello-static)
+student@os:~/.../drills/tasks/static-dynamic/support$ pmap $(pidof hello-static)
 9714:   ./hello-static
 0000000000400000    876K r-x-- hello-static
 00000000006db000     24K rw--- hello-static
@@ -167,7 +115,7 @@ student@os:~/.../lab/support/static-dynamic$ pmap $(pidof hello-static)
 ffffffffff600000      4K --x--   [ anon ]
  total             1196K
 
-student@os:~/.../lab/support/static-dynamic$ pmap $(pidof hello-dynamic)
+student@os:~/.../drills/tasks/static-dynamic/support$ pmap $(pidof hello-dynamic)
 9753:   ./hello-dynamic
 00005566e757f000      8K r-x-- hello-dynamic
 00005566e7780000      4K r---- hello-dynamic
@@ -196,59 +144,36 @@ And the `.rodata` section has been coalesced in the `.text` area.
 We can see the size of each section in the two executables by using the `size` command:
 
 ```console
-student@os:~/.../lab/support/static-dynamic$ size hello-static
+student@os:~/.../drills/tasks/static-dynamic/support$ size hello-static
 text    data     bss     dec     hex filename
 893333   20996    7128  921457   e0f71 hello-static
 
-student@os:~/.../lab/support/static-dynamic$ size hello-dynamic
+student@os:~/.../drills/tasks/static-dynamic/support$ size hello-dynamic
 text    data     bss     dec     hex filename
 4598     736     824    6158    180e hello-dynamic
 ```
-
-### Quiz
-
-Based on the information above, answer [this quiz](../quiz/memory-granularity.md).
-
-### Practice
-
-1. Let's investigate another static executable / process.
-
-   If not already installed, install the `busybox-static` package on your system.
-   On Debian/Ubuntu systems, use:
-
-   ```console
-   student@os:~$ sudo apt install busybox-static
-   ```
-
-   Start a process using:
-
-   ```console
-   student@os:~$ busybox sleep 1000
-   ```
-
-   Investigate the process using `pmap` and the executable using `size`.
 
 ## Modifying Memory Region Size
 
 We want to observe the update in size of memory regions for different instructions used in a program.
 
-Enter the `support/modify-areas/` directory.
+Enter the `drills/tasks/modify-areas/support` directory.
 Browse the contents of the `hello.c` file;
 it is an update to the `hello.c` file in the `memory-areas/` directory.
 Build the executable:
 
 ```console
-student@os:~/.../lab/support/modify-areas$ make
+student@os:~/.../drills/tasks/modify-areas/support$ make
 ```
 
 Use `size` to view the difference between the new executable and the one in the `memory-areas/` directory:
 
 ```console
-student@os:~/.../lab/support/modify-areas$ size hello
+student@os:~/.../drills/tasks/modify-areas/support$ size hello
    text    data     bss     dec     hex filename
   13131   17128   33592   63851    f96b hello
 
-student@os:~/.../lab/support/modify-areas$ size ../memory-areas/hello
+student@os:~/.../drills/tasks/modify-areas/support$ size ../memory-areas/hello
    text    data     bss     dec     hex filename
    4598     736     824    6158    180e ../memory-areas/hello
 ```
@@ -259,7 +184,7 @@ Then use the `pmap` to watch the memory areas of the resulting processes from th
 We will see something like this for the new executable:
 
 ```console
-student@os:~/.../lab/support/modify-areas$ pmap $(pidof hello)
+student@os:~/.../drills/tasks/modify-areas/support$ pmap $(pidof hello)
 18254:   ./hello
 000055beff4d0000     16K r-x-- hello
 000055beff6d3000      4K r---- hello
@@ -285,20 +210,6 @@ ffffffffff600000      4K --x--   [ anon ]
 
 We notice the size increase of text, data, bss, heap and stack sections.
 
-### Practice
-
-1. Comment out different parts of the `hello.c` program to notice differences in only specific areas (text, data, bss, heap, stack).
-
-1. Use a different argument (`order`) for the call to the `alloc_stack()` function.
-   See how it affects the stack size during runtime (investigate with `pmap`).
-
-1. Do a static build of `hello.c` and check the size of the memory areas, both statically and dynamically.
-
-1. The `extend_mem_area.py` Python script allocates a new string at each step by merging the two previous versions.
-   Start the program and investigate the resulting process at each allocation step.
-   Notice which memory area is updated and explain why.
-
-[Quiz](../quiz/page-allocation.md)
 
 ## Allocating and Deallocating Memory
 
@@ -318,18 +229,18 @@ Omitting to deallocate memory results in memory leaks that hurt the resource use
 Because of this, some language runtimes employ a garbage collector that automatically frees unused memory areas.
 More than that, some languages (think of Python) provide no explicit means to allocate memory: you just define and use data.
 
-Let's enter the `support/alloc_size/` directory.
+Let's enter the `drills/tasks/alloc_size/support` directory.
 Browse the `alloc_size.c` file.
 Build it:
 
 ```console
-student@os:~/.../lab/support/alloc_size$ make
+student@os:~/.../drills/tasks/alloc_size/support$ make
 ```
 
 Now see the update in the process layout, by running the program in one console:
 
 ```console
-student@os:~/.../lab/support/alloc_size$ ./alloc_size
+student@os:~/.../drills/tasks/alloc_size/support$ ./alloc_size
 Press key to allocate ...
 [...]
 ```
@@ -337,7 +248,7 @@ Press key to allocate ...
 And investigating it with `pmap` on another console:
 
 ```console
-student@os:~/.../lab/support/alloc_size$ pmap $(pidof alloc_size)
+student@os:~/.../drills/tasks/alloc_size/support$ pmap $(pidof alloc_size)
 21107:   ./alloc_size
 000055de9d173000      8K r-x-- alloc_size
 000055de9d374000      4K r---- alloc_size
@@ -359,7 +270,7 @@ student@os:~/.../lab/support/alloc_size$ pmap $(pidof alloc_size)
 ffffffffff600000      4K --x--   [ anon ]
  total             4520K
 
-student@os:~/.../lab/support/alloc_size$ pmap $(pidof alloc_size)
+student@os:~/.../drills/tasks/alloc_size/support$ pmap $(pidof alloc_size)
 21107:   ./alloc_size
 000055de9d173000      8K r-x-- alloc_size
 000055de9d374000      4K r---- alloc_size
@@ -381,7 +292,7 @@ student@os:~/.../lab/support/alloc_size$ pmap $(pidof alloc_size)
 ffffffffff600000      4K --x--   [ anon ]
  total             4840K
 
-student@os:~/.../lab/support/alloc_size$ pmap $(pidof alloc_size)
+student@os:~/.../drills/tasks/alloc_size/support$ pmap $(pidof alloc_size)
 21107:   ./alloc_size
 000055de9d173000      8K r-x-- alloc_size
 000055de9d374000      4K r---- alloc_size
@@ -411,7 +322,7 @@ Now, let's see what happens behind the scenes.
 Run the executable under `ltrace` and `strace`:
 
 ```console
-student@os:~/.../lab/support/alloc_size$ ltrace ./alloc_size
+student@os:~/.../drills/tasks/alloc_size/support$ ltrace ./alloc_size
 malloc(32768)                                                                                                    = 0x55e33f490b10
 printf("New allocation at %p\n", 0x55e33f490b10New allocation at 0x55e33f490b10
 )                                                                 = 33
@@ -419,7 +330,7 @@ printf("New allocation at %p\n", 0x55e33f490b10New allocation at 0x55e33f490b10
 free(0x55e33f490b10)                                                                                             = <void>
 [...]
 
-student@os:~/.../lab/support/alloc_size$ strace ./alloc_size
+student@os:~/.../drills/tasks/alloc_size/support$ strace ./alloc_size
 [...]
 write(1, "New allocation at 0x55ab98acfaf0"..., 33New allocation at 0x55ab98acfaf0
 ) = 33
@@ -445,14 +356,14 @@ Update the `ALLOC_SIZE_KB` macro in the `alloc_size.c` file to `256`.
 Rebuild the program and rerun it under `ltrace` and `strace`:
 
 ```console
-student@os:~/.../lab/support/alloc_size$ ltrace ./alloc_size
+student@os:~/.../drills/tasks/alloc_size/support$ ltrace ./alloc_size
 [...]
 malloc(262144)                                                                                                   = 0x7f4c016a9010
 [...]
 free(0x7f4c016a9010)                                                                                             = <void>
 [...]
 
-student@os:~/.../lab/support/alloc_size$ strace ./alloc_size
+student@os:~/.../drills/tasks/alloc_size/support$ strace ./alloc_size
 [...]
 mmap(NULL, 266240, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7feee19f2000
 write(1, "New allocation at 0x7feee19f2010"..., 33New allocation at 0x7feee19f2010
@@ -476,21 +387,6 @@ This is a behavior of the `malloc()` in libc, documented in the [manual page](ht
 A variable `MALLOC_THRESHOLD` holds the size after which `mmap` is used, instead of `brk`.
 This is based on a heuristic of using the heap or some other area in the process address space.
 
-### Practice
-
-1. Use `pmap` to analyze the process address space for `ALLOC_SIZE_KB` initialized to `256`.
-   Notice the new memory areas and the difference between the use of `mmap` syscall and `brk` syscall.
-
-1. Use `valgrind` on the resulting executable, and notice there are memory leaks.
-   They are quite obvious due to the lack of proper freeing.
-   Solve the leaks.
-
-1. Use `valgrind` on different executables in the system (in `/bin/`, `/usr/bin/`) and see if they have memory leaks.
-
-[Quiz](../quiz/malloc-brk.md)
-
-[Quiz](../quiz/malloc-mmap.md)
-
 ## Memory Mapping
 
 The `mmap` syscall is used to allocate memory as _anonymous mapping_, that is reserving memory in the process address space.
@@ -501,7 +397,7 @@ That is why, in the output of `pmap`, there is a column with a filename.
 Mapping of a file results in getting a pointer to its contents and then using that pointer.
 This way, reading and writing to a file is an exercise of pointer copying, instead of the use of `read` / `write`-like system calls.
 
-In the `support/copy/` folder, there are two source code files and two scripts:
+In the `drills/tasks/copy/support` folder, there are two source code files and two scripts:
 
 * `read_write_copy.c` implements copying with `read` / `write` syscalls
 * `mmap_copy.c` implements copying using `mmap`
@@ -526,13 +422,13 @@ dst_fd = open(DST_FILENAME, O_RDWR | O_CREAT | O_TRUNC, 0644);
 Let's generate the input file:
 
 ```console
-student@os:~/.../lab/support/copy$ ./generate.sh
+student@os:~/.../drills/tasks/copy/support$ ./generate.sh
 ```
 
 and let's build the two executable files:
 
 ```console
-student@os:~/.../lab/support/copy$ make
+student@os:~/.../drills/tasks/copy/support$ make
 ```
 
 Run the `benchmark_cp.sh` script:
@@ -541,7 +437,7 @@ Run the script in your local environment, not in the Docker container.
 Docker does not have permission to write to `/proc/sys/vm/drop_caches` file.
 
 ```console
-student@os:~/.../lab/support/copy$ ./benchmark_cp.sh
+student@os:~/.../drills/tasks/copy/support$ ./benchmark_cp.sh
 Benchmarking mmap_copy on in.dat
 time passed 54015 microseconds
 
@@ -559,13 +455,3 @@ It's called "buffer cache" and it's a mechanism by which the kernel caches data 
 You will get more detailed information about this in the I/O chapter.
 
 Browse the two source code files (`mmap_copy.c` and `read_write_copy.c`) for a glimpse on how the two types of copies are implemented.
-
-[Quiz](../quiz/mmap-file.md)
-
-### Practice
-
-1. Use a different value for `BUFSIZE` and see if that affects the comparison between the two executables.
-
-1. Add a `sleep()` call to the `mmap_copy.c` file **after** the files were mapped.
-   Rebuild the program and run it.
-   On a different console, use `pmap` to view the two new memory regions that were added to the process, by mapping the `in.dat` and `out.dat` files.

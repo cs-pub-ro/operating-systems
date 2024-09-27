@@ -222,6 +222,39 @@ docusaurus:
                           - Memory Alloc/: memory-alloc/
                           - Memory Vuln/: memory-vuln/
 
+        - Process Memory:
+            subsections:
+              - Process Memory:
+                  path: chapters/data/process-memory
+                  extra:
+                    - drills/questions/
+                    - drills/tasks/
+                  subsections:
+                    - Reading:
+                        path: reading/
+                        subsections:
+                          - Process Memory: process-memory.md
+                    - Drills:
+                        path: drills/
+                        subsections:
+                          - Tasks:
+                              path: tasks/
+                              subsections:
+                                - Alloc Size/: alloc-size/
+                                - Copy/: copy/
+                                - Memory Areas/: memory-areas/
+                                - Modify Areas/: modify-areas/
+                                - Static Dinamic/: static-dynamic/
+                          - Questions:
+                              path: questions/
+                              subsections:
+                                - Half page: half-page.md
+                                - Malloc Brk: malloc-brk.md
+                                - Malloc Mmap: malloc-mmap.md
+                                - Memory granularity: memory-granularity.md
+                                - Mmap file: mmap-file.md
+                                - Page Allocation: page-allocation.md
+
         - Data arena:
            subsections:
               - Arena:
