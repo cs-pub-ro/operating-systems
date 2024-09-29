@@ -1,6 +1,6 @@
 # High-Level Languages
 
-Enter the `high-level-lang/support/` folder and go through the practice items below.
+In the `high-level-lang` folder, run `make skels` to generate the code skeleton. Then, enter the `high-level-lang/support/src` folder and go through the practice items below.
 
 1. Use `make` to create the `hello` executable from the `hello.go` file (a Go "Hello, World!"-printing program).
    Use `ltrace` and `strace` to compute the number of library calls and system calls.
@@ -15,6 +15,7 @@ Enter the `high-level-lang/support/` folder and go through the practice items be
 
 1. Create programs in C, Python and Go that compute the N-th Fibonacci number.
    `N` is passed as a command-line argument.
+   Run the checker (`make check` in the `high-level-lang/solution/tests/` folder) to check your results.
 
    Use `ltrace` and `strace` to compute the number of library calls and system calls.
    Use `perf` to measure the running time.
@@ -23,6 +24,8 @@ Enter the `high-level-lang/support/` folder and go through the practice items be
 
 1. Create programs in C, Python and Go that copy a source file into a destination file.
    Both files are passed as the two command-line arguments for the program.
+   Run the checker (`make check` in the `high-level-lang/solution/tests/` folder) to check your results.
+
    Sample run:
 
    ```console
