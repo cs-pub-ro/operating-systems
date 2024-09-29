@@ -1,4 +1,4 @@
-/* SPDX-License-Identifier: BSD-3-Clause */
+// SPDX-License-Identifier: BSD-3-Clause
 
 #include <stdio.h>
 #include <unistd.h>
@@ -8,6 +8,9 @@
 
 int main(void)
 {
+	/* TODO 12: Use standard C library functions.
+	 * Be as creative as you can.
+	 */
 	int fd;
 	FILE *f;
 
