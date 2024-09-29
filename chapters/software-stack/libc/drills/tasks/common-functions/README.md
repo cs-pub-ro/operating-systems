@@ -1,6 +1,6 @@
 # Common Functions
 
-Enter the `common-functions/support/` folder and go through the practice items below.
+In the `common-functions` folder, run `make skels` to generate the code skeleton. Then, enter the `common-functions/support/src` folder and go through the practice items below.
 
 1. Update `string.c` and `string.h` to make available the `strcat()` function.
    Call that function in `main_string.c` and print the result.

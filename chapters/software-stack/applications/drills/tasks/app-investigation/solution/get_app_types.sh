@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# TODO 41: Print the number of files of each type on the system (binary, Perl, shell, Python and others)
 find /usr/bin /bin /usr/sbin /sbin -type f -exec file {} \; |
     awk '
 BEGIN {
