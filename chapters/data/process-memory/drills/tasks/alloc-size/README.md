@@ -11,5 +11,4 @@
 
 1. Use `valgrind` on different executables in the system (in `/bin/`, `/usr/bin/`) and see if they have memory leaks.
 
-If you're having difficulties solving this exercise, go through [this](../../../reading/process-memory.md
-) reading material.
+If you're having difficulties solving this exercise, go through [this](../../../reading/process-memory.md) reading material.

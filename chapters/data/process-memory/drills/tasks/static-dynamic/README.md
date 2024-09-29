@@ -19,5 +19,4 @@
 
    Investigate the process using `pmap` and the executable using `size`.
 
-If you're having difficulties solving this exercise, go through [this](../../../reading/process-memory.md
-) reading material.
+If you're having difficulties solving this exercise, go through [this](../../../reading/process-memory.md) reading material.

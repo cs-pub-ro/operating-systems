@@ -50,6 +50,5 @@ We investigate other programs.
 1. Make a program in another language of your choice that prints `Hello, world!` and sleeps and investigate it with `pmap`.
    Note that in the case of interpreted languages (Python, Lua, Perl, Ruby, PHP, JavaScript etc.) you have to investigate the interpreter process.
 
-If you're having difficulties solving this exercise, go through [this](../../../reading/process-memory.md
-) reading material.
+If you're having difficulties solving this exercise, go through [this](../../../reading/process-memory.md) reading material.
 

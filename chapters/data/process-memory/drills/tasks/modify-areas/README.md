@@ -13,5 +13,4 @@
    Start the program and investigate the resulting process at each allocation step.
    Notice which memory area is updated and explain why.
 
-If you're having difficulties solving this exercise, go through [this](../../../reading/process-memory.md
-) reading material.
+If you're having difficulties solving this exercise, go through [this](../../../reading/process-memory.md) reading material.

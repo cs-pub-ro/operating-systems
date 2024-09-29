@@ -8,5 +8,4 @@
    Rebuild the program and run it.
    On a different console, use `pmap` to view the two new memory regions that were added to the process, by mapping the `in.dat` and `out.dat` files.
 
-If you're having difficulties solving this exercise, go through [this](../../../reading/process-memory.md
-) reading material.
+If you're having difficulties solving this exercise, go through [this](../../../reading/process-memory.md) reading material.

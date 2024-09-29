@@ -255,6 +255,34 @@ docusaurus:
                                 - Mmap file: mmap-file.md
                                 - Page Allocation: page-allocation.md
 
+        - Investigate Memory:
+            subsections:
+              - Investigate Memory:
+                  path: chapters/data/investigate-memory
+                  extra:
+                    - drills/questions/
+                    - guides/
+                  subsections:
+                    - Reading: reading/investigate-memory.md
+                    - Drills:
+                        path: drills/
+                        subsections:
+                          - Questions:
+                              path: questions/
+                              subsections:
+                                - Memory leaks: memory-leaks.md
+                                - Valgrind leaks: valgrind-leaks.md
+                    - Guides:
+                        path: guides/
+                        subsections:
+                          - App Investigation Deluge/: app-investigation-deluge/
+                          - App Investigation Servo/: app-investigation-servo/
+                          - D allocator/: d-allocator/
+                          - Investigation Git/: git/
+                          - Investigation Jemalloc/: jemalloc/
+                          - Memory Actions/: memory-actions/
+                          - Memory Leak/: memory-leak/
+
         - Data arena:
            subsections:
               - Arena:
