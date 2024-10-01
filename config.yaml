@@ -14,7 +14,7 @@ make_assets:
     locations:
       - chapters/software-stack
       - content/chapters/data/lecture
-      - content/chapters/compute/lecture
+      - chapters/compute
       - content/chapters/io/lecture
       - content/chapters/app-interact/lecture
     args:
@@ -176,11 +176,171 @@ docusaurus:
                               path: tasks/
                               subsections:
                                 - Applications/: app-investigation/
+      - Compute:
+        - Slides: /build/embed_reveal/Compute/Compute.mdx
+        - Overview:
+            path: chapters/compute/overview/
+            extra:
+              - media/
+            subsections:
+              - Reading: reading/overview.md
+        - Hardware Perspective:
+            path: chapters/compute/hardware-perspective/
+            extra:
+              - media/
+            subsections:
+              - Reading: reading/hardware-perspective.md
+         - Processes:
+            path: chapters/compute/processes/
+            extra:
+            - media/
+            - drills/
+            subsections:
+            - Reading: reading/processes.md
+            - Drills:
+                path: drills/
+                subsections:
+                    - Tasks:
+                        path: tasks/
+                    - Questions:
+                        path: questions/
+                        subsections:
+                            - Cause of FileNotFoundError: cause-of-file-not-found-error.md
+                            - create_sleepy Process Ending: create-sleepy-process-ending.md
+                            - Parent of sleep Processes: parent-of-sleep-processes.md
+                            - Process Creation: process-creation.md
+                            - Processes Speedup: process-speedup.md
+         - Threads:
+            path: chapters/compute/threads
+            extra:
+                - drills/
+                - guides/
+                - media/
+            subsections:
+                - Tasks:
+                    path: tasks/
+                - Questions:
+                    path: questions/
+                    subsections:
+                        - Seg Fault Exit Code: seg-fault-exit-code.md
+                        - Thread Memory: thread-memory.md
+                        - Threads Shared Data: threads-shared-data.md
+                - Guides:
+                    path: guides/
+         - Usage of Processes and Threads in apache2:
+            path: chapters/compute/processes-threads-apache2
+            extra:
+                - drills/
+                - guides/
+            subsections:
+                - Reading: reading/processes-threads-apache2.md
+                - Drills:
+                    path: drills/
+                    subsections:
+                        - Tasks:
+                            path: tasks/
+                            subsections:
+                                - Investigate apache2 Using strace/: apache2/
+                        - Questions:
+                            path: questions/
+                            subsections:
+                                - apache2 Document Root: apache2-strace.md
+                - Guides:
+                    path: guides/
+                    subsections:
+                        - apache2 Live Action: apache2/
+         - Copy-on-Write:
+            path: chapters/compute/copy-on-write
+            extra:
+                - drills/
+                - guides/
+                - media/
+            subsections:
+                - Reading: reading/copy-on-write.md
+                - Drills:
+                    path: drills/
+                    subsections:
+                        - Questions:
+                            path: questions/
+                            subsections:
+                                - Child Faults After Write: child-faults-after-write.md
+                                - Parent Faults before fork(): parent-faults-before-fork.md
+                                - Always Shared Sections: sections-always-shared.md
+                - Guides:
+                    path: guides/
+                    subsections:
+                        - Fork faults/: fork-faults/
+         - Synchronization:
+            path: chapters/compute/synchronization
+            extra:
+                - drills/
+                - guides/
+                - media/
+            subsections:
+                - Reading: reading/synchronization.md
+                - Drills:
+                    path: drills/
+                    subsections:
+                        - Tasks:
+                            path: tasks/
+                            subsections:
+                                - C - TLS on Demand/: race-condition/
+                        - Questions:
+                            path: questions/
+                            subsections:
+                                - Coarse vs Granular Critical Section: coarse-vs-granular-critical-section.md
+                                - Both Condition and Mutex: notify-only-with-mutex.md
+                                - Not Race Condition: not-race-condition.md
+                                - Semaphore Equivalent: semaphore-equivalent.md
+                                - TLS Synchronization: tls-synchronization.md
+                                - TLS var Copies: tls-var-copies.md
+                - Guides:
+                    path: guides/
+                    subsections:
+                        - apache2 Simulator/: apache2-simulator/
+        - User-Level Threads:
+            path: chapters/compute/user-level-threads
+            extra:
+                - drills/
+                - guides/
+            subsections:
+                - Reading: reading/user-level-threads.md
+                - Drills:
+                    path: drills/
+                    subsections:
+                        - Questions:
+                            path: questions/
+                            subsections:
+                                - Fiber Strace: fiber-strace.md
+                                - Sleeping on a Fiber: sleeping-on-a-fiber.md
+                - Guides:
+                    path: guides/
+                    subsections:
+                        - Interaction Between Threads and Fibers/: user-level-threads/
+        - Arena:
+            path: chapters/compute/arena
+            extra:
+                - drills/
+                - media/
+            subsections:
+                - Reading: reading/arena.md
+                - Drills:
+                    path: drills/
+                    subsections:
+                        - Tasks:
+                            path: tasks/
+                        - Questions:
+                            path: questions/
+                            subsections:
+                                - exec() Without fork(): exec-without-fork.md
+                                - Mini-shell Stops After Command: mini-shell-stops-after-command.md
+                                - Copy-on-write Flag for mmap(): mmap-cow-flag.md
+                                - Who Calls execve in the Log of the Parent Process?: who-calls-execve-parent.md
+
       - Lecture:
           path: /build/embed_reveal
           subsections:
             - Data: Data/Data.mdx
-            - Compute: Compute/Compute.mdx
             - IO: IO/IO.mdx
             - Application Interaction: Application-Interaction/Application-Interaction.mdx
       - Lab:
@@ -195,21 +355,6 @@ docusaurus:
               - Process Memory: process-memory.md
               - Investigate Memory: investigate-memory.md
               - Memory Security: memory-security.md
-              - Arena: arena.md
-        - Compute:
-            path: content/chapters/compute/lab/content
-            extra:
-              - ../media
-              - ../quiz
-            subsections:
-              - Overview: overview.md
-              - Hardware Perspective: hardware-perspective.md
-              - Processes: processes.md
-              - Threads: threads.md
-              - Processes-threads-apache2: processes-threads-apache2.md
-              - Copy-on-Write: copy-on-write.md
-              - Synchronization: synchronization.md
-              - User-Level Threads: user-level-threads.md
               - Arena: arena.md
         - IO:
             path: content/chapters/io/lab/content
@@ -292,7 +437,7 @@ docusaurus:
       - Rules and Grading: content/misc/rules-and-grading.md
       - Resources: content/misc/resources.md
     static_assets:
-      - slides/Compute: /build/make_assets/content/chapters/compute/lecture/_site
+      - slides/Compute: /build/make_assets/chapters/compute/_site
       - slides/Software-Stack: /build/make_assets/chapters/software-stack/_site
       - slides/Data: /build/make_assets/content/chapters/data/lecture/_site
       - slides/IO: /build/make_assets/content/chapters/io/lecture/_site
