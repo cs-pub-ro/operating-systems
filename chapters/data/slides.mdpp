@@ -1,0 +1,18 @@
+---
+title: "OS: Data"
+revealOptions:
+  background-color: 'aquamarine'
+  transition: 'none'
+  slideNumber: true
+  autoAnimateDuration: 0.0
+---
+
+# Data
+
+1. [Data in Software and Computing](#data)
+1. [Perspectives of Data](#perspectives-of-data)
+1. [Virtual Memory](#virtual-memory)
+
+!INCLUDE "overview/slides/data.md"
+!INCLUDE "perspectives/slides/perspectives-of-data.md"
+!INCLUDE "virtual-memory/slides/virtual-memory.md"

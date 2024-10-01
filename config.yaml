@@ -13,7 +13,6 @@ make_assets:
     command: make
     locations:
       - chapters/software-stack
-      - content/chapters/data/lecture
       - content/chapters/compute/lecture
       - content/chapters/io/lecture
       - content/chapters/app-interact/lecture
@@ -176,6 +175,148 @@ docusaurus:
                               path: tasks/
                               subsections:
                                 - Applications/: app-investigation/
+
+      - Data:
+        - Slides: /build/embed_reveal/Data/Data.mdx
+        - Data Perspective:
+            subsections:
+              - Overview:
+                  path: chapters/data/overview/
+                  extra:
+                    - media/
+                  subsections:
+                    - Reading: reading/overview.md
+
+        - Lab 3 - Memory:
+            subsections:
+              - Working with Memory:
+                  path: chapters/data/working-with-memory
+                  extra:
+                    - drills/questions/
+                    - drills/tasks/
+                    - guides/
+                  subsections:
+                    - Reading:
+                        path: reading/
+                        subsections:
+                          - Working with Memory: working-with-memory.md
+                    - Drills:
+                        path: drills/
+                        subsections:
+                          - Tasks:
+                              path: tasks/
+                              subsections:
+                                - Memory Access/: memory-access/
+                                - Memory Corruption/: memory-corruption/
+                                - Memory Protection/: memory-protection/
+                                - Access Counter/: access-counter/
+
+                          - Questions:
+                              path: questions/
+                              subsections:
+                                - Memory Access: memory-access.md
+
+                    - Guides:
+                        path: guides/
+                        subsections:
+                          - Memory Alloc/: memory-alloc/
+                          - Memory Vuln/: memory-vuln/
+
+              - Process Memory:
+                  path: chapters/data/process-memory
+                  extra:
+                    - drills/questions/
+                    - drills/tasks/
+                  subsections:
+                    - Reading:
+                        path: reading/
+                        subsections:
+                          - Process Memory: process-memory.md
+                    - Drills:
+                        path: drills/
+                        subsections:
+                          - Tasks:
+                              path: tasks/
+                              subsections:
+                                - Alloc Size/: alloc-size/
+                                - Copy/: copy/
+                                - Memory Areas/: memory-areas/
+                                - Modify Areas/: modify-areas/
+                                - Static Dinamic/: static-dynamic/
+                                - Page Mapper/: page-mapper/
+                                - Reference Counting/: reference-counting/
+                          - Questions:
+                              path: questions/
+                              subsections:
+                                - Half page: half-page.md
+                                - Malloc Brk: malloc-brk.md
+                                - Malloc Mmap: malloc-mmap.md
+                                - Memory granularity: memory-granularity.md
+                                - Mmap file: mmap-file.md
+                                - Page Allocation: page-allocation.md
+                                - Operators: operators.md
+
+        - Lab 4 - Investigate Memory:
+            path: chapters/data/investigate-memory
+            extra:
+              - drills/questions/
+              - guides/
+            subsections:
+              - Reading: reading/investigate-memory.md
+              - Drills:
+                  path: drills/
+                  subsections:
+                    - Questions:
+                        path: questions/
+                        subsections:
+                          - Memory leaks: memory-leaks.md
+                          - Valgrind leaks: valgrind-leaks.md
+              - Guides:
+                  path: guides/
+                  subsections:
+                    - App Investigation Deluge/: app-investigation-deluge/
+                    - App Investigation Servo/: app-investigation-servo/
+                    - D allocator/: d-allocator/
+                    - Investigation Git/: git/
+                    - Investigation Jemalloc/: jemalloc/
+                    - Memory Actions/: memory-actions/
+                    - Memory Leak/: memory-leak/
+
+        - Lab 5 - Memory Security:
+            path: chapters/data/memory-security
+            extra:
+              - drills/questions/
+              - drills/tasks/
+              - guides/
+            subsections:
+              - Reading: reading/memory-security.md
+              - Drills:
+                  path: drills/
+                  subsections:
+                    - Questions:
+                        path: questions/
+                        subsections:
+                          - Bypass Canary: bypass-canary.md
+                          - Memory Aslr: memory-aslr.md
+                          - Memory Regions Vars: memory-regions-vars.md
+                          - Memory Stack Protector: memory-stack-protector.md
+                          - Stack Layout: stack-layout.md
+                          - String buff over: string-buff-over.md
+                          - String strcpy: string-strcpy.md
+                    - Tasks:
+                        path: tasks/
+                        subsections:
+                          - Pointer Arithmetic Leak/: pointer-arithmetic-leak/
+                          - Address Space Layout Randomization/: aslr/
+                          - Stack Protector/: stack-protector/
+                          - Bypassing Stack Protector/: bypassing-stack-protector/
+                          - Exec Shellcode/: exec-shellcode/
+              - Guides:
+                  path: guides/
+                  subsections:
+                    - Buffer Overflow Leak/: buffer-overflow-leak/
+                    - Buffer Overflow Overwrite/: buffer-overflow-overwrite/
+                
       - Lecture:
           path: /build/embed_reveal
           subsections:
@@ -185,17 +326,6 @@ docusaurus:
             - Application Interaction: Application-Interaction/Application-Interaction.mdx
       - Lab:
         - Setting up the Lab Environment: content/misc/lab-setup.md
-        - Data:
-            path: content/chapters/data/lab/content
-            extra:
-              - ../quiz
-            subsections:
-              - Overview: overview.md
-              - Working with Memory: working-memory.md
-              - Process Memory: process-memory.md
-              - Investigate Memory: investigate-memory.md
-              - Memory Security: memory-security.md
-              - Arena: arena.md
         - Compute:
             path: content/chapters/compute/lab/content
             extra:
@@ -294,7 +424,6 @@ docusaurus:
     static_assets:
       - slides/Compute: /build/make_assets/content/chapters/compute/lecture/_site
       - slides/Software-Stack: /build/make_assets/chapters/software-stack/_site
-      - slides/Data: /build/make_assets/content/chapters/data/lecture/_site
       - slides/IO: /build/make_assets/content/chapters/io/lecture/_site
       - slides/Application-Interaction: /build/make_assets/content/chapters/app-interact/lecture/_site
     config_meta:
