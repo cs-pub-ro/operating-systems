@@ -243,36 +243,38 @@ To reinforce knowledge, there will be 4 multiple-choice quizzes as follows:
 
 1. Quiz 1 - covering questions from the [Software Stack chapter](https://cs-pub-ro.github.io/operating-systems/Lecture/Software%20Stack/), will take place on the following dates:
 
-    - Series CA: 17.10.2023
-    - Series CB: 18.10.2023
-    - Series CC: 17.10.2023
-    - Series CD: 17.10.2023
+    - Series CA: 15.10.2024
+    - Series CB: 16.10.2024
+    - Series CC: 15.10.2024
+    - Series CD: 15.10.2024
 
 1. Quiz 2 - covering questions from the [Data chapter](https://cs-pub-ro.github.io/operating-systems/Lecture/Data/), will take place on the following dates:
 
-    - Series CA: 07.11.2023
-    - Series CB: 08.11.2023
-    - Series CC: 07.11.2023
-    - Series CD: 07.11.2023
+    - Series CA: 05.11.2024
+    - Series CB: 06.11.2024
+    - Series CC: 05.11.2024
+    - Series CD: 05.11.2024
 
 1. Quiz 3 - covering questions from the [Compute chapter](https://cs-pub-ro.github.io/operating-systems/Lecture/Compute/), will take place on the following dates:
 
-    - Series CA: 05.12.2023
-    - Series CB: 06.12.2023
-    - Series CC: 05.12.2023
-    - Series CD: 05.12.2023
+    - Series CA: 26.11.2024
+    - Series CB: 27.11.2024
+    - Series CC: 26.11.2024
+    - Series CD: 26.11.2024
 
-1. Quiz 4 - covering questions from the [I/O chapter](https://cs-pub-ro.github.io/operating-systems/Lecture/IO/), will take place on the following dates:
+1. Quiz 4 - covering questions from the [I/O chapter](https://cs-pub-ro.github.io/operating-systems/Lecture/IO/), in the written exam format, will take place on the following dates:
 
-    - Series CA: 09.01.2024
-    - Series CB: 10.01.2024
-    - Series CC: 09.01.2024
-    - Series CD: 09.01.2024
+    - Series CA: 17.12.2024
+    - Series CB: 18.12.2024
+    - Series CC: 17.12.2024
+    - Series CD: 17.12.2024
 
 Lecture quizzes are closed-book.
 They take place on the [Moodle platform](https://curs.upb.ro) at the beginning of the corresponding lectures.
-Each quiz lasts **5 minutes**.
-Each quiz consists of **5 multiple-choice questions** with a single answer option.
+The first three quizzes last **5 minutes**.
+The fourth quiz lasts **20 minutes**.
+The first three quizzes consist of **5 multiple-choice questions** with a single answer option.
+The fourth quiz consists of 10 True/False questions that require explanations, following the [written exam format](#exam-structure).
 Each quiz is worth **0.3 points of the final grade**.
 Lecture quiz grade is truncated at **1 point**.
 
