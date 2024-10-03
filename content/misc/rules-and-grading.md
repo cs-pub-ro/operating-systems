@@ -115,7 +115,12 @@ Assignments cannot be submitted during the summer or inter-semester break.
 
 #### No Exam For Assignment Heroes
 
-Those who receive at least **9 points** (out of the total of **10 points**), will not be required to be part of and pass the exam.
+Those who meet the following requirements will not be required to be part of and pass the exam:
+
+- **9 points** for the home assignments (out of the total of **10 points**)
+- **0.8 points** for the lecture quizzes  (out of the total of **1 point**)
+- The approval of your teaching assistant
+
 In exceptional circumstances, when there is doubt on the correctness of getting the **9 points**, the student will still be request to be part of the exam.
 
 #### Solving and Submitting Assignments
