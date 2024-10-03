@@ -10,7 +10,7 @@ Instead of one process checking all combinations, we'll split the work among mul
 
 ## Multiprocess Version
 
-The code for this version is in `support/password-cracker/password-cracker-multiprocess.c`.
+The code for this version is in `chapters/app-interact/password-cracker/support/password-cracker-multiprocess.c`.
 
 The idea is the following: we create 26 worker processes, where each process will consider passwords that start with one particular letter (the first process will brute-force passwords starting with `a`, the second with `b`, and so on).
 
@@ -49,17 +49,9 @@ student@os:~/.../support/password-cracker$ ./password-cracker-multiprocess
 worker 7 found haxx
 ```
 
-### Practice
-
-Creating 26 processes is not very realistic, since it's unlikely that a usual machine has that many cores.
-
-Modify the program so that it only creates 4 workers.
-Each worker will receive 2 characters instead of one, defining an interval to search.
-For example, the first worker will receive `a` and `f`, meaning it will brute-force passwords starting with `a`, `b`, `c`, `d`, `e`, or `f`, the second `g` - `l`, and so on.
-
 ## Multithreaded Version
 
-Check out the code in `support/password-cracker/password-cracker-multithread.c`.
+Check out the code in `chapters/app-interact/password-cracker/support/password-cracker-multithread.c`.
 
 The core idea of the program is the same, but now we're using threads instead of processes.
 
@@ -67,13 +59,13 @@ This makes the communication easier: we'll use the thread function argument to s
 As for the result, each thread will return it as the return value of the thread function.
 
 ```console
-student@os:~/.../support/password-cracker$ ./password-cracker-multithread
+student@os:~/.../support$ ./password-cracker-multithread
 worker 7 found haxx
 ```
 
 ## Multiprocess Version in Python (1)
 
-Code in `support/password-cracker/python/password-cracker-multiprocess-1.py`.
+Code in `chapters/app-interact/password-cracker/support/python/password-cracker-multiprocess-1.py`.
 
 This is the Python equivalent of the previous multiprocess version. The program structure is the same, but Python has a few nice features that make our life easier:
 
@@ -86,13 +78,13 @@ So we don't need to create 2 pipes for each direction.
 * we don't have to write the code that generates all the password combinations, `itertools.product` will do it for us
 
 ```console
-student@os:~/.../support/password-cracker$ python3 python/password-cracker-multiprocess-1.py
+student@os:~/.../support$ python3 python/password-cracker-multiprocess-1.py
 worker 7 found haxx
 ```
 
 ## Multiprocess Version in Python (2)
 
-Code in `support/password-cracker/python/password-cracker-multiprocess-2.py`.
+Code in `chapters/app-interact/password-cracker/support/python/password-cracker-multiprocess-2.py`.
 
 In this case, the code looks different than in the previous examples.
 Now we are taking advantage of some Python constructs, namely `process pools`, which are a collection of worker processes.
@@ -104,24 +96,18 @@ At first glance, it might look like the usual `map` function, but with the key d
 In other words, the work is distributed to the worker processes from the pool, and all the communication that we had to handle in the previous examples is done behind the scenes, greatly simplifying the code.
 
 ```console
-student@os:~/.../support/password-cracker$ python3 python/password-cracker-multiprocess-2.py
+student@os:~/.../support$ python3 python/password-cracker-multiprocess-2.py
 worker 7 found haxx
 ```
 
-### Practice
-
-Check that the `worker` function is indeed called from different worker processes.
-One simple way to do this is to print out the current process ID at the beginning of the function.
-To get the current process ID, use the `getpid` function from the `os` module.
-
 ## Multithreaded Version in Python
 
-Code in `support/password-cracker/python/password-cracker-multithread.py`.
+Code in `chapters/app-interact/password-cracker/support/python/password-cracker-multithread.py`.
 
 The Python equivalent of the previous multithreaded version.
 
 ```console
-student@os:~/.../support/password-cracker$ python3 python/password-cracker-multithread.py
+student@os:~/.../support$ python3 python/password-cracker-multithread.py
 worker 7 found haxx
 ```
 

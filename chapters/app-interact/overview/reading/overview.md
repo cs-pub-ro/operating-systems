@@ -13,9 +13,9 @@ sudo apt-get -y update; sudo apt-get -y install net-tools x11-apps libssl-dev d-
 
 ## Contents
 
-1. [Time Server](./time-server.md)
-1. [Password Cracker](./password-cracker.md)
-1. [The X Window System](./x-window-system.md)
-1. [D-Bus](./dbus.md)
-1. [OS Cloud](./os-cloud.md)
-1. [Arena](./arena.md)
+1. [Time Server](../../time-server/reading/time-server.md)
+1. [Password Cracker](../../password-cracker/reading/password-cracker.md)
+1. [The X Window System](../../x-window-system/reading/x-window-system.md)
+1. [D-Bus](../../dbus/reading/dbus.md)
+1. [OS Cloud](../../os-cloud/reading/os-cloud.md)
+1. [Arena](../../arena/reading/arena.md)
