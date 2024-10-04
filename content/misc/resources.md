@@ -5,12 +5,12 @@
 List of resources:
 
 - [GitHub Repository](https://github.com/cs-pub-ro/operating-systems)
-- [Moodle Class](https://curs.upb.ro/2023/course/view.php?id=7774) (used for homework submissions, quizzes, announcements, etc.)
-- [Teams Class](https://teams.microsoft.com/l/team/19%3aLTQa0tGvTM_L1c8N9F_dwZJ8RKLA_KqVejJJdeLfHos1%40thread.tacv2/conversations?groupId=ca6de354-95d1-4b60-9668-d79997e9d058&tenantId=2d8cc8ba-8dda-4334-9e5c-fac2092e9bac)
+- [Moodle Class](https://curs.upb.ro/2024/course/view.php?id=2665) (used for homework submissions, quizzes, announcements, etc.)
+- [Teams Class](https://teams.microsoft.com/l/team/19%3AOL84NjHQxdxL9n7RmphK8rKr0vUVcuea_r08OsoWKQQ1%40thread.tacv2/conversations?groupId=b37b5353-4791-449b-95e0-ab59c39326af&tenantId=2d8cc8ba-8dda-4334-9e5c-fac2092e9bac)
 - [Rules and Grading](https://cs-pub-ro.github.io/operating-systems/rules-and-grading)
 - [Books / Reading Materials](http://elf.cs.pub.ro/so/res/doc/) (you will need to log in using your `UPB` account)
-- [OS Calendar](https://calendar.google.com/calendar/u/0/embed?src=d2biu4r5gcv83ndamn6tpe0onc@group.calendar.google.com&ctz=Europe/Bucharest)
-- [OS Course Planning](https://docs.google.com/spreadsheets/d/1HVCP7ybjrtrtN5MMQYbSnvHoals5IbagtY1SaG9K3FE/edit?usp=sharing)
+- [OS Calendar](https://calendar.google.com/calendar/embed?src=9a0798c60c5a4a2dad36cde37ef6cbcfc001ccd2d4de2a74e6fa1861a679bbea%40group.calendar.google.com&ctz=Europe%2FBucharest)
+- [OS Course Planning](https://docs.google.com/spreadsheets/d/e/2PACX-1vQ9eom_uRzu-a_lAZ6Yt2Slta5wpTm53b1ZaZlanEWBSBc69xGwKYK8wfImCS_LVhtWZ_4h3U9oVqpx/pubhtml?gid=0&single=true)
 
 ## Documentation and Reading Materials
 
@@ -19,16 +19,14 @@ You will need to log in using the `UPB` institutional account.
 
 ## Calendar
 
-There are no classes / labs in the 27 November 2023 - 1 December 2023 week.
-
 You can find the full calendar in multiple formats below:
 
-- Calendar ID: `d2biu4r5gcv83ndamn6tpe0onc@group.calendar.google.com`
-- [XML](http://www.google.com/calendar/feeds/d2biu4r5gcv83ndamn6tpe0onc%40group.calendar.google.com/public/basic)
-- [ICAL](http://www.google.com/calendar/ical/d2biu4r5gcv83ndamn6tpe0onc%40group.calendar.google.com/public/basic.ics)
-- [HTML](http://www.google.com/calendar/embed?src=d2biu4r5gcv83ndamn6tpe0onc%40group.calendar.google.com&ctz=Europe/Bucharest)
+- Calendar ID: `9a0798c60c5a4a2dad36cde37ef6cbcfc001ccd2d4de2a74e6fa1861a679bbea@group.calendar.google.com`
+- [XML](http://www.google.com/calendar/feeds/9a0798c60c5a4a2dad36cde37ef6cbcfc001ccd2d4de2a74e6fa1861a679bbea%40group.calendar.google.com/public/basic)
+- [ICAL](https://calendar.google.com/calendar/ical/9a0798c60c5a4a2dad36cde37ef6cbcfc001ccd2d4de2a74e6fa1861a679bbea%40group.calendar.google.com/public/basic.ics)
+- [HTML](https://calendar.google.com/calendar/embed?src=9a0798c60c5a4a2dad36cde37ef6cbcfc001ccd2d4de2a74e6fa1861a679bbea%40group.calendar.google.com&ctz=Europe%2FBucharest)
 
-You can also find the course planning [here](https://docs.google.com/spreadsheets/d/1HVCP7ybjrtrtN5MMQYbSnvHoals5IbagtY1SaG9K3FE/edit?usp=sharing).
+You can also find the course planning [here](https://docs.google.com/spreadsheets/d/e/2PACX-1vQ9eom_uRzu-a_lAZ6Yt2Slta5wpTm53b1ZaZlanEWBSBc69xGwKYK8wfImCS_LVhtWZ_4h3U9oVqpx/pubhtml?gid=0&single=true).
 
 ## Virtual Machine
 
@@ -37,13 +35,12 @@ We provide Linux virtual machines with all the setup ready.
 
 ### VirtualBox / VMware
 
-You can download the Linux virtual machine from [this link](https://repository.grid.pub.ro/cs/so/linux-2024/so-vm.ova).
-You will need to log in using your `UPB` account.
+You can download the Linux virtual machine with **NO** GUI [here](https://repository.grid.pub.ro/cs/so/linux-2024-2025/so-vm-2024.ova) and **WITH** GUI [here](https://repository.grid.pub.ro/cs/so/linux-2024-2025/so-vm-gui-2024.ova). You will need to log in using your `UPB` account.
 
 You can import the `.ova` file in [VirtualBox](https://www.virtualbox.org/) or [VMware](https://www.vmware.com/).
 Follow the instructions on the official websites for installation.
 
-### UTM (macOS >= 11)
+### UTM (macOS >= 11 users)
 
 If you are using an `M1` Apple system, you will not be able to run the virtual machine using VirtualBox or VMware.
 You will need to use [`UTM`](https://mac.getutm.app/), along with a [`.qcow2`](https://repository.grid.pub.ro/cs/so/linux-2024/SO-Ubuntu-22-04-03-LTS.utm.zip) image.
