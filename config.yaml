@@ -2,6 +2,7 @@ stages:
   - make_assets
   - prepare_view
   - embed_reveal
+  - quizzes
   - docusaurus
 
 build_dir: /build
@@ -206,7 +207,21 @@ embed_reveal:
       IO: slides/IO
       Application-Interaction: slides/Application-Interaction
 
+quizzes:
+  plugin: quizify
+  options:
+    parser_type: python
+    parser: md_parser.py
+    quiz_type: link
+    quiz_embed: iframe_inline
+    quiz_regex: \[Quiz.*\]\((questions\/.*\.md)\)
+    template: simple_quiz
+    iframe_template: docusaurus_iframe
+    locations:
+      - /build/prepare_view/.view/lab*.md
+
 docusaurus:
+  input: $$quizzes$$
   plugin: docusaurus
   options:
     course_name: SO

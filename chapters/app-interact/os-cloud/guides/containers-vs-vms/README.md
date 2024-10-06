@@ -9,7 +9,7 @@ Namespaces isolate processes from each other by creating independent views of sy
 There are different types of namespaces, such as user, PID, network, mount, IPC, and UTS.
 You can read more about them [here](https://www.nginx.com/blog/what-are-namespaces-cgroups-how-do-they-work/), [here](https://www.baeldung.com/linux/cgroups-and-namespaces) and a particularly good read about namespaces can be found [here](https://blog.quarkslab.com/digging-into-linux-namespaces-part-1.html)
 
-[Quiz](../drills/questions/questions/cgroups-vs-namespaces.md)
+[Quiz](../drills/questions/cgroups-vs-namespaces.md)
 
 However, containers take this isolation a step further by using kernel features such as namespaces and cgroups to provide a more complete and secure isolation of resources.
 

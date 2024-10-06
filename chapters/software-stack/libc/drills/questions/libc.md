@@ -2,7 +2,7 @@
 
 ## Question Text
 
-Which of following is **not*- and advantage of using libc for programs?
+Which of following is **not** and advantage of using libc for programs?
 
 ## Question Answers
 

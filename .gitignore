@@ -178,6 +178,7 @@ Thumbs.db
 
 # Docusaurus build files
 .output/
+.view/
 
 # VSCode
 .vscode/
