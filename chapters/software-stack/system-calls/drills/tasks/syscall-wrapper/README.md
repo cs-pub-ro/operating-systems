@@ -1,8 +1,8 @@
 # System Call Wrappers
 
-Enter the `syscall-wrapper/support/` folder and go through the practice items below.
+Enter the `chapters/software-stack/system-calls/syscall-wrapper/drills/tasks/support/` folder and go through the practice items below.
 
-1. Update the files in the `syscall-wrapper/` folder to make `read` system call available as a wrapper.
+1. Update the files in the `support/` folder to make `read` system call available as a wrapper.
    Make a call to the `read` system call to read data from standard input in a buffer.
    Then call `write()` to print data from that buffer.
 
@@ -13,7 +13,7 @@ Enter the `syscall-wrapper/support/` folder and go through the practice items be
 
    [Quiz](../drills/questions/syscall-wrapper.md)
 
-1. Update the files in the `syscall-wrapper/` folder to make the `getpid` system call available as a wrapper.
+1. Update the files in the `support/` folder to make the `getpid` system call available as a wrapper.
    Create a function with the signature `unsigned int itoa(int n, char *a)` that converts an integer to a string.
    It returns the number of digits in the string.
    For example, it will convert the number `1234` to the string `"1234"` string (`NULL`-terminated, 5 bytes long);

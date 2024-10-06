@@ -1,6 +1,6 @@
 # App Investigation
 
-Enter the `app-investigation/support/` folder and go through the practice items below.
+Enter the `chapters/software-stack/applications/drills/tasks/app-investigation/support/` folder and go through the practice items below.
 Select a binary executable application and a scripted application.
 
 1. Use `ldd` on the two applications.

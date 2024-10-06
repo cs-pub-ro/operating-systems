@@ -1,6 +1,6 @@
 # Common Functions
 
-Enter the `common-functions/support/` folder and go through the practice items below.
+Enter the `chapters/software-stack/libc/drills/tasks/common-functions/support/` folder and go through the practice items below.
 
 1. Update `string.c` and `string.h` to make available the `strcat()` function.
    Call that function in `main_string.c` and print the result.

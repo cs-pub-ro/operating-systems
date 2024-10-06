@@ -1,6 +1,6 @@
-# Library calls vs System Calls
+# Library Calls vs System Calls
 
-Enter the `libcall-syscall/support/` folder and go through the practice items below.
+Enter the `chapters/software-stack/system-calls/drills/tasks/libcall-syscall/support/` folder and go through the practice items below.
 
 1. Check library calls and system calls for the `call2.c` file.
    Use `ltrace` and `strace`.

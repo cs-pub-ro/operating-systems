@@ -1,6 +1,6 @@
 # System Calls
 
-Enter the `basic-syscall/support/` folder and go through the practice items below.
+Enter the `chapters/software-stack/system-calls/drills/tasks/basic-syscall/support/` folder and go through the practice items below.
 
 For debugging, use `strace` to trace the system calls from your program and make sure the arguments are set right.
 

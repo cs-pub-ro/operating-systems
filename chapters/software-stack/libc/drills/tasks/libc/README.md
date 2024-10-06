@@ -1,6 +1,6 @@
 # Libraries and libc
 
-Enter the `libc/support/` folder and go through the practice items below.
+Enter the `chapters/software-stack/libc/libc/drills/tasks/support/` folder and go through the practice items below.
 
 1. Use `malloc()` and `free()` functions in the `memory.c` program.
    Make your own use of the allocated memory.

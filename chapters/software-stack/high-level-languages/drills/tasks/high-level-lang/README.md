@@ -1,6 +1,6 @@
 # High-Level Languages
 
-Enter the `high-level-lang/support/` folder and go through the practice items below.
+Enter the `chapters/software-stack/high-level-languages/drills/tasks/high-level-lang/support/` folder and go through the practice items below.
 
 1. Use `make` to create the `hello` executable from the `hello.go` file (a Go "Hello, World!"-printing program).
    Use `ltrace` and `strace` to compute the number of library calls and system calls.

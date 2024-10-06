@@ -3,7 +3,7 @@
 Libraries can be statically-linked or dynamically-linked, creating statically-linked executables and dynamically-linked executables.
 Typically, the executables found in modern operating systems are dynamically-linked, given their reduced size and ability to share libraries at runtime.
 
-The `static-dynamic/support/` folder stores the implementation of a simple "Hello, World!"-printing program that uses both static and dynamic linking of libraries.
+The `chapters/software-stack/libraries/guides/static-dynamic/support/` folder stores the implementation of a simple "Hello, World!"-printing program that uses both static and dynamic linking of libraries.
 Let's build and run the two executables:
 
 ```console
