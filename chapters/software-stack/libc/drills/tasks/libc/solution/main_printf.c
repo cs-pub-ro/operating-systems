@@ -1,1 +1,0 @@
-../support/main_printf.c
