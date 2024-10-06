@@ -176,12 +176,294 @@ docusaurus:
                               path: tasks/
                               subsections:
                                 - Applications/: app-investigation/
+      - IO:
+        # - Slides: /build/embed_reveal/Software-Stack/Software-Stack.mdx
+        - Lab 9 - generic_name(TODO):
+            subsections:
+              - Overview:
+                  path: chapters/io/overview/
+                  extra:
+                    - media/
+                  subsections:
+                    - Reading: reading/overview.md
+              - File Handlers:
+                  path: chapters/io/file-handlers
+                  extra:
+                    - drills/questions/
+                    - drills/tasks/
+                  subsections:
+                    - Reading: reading/file-handlers.md
+                    - Drills:
+                        path: drills/
+                        subsections:
+                          - Tasks:
+                              path: tasks/
+                              subsections:
+                                - Simple File Operations: simple-file-operations/
+                          - Questions:
+                              path: questions/
+                              subsections:
+                                - File Handler C: file-handler-c.md
+                                - Fopen Syscall: fopen-syscall.md
+              - File Descriptors:
+                  path: chapters/io/file-descriptors
+                  extra:
+                    - media/
+                    - drills/questions/
+                    - drills/tasks/
+                  subsections:
+                    - Reading: reading/file-descriptors.md
+                    - Drills:
+                        path: drills/
+                        subsections:
+                          - Tasks:
+                              path: tasks/
+                              subsections:
+                                - File Descriptors: file-descriptors/
+                          - Questions:
+                              path: questions/
+                              subsections:
+                                - Stderr Fd: stderr-fd.md
+              - Redirections:
+                  path: chapters/io/redirections
+                  extra:
+                    - media/
+                    - drills/questions/
+                    - drills/tasks/
+                  subsections:
+                    - Reading: reading/redirections.md
+                    - Drills:
+                        path: drills/
+                        subsections:
+                          - Tasks:
+                              path: tasks/
+                              subsections:
+                                - Redirect: redirect/
+                          - Questions:
+                              path: questions/
+                              subsections:
+                                - Execve: execve.md
+                                - Prints work No Stdio: prints-work-no-stdio.md
+              - Pipes:
+                  path: chapters/io/pipes
+                  extra:
+                    - media/
+                    - drills/questions/
+                    - drills/tasks/
+                  subsections:
+                    - Reading: reading/pipes.md
+                    - Drills:
+                        path: drills/
+                        subsections:
+                          - Tasks:
+                              path: tasks/
+                              subsections:
+                                - Pipes: pipes/
+                                - Receive Challenges: receive-challenges/
+                          - Questions:
+                              path: questions/
+                              subsections:
+                                - Anonymous Pipes Limitation: anonymous-pipes-limitation.md
+                                - Pipe Ends: pipe-ends.md
+              - Local IO in action:
+                  path: chapters/io/local-io-in-action
+                  extra:
+                    - media/
+                    - drills/questions/
+                    - drills/tasks/
+                  subsections:
+                    - Reading: reading/local-io-in-action.md
+                    - Drills:
+                        path: drills/
+                        subsections:
+                          - Tasks:
+                              path: tasks/
+                              subsections:
+                                - Simple File Operations: simple-file-operations/
+                          - Questions:
+                              path: questions/
+                              subsections:
+                                - Local IO Errors: local-io-errors.md
+        - Lab 10 - generic_name(TODO):
+            subsections:
+              - Remote IO:
+                  path: chapters/io/remote-io
+                  extra:
+                    - media/
+                    - drills/questions/
+                    - drills/tasks/
+                  subsections:
+                    - Reading: reading/remote-io.md
+                    - Drills:
+                        path: drills/
+                        subsections:
+                          - Tasks:
+                              path: tasks/
+                              subsections:
+                                - Receive Challenges: receive-challenges/
+                                - Send Receive: send-receive/
+                          - Questions:
+                              path: questions/
+                              subsections:
+                                - Bind Error cause: bind-error-cause.md
+                                - Receiver Socket Fd: receiver-socket-fd.md
+              - Networking 101:
+                  path: chapters/io/networking-101
+                  extra:
+                    - media/
+                    - drills/questions/
+                    - drills/tasks/
+                  subsections:
+                    - Reading: reading/networking-101.md
+                    - Drills:
+                        path: drills/
+                        subsections:
+                          - Tasks:
+                              path: tasks/
+                              subsections:
+                                - Send Receive: send-receive/
+                          - Questions:
+                              path: questions/
+                              subsections:
+                                - Firefox TCP UDP: firefox-tcp-udp.md
+              - Client Server Model:
+                  path: chapters/io/client-server-model
+                  extra:
+                    - drills/questions/
+                    - drills/tasks/
+                  subsections:
+                    - Reading: reading/client-server-model.md
+                    - Drills:
+                        path: drills/
+                        subsections:
+                          - Tasks:
+                              path: tasks/
+                              subsections:
+                                - Client Server: client-server/
+                          - Questions:
+                              path: questions/
+                              subsections:
+                                - Client Server Sender Receiver: client-server-sender-receiver.md
+              - Beyond Network Sockets:
+                  path: chapters/io/beyond-network-sockets
+                  extra:
+                    - drills/tasks/
+                  subsections:
+                    - Reading: reading/beyond-network-sockets.md
+                    - Drills:
+                        path: drills/
+                        subsections:
+                          - Tasks:
+                              path: tasks/
+                              subsections:
+                                - Receive Challenges: receive-challenges/
+              - File Mappings:
+                  path: chapters/io/file-mappings
+                  extra:
+                    - drills/questions/
+                    - drills/tasks/
+                  subsections:
+                    - Reading: reading/file-mappings.md
+                    - Drills:
+                        path: drills/
+                        subsections:
+                          - Tasks:
+                              path: tasks/
+                              subsections:
+                                - File Mappings: file-mappings/
+                          - Questions:
+                              path: questions/
+                              subsections:
+                                - Mmap Read Write Benchmark: mmap-read-write-benchmark.md
+                                - Syscalls Cp: syscalls.md
+        - Lab 11 - generic_name(TODO):
+            subsections:
+              - IO Internals:
+                  path: chapters/io/io-internals
+                  extra:
+                    - media/
+                    - drills/questions/
+                    - drills/tasks/
+                  subsections:
+                    - Reading: reading/io-internals.md
+                    - Drills:
+                        path: drills/
+                        subsections:
+                          - Tasks:
+                              path: tasks/
+                              subsections:
+                                - Buffering: buffering/
+                          - Questions:
+                              path: questions/
+                              subsections:
+                                - Flush Libc Buffer: flush-libc-buffer.md
+                                - Strace Printf: strace-printf.md
+              - Zero-copy:
+                  path: chapters/io/zero-copy
+                  extra:
+                    - media/
+                    - drills/questions/
+                    - drills/tasks/
+                  subsections:
+                    - Reading: reading/zero-copy.md
+                    - Drills:
+                        path: drills/
+                        subsections:
+                          - Tasks:
+                              path: tasks/
+                              subsections:
+                                - Zero-copy: zero-copy/
+                          - Questions:
+                              path: questions/
+                              subsections:
+                                - Fewer Than 2 Copies: fewer-than-2-copies.md
+                                - Server Copies: server-copies.md
+              - Async IO:
+                  path: chapters/io/async-io
+                  extra:
+                    - drills/tasks/
+                  subsections:
+                    - Reading: reading/async-io.md
+                    - Drills:
+                        path: drills/
+                        subsections:
+                          - Tasks:
+                              path: tasks/
+                              subsections:
+                                - Async: async/
+              - IO Multiplexing:
+                  path: chapters/io/io-multiplexing
+                  extra:
+                    - drills/tasks/
+                  subsections:
+                    - Reading: reading/io-multiplexing.md
+                    - Drills:
+                        path: drills/
+                        subsections:
+                          - Tasks:
+                              path: tasks/
+                              subsections:
+                                - Multiplex: multiplex/
+              - Arena:
+                  path: chapters/io/arena
+                  extra:
+                    - drills/tasks/
+                  subsections:
+                    - Reading: reading/arena.md
+                    - Drills:
+                        path: drills/
+                        subsections:
+                          - Tasks:
+                              path: tasks/
+                              subsections:
+                                - Buffering: buffering/
+                                - File Mappings: file-mappings/
+                                - Mini Shell: mini-shell/
       - Lecture:
           path: /build/embed_reveal
           subsections:
             - Data: Data/Data.mdx
             - Compute: Compute/Compute.mdx
-            - IO: IO/IO.mdx
             - Application Interaction: Application-Interaction/Application-Interaction.mdx
       - Lab:
         - Setting up the Lab Environment: content/misc/lab-setup.md
@@ -210,28 +492,6 @@ docusaurus:
               - Copy-on-Write: copy-on-write.md
               - Synchronization: synchronization.md
               - User-Level Threads: user-level-threads.md
-              - Arena: arena.md
-        - IO:
-            path: content/chapters/io/lab/content
-            extra:
-              - ../media
-              - ../quiz
-            subsections:
-              - Overview: overview.md
-              - File Handlers: file-handlers.md
-              - File Descriptors: file-descriptors.md
-              - Redirections: redirections.md
-              - Pipes: pipes.md
-              - Local IO in Action: local-io-in-action.md
-              - Remote IO: remote-io.md
-              - Networking 101: networking-101.md
-              - Client-Server Model: client-server-model.md
-              - Beyond Network Sockets: beyond-network-sockets.md
-              - File Mappings: file-mappings.md
-              - IO Internals: io-internals.md
-              - Zero-Copy: zero-copy.md
-              - Asynchronous IO: async-io.md
-              - IO Multiplexing: io-multiplexing.md
               - Arena: arena.md
         - Application Interaction:
             path: content/chapters/app-interact/lab/content

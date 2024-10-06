@@ -1,1 +1,0 @@
-../../support/file-mappings/benchmark_cp.sh
