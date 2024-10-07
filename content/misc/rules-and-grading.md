@@ -388,16 +388,16 @@ If, after the resit/improvement session in the fall, you still do not obtain a p
 
 ### Retaking the Course
 
-By default, the grades for the previous academic year (2022-2023) are reset on October 1, 2023.
-If you did not graduate from the course in the 2022-2023 academic year, you will need to retake it in the current academic year (2023-2024), with the possibility of retaining some components, as detailed below:
+By default, the grades for the previous academic year (2023-2024) are reset on October 1, 2024.
+If you did not graduate from the course in the 2023-2024 academic year, you will need to retake it in the current academic year (2024-2025), with the possibility of retaining some components, as detailed below:
 
 - If you wish, you can retain the grades for the course's practical components (laboratory and/or assignments).
   You **cannot** retain the grades for lecture components (lecture tests and exam).
-- Students interested in preserving their grades should respond on [the designated Moodle thread](https://curs.upb.ro/2023/mod/forum/discuss.php?d=96) by **Tuesday, October 31, 2023, 23:00**.
+- Students interested in preserving their grades should respond on [the designated Moodle thread](https://curs.upb.ro/2024/mod/forum/discuss.php?d=150) by **October 13, 2024, 23:55**.
 - The rules and grading system for students retaking the course are the same as for students in the current year (lecture tests + exam, assignments, etc.).
 - Students retaking the course can participate in any lab session as long as there are available slots.
   Like other students, the attendance list becomes fixed starting from the third week.
 - Students retaking the course can participate in any lecture, lecture test, and exam, regardless of the series to which they belonged.
 
-By default, the grades for the 2023-2024 academic year will be reset on October 1, 2024.
-If you do not graduate from the course in the 2023-2024 academic year, you will need to retake it in the 2024-2025 academic year, with the possibility of retaining some components, as detailed above.
+By default, the grades for the 2024-2025 academic year will be reset on October 1, 2025.
+If you do not graduate from the course in the 2024-2025 academic year, you will need to retake it in the 2025-2026 academic year, with the possibility of retaining some components, as detailed above.
