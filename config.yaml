@@ -39,6 +39,7 @@ docusaurus:
     sidebar: js
     structure:
       - Introduction: content/landing-page/README.md
+      - Setting up the Lab Environment: misc/lab-setup.md
       - Software Stack:
         - Slides: /build/embed_reveal/Software-Stack/Software-Stack.mdx
         - Lab 1 - Operating System Perspective:
@@ -183,69 +184,68 @@ docusaurus:
             - Compute: Compute/Compute.mdx
             - IO: IO/IO.mdx
             - Application Interaction: Application-Interaction/Application-Interaction.mdx
-      - Lab:
-        - Setting up the Lab Environment: content/misc/lab-setup.md
-        - Data:
-            path: content/chapters/data/lab/content
-            extra:
-              - ../quiz
-            subsections:
-              - Overview: overview.md
-              - Working with Memory: working-memory.md
-              - Process Memory: process-memory.md
-              - Investigate Memory: investigate-memory.md
-              - Memory Security: memory-security.md
-              - Arena: arena.md
-        - Compute:
-            path: content/chapters/compute/lab/content
-            extra:
-              - ../media
-              - ../quiz
-            subsections:
-              - Overview: overview.md
-              - Hardware Perspective: hardware-perspective.md
-              - Processes: processes.md
-              - Threads: threads.md
-              - Processes-threads-apache2: processes-threads-apache2.md
-              - Copy-on-Write: copy-on-write.md
-              - Synchronization: synchronization.md
-              - User-Level Threads: user-level-threads.md
-              - Arena: arena.md
-        - IO:
-            path: content/chapters/io/lab/content
-            extra:
-              - ../media
-              - ../quiz
-            subsections:
-              - Overview: overview.md
-              - File Handlers: file-handlers.md
-              - File Descriptors: file-descriptors.md
-              - Redirections: redirections.md
-              - Pipes: pipes.md
-              - Local IO in Action: local-io-in-action.md
-              - Remote IO: remote-io.md
-              - Networking 101: networking-101.md
-              - Client-Server Model: client-server-model.md
-              - Beyond Network Sockets: beyond-network-sockets.md
-              - File Mappings: file-mappings.md
-              - IO Internals: io-internals.md
-              - Zero-Copy: zero-copy.md
-              - Asynchronous IO: async-io.md
-              - IO Multiplexing: io-multiplexing.md
-              - Arena: arena.md
-        - Application Interaction:
-            path: content/chapters/app-interact/lab/content
-            extra:
-              - ../media
-              - ../quiz
-            subsections:
-              - Overview: overview.md
-              - Time Server: time-server.md
-              - Password Cracker: password-cracker.md
-              - The X Window System: x-window-system.md
-              - D-Bus: dbus.md
-              - OS Cloud: os-cloud.md
-              - Arena: arena.md
+      # - Lab:
+      #   - Data:
+      #       path: content/chapters/data/lab/content
+      #       extra:
+      #         - ../quiz
+      #       subsections:
+      #         - Overview: overview.md
+      #         - Working with Memory: working-memory.md
+      #         - Process Memory: process-memory.md
+      #         - Investigate Memory: investigate-memory.md
+      #         - Memory Security: memory-security.md
+      #         - Arena: arena.md
+      #   - Compute:
+      #       path: content/chapters/compute/lab/content
+      #       extra:
+      #         - ../media
+      #         - ../quiz
+      #       subsections:
+      #         - Overview: overview.md
+      #         - Hardware Perspective: hardware-perspective.md
+      #         - Processes: processes.md
+      #         - Threads: threads.md
+      #         - Processes-threads-apache2: processes-threads-apache2.md
+      #         - Copy-on-Write: copy-on-write.md
+      #         - Synchronization: synchronization.md
+      #         - User-Level Threads: user-level-threads.md
+      #         - Arena: arena.md
+      #   - IO:
+      #       path: content/chapters/io/lab/content
+      #       extra:
+      #         - ../media
+      #         - ../quiz
+      #       subsections:
+      #         - Overview: overview.md
+      #         - File Handlers: file-handlers.md
+      #         - File Descriptors: file-descriptors.md
+      #         - Redirections: redirections.md
+      #         - Pipes: pipes.md
+      #         - Local IO in Action: local-io-in-action.md
+      #         - Remote IO: remote-io.md
+      #         - Networking 101: networking-101.md
+      #         - Client-Server Model: client-server-model.md
+      #         - Beyond Network Sockets: beyond-network-sockets.md
+      #         - File Mappings: file-mappings.md
+      #         - IO Internals: io-internals.md
+      #         - Zero-Copy: zero-copy.md
+      #         - Asynchronous IO: async-io.md
+      #         - IO Multiplexing: io-multiplexing.md
+      #         - Arena: arena.md
+      #   - Application Interaction:
+      #       path: content/chapters/app-interact/lab/content
+      #       extra:
+      #         - ../media
+      #         - ../quiz
+      #       subsections:
+      #         - Overview: overview.md
+      #         - Time Server: time-server.md
+      #         - Password Cracker: password-cracker.md
+      #         - The X Window System: x-window-system.md
+      #         - D-Bus: dbus.md
+      #         - OS Cloud: os-cloud.md
+      #         - Arena: arena.md
       - Assignments:
           # These all have the same filename so we need to create separate
           # subdirectories for them, otherwise they will overwrite each other.
@@ -289,8 +289,8 @@ docusaurus:
           path: content/assignments
           subsections:
             - Lambda Function Loader/: lambda-function-loader/
-      - Rules and Grading: content/misc/rules-and-grading.md
-      - Resources: content/misc/resources.md
+      - Rules and Grading: misc/rules-and-grading.md
+      - Resources: misc/resources.md
     static_assets:
       - slides/Compute: /build/make_assets/content/chapters/compute/lecture/_site
       - slides/Software-Stack: /build/make_assets/chapters/software-stack/_site
