@@ -13,21 +13,21 @@ This way, C programs can be written that make function calls that end up making 
 Let's build, run and trace system calls for the program:
 
 ```console
-student@os:~/.../tasks/syscall-wrapper/support$ ls
+student@os:~/.../syscall-wrapper/support$ ls
 main.c  Makefile  syscall.h  syscall.s
 
-student@os:~/.../tasks/syscall-wrapper/support$ make
+student@os:~/.../syscall-wrapper/support$ make
 gcc -c -o main.o main.c
 nasm -f elf64 -o syscall.o syscall.s
 cc -nostdlib -no-pie -Wl,--entry=main -Wl,--build-id=none  main.o syscall.o   -o main
 
-student@os:~/.../tasks/syscall-wrapper/support$ ls
+student@os:~/.../syscall-wrapper/support$ ls
 main  main.c  main.o  Makefile  syscall.h  syscall.o  syscall.s
 
 student@os:~/.../software-stack/lab/syscall-wrapper$ ./main
 Hello, world!
 
-student@os:~/.../tasks/syscall-wrapper/support$ strace ./main
+student@os:~/.../syscall-wrapper/support$ strace ./main
 execve("./main", ["./main"], 0x7ffee60fb590 /- 63 vars */) = 0
 write(1, "Hello, world!\n", 14Hello, world!
 )         = 14

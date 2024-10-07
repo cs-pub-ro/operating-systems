@@ -38,21 +38,21 @@ The implementation follows the [x86_64 Linux calling convention](https://x64.sys
 Let's build and run the two programs:
 
 ```console
-student@os:~/.../tasks/basic-syscall/support$ ls
+student@os:~/.../basic-syscall/support$ ls
 hello.asm  hello.s  Makefile
 
-student@os:~/.../tasks/basic-syscall/support$ make
+student@os:~/.../basic-syscall/support$ make
 nasm -f elf64 -o hello-nasm.o hello.asm
 cc -nostdlib -no-pie -Wl,--entry=main -Wl,--build-id=none  hello-nasm.o   -o hello-nasm
 gcc -c -o hello-gas.o hello.s
 cc -nostdlib -no-pie -Wl,--entry=main -Wl,--build-id=none  hello-gas.o   -o hello-gas
 
-student@os:~/.../tasks/basic-syscall/support$ ls
+student@os:~/.../basic-syscall/support$ ls
 hello.asm  hello-gas  hello-gas.o  hello-nasm  hello-nasm.o  hello.s  Makefile
 
-student@os:~/.../tasks/basic-syscall/support$ ./hello-nasm
+student@os:~/.../basic-syscall/support$ ./hello-nasm
 Hello, world!
-student@os:~/.../tasks/basic-syscall/support$ ./hello-gas
+student@os:~/.../basic-syscall/support$ ./hello-gas
 Hello, world!
 ```
 
@@ -76,7 +76,7 @@ You can also check the online man pages: [`write`](https://man7.org/linux/man-pa
 We use `strace` to inspect system calls issued by a program:
 
 ```console
-student@os:~/.../tasks/basic-syscall/support$ strace ./hello-nasm
+student@os:~/.../basic-syscall/support$ strace ./hello-nasm
 execve("./hello-nasm", ["./hello-nasm"], 0x7ffc4e175f00 /- 63 vars */) = 0
 write(1, "Hello, world!\n", 14Hello, world!
 )         = 14

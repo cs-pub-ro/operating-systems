@@ -18,27 +18,27 @@ In the examples above, we've explicitly disabled the use of the standard C libra
 By using the standard C library, it's much easier to create new programs.
 You call existing functionality in the library and implement only features particular to your program.
 
-The `libc/support/` folder stores the implementation of programs using the standard C library: `hello.c`, `main_string.c` and `main_printf.c`.
+The `chapters/software-stack/libc/drills/tasks/libc/support/` folder stores the implementation of programs using the standard C library: `hello.c`, `main_string.c` and `main_printf.c`.
 These programs are almost identical to those used in the past sections:
 
-- `hello.c` is similar to the programs in `solution/basic-syscall/` and `solution/syscall-wrapper/`
-- `main_string.c` and `main_printf.c` are similar to the programs in `solution/common-functions/`
+- `hello.c` is similar to the programs in `chapters/software-stack/system-calls/drills/tasks/basic-syscall/solution/` and `chapters/software-stack/system-calls/drills/tasks/syscall-wrapper/solution/`
+- `main_string.c` and `main_printf.c` are similar to the programs in `chapters/software-stack/libc/drills/tasks/common-functions/solution/`
 
 Let's build and run them:
 
 ```console
-student@os:~/.../tasks/libc/support$ ls
+student@os:~/.../libc/support$ ls
 hello  hello.c  hello.o  main_printf  main_printf.c  main_printf.o  main_string  main_string.c  main_string.o  Makefile
 
-student@os:~/.../tasks/libc/support$ make clean
+student@os:~/.../libc/support$ make clean
 rm -f hello hello.o
 rm -f main_printf main_printf.o
 rm -f main_string main_string.o
 
-student@os:~/.../tasks/libc/support$ ls
+student@os:~/.../libc/support$ ls
 hello.c  main_printf.c  main_string.c  Makefile
 
-student@os:~/.../tasks/libc/support$ make
+student@os:~/.../libc/support$ make
 cc -Wall   -c -o hello.o hello.c
 cc -static  hello.o   -o hello
 cc -Wall   -c -o main_printf.o main_printf.c
@@ -46,20 +46,20 @@ cc -static  main_printf.o   -o main_printf
 cc -Wall   -c -o main_string.o main_string.c
 cc -static  main_string.o   -o main_string
 
-student@os:~/.../tasks/libc/support$ ls
+student@os:~/.../libc/support$ ls
 hello  hello.c  hello.o  main_printf  main_printf.c  main_printf.o  main_string  main_string.c  main_string.o  Makefile
 
-student@os:~/.../tasks/libc/support$ ./hello
+student@os:~/.../libc/support$ ./hello
 Hello, world!
 Bye, world!
 aaa
 aaa
 ^C
 
-student@os:~/.../tasks/libc/support$ ./main_string
+student@os:~/.../libc/support$ ./main_string
 Destination string is: warhammer40k
 
-student@os:~/.../tasks/libc/support$ ./main_printf
+student@os:~/.../libc/support$ ./main_printf
 [before] src is at 0x492308, len is 12, content: "warhammer40k"
 [before] dest is at 0x6bb340, len is 0, content: ""
 copying src to dest
@@ -71,17 +71,17 @@ abc
 The behavior / output is similar to the ones in the previous sections:
 
 ```console
-student@os:~/.../tasks/libc/support$ ../../solution/basic-syscall/hello-nasm
+student@os:~/.../libc/support$ ../../solution/basic-syscall/hello-nasm
 Hello, world!
 Bye, world!
 aaa
 aaa
 ^C
 
-student@os:~/.../tasks/libc/support$ ../../solution/common-functions/main_string
+student@os:~/.../libc/support$ ../../solution/common-functions/main_string
 Destination string is: warhammer40k
 
-student@os:~/.../tasks/libc/support$ ../../solution/common-functions/main_printf
+student@os:~/.../libc/support$ ../../solution/common-functions/main_printf
 [before] src is at 0000000000402680, len is 12, content: "warhammer40k"
 [before] dest is at 0000000000604000, len is 0, content: ""
 copying src to dest
@@ -94,7 +94,7 @@ We can inspect the system calls made to check the similarities.
 For example, for the `main_printf` program we get the outputs:
 
 ```console
-student@os:~/.../tasks/libc/support$ strace ./main_printf
+student@os:~/.../libc/support$ strace ./main_printf
 execve("./main_printf", ["./main_printf"], 0x7fff7b38c240 /- 66 vars */) = 0
 brk(NULL)                               = 0x15af000
 brk(0x15b01c0)                          = 0x15b01c0
@@ -121,7 +121,7 @@ write(1, "c\n", 2c
 exit_group(0)                           = ?
 +++ exited with 0 +++
 
-student@os:~/.../tasks/libc/support$ strace ../../solution/common-functions/main_printf
+student@os:~/.../libc/support$ strace ../../solution/common-functions/main_printf
 execve("../../solution/common-functions/main_printf", ["../../solution/common-functions/"...], 0x7ffe204eec00 /- 66 vars */) = 0
 write(1, "[before] src is at 0000000000402"..., 72[before] src is at 0000000000402680, len is 12, content: "warhammer40k"
 ) = 72

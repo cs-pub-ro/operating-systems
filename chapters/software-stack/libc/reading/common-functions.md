@@ -7,8 +7,8 @@ The simple attempt is to implement these functions (`printf()` or `strcpy()` or 
 This saves us time (we don't have to reimplement) and allows us to constantly improve one implementation constantly;
 there will only be one implementation that we update to increase its safety, efficiency or performance.
 
-The `common-functions/support` folder stores the implementation of string management functions, in `string.c` and `string.h` and of printing functions in `printf.c` and `printf.h`.
-The `printf` implementation is [this one](https://github.com/mpaland/printf).
+The `chapters/software-stack/libc/drills/tasks/common-functions/support` folder stores the implementation of string management functions, in `string.c` and `string.h` and of printing functions in `printf.c` and `printf.h`.
+The `printf()` implementation is [this one](https://github.com/mpaland/printf).
 
 There are two programs: `main_string.c` showcases string management functions, `main_printf.c` showcases the `printf()` function.
 
@@ -18,16 +18,16 @@ We print messages using the `write()` system call wrapper implemented in `syscal
 Let's build and run the program:
 
 ```console
-student@os:~/.../tasks/common-functions/support$ make main_string
+student@os:~/.../common-functions/support$ make main_string
 gcc -fno-stack-protector   -c -o main_string.o main_string.c
 gcc -fno-stack-protector   -c -o string.o string.c
 nasm -f elf64 -o syscall.o syscall.s
 gcc -nostdlib -no-pie -Wl,--entry=main -Wl,--build-id=none  main_string.o string.o syscall.o   -o main_string
 
-student@os:~/.../tasks/common-functions/support$ ./main_string
+student@os:~/.../common-functions/support$ ./main_string
 Destination string is: warhammer40k
 
-student@os:~/.../tasks/common-functions/support$ strace ./main_string
+student@os:~/.../common-functions/support$ strace ./main_string
 execve("./main_string", ["./main_string"], 0x7ffd544d0a70 /- 63 vars */) = 0
 write(1, "Destination string is: ", 23Destination string is: ) = 23
 write(1, "warhammer40k\n", 13warhammer40k
@@ -48,18 +48,18 @@ The `main()` function `main_printf.c` file contains all the string and printing 
 Let's build and run the program:
 
 ```console
-student@os:~/.../tasks/common-functions/support$ make main_printf
+student@os:~/.../common-functions/support$ make main_printf
 gcc -fno-stack-protector   -c -o printf.o printf.c
 gcc -nostdlib -no-pie -Wl,--entry=main -Wl,--build-id=none  main_printf.o printf.o string.o syscall.o   -o main_printf
 
-student@os:~/.../tasks/common-functions/support$ ./main_printf
+student@os:~/.../common-functions/support$ ./main_printf
 [before] src is at 00000000004026A0, len is 12, content: "warhammer40k"
 [before] dest is at 0000000000603000, len is 0, content: ""
 copying src to dest
 [after] src is at 00000000004026A0, len is 12, content: "warhammer40k"
 [after] dest is at 0000000000603000, len is 12, content: "warhammer40k"
 
-student@os:~/.../tasks/common-functions/support$ strace ./main_printf
+student@os:~/.../common-functions/support$ strace ./main_printf
 execve("./main_printf", ["./main_printf"], 0x7ffcaaa1d660 /- 63 vars */) = 0
 write(1, "[", 1[)                        = 1
 write(1, "b", 1b)                        = 1

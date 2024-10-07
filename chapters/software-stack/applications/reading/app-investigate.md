@@ -3,10 +3,10 @@
 Let's spend some time investigating actual applications residing on the local system.
 For now, we know that applications are developed using high-level languages and then compiled or interpreted to use the lower-layer interfaces of the software stack, such as the system call API.
 
-Let's enter the `app-investigation/support/` folder and run the `get_app_types.sh` script:
+Let's enter the `chapters/software-stack/applications/drills/tasks/app-investigation/support/` folder and run the `get_app_types.sh` script:
 
 ```console
-student@os:~/.../tasks/app-investigation/support/$ ./get_app_types.sh
+student@os:~/.../app-investigation/support/$ ./get_app_types.sh
 binary apps: 2223
 Perl apps: 256
 Shell apps: 454
@@ -20,7 +20,7 @@ The output will differ between systems, given each has particular types of appli
 We list them by running the command inside the `get_app_types.sh` script:
 
 ```console
-student@os:~/.../tasks/app-investigation/support/$ find /usr/bin /bin /usr/sbin /sbin -type f -exec file {} \;
+student@os:~/.../app-investigation/support/$ find /usr/bin /bin /usr/sbin /sbin -type f -exec file {} \;
 [...]
 /usr/bin/qpdldecode: ELF 64-bit LSB shared object, x86-64 [...]
 /usr/bin/mimeopen: Perl script text executable

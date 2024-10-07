@@ -5,34 +5,34 @@ Still, for improved development time and safety, other programming languages can
 Most (if not all) of these high-level programming languages still make use of the standard C library.
 Such that a call to a function in Python would end-up making a call to a function in the standard C library.
 
-The `high-level-lang/support/` folder stores the implementation of a simple "Hello, World!"-printing program in Python.
+The `chapters/software-stack/high-level-languages/drills/tasks/high-level-lang/support/` folder stores the implementation of a simple "Hello, World!"-printing program in Python.
 We simply invoke the `python` interpreter to run the program:
 
 ```console
-student@os:~/.../tasks/high-level-lang/support$ python hello.py
+student@os:~/.../high-level-lang/support$ python hello.py
 Hello, world!
 ```
 
 We count the number of functions called from the standard C library and the number of system calls:
 
 ```console
-student@os:~/.../tasks/high-level-lang/support$ ltrace -l 'libc*' python hello.py 2> libc.out
+student@os:~/.../high-level-lang/support$ ltrace -l 'libc*' python hello.py 2> libc.out
 Hello, world!
 
-student@os:~/.../tasks/high-level-lang/support$ wc -l libc.out
+student@os:~/.../high-level-lang/support$ wc -l libc.out
 50469 out
 
-student@os:~/.../tasks/high-level-lang/support$ strace python hello.py 2> syscall.out
+student@os:~/.../high-level-lang/support$ strace python hello.py 2> syscall.out
 Hello, world!
 
-student@os:~/.../tasks/high-level-lang/support$ wc -l syscall.out
+student@os:~/.../high-level-lang/support$ wc -l syscall.out
 948 syscall.out
 ```
 
 The dynamic standard C library (`libc.so.6`) is a dependency of the Python interpreter (`/usr/bin/python3`):
 
 ```console
-student@os:~/.../tasks/high-level-lang/support$ ldd /usr/bin/python3
+student@os:~/.../high-level-lang/support$ ldd /usr/bin/python3
 [...]
         libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007fa6fd6d0000)
 [...]
@@ -46,7 +46,7 @@ Each new layer in the software stack simplifies development but adds overhead.
 We can use `perf` to compare the running time between the Python and a C "Hello, World!"-printing programs:
 
 ```console
-student@os:~/.../tasks/high-level-lang/support$ sudo perf stat ../static-dynamic/hello
+student@os:~/.../high-level-lang/support$ sudo perf stat ../static-dynamic/hello
 Hello, World!
 
  Performance counter stats for '../static-dynamic/hello':
@@ -65,7 +65,7 @@ Hello, World!
        0.000872000 seconds user
        0.000000000 seconds sys
 
-student@os:~/.../tasks/high-level-lang/support$ sudo perf stat python hello.py
+student@os:~/.../high-level-lang/support$ sudo perf stat python hello.py
 Hello, world!
 
  Performance counter stats for 'python hello.py':

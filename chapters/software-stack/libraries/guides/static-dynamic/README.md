@@ -7,15 +7,15 @@ The `chapters/software-stack/libraries/guides/static-dynamic/support/` folder st
 Let's build and run the two executables:
 
 ```console
-student@os:~/.../tasks/static-dynamic/support$ ls
+student@os:~/.../static-dynamic/support$ ls
 hello.c  Makefile
 
-student@os:~/.../tasks/static-dynamic/support$ make
+student@os:~/.../static-dynamic/support$ make
 cc -Wall   -c -o hello.o hello.c
 cc   hello.o   -o hello
 cc -static -o hello_static hello.o
 
-student@os:~/.../tasks/static-dynamic/support$ ls -lh
+student@os:~/.../static-dynamic/support$ ls -lh
 total 852K
 -rwxrwxr-x 1 razvan razvan 8.2K Aug  2 15:53 hello
 -rw-rw-r-- 1 razvan razvan   76 Aug  2 15:51 hello.c
@@ -23,10 +23,10 @@ total 852K
 -rwxrwxr-x 1 razvan razvan 827K Aug  2 15:53 hello_static
 -rw-rw-r-- 1 razvan razvan  237 Aug  2 15:53 Makefile
 
-student@os:~/.../tasks/static-dynamic/support$ ./hello
+student@os:~/.../static-dynamic/support$ ./hello
 Hello, World!
 
-student@os:~/.../tasks/static-dynamic/support$ ./hello_static
+student@os:~/.../static-dynamic/support$ ./hello_static
 Hello, World!
 ```
 
@@ -35,18 +35,18 @@ The two executables (`hello` and `hello_static`) behave similarly, despite havin
 We use `nm` and `ldd` to catch differences between the two types of resulting executables:
 
 ```console
-student@os:~/.../tasks/static-dynamic/support$ ldd hello
+student@os:~/.../static-dynamic/support$ ldd hello
         linux-vdso.so.1 (0x00007ffc8d9b2000)
         libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007f10d1d88000)
         /lib64/ld-linux-x86-64.so.2 (0x00007f10d237b000)
 
-student@os:~/.../tasks/static-dynamic/support$ ldd hello_static
+student@os:~/.../static-dynamic/support$ ldd hello_static
         not a dynamic executable
 
-student@os:~/.../tasks/static-dynamic/support$ nm hello | wc -l
+student@os:~/.../static-dynamic/support$ nm hello | wc -l
 33
 
-student@os:~/.../tasks/static-dynamic/support$ nm hello_static | wc -l
+student@os:~/.../static-dynamic/support$ nm hello_static | wc -l
 1674
 ```
 
@@ -57,7 +57,7 @@ We can use `strace` to see that there are differences in the preparatory system 
 For the dynamically-linked executable, the dynamically-linked library (`/lib/x86_64-linux-gnu/libc.so.6`) is opened during runtime:
 
 ```console
-student@os:~/.../tasks/static-dynamic/support$ strace ./hello
+student@os:~/.../static-dynamic/support$ strace ./hello
 execve("./hello", ["./hello"], 0x7ffc409c6640 /- 66 vars */) = 0
 brk(NULL)                               = 0x55a72eda6000
 access("/etc/ld.so.nohwcap", F_OK)      = -1 ENOENT (No such file or directory)
@@ -89,7 +89,7 @@ write(1, "Hello, World!\n", 14Hello, World!
 exit_group(0)                           = ?
 +++ exited with 0 +++
 
-student@os:~/.../tasks/static-dynamic/support$ strace ./hello_static
+student@os:~/.../static-dynamic/support$ strace ./hello_static
 execve("./hello_static", ["./hello_static"], 0x7ffc9fd45400 /- 66 vars */) = 0
 brk(NULL)                               = 0xff8000
 brk(0xff91c0)                           = 0xff91c0
@@ -109,7 +109,7 @@ exit_group(0)                           = ?
 Similarly, we can investigate a system executable (`/bin/ls`) to see that indeed all referenced dynamically-linked libraries are opened (via the `openat` system call) at runtime:
 
 ```console
-student@os:~/.../tasks/static-dynamic/support$ ldd $(which ls)
+student@os:~/.../static-dynamic/support$ ldd $(which ls)
 	linux-vdso.so.1 (0x00007ffc3bdf3000)
 	libselinux.so.1 => /lib/x86_64-linux-gnu/libselinux.so.1 (0x00007f092bd88000)
 	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007f092b997000)
@@ -118,7 +118,7 @@ student@os:~/.../tasks/static-dynamic/support$ ldd $(which ls)
 	/lib64/ld-linux-x86-64.so.2 (0x00007f092c1d2000)
 	libpthread.so.0 => /lib/x86_64-linux-gnu/libpthread.so.0 (0x00007f092b303000)
 
-student@os:~/.../tasks/static-dynamic/support$ strace -e openat ls
+student@os:~/.../static-dynamic/support$ strace -e openat ls
 openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3
 openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libselinux.so.1", O_RDONLY|O_CLOEXEC) = 3
 openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3

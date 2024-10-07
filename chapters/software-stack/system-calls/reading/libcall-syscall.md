@@ -13,13 +13,13 @@ The `libcall-syscall/support` folder stores the implementation of a simple progr
 Let's build the program and then trace the library calls (with `ltrace`) and the system calls (with `strace`):
 
 ```console
-student@os:~/.../tasks/libcall-syscall/support$ make
+student@os:~/.../libcall-syscall/support$ make
 cc -Wall   -c -o call.o call.c
 cc   call.o   -o call
 cc -Wall   -c -o call2.o call2.c
 cc   call2.o   -o call2
 
-student@os:~/.../tasks/libcall-syscall/support$ ltrace ./call
+student@os:~/.../libcall-syscall/support$ ltrace ./call
 fopen("a.txt", "wt")                                                                                             = 0x556d57679260
 strlen("Hello, world!\n")                                                                                        = 14
 fwrite("Hello, world!\n", 1, 14, 0x556d57679260)                                                                 = 14
@@ -28,7 +28,7 @@ fwrite("Bye, world!\n", 1, 12, 0x556d57679260)                                  
 fflush(0x556d57679260)                                                                                           = 0
 +++ exited (status 0) +++
 
-student@os:~/.../tasks/libcall-syscall/support$ strace ./call
+student@os:~/.../libcall-syscall/support$ strace ./call
 [...]
 openat(AT_FDCWD, "a.txt", O_WRONLY|O_CREAT|O_TRUNC, 0666) = 3
 fstat(3, {st_mode=S_IFREG|0664, st_size=0, ...}) = 0
