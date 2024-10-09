@@ -7,11 +7,11 @@ For debugging, use `strace` to trace the system calls from your program and make
 1. Update the `hello.asm` and / or `hello.s` files to print both `Hello, world!` and `Bye, world!`.
    This means adding another `write()` system call.
 
-   [Quiz 1](../drills/questions/syscall-id.md)
+   [Quiz 1](../../questions/syscall-id.md)
 
-   [Quiz 2](../drills/questions/syscall-tool.md)
+   [Quiz 2](../../questions/syscall-tool.md)
 
-   [Quiz 3](../drills/questions/syscall-numbers.md)
+   [Quiz 3](../../questions/syscall-numbers.md)
 
 1. Update the `hello.asm` and / or `hello.s` files to sleep before the `exit` system call.
 

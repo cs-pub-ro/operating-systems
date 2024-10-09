@@ -14,10 +14,12 @@ Enter the `chapters/software-stack/libc/libc/drills/tasks/support/` folder and g
    And for certain calls to `malloc()` / `free()` no syscall is happening.
    You'll find more about them in the [Data chapter](../../../data/lab).
 
+   [Quiz](../../questions/malloc.md)
+
 1. Create your own C program with calls to the standard C library in `vendetta.c`.
    Be as creative as you can about the types of functions being made.
 
-   [Quiz](../drills/questions/libc.md)
+   [Quiz](../../questions/libc.md)
 
 1. Inside the `vendetta.c` file make a call `open("a.txt", O_RDWR | O_CREAT, 0644)` to open / create the `a.txt` file.
    Make sure you include all required headers.

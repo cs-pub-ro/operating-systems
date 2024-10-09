@@ -13,11 +13,11 @@ Enter the `chapters/software-stack/libc/drills/tasks/common-functions/support/` 
    Using previously implemented functions allows us to more efficiently write new programs.
    These functions provide us with extensive features that we use in our programs.
 
-   [Quiz 1](../drills/questions/printf-syscall.md)
+   [Quiz 1](../../questions/printf-syscall.md)
 
-   [Quiz 2](../drills/questions/strcpy-syscall.md)
+   [Quiz 2](../../questions/strcpy-syscall.md)
 
-   [Quiz 3](../drills/questions/printf-vs-write.md)
+   [Quiz 3](../../questions/printf-vs-write.md)
 
 1. Update the `putchar()` function in `main_printf.c` to implement a buffered functionality of `printf()`.
    Characters passed via the `putchar()` call will be stored in a predefined static global buffer.

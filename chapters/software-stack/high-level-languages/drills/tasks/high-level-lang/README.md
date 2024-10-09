@@ -11,7 +11,7 @@ Enter the `chapters/software-stack/high-level-languages/drills/tasks/high-level-
 1. Create a "Hello, World!"-printing program in a programming language of your choice (other than C, Python and Go).
    Find the values above (library calls, system calls and running time).
 
-   [Quiz](../drills/questions/high-level-lang.md)
+   [Quiz](../../questions/python-tools.md)
 
 1. Create programs in C, Python and Go that compute the N-th Fibonacci number.
    `N` is passed as a command-line argument.

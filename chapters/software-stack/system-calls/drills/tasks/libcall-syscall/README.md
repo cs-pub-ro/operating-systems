@@ -7,6 +7,6 @@ Enter the `chapters/software-stack/system-calls/drills/tasks/libcall-syscall/sup
 
    Find explanations for the calls being made and the library call to system call mapping.
 
-   [Quiz](../drills/questions/libcall-syscall.md)
+   [Quiz](../../questions/libcall-syscall.md)
 
 If you're having difficulties solving this exercise, go through [this](../../../reading/libcall-syscall.md) reading material.

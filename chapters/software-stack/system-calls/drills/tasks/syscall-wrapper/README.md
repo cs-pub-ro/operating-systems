@@ -11,7 +11,7 @@ Enter the `chapters/software-stack/system-calls/syscall-wrapper/drills/tasks/sup
 
    We can see that it's easier to have wrapper calls and write most of the code in C than in assembly language.
 
-   [Quiz](../drills/questions/syscall-wrapper.md)
+   [Quiz](../../questions/syscall-wrapper.md)
 
 1. Update the files in the `support/` folder to make the `getpid` system call available as a wrapper.
    Create a function with the signature `unsigned int itoa(int n, char *a)` that converts an integer to a string.
