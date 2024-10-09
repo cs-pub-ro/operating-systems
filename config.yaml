@@ -140,7 +140,7 @@ docusaurus:
                                 - strcpy System Call: strcpy-syscall.md
                                 - printf vs write: printf-vs-write.md
                                 - malloc: malloc.md
-                                - Syscall Tool: syscall-tool.md
+                                - Libc: libc.md
               - High-Level Languages:
                   path: chapters/software-stack/high-level-languages
                   extra:
