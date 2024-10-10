@@ -1,6 +1,7 @@
 stages:
   - make_assets
   - embed_reveal
+  - quizzes
   - docusaurus
 
 build_dir: /build
@@ -31,6 +32,17 @@ embed_reveal:
       Compute: slides/Compute
       IO: slides/IO
       Application-Interaction: slides/Application-Interaction
+
+quizzes:
+  plugin: quizify
+  options:
+    parser_type: python
+    parser: python
+    quiz_type: link
+    quiz_embed: iframe_inline
+    quiz_regex: \[.*\]\(\.\./drills/questions/.*\.md\)
+    locations:
+      - chapters/software-stack/high-level-languages/drills/tasks/high-level-lang/README.md
 
 docusaurus:
   plugin: docusaurus
