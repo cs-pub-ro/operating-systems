@@ -38,7 +38,7 @@ docusaurus:
     course_name: SO
     sidebar: js
     structure:
-      - Introduction: content/landing-page/README.md
+      - Introduction: landing-page/README.md
       - Setting up the Lab Environment: misc/lab-setup.md
       - Software Stack:
         - Slides: /build/embed_reveal/Software-Stack/Software-Stack.mdx
