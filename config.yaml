@@ -1,11 +1,39 @@
 stages:
   - make_assets
+  - prepare_view
   - embed_reveal
   - docusaurus
 
 build_dir: /build
 output_type: last
 output_dir: /output
+
+# Static data to describe how source files compose the labs
+# Each entry will be named lab1.md, lab2.md, etc.
+lab_structure:
+  - title: Lab 1 - Operating System Perspective
+    filename: lab1.md
+    content:
+      - modern-sw-stack.md
+      - basic-syscall.md
+      - syscall-wrapper.md
+      - libcall-syscall.md
+    tasks:
+      - basic-syscall.md
+      - syscall-wrapper.md
+      - libcall-syscall.md
+  - title: Lab 2 - Library Perspective
+    filename: lab2.md
+    content:
+      - common-functions.md
+      - libc.md
+      - high-level-lang.md
+      - app-investigate.md
+    tasks:
+      - common-functions.md
+      - libc.md
+      - high-level-lang.md
+      - app-investigation.md
 
 make_assets:
   plugin: command
@@ -19,6 +47,15 @@ make_assets:
       - content/chapters/app-interact/lecture
     args:
       - all
+
+prepare_view:
+  plugin: command
+  options:
+    command: python
+    locations:
+      - .
+    args:
+      - gen-view.py
 
 embed_reveal:
   plugin: reveal_embed
@@ -41,142 +78,31 @@ docusaurus:
       - Introduction: landing-page/README.md
       - Setting up the Lab Environment: misc/lab-setup.md
       - Software Stack:
-        - Slides: /build/embed_reveal/Software-Stack/Software-Stack.mdx
-        - Lab 1 - Operating System Perspective:
-            subsections:
-              - Overview:
-                  path: chapters/software-stack/overview/
-                  extra:
-                    - media/
-                    - drills/questions/
-                  subsections:
-                    - Reading: reading/overview.md
-                    - Drills:
-                        path: drills/
-                        subsections:
-                          - Questions:
-                              path: questions/
-                              subsections:
-                                - Software: software.md
-              - Modern Software Stacks:
-                  path: chapters/software-stack/modern-software-stacks
-                  extra:
-                    - media/
-                  subsections:
-                    - Reading: reading/modern-sw-stack.md
-              - System Calls:
-                  path: chapters/software-stack/system-calls
-                  extra:
-                    - media/
-                    - drills/questions/
-                    - drills/tasks/
-                  subsections:
-                    - Reading:
-                        path: reading/
-                        subsections:
-                          - Basic System Calls: basic-syscall.md
-                          - System Call Wrapper: syscall-wrapper.md
-                          - Libcall-Syscall: libcall-syscall.md
-                    - Drills:
-                        path: drills/
-                        subsections:
-                          - Tasks:
-                              path: tasks/
-                              subsections:
-                                - Basic Syscall/: basic-syscall/
-                                - System Call Wrapper/: syscall-wrapper/
-                          - Questions:
-                              path: questions/
-                              subsections:
-                                - Libcall with Syscall: libcall-syscall.md
-                                - Syscall Wrappers: syscall-wrapper.md
-                                - Syscall ID: syscall-id.md
-                                - Syscall Tool: syscall-tool.md
-                                - Syscall Numbers: syscall-numbers.md
-        - Lab 2 - Library Perspective:
-            subsections:
-              - Libraries:
-                  path: chapters/software-stack/libraries
-                  extra:
-                    - media/
-                    - drills/questions/
-                  subsections:
-                    - Guides:
-                        path: guides/
-                        subsections:
-                          - Static-Dynamic/: static-dynamic/
-                    - Drills:
-                        path: drills/
-                        subsections:
-                          - Questions:
-                              path: questions/
-                              subsections:
-                                - Dynamic Libraries: dynamic-libraries.md
-                                - Static Executables: static-executables.md
-              - Libc:
-                  path: chapters/software-stack/libc
-                  extra:
-                    - media/
-                    - drills/questions/
-                    - drills/tasks/
-                  subsections:
-                    - Reading:
-                        path: reading/
-                        subsections:
-                          - Common Functions: common-functions.md
-                          - Libc: libc.md
-                    - Drills:
-                        path: drills/
-                        subsections:
-                          - Tasks:
-                              path: tasks/
-                              subsections:
-                                - Common Functions/: common-functions/
-                                - Libc/: libc/
-                          - Questions:
-                              path: questions/
-                              subsections:
-                                - printf System Call: printf-syscall.md
-                                - strcpy System Call: strcpy-syscall.md
-                                - printf vs write: printf-vs-write.md
-                                - malloc: malloc.md
-                                - Libc: libc.md
-              - High-Level Languages:
-                  path: chapters/software-stack/high-level-languages
-                  extra:
-                    - drills/questions/
-                  subsections:
-                    - Reading:
-                        path: reading/
-                        subsections:
-                          - High-Level Languages: high-level-lang.md
-                    - Drills:
-                        path: drills/
-                        subsections:
-                          - Tasks:
-                              path: tasks/
-                              subsections:
-                                - High-Level Languages/: high-level-lang/
-                          - Questions:
-                              path: questions/
-                              subsections:
-                                - Python Tools: python-tools.md
-              - Applications:
-                  path: chapters/software-stack/applications
-                  extra:
-                    - media/
-                  subsections:
-                    - Reading:
-                        path: reading/
-                        subsections:
-                          - Applications: app-investigate.md
-                    - Drills:
-                        path: drills/
-                        subsections:
-                          - Tasks:
-                              path: tasks/
-                              subsections:
-                                - Applications/: app-investigation/
+          path: /build/prepare_view/.view
+          extra:
+            - media
+          subsections:
+            - Slides: /build/embed_reveal/Software-Stack/Software-Stack.mdx
+            - Overview: /build/prepare_view/.view/software-stack-overview.md
+            - Questions:
+                path: questions
+                subsections:
+                  - Printf vs Write: printf-vs-write.md
+                  - Syscall ID: syscall-id.md
+                  - Python Tools: python-tools.md
+                  - Malloc: malloc.md
+                  - Software: software.md
+                  - Static Executables: static-executables.md
+                  - Syscall Numbers: syscall-numbers.md
+                  - Printf Syscall: printf-syscall.md
+                  - Syscall Wrapper: syscall-wrapper.md
+                  - Syscall Tool: syscall-tool.md
+                  - Libcall Syscall: libcall-syscall.md
+                  - Libc: libc.md
+                  - Dynamic Libraries: dynamic-libraries.md
+                  - Strcpy Syscall: strcpy-syscall.md
+            - Lab 1 - Operating System Perspective: lab1.md
+            - Lab 2 - Library Perspective: lab2.md
       - Lecture:
           path: /build/embed_reveal
           subsections:
