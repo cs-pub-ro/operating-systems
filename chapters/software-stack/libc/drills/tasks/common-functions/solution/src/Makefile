@@ -7,9 +7,9 @@ LDFLAGS = -nostdlib -no-pie -Wl,--entry=main -Wl,--build-id=none
 
 all: main_printf os_string.o
 
-main_printf: main_printf.o printf.o string.o syscall.o
+main_printf: main_printf.o printf.o os_string.o syscall.o
 
-main_printf.o: main_printf.c printf.h syscall.h string.h
+main_printf.o: main_printf.c printf.h syscall.h os_string.h
 
 printf.o: printf.c printf.h
 
