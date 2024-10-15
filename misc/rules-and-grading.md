@@ -246,28 +246,28 @@ Winning teams will be announced by December 20, 2023.
 
 To reinforce knowledge, there will be 4 multiple-choice quizzes as follows:
 
-1. Quiz 1 - covering questions from the [Software Stack chapter](https://cs-pub-ro.github.io/operating-systems/Lecture/Software%20Stack/), will take place on the following dates:
+1. Quiz 1 - covering questions from the [Software Stack chapter](https://cs-pub-ro.github.io/operating-systems/Software%20Stack), will take place on the following dates:
 
     - Series CA: 15.10.2024
     - Series CB: 16.10.2024
     - Series CC: 15.10.2024
     - Series CD: 15.10.2024
 
-1. Quiz 2 - covering questions from the [Data chapter](https://cs-pub-ro.github.io/operating-systems/Lecture/Data/), will take place on the following dates:
+1. Quiz 2 - covering questions from the [Data chapter](https://cs-pub-ro.github.io/operating-systems/Data/), will take place on the following dates:
 
     - Series CA: 05.11.2024
     - Series CB: 06.11.2024
     - Series CC: 05.11.2024
     - Series CD: 05.11.2024
 
-1. Quiz 3 - covering questions from the [Compute chapter](https://cs-pub-ro.github.io/operating-systems/Lecture/Compute/), will take place on the following dates:
+1. Quiz 3 - covering questions from the [Compute chapter](https://cs-pub-ro.github.io/operating-systems/Compute/), will take place on the following dates:
 
     - Series CA: 26.11.2024
     - Series CB: 27.11.2024
     - Series CC: 26.11.2024
     - Series CD: 26.11.2024
 
-1. Quiz 4 - covering questions from the [I/O chapter](https://cs-pub-ro.github.io/operating-systems/Lecture/IO/), in the written exam format, will take place on the following dates:
+1. Quiz 4 - covering questions from the [I/O chapter](https://cs-pub-ro.github.io/operating-systems/IO/), in the written exam format, will take place on the following dates:
 
     - Series CA: 17.12.2024
     - Series CB: 18.12.2024
