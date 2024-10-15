@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-    <title>OS: Compute</title>
+    <title>OS: Data</title>
     <link rel="shortcut icon" href="./favicon.ico" />
     <link rel="stylesheet" href="./dist/reset.css" />
     <link rel="stylesheet" href="./dist/reveal.css" />
@@ -19,17 +19,17 @@
           <textarea data-template>
             
 
-# DATA
+# Data
 
-1. Data in Software and Computing
-1. Perspectives on Data
-1. Virtual Memory
+1. [Data in Software and Computing](#data)
+1. [Perspectives of Data](#perspectives-of-data)
+1. [Virtual Memory](#virtual-memory)
 
 ---
 
 ## Data in Software and Computing
 
----
+----
 
 ### What Is Data?
 
@@ -49,28 +49,27 @@
 
 ### What Is Data? (Computer Science)
 
-![Data1](media/data.svg)
+![Data1](overview/media/data.svg)
 
 ----
 
 ### What Is Data? (Computer Science)
 
-![Data2](media/data-mem.svg)
+![Data2](overview/media/data-mem.svg)
 
 ----
 
 ### What We Want
 
 * Optimal performance
-    * retrieve and store should be as fast as possible
+  * retrieve and store should be as fast as possible
 * Optimal use of memory space
-    * once data is not used, memory is freed immediately
-    * minimize the time when memory is reserved but not used
-    * data should occupy the minimal required space
+  * once data is not used, memory is freed immediately
+  * minimize the time when memory is reserved but not used
+  * data should occupy the minimal required space
 * Security
-    * data correctness
-    * data isolation
-
+  * data correctness
+  * data isolation
 ---
 
 ## Perspectives of Data
@@ -80,15 +79,15 @@
 * Hardware Perspective
 * Operating System Perspective
 
----
+----
 
 ### A Programmer's Perspective on Data
 
 * Data = variables
 * Operations: declare/read/write
 * Variables are stored in memory, so depending on the language, you can also:
-    * allocate memory
-    * deallocate memory
+  * allocate memory
+  * deallocate memory
 
 ----
 
@@ -165,31 +164,31 @@
 
 ### Stages of data
 
-![Data3](media/lvl-data.svg)
+![Data3](perspectives/media/lvl-data.svg)
 
 ---
 
 ### Programming Language Perspective
 
-![PL](media/PL.svg)
+![PL](perspectives/media/PL.svg)
 
 ---
 
 ### Hardware perspective
 
-![HP](media/HP.svg)
+![HP](perspectives/media/HP.svg)
 
 ----
 
 ### Hardware Perspective
 
-![HP2](media/HP2.svg)
+![HP2](perspectives/media/HP2.svg)
 
 ----
 
 ### How is it Mapped?
 
-![SOP](media/SOP.svg)
+![SOP](perspectives/media/SOP.svg)
 
 ---
 
@@ -199,14 +198,14 @@
 
 ### Storage Units - v1
 
-![STAGENGY](media/storing-agency.svg)
+![STAGENGY](perspectives/media/storing-agency.svg)
 
 ----
 
 ### Storage Units - v1
 
 * Each user needs to manually verify that a storage box is free
-* The user needs to know the exact id of the box
+* The user needs to know the exact ID of the box
 * Extra security measures need to be implemented so that a user
 does not end up opening another users box
 * We expect the users to govern the situation
@@ -216,7 +215,7 @@ does not end up opening another users box
 
 ### Storing Units - v2
 
-![STAGENGY2](media/unit-interface.svg)
+![STAGENGY2](perspectives/media/unit-interface.svg)
 
 ----
 
@@ -232,19 +231,17 @@ does not end up opening another users box
 ### Storing Memory
 
 * How do computers use memory?
-    - v1 or v2?
-    - `demo/proc_storage/`
-
-
+  - v1 or v2?
+  - `demo/proc_storage/`
 ---
 
 ## Virtual Memory
 
----
+----
 
 ### Virtual Memory
 
-![VM1](media/VM-1.svg)
+![VM1](virtual-memory/media/VM-1.svg)
 
 ----
 
@@ -267,7 +264,7 @@ does not end up opening another users box
 
 ### Pages/Frames
 
-![PG](media/pages.svg)
+![PG](virtual-memory/media/pages.svg)
 
 ----
 
@@ -293,7 +290,7 @@ arr[1500] = 7;
 
 ### An Example - How does it work?
 
-![EX1](media/vm-example1.svg)
+![EX1](virtual-memory/media/vm-example1.svg)
 
 ----
 
@@ -308,7 +305,7 @@ arr[1500] = 7;
 
 ### An Example - How does it work?
 
-![EX2](media/vm-example2.svg)
+![EX2](virtual-memory/media/vm-example2.svg)
 
 ----
 
@@ -317,14 +314,14 @@ arr[1500] = 7;
 * The requested address is checked to see if it was allocated (virtually)
 * If not => _segmentation fault_
 * If yes, then we must retrieve it
-* Wait, about about physical frames?
+* Wait, what about physical frames?
 
 ----
 
 ### What About Physical Memory? (part 2)
 
 
-![EX3](media/vm-example3.svg)
+![EX3](virtual-memory/media/vm-example3.svg)
 
 ----
 
@@ -339,7 +336,7 @@ arr[1500] = 7;
 
 ### An Example - How does it work?
 
-![EX4](media/vm-example4.svg)
+![EX4](virtual-memory/media/vm-example4.svg)
 
 ----
 
@@ -352,7 +349,7 @@ arr[1500] = 7;
 
 ### An Example - How does it work?
 
-![EX5](media/vm-example5.svg)
+![EX5](virtual-memory/media/vm-example5.svg)
 
 ----
 
@@ -371,8 +368,8 @@ arr[1500] = 7;
 
 * Occur when a virtual address access cannot be performed
 * Examples:
-    - A valid virtual address is accessed, but no physical frame is allocated
-    - An invalid virtual address is accessed
+  - A valid virtual address is accessed, but no physical frame is allocated
+  - An invalid virtual address is accessed
 
 ----
 
@@ -386,7 +383,7 @@ arr[1500] = 7;
 
 ### Implementation of Virtual Memory
 
-![VM](media/VM.svg)
+![VM](virtual-memory/media/VM.svg)
 
 ----
 
@@ -463,13 +460,13 @@ arr[1500] = 7;
 
 ### Swapping
 
-![SWAP](media/Swap.svg)
+![SWAP](virtual-memory/media/Swap.svg)
 
 ----
 
 ### Swapping
 
-![SWAPARCH](media/Swap-arch.svg)
+![SWAPARCH](virtual-memory/media/Swap-arch.svg)
 
 * [Quiz](quiz/swap.md)
 
@@ -501,7 +498,7 @@ void main()
 
 ### OS Data Structures
 
-![OSVM](media/OSVM.svg)
+![OSVM](virtual-memory/media/OSVM.svg)
 
 * [Quiz](quiz/sdfsd)
 
@@ -510,11 +507,11 @@ void main()
 ### OS Interface To Virtual Memory
 
 * `/proc/<PID>/mem` - access to virtual memory
-    - `demo/proc_mem/`
+  - `demo/proc_mem/`
 * `/proc/<PID>/page_map` - access to page mappings
-    - `demo/proc_pagemap/`
+  - `demo/proc_pagemap/`
 * `/dev/mem` - access to physical memory
-    - `demo/proc_pagemap/`
+  - `demo/proc_pagemap/`
 
 ---
 
