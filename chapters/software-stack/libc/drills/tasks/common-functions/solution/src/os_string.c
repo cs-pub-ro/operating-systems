@@ -23,7 +23,7 @@ char *os_strcpy(char *dest, const char *src)
 	return dest;
 }
 
-/* TODO 12: Implement strcat(). */
+/* TODO 25: Implement os_strcat(). */
 char *os_strcat(char *dest, const char *src)
 {
     char *rdest = dest;
@@ -31,8 +31,22 @@ char *os_strcat(char *dest, const char *src)
     while (*dest)
       dest++;
 
+	while (*src) {
+		*dest = *src;
+		dest++;
+		src++;
+	}
+
+	/*
+	 * A more difficult to understand, but shorter and smarter implementation is below.
+	 * The ++ operator is evaluated last, after checking the condition of the loop, so this condition can be
+	 * seen as simply *dest = *src followed by dest++ and src++ in the loop body, which is equivalent to the loop
+	 * above.
+	 */
+	/*
     while (*dest++ = *src++)
       ;
+	*/
 
     return rdest;
 }
