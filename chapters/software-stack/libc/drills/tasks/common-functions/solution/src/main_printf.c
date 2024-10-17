@@ -23,25 +23,42 @@ void flush(void)
 /* _putchar implementation has to be provided. */
 void _putchar(char character)
 {
-	/* REPLACE 1 */
-	write(1, &character, 1);
-	/* REMOVE 4 */
+	/* TODO 5: Store the character in putchar_buffer. Flush on \n or when the length is 1024. */
 	putchar_buffer[putchar_buffer_len] = character;
 	putchar_buffer_len++;
 	if (character == '\n' || putchar_buffer_len == 1024)
 		flush();
+
+	/* REPLACE 1 */
+	/* write(1, &character, 1); */
 }
 
 int main(void)
 {
-	printf("[before] src is at %p, len is %lu, content: \"%s\"\n", src, os_strlen(src), src);
-	printf("[before] dest is at %p, len is %lu, content: \"%s\"\n", dest, os_strlen(dest), dest);
+	/* TODO 5: Replace printf() with sprintf() and write(). */
+	sprintf(out_buffer, "[before] src is at %p, len is %lu, content: \"%s\"\n", src, os_strlen(src), src);
+	write(1, out_buffer, strlen(out_buffer));
+
+	sprintf(out_buffer, "[before] dest is at %p, len is %lu, content: \"%s\"\n", dest, os_strlen(dest), dest);
+	write(1, out_buffer, strlen(out_buffer));
+
+	/* REPLACE 2 */
+	/* printf("[before] src is at %p, len is %lu, content: \"%s\"\n", src, os_strlen(src), src); */
+	/* printf("[before] dest is at %p, len is %lu, content: \"%s\"\n", dest, os_strlen(dest), dest); */
 
 	printf("copying src to dest\n");
 	os_strcpy(dest, src);
 
-	printf("[after] src is at %p, len is %lu, content: \"%s\"\n", src, os_strlen(src), src);
-	printf("[after] dest is at %p, len is %lu, content: \"%s\"\n", dest, os_strlen(dest), dest);
+	/* TODO 5: Replace printf() with sprintf() and write(). */
+	sprintf(out_buffer, "[after] src is at %p, len is %lu, content: \"%s\"\n", src, os_strlen(src), src);
+	write(1, out_buffer, strlen(out_buffer));
+
+	sprintf(out_buffer, "[after] dest is at %p, len is %lu, content: \"%s\"\n", dest, os_strlen(dest), dest);
+	write(1, out_buffer, strlen(out_buffer));
+
+	/* REPLACE 2 */
+	/* printf("[after] src is at %p, len is %lu, content: \"%s\"\n", src, os_strlen(src), src); */
+	/* printf("[after] dest is at %p, len is %lu, content: \"%s\"\n", dest, os_strlen(dest), dest); */
 
 	exit(0);
 	return 0;
