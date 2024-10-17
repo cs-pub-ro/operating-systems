@@ -19,16 +19,16 @@ We print messages using the `write()` system call wrapper implemented in `syscal
 Let's build and run the program:
 
 ```console
-student@os:~/.../common-functions/support$ make main_string
+student@os:~/.../common-functions/support/src$ make main_string
 gcc -fno-PIC -fno-stack-protector   -c -o main_string.o main_string.c
 gcc -fno-PIC -fno-stack-protector   -c -o os_string.o os_string.c
 nasm -f elf64 -o syscall.o syscall.s
 gcc -nostdlib -no-pie -Wl,--entry=main -Wl,--build-id=none main_string.o os_string.o syscall.o -o main_string
 
-student@os:~/.../common-functions/support$ ./main_string
+student@os:~/.../common-functions/support/src$ ./main_string
 Destination string is: warhammer40k
 
-student@os:~/.../common-functions/support$ strace ./main_string
+student@os:~/.../common-functions/support/src$ strace ./main_string
 execve("./main_string", ["./main_string"], 0x7ffd544d0a70 /- 63 vars */) = 0
 write(1, "Destination string is: ", 23Destination string is: ) = 23
 write(1, "warhammer40k\n", 13warhammer40k
