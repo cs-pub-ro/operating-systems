@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkso=self.webpackChunkso||[]).push([[7369],{9686:e=>{e.exports=JSON.parse('{"title":"Lecture","slug":"/Lecture/","permalink":"/operating-systems/86/Lecture/","navigation":{"previous":{"title":"Lab 5 - Memory Security","permalink":"/operating-systems/86/Data/lab5"},"next":{"title":"Compute","permalink":"/operating-systems/86/Lecture/Compute"}}}')}}]);
