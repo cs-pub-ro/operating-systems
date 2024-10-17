@@ -39,7 +39,7 @@ The last two characteristics rely on two items:
 
 ![Software Stack](../media/software-stack.svg)
 
-[Quiz](../drills/software.md)
+[Quiz](../drills/questions/software.md)
 
 ## Contents
 
