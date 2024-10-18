@@ -1,5 +1,5 @@
 SRC_PATH ?= ../src
-FULL_SRC_PATH = $(realpath $(SRC_PATH))
+FULL_SRC_PATH = "$(realpath $(SRC_PATH))"
 CPPFLAGS = -I. -I$(realpath $(SRC_PATH)) -I../utils
 CFLAGS = -Wall -Wextra
 # Remove the line below to disable debugging support.
