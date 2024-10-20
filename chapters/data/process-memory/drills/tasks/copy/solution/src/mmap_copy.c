@@ -39,19 +39,26 @@ int main(void)
 	rc = ftruncate(dst_fd, statbuf.st_size);
 	DIE(rc < 0, "fstat");
 
-	/* Map files. */
+	if (statbuf.st_size == 0) {
+		/* Nothing to copy. */
+		close(src_fd);
+		close(dst_fd);
+		return 0;
+	}
+
+	/* TODO 4: Map files using mmap */
 	src_p = mmap(NULL, statbuf.st_size, PROT_READ, MAP_PRIVATE, src_fd, 0);
 	DIE(src_p == MAP_FAILED, "mmap");
 	dst_p = mmap(NULL, statbuf.st_size, PROT_READ | PROT_WRITE, MAP_SHARED, dst_fd, 0);
 	DIE(dst_p == MAP_FAILED, "mmap");
 
-	/* Do the copying. */
 	clock_gettime(CLOCK_REALTIME, &time_before);
+	/* TODO 1: Do the copying */
 	memcpy(dst_p, src_p, statbuf.st_size);
 	clock_gettime(CLOCK_REALTIME, &time_after);
 	printf("time passed %ld microseconds\n", diff_us(time_after, time_before));
 
-	/* Unmap files. */
+	/* TODO 2: Unmap files. */
 	munmap(src_p, statbuf.st_size);
 	munmap(dst_p, statbuf.st_size);
 

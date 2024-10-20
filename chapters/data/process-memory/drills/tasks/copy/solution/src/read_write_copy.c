@@ -32,6 +32,7 @@ int main(void)
 	DIE(dst_fd < 0, "open");
 
 	clock_gettime(CLOCK_REALTIME, &time_before);
+	/* TODO 11: Implement copying using read and write syscalls */
 	while (1) {
 		n = read(src_fd, buffer, BUFSIZE);
 		DIE(n < 0, "read");
