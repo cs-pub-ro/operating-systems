@@ -28,13 +28,20 @@ int main(void)
 {
 	Student *s;
 
-	s = new Student("Andrei Popescu", 22, "Linux");
+	s = new Student("Linus Torvalds", 22, "Linux");
 	s->Print();
 
-	s = new Student("Ioana David", 23, "macOS");
-	s->Print();
-
+	/* TODO 1: Solve memory leaks. */
 	delete s;
+
+	s = new Student("Steve Jobs", 23, "macOS");
+	s->Print();
+
+	/* REMOVE 2 */
+	delete s;
+
+	/* TODO 1: Print size of student. */
+	std::cout << "Size of class Student: " << sizeof(Student) << "\n";
 
 	return 0;
 }

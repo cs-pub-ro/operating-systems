@@ -31,14 +31,21 @@ int main(void)
 	mtrace();
 
 	s = malloc(sizeof(*s));
-	init_student(s, "Andrei Popescu", 22, "Linux");
+	init_student(s, "Linus Torvalds", 22, "Linux");
 	print_student(s);
+
+	/* TODO 1: Solve memory leaks. */
+	free(s);
 
 	s = malloc(sizeof(*s));
-	init_student(s, "Ioana David", 23, "macOS");
+	init_student(s, "Steve Jobs", 23, "macOS");
 	print_student(s);
 
+	/* REMOVE 2 */
 	free(s);
+
+	/* TODO 1: Print size of student. */
+	printf("Size of struct student: %ld\n", sizeof(struct student));
 
 	return 0;
 }
