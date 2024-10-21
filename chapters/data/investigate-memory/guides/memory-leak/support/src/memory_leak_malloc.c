@@ -31,11 +31,11 @@ int main(void)
 	mtrace();
 
 	s = malloc(sizeof(*s));
-	init_student(s, "Andrei Popescu", 22, "Linux");
+	init_student(s, "Linus Torvalds", 22, "Linux");
 	print_student(s);
 
 	s = malloc(sizeof(*s));
-	init_student(s, "Ioana David", 23, "macOS");
+	init_student(s, "Steve Jobs", 23, "macOS");
 	print_student(s);
 
 	free(s);
