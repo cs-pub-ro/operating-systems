@@ -2,7 +2,7 @@
 
 ## Question Text
 
-Which of the following is **not*- an advantage of software when compared to hardware?
+Which of the following is **not** an advantage of software when compared to hardware?
 
 ## Question Answers
 
