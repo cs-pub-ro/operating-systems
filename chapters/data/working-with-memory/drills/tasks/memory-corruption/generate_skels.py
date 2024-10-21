@@ -93,37 +93,40 @@ def main():
     args = parser.parse_args()
 
     for root, dirs, files in os.walk(args.input):
-        new_root = os.path.join(args.output, root.replace(args.input, ""))
+        new_root = os.path.join(args.output, os.path.relpath(root, args.input))
         for d in dirs:
             os.makedirs(os.path.join(new_root, d), exist_ok=True)
 
         for src in files:
             if (
                 re.match("Makefile.*$", src)
-                or re.match(".*\.sh$", src)
-                or re.match(".*\.[sS]$", src)
+                or re.match(r".*\.sh$", src)
+                or re.match(r".*\.[sS]$", src)
             ):
-                pattern = "(^\s*#\s*TODO)( [0-9]*)(:.*)"
-                replace = "(^\s*#\s*REPLACE)( [0-9]*)"
-                remove = "(^\s*#\s*REMOVE)( [0-9]*)"
+                pattern = r"(^\s*#\s*TODO)( [0-9]*)(:.*)"
+                replace = r"(^\s*#\s*REPLACE)( [0-9]*)"
+                remove = r"(^\s*#\s*REMOVE)( [0-9]*)"
                 replace_pairs = [("# ", "")]
                 end_string = None
-            elif re.match(".*\.asm$", src):
-                pattern = "(^\s*;\s*TODO)( [0-9]*)(:.*)"
-                replace = "(^\s*;\s*REPLACE)( [0-9]*)"
-                remove = "(^\s*;\s*REMOVE)( [0-9]*)"
+            elif re.match(r".*\.asm$", src):
+                pattern = r"(^\s*;\s*TODO)( [0-9]*)(:.*)"
+                replace = r"(^\s*;\s*REPLACE)( [0-9]*)"
+                remove = r"(^\s*;\s*REMOVE)( [0-9]*)"
                 replace_pairs = [("; ", "")]
                 end_string = None
             elif (
-                re.match(".*\.[chd]$", src)
-                or re.match(".*\.cpp$", src)
-                or re.match(".*\.hpp$", src)
+                re.match(r".*\.[ch]$", src)
+                or re.match(r".*\.cpp$", src)
+                or re.match(r".*\.hpp$", src)
             ):
-                pattern = "(.*/\*\s*TODO)([ 0-9]*)(:.*)"
-                replace = "(.*/\*\s*REPLACE)( [0-9]*)"
-                remove = "(.*/\*\s*REMOVE)( [0-9]*)"
-                replace_pairs = [("/\* ", ""), (" \*/", "")]
+                pattern = r"(.*/\*\s*TODO)([ 0-9]*)(:.*)"
+                replace = r"(.*/\*\s*REPLACE)( [0-9]*)"
+                remove = r"(.*/\*\s*REMOVE)( [0-9]*)"
+                replace_pairs = [(r"/\* ", ""), (r" \*/", "")]
                 end_string = "*/"
+            elif re.match(r".*\.d$", src):
+                pattern = r"(.*//\s*TODO)([ 0-9]*)(:.*)"
+                replace = r"(.*//\s*REPLACE)( [0-9]*)"
             else:
                 continue
 
