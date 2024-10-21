@@ -1,6 +1,8 @@
 # Memory Protection
 
-Let's navigate to the `chapters/data/working-with-memory/drills/tasks/memory-protection/support/` directory and inspect the `mem_prot.c` source file.
+Let's navigate to the `chapters/data/working-with-memory/drills/tasks/memory-protection/`, run `make skels` and enter the `support` directory.
+
+Inspect the `mem_prot.c` source file.
 The file uses different access types for the `data` variable and the `do_nothing` function.
 
 Build it:
@@ -55,5 +57,7 @@ you have to create a new string.
    The variable will be placed on a read-only section (`.rodata`) such as that write and execution access would result in _Segmentation fault_.
 
    Access the `ro` variable and show that, indeed, for write and execution access, _Segmentation fault_ is issued.
+
+   Check your work by running the `checker.sh` script in `support/tests/`.
 
 If you're having difficulties solving this exercise, go through [this](../../../reading/working-with-memory.md) reading material.

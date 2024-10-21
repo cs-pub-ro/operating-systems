@@ -393,18 +393,49 @@ An alternate use is for mapping files in the memory address space.
 Mapping of files is done by the loader for executables and libraries.
 That is why, in the output of `pmap`, there is a column with a filename.
 
-Mapping of a file results in getting a pointer to its contents and then using that pointer.
-This way, reading and writing to a file is an exercise of pointer copying, instead of the use of `read` / `write`-like system calls.
+```c
+void *mmap(void *addr, size_t length, int prot, int flags, int fd, off_t offset)
+```
 
-In the `drills/tasks/copy/support` folder, there are two source code files and two scripts:
+To better understand this prototype, let's break it down using an example:
 
-* `read_write_copy.c` implements copying with `read` / `write` syscalls
-* `mmap_copy.c` implements copying using `mmap`
-* `generate.sh` script generates the input file `in.dat`
-* `benchmark_cp.sh` script runs the two executables `mmap_copy` and `read_write_copy`
+```c
+void *mapped_region = mmap(NULL, filesize, PROT_READ, MAP_PRIVATE, fd, 0);
+```
 
-Open the two source code files and investigate them.
-You will notice that the `open()` system call has the following prototype `int open(const char *pathname, int flags)`.
+The arguments are as follows:
+
+- `addr`: used to request an exact memory address for the mapping; since we are not constrained by anything, we set `addr` to `NULL`, which means the kernel chooses the address
+- `length`: the length of the mapping i.e. `filesize`
+- `prot`: specifies the protection of the mapping, and can be a combination of `PROT_READ`, `PROT_WRITE`, `PROT_EXEC`, and `PROT_NONE`
+- `flags`: the type of the mapping, such as `MAP_SHARED` (changes are shared between processes and written back to the file) or `MAP_PRIVATE` (changes are private to the process and do not modify the file)
+- `fd`: the file descriptor of the file to be mapped
+- `offset`: the offset in the file where the mapping should start
+
+Mapping a file provides a pointer to its contents, allowing you to use this pointer to read or write data.
+This method turns reading and writing to a file into a matter of pointer copying, rather than relying on `read` / `write` system calls.
+
+Unlike `mmap`, the `read` and `write` system calls involve explicitly reading from or writing to a file through a buffer, transferring data between the user space and kernel space.
+
+For example:
+
+```c
+int src_fd = open("in.dat", O_RDONLY);
+int dst_fd = open("out.dat", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+char buffer[8192];
+ssize_t bytes;
+
+while ((bytes = read(src_fd, buffer, sizeof(buffer))) > 0) {
+    write(dst_fd, buffer, bytes);
+}
+```
+
+In this code snippet, we open a source file for reading and a destination file for writing.
+`read` reads up to `sizeof(buffer)` bytes from the file descriptor `src_fd` into the buffer.
+Notice that the `read` system call returns the number of bytes read.
+The `write` system call writes the bytes read from the buffer into the destination file and returns the number of bytes successfully written.
+
+You should also note the `open()` system call's prototype: `int open(const char *pathname, int flags)`.
 The argument `flags` must include one of the following access modes: `O_RDONLY`, `O_WRONLY`, or `O_RDWR` - indicating that the file is opened in read-only, write-only, or read/write mode.
 You can add an additional flag - `O_CREAT` - that will create a new file with `pathname` if the file does not already exist.
 This is only the case when opening the file for writing (`O_WRONLY` or `O_RDWR`).
@@ -418,42 +449,11 @@ For example:
 dst_fd = open(DST_FILENAME, O_RDWR | O_CREAT | O_TRUNC, 0644);
 ```
 
-Let's generate the input file:
-
-```console
-student@os:~/.../drills/tasks/copy/support$ ./generate.sh
-```
-
-and let's build the two executable files:
-
-```console
-student@os:~/.../drills/tasks/copy/support$ make
-```
-
-Run the `benchmark_cp.sh` script:
-
-Run the script in your local environment, not in the Docker container.
-Docker does not have permission to write to `/proc/sys/vm/drop_caches` file.
-
-```console
-student@os:~/.../drills/tasks/copy/support$ ./benchmark_cp.sh
-Benchmarking mmap_copy on in.dat
-time passed 54015 microseconds
-
-Benchmarking read_write_copy on in.dat
-time passed 42011 microseconds
-```
-
-Run the script a few more times.
-As you can see, there isn't much of a difference between the two approaches.
-Although we would have expected the use of multiple system calls to cause overhead, it's too little compared to the memory copying overhead.
-
-If you inspect `benchmark_cp.sh`, you will notice a weird-looking command `sh -c "sync; echo 3 > /proc/sys/vm/drop_caches"`.
+We will investigate the differences between mapping a file and using `read` and `write` system calls more deeply in the task found at `chapters/data/process-memory/drills/tasks/copy/`, by benchmarking the two methods via the `benchmark_cp.sh` script.
+If you inspect it, you will notice a weird-looking command `sh -c "sync; echo 3 > /proc/sys/vm/drop_caches"`.
 This is used to disable a memory optimization that the kernel does.
 It's called "buffer cache" and it's a mechanism by which the kernel caches data blocks from recently accessed files in memory.
 You will get more detailed information about this in the I/O chapter.
-
-Browse the two source code files (`mmap_copy.c` and `read_write_copy.c`) for a glimpse on how the two types of copies are implemented.
 
 ## Memory Support
 

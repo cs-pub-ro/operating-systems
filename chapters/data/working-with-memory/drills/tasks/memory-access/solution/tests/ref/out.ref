@@ -1,0 +1,4 @@
+assignment of read-only variable ‘ca’
+assignment of read-only variable ‘cp’
+assignment of read-only variable ‘cp2’
+assignment of read-only location ‘*(const char *)cp2’

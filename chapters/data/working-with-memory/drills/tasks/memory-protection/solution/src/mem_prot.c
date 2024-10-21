@@ -33,6 +33,9 @@ static void do_exec(const char *msg, void *address)
 
 int main(void)
 {
+	/* TODO 1: Add a const variable called ro*/
+	const int ro = 42;
+
 	do_read("reading from .data section", &data[0]);
 	do_write("writing to .data section", &data[0], 77);
 
@@ -43,6 +46,10 @@ int main(void)
 	//do_exec("executing .data section", &data[0]);
 	//do_write("writing to .text section", exec_do_nothing, 77);
 	//do_read("reading from NULL", NULL);
+
+	/* TODO 2: Implement executing and writing to the ro variable */
+	do_exec("executing ro variable", &ro);
+	do_write("writing to ro variable", &ro, 77);
 
 	return 0;
 }
