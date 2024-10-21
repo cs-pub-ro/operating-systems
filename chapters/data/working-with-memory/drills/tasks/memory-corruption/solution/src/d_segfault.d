@@ -4,7 +4,7 @@ import std.stdio;
 
 enum SIZE_INT = 32;
 
-/* TODO 9: Fix the bug causing the Segmentation Fault */
+// TODO 9: Fix the bug causing the Segmentation Fault
 void print_bit_array(uint[SIZE_INT] the_bits)
 {
     int i = SIZE_INT-1;
@@ -15,16 +15,16 @@ void print_bit_array(uint[SIZE_INT] the_bits)
     }
 }
 
-/* REPLACE 9 */
-/* void print_bit_array(uint[SIZE_INT] the_bits) */
-/* { */
-/*    uint i = SIZE_INT-1; */
-/*    while (i >= 0) */
-/*    { */
-/*        printf("%u\n", the_bits[i]); */
-/*        i--; */
-/*    } */
-/* } */
+// REPLACE 9
+// void print_bit_array(uint[SIZE_INT] the_bits) *
+// {
+//     uint i = SIZE_INT-1;
+//     while (i >= 0)
+//     {
+//         printf("%u\n", the_bits[i]);
+//         i--;
+//     }
+// }
 
 void to_bits(uint value, uint[SIZE_INT] in_bits)
 {

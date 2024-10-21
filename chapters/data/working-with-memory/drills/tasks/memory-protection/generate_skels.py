@@ -8,6 +8,13 @@ import re
 
 
 def process_file(src, dst, pattern, replace, remove, replace_pairs, end_string=None):
+    if not pattern or not replace or not remove:
+        print(
+            f"ERROR: The script behaviour is not properly specified for {src}",
+            file=sys.stderr,
+        )
+        sys.exit(1)
+
     fin = open(src, "r")
     fout = open(dst, "w")
     remove_lines = 0
@@ -127,6 +134,9 @@ def main():
             elif re.match(r".*\.d$", src):
                 pattern = r"(.*//\s*TODO)([ 0-9]*)(:.*)"
                 replace = r"(.*//\s*REPLACE)( [0-9]*)"
+                remove = r"(.*//\s*REMOVE)( [0-9]*)"
+                replace_pairs = [(r"// ", "")]
+                end_string = None
             else:
                 continue
 
