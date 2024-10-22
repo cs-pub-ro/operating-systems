@@ -13,32 +13,29 @@ output_dir: /output
 lab_structure:
   - title: Lab 1 - Operating System Perspective
     filename: lab1.md
+    tasks:
+      - basic-syscall.md
+      - syscall-wrapper.md
+      - libcall-syscall.md
     content:
       - modern-sw-stack.md
       - basic-syscall.md
       - syscall-wrapper.md
       - libcall-syscall.md
-    tasks:
-      - basic-syscall.md
-      - syscall-wrapper.md
-      - libcall-syscall.md
   - title: Lab 2 - Library Perspective
     filename: lab2.md
-    content:
-      - common-functions.md
-      - libc.md
-      - high-level-lang.md
-      - app-investigate.md
     tasks:
       - common-functions.md
       - libc.md
       - high-level-lang.md
       - app-investigation.md
+    content:
+      - common-functions.md
+      - libc.md
+      - high-level-lang.md
+      - app-investigate.md
   - title: Lab 3 - Memory
     filename: lab3.md
-    content:
-      - working-with-memory.md
-      - process-memory.md
     tasks:
       - memory-access.md
       - memory-corruption.md
@@ -51,6 +48,9 @@ lab_structure:
       - static-dynamic.md
       - page-mapper.md
       - reference-counting.md
+    content:
+      - working-with-memory.md
+      - process-memory.md
     guides:
       - memory-alloc.md
       - memory-vuln.md
@@ -68,14 +68,14 @@ lab_structure:
       - memory-leak.md
   - title: Lab 5 - Memory Security
     filename: lab5.md
-    content:
-      - memory-security.md
     tasks:
       - pointer-arithmetic-leak.md
       - aslr.md
       - stack-protector.md
       - bypassing-stack-protector.md
       - exec-shellcode.md
+    content:
+      - memory-security.md
     guides:
       - buffer-overflow-leak.md
       - buffer-overflow-overwrite.md
