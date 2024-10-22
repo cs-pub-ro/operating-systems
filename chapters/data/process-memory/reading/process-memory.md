@@ -94,7 +94,7 @@ The operating system allocates memory in chunks of a predefined size (in our cas
 
 We want to see the difference in memory layout between the statically-linked and dynamically-linked executables.
 
-Enter the `drills/tasks/static-dynamic/support` directory and build the statically-linked and dynamically-linked executables `hello-static` and `hello-dynamic`:
+Enter the `chapters/data/process-memory/drills/tasks/static-dynamic/support` directory and build the statically-linked and dynamically-linked executables `hello-static` and `hello-dynamic`:
 
 ```console
 student@os:~/.../drills/tasks/static-dynamic/support$ make
@@ -157,7 +157,7 @@ text    data     bss     dec     hex filename
 
 We want to observe the update in size of memory regions for different instructions used in a program.
 
-Enter the `drills/tasks/modify-areas/support` directory.
+Enter the `chapters/data/process-memory/drills/tasks/modify-areas/support` directory.
 Browse the contents of the `hello.c` file;
 it is an update to the `hello.c` file in the `memory-areas/` directory.
 Build the executable:
@@ -228,7 +228,7 @@ Omitting to deallocate memory results in memory leaks that hurt the resource use
 Because of this, some language runtimes employ a garbage collector that automatically frees unused memory areas.
 More than that, some languages (think of Python) provide no explicit means to allocate memory: you just define and use data.
 
-Let's enter the `drills/tasks/alloc_size/support` directory.
+Let's enter the `chapters/data/process-memory/drills/tasks/alloc_size/support` directory.
 Browse the `alloc_size.c` file.
 Build it:
 
