@@ -14,38 +14,46 @@ lab_structure:
   - title: Lab 1 - Operating System Perspective
     filename: lab1.md
     content:
+      - tasks/basic-syscall.md
+      - tasks/syscall-wrapper.md
+      - tasks/libcall-syscall.md
       - modern-sw-stack.md
       - basic-syscall.md
       - syscall-wrapper.md
       - libcall-syscall.md
-      - tasks/basic-syscall.md
-      - tasks/syscall-wrapper.md
-      - tasks/libcall-syscall.md
   - title: Lab 2 - Library Perspective
     filename: lab2.md
     content:
-      - common-functions.md
-      - libc.md
-      - high-level-lang.md
-      - app-investigate.md
       - tasks/common-functions.md
       - tasks/libc.md
       - tasks/high-level-lang.md
       - tasks/app-investigation.md
+      - guides/static-dynamic.md
+      - common-functions.md
+      - libc.md
+      - high-level-lang.md
+      - app-investigate.md
   - title: Lab 3 - Memory
     filename: lab3.md
     content:
-      - working-with-memory.md
-      - process-memory.md
-      - guides/memory-alloc.md
-      - guides/memory-vuln.md
       - tasks/memory-access.md
       - tasks/memory-corruption.md
       - tasks/memory-protection.md
       - tasks/access-counter.md
+      - working-with-memory.md
+      - process-memory.md
+      - guides/memory-alloc.md
+      - guides/memory-vuln.md
   - title: Lab 4 - Investigate Memory
     filename: lab4.md
     content:
+      - tasks/alloc-size.md
+      - tasks/copy.md
+      - tasks/memory-areas.md
+      - tasks/modify-areas.md
+      - tasks/static-dynamic.md
+      - tasks/page-mapper.md
+      - tasks/reference-counting.md
       - investigate-memory.md
       - guides/app-investigation-deluge.md
       - guides/app-investigation-servo.md
@@ -54,24 +62,17 @@ lab_structure:
       - guides/jemalloc.md
       - guides/memory-actions.md
       - guides/memory-leak.md
-      - tasks/alloc-size.md
-      - tasks/copy.md
-      - tasks/memory-areas.md
-      - tasks/modify-areas.md
-      - tasks/static-dynamic.md
-      - tasks/page-mapper.md
-      - tasks/reference-counting.md
   - title: Lab 5 - Memory Security
     filename: lab5.md
     content:
-      - memory-security.md
-      - guides/buffer-overflow-leak.md
-      - guides/buffer-overflow-overwrite.md
       - tasks/pointer-arithmetic-leak.md
       - tasks/aslr.md
       - tasks/stack-protector.md
       - tasks/bypassing-stack-protector.md
       - tasks/exec-shellcode.md
+      - memory-security.md
+      - guides/buffer-overflow-leak.md
+      - guides/buffer-overflow-overwrite.md
 
 make_assets:
   plugin: command
