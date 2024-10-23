@@ -46,7 +46,7 @@ def group_media():
     Group all the media files in a single directory.
     """
     os.makedirs(mediaDir, exist_ok=True)
-    formats = (".jpg", ".png", ".gif", ".svg")
+    formats = (".jpg", ".jpeg", ".png", ".gif", ".svg")
 
     for root, _, files in os.walk(CHAPTERS_PATH):
         for f in files:
