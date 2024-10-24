@@ -32,7 +32,7 @@ def group_media():
     Group all the media files in a single directory.
     """
     os.makedirs(mediaDir, exist_ok=True)
-    formats = (".jpg", ".png", ".gif", ".svg")
+    formats = (".jpg", ".jpeg", ".png", ".gif", ".svg")
 
     for root, _, files in os.walk(CHAPTERS_PATH):
         for f in files:
@@ -253,7 +253,9 @@ class ConfigParser:
 
         self.fileToLab = {}
         for id, lab in enumerate(self.data["lab_structure"]):
-            for c in lab["content"]:
+            tasks = lab["tasks"] if "tasks" in lab else []
+            guides = lab["guides"] if "guides" in lab else []
+            for c in lab["content"] + tasks + guides:
                 self.fileToLab[c] = f"lab{id+1}.md"
         return self.fileToLab
 
