@@ -2,7 +2,7 @@
 
 For this practice item, you will need to identify the programming mistake that makes it possible to corrupt memory.
 
-Navigate to the `chapters/data/working-with-memory/drills/tasks/memory-corruption/` folder, run `make skels` and enter `support/`.
+Navigate to the `chapters/data/working-with-memory/drills/tasks/memory-corruption/` folder, run `make skels` and enter `support/src/`.
 Inspect the source file `segfault.c`.
 
 1. What does the program do? (this could be a quiz in the final form)
