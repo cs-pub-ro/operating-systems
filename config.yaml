@@ -44,13 +44,6 @@ lab_structure:
       - memory-corruption.md
       - memory-protection.md
       - access-counter.md
-      - alloc-size.md
-      - copy.md
-      - memory-areas.md
-      - modify-areas.md
-      - static-dynamic.md
-      - page-mapper.md
-      - reference-counting.md
     guides:
       - memory-alloc.md
       - memory-vuln.md
@@ -66,6 +59,14 @@ lab_structure:
       - jemalloc.md
       - memory-actions.md
       - memory-leak.md
+    tasks:
+      - alloc-size.md
+      - copy.md
+      - memory-areas.md
+      - modify-areas.md
+      - static-dynamic.md
+      - page-mapper.md
+      - reference-counting.md
   - title: Lab 5 - Memory Security
     filename: lab5.md
     content:
