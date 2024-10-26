@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: BSD-3-Clause
 
+from enum import Enum
 import os
 import re
 from typing import List
@@ -10,6 +11,7 @@ CHAPTERS = ["Software Stack", "Data", "Compute", "IO"]
 CHAPTERS_PATH = "chapters/"
 
 viewDir = ".view"
+readingDir = f"{viewDir}/reading"
 tasksDir = f"{viewDir}/tasks"
 guidesDir = f"{viewDir}/guides"
 mediaDir = f"{viewDir}/media"
@@ -25,6 +27,18 @@ def find(name, path):
         if name in files or name in dirs:
             return os.path.join(root, name)
     raise FileNotFoundError(f"File {name} not found in {path}")
+
+
+def group_reading():
+    """
+    Group all the reading files in a single directory.
+    """
+    os.makedirs(readingDir, exist_ok=True)
+
+    for root, _, files in os.walk(CHAPTERS_PATH):
+        for f in files:
+            if "reading" in root and f.endswith(".md") and f != "overview.md":
+                os.popen(f"cp {os.path.join(root, f)} {readingDir}/")
 
 
 def group_media():
@@ -140,91 +154,62 @@ def solve_links(text: str, fileToLab: dict) -> str:
     return text
 
 
+class ContentType(Enum):
+    READING = "Reading"
+    TASKS = "Task"
+    GUIDES = "Guide"
+
+
 class Lab:
-    def __init__(
-        self,
-        title: str,
-        filename: str,
-        content: List[str],
-        tasks: List[str],
-        guides: List[str],
-    ):
+    def __init__(self, title: str, filename: str, content: List[str]):
         self.title = title
         self.filename = filename
-        self.content = content
-        self.tasks = tasks
-        self.guides = guides
+
+        self.text = f"# {title}\n\n"
+        for file in content:
+            self.process_file(file)
+
+    def __get_filetype(self, filename: str) -> ContentType:
+        """
+        Get the type of the file based on the prefix.
+        """
+        if filename.startswith("reading/") or "/" not in filename:
+            return ContentType.READING
+        if filename.startswith("tasks/"):
+            return ContentType.TASKS
+        if filename.startswith("guides/"):
+            return ContentType.GUIDES
+
+    def process_file(self, filename: str):
+        """
+        Process a file and add it to the lab text.
+        """
+
+        if self.__get_filetype(filename) == ContentType.READING:
+            with open(os.path.join(readingDir, filename)) as f:
+                filecontent = f.read()
+        else:
+            with open(os.path.join(viewDir, filename)) as f:
+                lines = f.readlines()
+                # Rename "# Some title" to "## Task: Some title" or "## Guide: Some title"
+                content_type = self.__get_filetype(filename).value
+                lines[0] = f"# {content_type}:{lines[0].strip('#')}\n"
+                filecontent = "".join(lines)
+
+        # Add one more level of indentation to the chapter headings
+        filecontent = re.sub(r"^(#+)", r"\1#", filecontent, flags=re.MULTILINE)
+        self.text += filecontent + "\n\n"
 
     def generate(self, fileToLab: dict):
         """
         Generate the final markdown file for the lab.
         """
-        text = f"# {self.title}\n\n"
-        text += self.prepare_content()
-        if self.guides:  # Guides are optional
-            text += self.prepare_guides()
-        if self.tasks:  # Tasks are optional
-            text += self.prepare_tasks()
-        text = solve_links(text, fileToLab)
-
-        with open(f"{viewDir}/{self.filename}", "w") as f:
-            f.write(text)
-
-    def prepare_content(self):
-        """
-        Concatenate all the content files into a single markdown file.
-        """
         print(f"Generating lab {viewDir}/{self.filename}")
 
-        text = ""
+        self.text = solve_links(self.text, fileToLab)
 
-        for c in self.content:
-            for root, _, files in os.walk(CHAPTERS_PATH):
-                if "reading" in root and c in files:
-                    filename = os.path.join(root, c)
-                    with open(filename) as f:
-                        text += f.read() + "\n\n"
-
-        # Add one more level of indentation to the chapter headings
-        text = re.sub(r"^(#+)", r"\1#", text, flags=re.MULTILINE)
-
-        return text
-
-    def prepare_tasks(self):
-        """
-        Concatenate all the tasks README.md files into a single markdown file.
-        """
-        text = ""
-
-        for t in self.tasks:
-            with open(f"{tasksDir}/{t}") as f:
-                text += f.read() + "\n\n"
-
-        # Add two more level of indentation to the chapter headings
-        text = re.sub(r"^(#+)", r"\1##", text, flags=re.MULTILINE)
-
-        # Prepend the section title to the tasks
-        text = f"## Tasks\n\n{text}"
-
-        return text
-
-    def prepare_guides(self):
-        """
-        Concatenate all the guides README.md files into a single markdown file.
-        """
-        text = ""
-
-        for g in self.guides:
-            with open(f"{guidesDir}/{g}") as f:
-                text += f.read() + "\n\n"
-
-        # Add two more level of indentation to the chapter headings
-        text = re.sub(r"^(#+)", r"\1##", text, flags=re.MULTILINE)
-
-        # Prepend the section title to the tasks
-        text = f"## Guides\n\n{text}"
-
-        return text
+        with open(f"{viewDir}/{self.filename}", "w") as f:
+            f.write(self.text)
 
 
 class ConfigParser:
@@ -236,11 +221,7 @@ class ConfigParser:
     def create_labs(self) -> List[Lab]:
         labs = []
         for entry in self.data["lab_structure"]:
-            tasks = entry["tasks"] if "tasks" in entry else []
-            guides = entry["guides"] if "guides" in entry else []
-            labs.append(
-                Lab(entry["title"], entry["filename"], entry["content"], tasks, guides)
-            )
+            labs.append(Lab(entry["title"], entry["filename"], entry["content"]))
         return labs
 
     def get_file_to_lab_dict(self) -> dict:
@@ -270,6 +251,7 @@ def main():
     4. Copy the overview.md file to the .view directory.
     """
     # Prepare directories layout
+    group_reading()
     group_media()
     group_tasks()
     group_guides()

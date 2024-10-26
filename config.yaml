@@ -18,10 +18,9 @@ lab_structure:
       - basic-syscall.md
       - syscall-wrapper.md
       - libcall-syscall.md
-    tasks:
-      - basic-syscall.md
-      - syscall-wrapper.md
-      - libcall-syscall.md
+      - tasks/basic-syscall.md
+      - tasks/syscall-wrapper.md
+      - tasks/libcall-syscall.md
   - title: Lab 2 - Library Perspective
     filename: lab2.md
     content:
@@ -29,57 +28,50 @@ lab_structure:
       - libc.md
       - high-level-lang.md
       - app-investigate.md
-    tasks:
-      - common-functions.md
-      - libc.md
-      - high-level-lang.md
-      - app-investigation.md
+      - tasks/common-functions.md
+      - tasks/libc.md
+      - tasks/high-level-lang.md
+      - tasks/app-investigation.md
   - title: Lab 3 - Memory
     filename: lab3.md
     content:
       - working-with-memory.md
       - process-memory.md
-    tasks:
-      - memory-access.md
-      - memory-corruption.md
-      - memory-protection.md
-      - access-counter.md
-    guides:
-      - memory-alloc.md
-      - memory-vuln.md
+      - guides/memory-alloc.md
+      - guides/memory-vuln.md
+      - tasks/memory-access.md
+      - tasks/memory-corruption.md
+      - tasks/memory-protection.md
+      - tasks/access-counter.md
   - title: Lab 4 - Investigate Memory
     filename: lab4.md
     content:
       - investigate-memory.md
-    guides:
-      - app-investigation-deluge.md
-      - app-investigation-servo.md
-      - d-allocator.md
-      - git.md
-      - jemalloc.md
-      - memory-actions.md
-      - memory-leak.md
-    tasks:
-      - alloc-size.md
-      - copy.md
-      - memory-areas.md
-      - modify-areas.md
-      - static-dynamic.md
-      - page-mapper.md
-      - reference-counting.md
+      - guides/app-investigation-deluge.md
+      - guides/app-investigation-servo.md
+      - guides/d-allocator.md
+      - guides/git.md
+      - guides/jemalloc.md
+      - guides/memory-actions.md
+      - guides/memory-leak.md
+      - tasks/alloc-size.md
+      - tasks/copy.md
+      - tasks/memory-areas.md
+      - tasks/modify-areas.md
+      - tasks/static-dynamic.md
+      - tasks/page-mapper.md
+      - tasks/reference-counting.md
   - title: Lab 5 - Memory Security
     filename: lab5.md
     content:
       - memory-security.md
-    tasks:
-      - pointer-arithmetic-leak.md
-      - aslr.md
-      - stack-protector.md
-      - bypassing-stack-protector.md
-      - exec-shellcode.md
-    guides:
-      - buffer-overflow-leak.md
-      - buffer-overflow-overwrite.md
+      - guides/buffer-overflow-leak.md
+      - guides/buffer-overflow-overwrite.md
+      - tasks/pointer-arithmetic-leak.md
+      - tasks/aslr.md
+      - tasks/stack-protector.md
+      - tasks/bypassing-stack-protector.md
+      - tasks/exec-shellcode.md
 
 make_assets:
   plugin: command
