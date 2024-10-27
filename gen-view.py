@@ -137,6 +137,12 @@ def solve_links(text: str, fileToLab: dict) -> str:
     # Questions from the same chapter are at Questions/<question>, without the .md extension
     text = re.sub(r"(\[.*\])\(.*questions/(.*)\.md\)", r"\1(Questions/\2)", text)
 
+    # Tasks links should be routed to [text](./tasks/<file>)
+    text = re.sub(r"(\[.*\])\(.*tasks/(.*)\)", r"\1(./tasks/\2)", text)
+
+    # Guides links should be routed to [text](./guides/<file>)
+    text = re.sub(r"(\[.*\])\(.*guides/(.*)\)", r"\1(./guides/\2)", text)
+
     # Reading links [text](.*/reading/<file>.md) should be replaced with [text](.view/labQ#<chapter>)
     # Where Q is the lab number and chapter is the heading of the file
     matches = re.findall(r"\[.*\]\(.*reading/(.*\.md)\)", text)
