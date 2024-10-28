@@ -2,11 +2,21 @@
 
 ## Higher level - Python
 
-Enter the `sleepy/support/` folder and go through the practice items below.
+Enter the `chapters/compute/processes/drills/tasks/sleepy` folder, run `make skels`, open the `support/src` folder and go through the practice items below.
+
+Use the `tests/checker.sh` script to check your solutions.
+
+```bash
+./checker.sh
+sleepy_creator ...................... passed ... 30
+sleepy_creator_wait ................. passed ... 30
+sleepy_creator_c .................... passed ... 40
+100 / 100
+```
 
 Head over to `sleepy_creator.py`.
 
-1. Solve `TODO 1`: use `subprocess.Popen()` to spawn 10 `sleep 1000` processes.
+1. Solve the `TODO`: use `subprocess.Popen()` to spawn 10 `sleep 1000` processes.
 
    Start the script:
 
@@ -46,7 +56,7 @@ Head over to `sleepy_creator.py`.
 
    [Quiz](../../questions/parent-of-sleep-processes.md)
 
-1. Solve `TODO 2`: change the code in `sleepy_creator.py` so that the `sleep 1000` processes remain the children of `sleepy_creator.py`.
+1. Solve the `TODO`: change the code in `sleepy_creator_wait.py` so that the `sleep 1000` processes remain the children of `sleepy_creator_wait.py`.
    This means that the parent / creator process must **not** exit until its children have finished their execution.
    In other words, the parent / creator process must **wait** for the termination of its children.
    Check out [`Popen.wait()`](https://docs.python.org/3/library/subprocess.html#subprocess.Popen.wait) and add the code that makes the parent / creator process wait for its children.
@@ -62,7 +72,7 @@ Head over to `sleepy_creator.py`.
    student@os:~/.../tasks/sleepy/support$ python3 sleepy_creator.py
    ```
 
-   On another terminal, verify that `sleepy_creator.py` remains the parent of the `sleep` processes it creates:
+   On another terminal, verify that `sleepy_creator_wait.py` remains the parent of the `sleep` processes it creates:
 
    ```console
    student@os:~$ ps -e -H -o pid,ppid,cmd | (head -1; grep sleep)
@@ -80,7 +90,7 @@ Head over to `sleepy_creator.py`.
    16117   16107           sleep 1000
    ```
 
-   Note that the parent process `sleepy_creator.py` (`PID 16107`) is still alive, and its child processes (the 10 `sleep 1000`) have its ID as their `PPID`.
+   Note that the parent process `sleepy_creator_wait.py` (`PID 16107`) is still alive, and its child processes (the 10 `sleep 1000`) have its ID as their `PPID`.
    You've successfully waited for the child processes to finish their execution.
 
 ## Lower level - C
@@ -89,7 +99,7 @@ Now let's see how to create a child process in C.
 There are multiple ways of doing this.
 For now, we'll start with a higher-level approach.
 
-Go to `sleepy/support/sleepy_creator.c` and use [`system`](https://man7.org/linux/man-pages/man3/system.3.html) to create a `sleep 1000` process.
+Go to `sleepy_creator.c` and use [`system`](https://man7.org/linux/man-pages/man3/system.3.html) to create a `sleep 1000` process.
 
 [Quiz](../../questions/create-sleepy-process-ending.md)
 

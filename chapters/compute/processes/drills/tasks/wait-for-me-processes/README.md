@@ -1,8 +1,15 @@
 # Wait for Me
 
-Enter the `wait-for-me/support/` folder and go through the practice items below.
+Enter the `chapters/compute/processes/drills/tasks/wait-for-me-processes/` folder, run `make skels`, open the `support/src` folder and go through the practice items below.
 
-1. Run the code in `wait_for_me_processes.py`.
+Use the `tests/checker.sh` script to check your solutions.
+
+```bash
+wait_for_me_processes ...................... passed ... 100
+100 / 100
+```
+
+1. Run the code in `wait_for_me_processes.py` (e.g: `python3 wait_for_me_processes.py`).
     The parent process creates one child that writes and message to the given file.
     Then the parent reads that message.
     Simple enough, right?
