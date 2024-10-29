@@ -1,4 +1,4 @@
-BINARIES = sum_array_sequential sum_array_threads sum_array_processes sum_array_threads_openmp
+BINARIES = sum_array_sequential sum_array_threads sum_array_processes sum_array_threads_openmp add_array_threads_openmp
 CFLAGS += -fopenmp
 LDFLAGS += -fopenmp
 

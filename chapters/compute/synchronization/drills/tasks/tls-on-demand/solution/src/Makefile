@@ -1,4 +1,4 @@
-BINARIES = race_condition race_condition_mutex
+BINARIES = race_condition_tls
 LDLIBS = -lpthread
 all: $(BINARIES)
 
@@ -7,7 +7,7 @@ CC = gcc
 # Get the relative path to the directory of the current makefile.
 MAKEFILE_DIR := $(dir $(lastword $(MAKEFILE_LIST)))
 INCLUDES_DIR := $(MAKEFILE_DIR)..
-UTILS_DIR := $(MAKEFILE_DIR)/utils
+UTILS_DIR := $(MAKEFILE_DIR)/../utils
 LOGGER_DIR := $(UTILS_DIR)/log
 
 CPPFLAGS += -I$(INCLUDES_DIR)

@@ -105,9 +105,12 @@ lab_structure:
     filename: lab8.md
     content:
       - tasks/race-condition.md
-      - tasks/threadsafe-data-struct.md
-      - tasks/shared-memory.md
-      - tasks/libult.md
+      - tasks/wrap-the-for.md
+      - tasks/race-condition-atomic.md
+      - tasks/tls-on-demand.md
+      - tasks/atomic-assembly.md
+      - guides/apache2-simulator-semaphore.md
+      - tasks/apache2-simulator-condition.md
       - reading/synchronization.md
       - reading/user-level-threads.md
       - reading/scheduling.md
