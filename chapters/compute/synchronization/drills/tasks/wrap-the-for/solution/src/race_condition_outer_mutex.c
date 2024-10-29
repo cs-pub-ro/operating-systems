@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <pthread.h>
 
-#include "utils/utils.h"
+#include "./../utils/utils.h"
 
 #define NUM_ITER 10000000
 
@@ -15,11 +15,11 @@ void *increment_var(void *arg)
 {
 	(void)arg;
 
-	for (size_t i = 0; i < NUM_ITER; i++) {
-		pthread_mutex_lock(&mutex);
+	/* TODO 4: Wrap the whole `for` statement in the critical section */
+	pthread_mutex_lock(&mutex);
+	for (size_t i = 0; i < NUM_ITER; i++)
 		val++;
-		pthread_mutex_unlock(&mutex);
-	}
+	pthread_mutex_unlock(&mutex);
 
 	return NULL;
 }
@@ -28,11 +28,11 @@ void *decrement_var(void *arg)
 {
 	(void)arg;
 
-	for (size_t i = 0; i < NUM_ITER; i++) {
-		pthread_mutex_lock(&mutex);
+	/* TODO 4: Wrap the whole `for` statement in the critical section */
+	pthread_mutex_lock(&mutex);
+	for (size_t i = 0; i < NUM_ITER; i++)
 		val--;
-		pthread_mutex_unlock(&mutex);
-	}
+	pthread_mutex_unlock(&mutex);
 
 	return NULL;
 }

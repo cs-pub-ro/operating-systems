@@ -1,5 +1,7 @@
-BINARIES = race_condition race_condition_mutex
-LDLIBS = -lpthread
+BINARIES = add_array_threads_openmp
+CFLAGS += -fopenmp
+LDFLAGS += -fopenmp
+
 all: $(BINARIES)
 
 CC = gcc
@@ -35,3 +37,11 @@ clean::
 	-rm -f $(BINARIES)
 
 .PHONY: all clean
+
+sum_array_sequential: sum_array_sequential.o generate_random_array.o
+
+sum_array_threads: sum_array_threads.o generate_random_array.o
+
+sum_array_processes: sum_array_processes.o generate_random_array.o
+
+sum_array_threads_openmp: sum_array_threads_openmp.o generate_random_array.o

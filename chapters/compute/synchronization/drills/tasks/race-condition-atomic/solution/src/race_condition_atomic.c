@@ -2,12 +2,11 @@
 
 #include <stdio.h>
 #include <pthread.h>
+#include <stdatomic.h>
 
 #include "utils/utils.h"
 
-#define NUM_ITER 10000000
-
-pthread_mutex_t mutex;
+#define NUM_ITER 20000000
 
 static int val;
 
@@ -15,11 +14,8 @@ void *increment_var(void *arg)
 {
 	(void)arg;
 
-	for (size_t i = 0; i < NUM_ITER; i++) {
-		pthread_mutex_lock(&mutex);
-		val++;
-		pthread_mutex_unlock(&mutex);
-	}
+	for (size_t i = 0; i < NUM_ITER; i++)
+		atomic_fetch_add(&val, 1);
 
 	return NULL;
 }
@@ -28,11 +24,9 @@ void *decrement_var(void *arg)
 {
 	(void)arg;
 
-	for (size_t i = 0; i < NUM_ITER; i++) {
-		pthread_mutex_lock(&mutex);
-		val--;
-		pthread_mutex_unlock(&mutex);
-	}
+	for (size_t i = 0; i < NUM_ITER; i++)
+		/* TODO 1: Use `atomic_fetch_sub` to implement `var -= 1` atomically. */
+		atomic_fetch_sub(&val, 1);
 
 	return NULL;
 }

@@ -1,5 +1,2 @@
 race_condition
 race_condition_mutex
-race_condition_atomic
-race_condition_atomic2
-race_condition_tls
