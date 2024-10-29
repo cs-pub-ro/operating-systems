@@ -7,7 +7,7 @@ simply start it.
 
 Compile the code and run the resulting executable several times.
 See that the negative numbers appear from different indices.
-This is precisely the nondeterminism that we talked about [in the previous section](tasks/wait-for-me.md).
+This is precisely the nondeterminism that we talked about [in the previous section](tasks/wait-for-me-processes.md).
 
 Now wait for that thread to finish and see that all the printed numbers are consistently negative.
 

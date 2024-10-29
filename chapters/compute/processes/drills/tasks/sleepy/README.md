@@ -94,4 +94,4 @@ Go to `sleepy/support/sleepy_creator.c` and use [`system`](https://man7.org/linu
 [Quiz](../../questions/create-sleepy-process-ending.md)
 
 The `man` page also mentions that `system` calls `fork()` and `exec()` to run the command it's given.
-If you want to find out more about them, head over to the [Arena and create your own mini-shell](mini-shell).
+If you want to find out more about them, head over to the [Arena and create your own mini-shell](tasks/mini-shell.md).

@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: BSD-3-Clause
 
-from enum import Enum
 import os
 import re
 from typing import List
@@ -20,13 +19,6 @@ questionsDir = f"{viewDir}/questions"
 
 def hypenate(text: str) -> str:
     return "-".join(text.strip().split(" ")).lower()
-
-
-def find(name, path):
-    for root, dirs, files in os.walk(path):
-        if name in files or name in dirs:
-            return os.path.join(root, name)
-    raise FileNotFoundError(f"File {name} not found in {path}")
 
 
 def group_reading():
@@ -131,39 +123,45 @@ def solve_links(text: str, fileToLab: dict) -> str:
         The lab number is determined by the fileToLab dictionary, and the subchapter is the first line of the file.
         For example, [text](../reading/basic-syscall.md) will become [text](.view/lab1#basic-syscall).
     """
-    # Media links should be routed to [text](./media/<file>)
-    text = re.sub(r"(\[.*\])\(.*media/(.*)\)", r"\1(./media/\2)", text)
-
     # Questions from the same chapter are at Questions/<question>, without the .md extension
     text = re.sub(r"(\[.*\])\(.*questions/(.*)\.md\)", r"\1(Questions/\2)", text)
 
-    # Tasks links should be routed to [text](./tasks/<file>)
-    text = re.sub(r"(\[.*\])\(.*tasks/(.*)\)", r"\1(./tasks/\2)", text)
-
-    # Guides links should be routed to [text](./guides/<file>)
-    text = re.sub(r"(\[.*\])\(.*guides/(.*)\)", r"\1(./guides/\2)", text)
+    # Remove relative links to reading, media, tasks, and guides
+    for section in ["reading", "media", "tasks", "guides"]:
+        text = re.sub(
+            r"(\[.*\])\(.*" + section + r"/(.*)\)", rf"\1({section}/\2)", text
+        )
 
     # Reading links [text](.*/reading/<file>.md) should be replaced with [text](.view/labQ#<chapter>)
     # Where Q is the lab number and chapter is the heading of the file
-    matches = re.findall(r"\[.*\]\(.*reading/(.*\.md)\)", text)
+    matches = re.findall(r"\[.*\]\((.*\.md)\)", text)
     for sourceFile in matches:
+        filepath = os.path.join(viewDir, sourceFile)
+
+        # Tasks and guides are prefixed with the section name
+        # FIXME: Refactor this.
+        prefix = ""
+        if "tasks/" in sourceFile:
+            prefix = "task-"
+        elif "guides/" in sourceFile:
+            prefix = "guide-"
+
         # Get the first line of the file to extract the chapter in hypenated format
-        with open(find(sourceFile, CHAPTERS_PATH)) as f:
-            subchapter = hypenate(f.readline().strip("#"))
+        try:
+            with open(filepath) as f:
+                title = f.readline().strip("#").replace("`", "").replace(":", "")
+                subchapter = prefix + hypenate(title)
+        except:
+            print(f"Error: Could not solve link to {filepath}")
+            continue
 
         text = re.sub(
-            rf"(\[.*\])\(.*reading/{sourceFile}\)",
+            rf"(\[.*\])\({sourceFile}\)",
             rf"\1({fileToLab[sourceFile]}#{subchapter})",
             text,
         )
 
     return text
-
-
-class ContentType(Enum):
-    READING = "Reading"
-    TASKS = "Task"
-    GUIDES = "Guide"
 
 
 class Lab:
@@ -175,31 +173,22 @@ class Lab:
         for file in content:
             self.process_file(file)
 
-    def __get_filetype(self, filename: str) -> ContentType:
-        """
-        Get the type of the file based on the prefix.
-        """
-        if filename.startswith("reading/") or "/" not in filename:
-            return ContentType.READING
-        if filename.startswith("tasks/"):
-            return ContentType.TASKS
-        if filename.startswith("guides/"):
-            return ContentType.GUIDES
-
     def process_file(self, filename: str):
         """
         Process a file and add it to the lab text.
         """
-
-        if self.__get_filetype(filename) == ContentType.READING:
-            with open(os.path.join(readingDir, filename)) as f:
+        with open(os.path.join(viewDir, filename)) as f:
+            if "reading/" in filename:
                 filecontent = f.read()
-        else:
-            with open(os.path.join(viewDir, filename)) as f:
+            else:
                 lines = f.readlines()
                 # Rename "# Some title" to "## Task: Some title" or "## Guide: Some title"
-                content_type = self.__get_filetype(filename).value
-                lines[0] = f"# {content_type}:{lines[0].strip('#')}\n"
+                if "tasks/" in filename:
+                    prefix = "Task"
+                elif "guides/" in filename:
+                    prefix = "Guide"
+
+                lines[0] = f"# {prefix}:{lines[0].strip('#')}\n"
                 filecontent = "".join(lines)
 
         # Add one more level of indentation to the chapter headings
@@ -240,9 +229,7 @@ class ConfigParser:
 
         self.fileToLab = {}
         for id, lab in enumerate(self.data["lab_structure"]):
-            tasks = lab["tasks"] if "tasks" in lab else []
-            guides = lab["guides"] if "guides" in lab else []
-            for c in lab["content"] + tasks + guides:
+            for c in lab["content"]:
                 self.fileToLab[c] = f"lab{id+1}.md"
         return self.fileToLab
 

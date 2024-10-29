@@ -17,10 +17,10 @@ lab_structure:
       - tasks/basic-syscall.md
       - tasks/syscall-wrapper.md
       - tasks/libcall-syscall.md
-      - modern-sw-stack.md
-      - basic-syscall.md
-      - syscall-wrapper.md
-      - libcall-syscall.md
+      - reading/modern-sw-stack.md
+      - reading/basic-syscall.md
+      - reading/syscall-wrapper.md
+      - reading/libcall-syscall.md
   - title: Lab 2 - Library Perspective
     filename: lab2.md
     content:
@@ -29,10 +29,10 @@ lab_structure:
       - tasks/high-level-lang.md
       - tasks/app-investigation.md
       - guides/static-dynamic.md
-      - common-functions.md
-      - libc.md
-      - high-level-lang.md
-      - app-investigate.md
+      - reading/common-functions.md
+      - reading/libc.md
+      - reading/high-level-lang.md
+      - reading/app-investigate.md
   - title: Lab 3 - Memory
     filename: lab3.md
     content:
@@ -40,8 +40,8 @@ lab_structure:
       - tasks/memory-corruption.md
       - tasks/memory-protection.md
       - tasks/access-counter.md
-      - working-with-memory.md
-      - process-memory.md
+      - reading/working-with-memory.md
+      - reading/process-memory.md
       - guides/memory-alloc.md
       - guides/memory-vuln.md
   - title: Lab 4 - Investigate Memory
@@ -54,7 +54,7 @@ lab_structure:
       - tasks/static-dynamic.md
       - tasks/page-mapper.md
       - tasks/reference-counting.md
-      - investigate-memory.md
+      - reading/investigate-memory.md
       - guides/app-investigation-deluge.md
       - guides/app-investigation-servo.md
       - guides/d-allocator.md
@@ -70,7 +70,7 @@ lab_structure:
       - tasks/stack-protector.md
       - tasks/bypassing-stack-protector.md
       - tasks/exec-shellcode.md
-      - memory-security.md
+      - reading/memory-security.md
       - guides/buffer-overflow-leak.md
       - guides/buffer-overflow-overwrite.md
   - title: Lab 6 - Multiprocess and Multithread
@@ -83,9 +83,9 @@ lab_structure:
       - tasks/multithreaded.md
       - tasks/sum-array.md
       - tasks/sum-array-bugs.md
-      - hardware-perspective.md
-      - processes.md
-      - threads.md
+      - reading/hardware-perspective.md
+      - reading/processes.md
+      - reading/threads.md
       - guides/create-process.md
       - guides/sum-array-processes.md
       - guides/system-dissected.md
@@ -98,8 +98,8 @@ lab_structure:
       - tasks/apache2.md
       - tasks/page-faults.md
       - tasks/shared-memory.md
-      - processes-threads-apache2.md
-      - copy-on-write.md
+      - reading/processes-threads-apache2.md
+      - reading/copy-on-write.md
       - guides/apache2.md
       - guides/fork-faults.md
   - title: Lab 8 - Syncronization
@@ -108,9 +108,9 @@ lab_structure:
       - tasks/race-condition.md
       - tasks/threadsafe-data-struct.md
       - tasks/libult.md
-      - synchronization.md
-      - user-level-threads.md
-      - scheduling.md
+      - reading/synchronization.md
+      - reading/user-level-threads.md
+      - reading/scheduling.md
       - guides/user-level-threads.md
       - guides/libult.md
 
