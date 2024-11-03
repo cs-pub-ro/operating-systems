@@ -303,7 +303,7 @@ docusaurus:
           subsections:
             - Mini Libc/: chapters/software-stack/libc/projects/mini-libc/
             - Memory Allocator/: content/assignments/memory-allocator/
-            - Parallel Graph/: content/assignments/parallel-graph/
+            - Parallel Firewall/: content/assignments/parallel-firewall/
             - Mini Shell/: content/assignments/minishell/
             - Asynchronous Web Server/: content/assignments/async-web-server/
       - Exams:
