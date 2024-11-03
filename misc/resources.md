@@ -43,9 +43,9 @@ Follow the instructions on the official websites for installation.
 ### UTM (macOS >= 11 users)
 
 If you are using an `M1` Apple system, you will not be able to run the virtual machine using VirtualBox or VMware.
-You will need to use [`UTM`](https://mac.getutm.app/), along with a [`.qcow2`](https://repository.grid.pub.ro/cs/so/linux-2024/SO-Ubuntu-22-04-03-LTS.utm.zip) image.
+You will need to use [`UTM`](https://mac.getutm.app/), along with a [`.qcow2`](https://repository.grid.pub.ro/cs/so/linux-2024-2025/so-vm-gui-2024.qcow2) image.
 You will need to log in using your `UPB` account.
 
-After you install `UTM` and download and unzip the archive, you can import it using the `Open existing VM` option in `UTM`.
+After you install `UTM` and download the `.qcow2` image, you should use it via emulation. Please, follow the instructions provided [here](https://ocw.cs.pub.ro/courses/pclp2/utile).
 
 You can also follow the instructions for [running the VM using `qemu`](https://github.com/cs-pub-ro/operating-systems/blob/main/util/macos-vm/README.md).
