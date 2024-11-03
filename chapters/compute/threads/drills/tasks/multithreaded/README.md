@@ -1,6 +1,6 @@
 # Multithreaded
 
-Enter the `multithreaded/support/` folder and go through the practice items below.
+Enter the `chapters/compute/threads/drills/tasks/multithreaded/` folder, run `make skels`, and go through the practice items below in the `support/` directory.
 
 1. Use the Makefile to compile `multithread.c`, run it and follow the instructions.
 
@@ -18,10 +18,10 @@ Enter the `multithreaded/support/` folder and go through the practice items belo
     You cannot change `sleep_wrapper2()` definition, since `pthreads_create()` expects a pointer to a function that receives a `void *` argument.
     What you can and should do is to pass a pointer to a `int` as argument, and then cast `data` to `int *` inside `sleep_wrapper2()`.
 
-    `Note:` Do not simply pass `&i` as argument to the function.
+    **Note:** Do not simply pass `&i` as argument to the function.
     This will make all threads to use the **same integer** as their ID.
 
-    `Note:` Do not use global variables.
+    **Note:** Do not use global variables.
 
     If you get stuck you can google `pthread example` and you will probably stumble upon [this](https://gist.github.com/ankurs/179778).
 

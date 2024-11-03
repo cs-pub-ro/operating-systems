@@ -9,7 +9,7 @@ if one thread has more work to do than another, bad luck.
 This may lead to starvation.
 
 But there are other scheduler implementations, such as `shared_work` and `work_stealing`.
-Follow the `user-level-threads/support/threads_and_fibers.cc` implementation.
+Follow the `chapters/compute/user-level-threads/guides/user-level-threads/support/threads_and_fibers.cc` implementation.
 It creates multiple fibers and threads, and uses the `shared_work` scheduler to balance the workload between the threads.
 Each main fiber, from each thread, is suspended until all worker fibers have completed their work, using a condition variable.
 

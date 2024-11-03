@@ -1,6 +1,6 @@
 # Minor and Major Page Faults
 
-The code in `page-faults/support/page_faults.c` generates some minor and major page faults.
+The code in `chapters/compute/copy-on-write/drills/tasks/page-faults/support/page_faults.c` generates some minor and major page faults.
 Open 2 terminals: one in which you will run the program, and one which will monitor the page faults of the program.
 In the monitoring terminal, run the following command:
 
@@ -52,3 +52,5 @@ Note the second number go up in the monitoring terminal.
 Comment the `posix_fadvise()` call, recompile the program, and run it again.
 You won't get any major page fault, because the file contents are cached by the OS, to avoid those page faults.
 As a rule, the OS will avoid major page faults whenever possible, because they are very costly in terms of running time.
+
+If you're having difficulties solving this exercise, go through [this](../../../guides/fork-faults.md) reading material.

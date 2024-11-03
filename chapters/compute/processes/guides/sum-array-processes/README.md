@@ -4,7 +4,7 @@
 
 Let's assume we only have one process on our system, and that process knows how to add the numbers in an array.
 It can use however many resources it wants, since there is no other process to contest it.
-It would probably look like the code in `sum-array/support/c/sum_array_sequential.c`.
+It would probably look like the code in `chapters/compute/processes/guides/sum-array-processes/support/c/sum_array_sequential.c`.
 The program also measures the time spent computing the sum.
 Let's compile and run it:
 
@@ -48,7 +48,7 @@ You most likely did get some speedup, especially when using 8 processes.
 Now we will try to improve this speedup by using **threads** instead.
 
 Also notice that we're not using hundreds or thousands of processes.
-Assuming our system has 8 cores, only 8 _threads_ (we'll see this later in the lab) can run at the same time.
+Assuming our system has 8 cores, only 8 _threads_ can run at the same time.
 In general, **the maximum number of threads that can run at the same time is equal to the number of cores**.
 In our example, each process only has one thread: its main thread.
 So by consequence and by forcing the terminology (because it's the main thread of these processes that is running, not the processes themselves), we can only run in parallel a number of processes equal to at most the number of cores.

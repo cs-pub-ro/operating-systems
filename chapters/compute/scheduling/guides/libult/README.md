@@ -1,6 +1,6 @@
 # User-Level Threads Scheduler
 
-Go to `libult/support`.
+Go to `chapters/compute/scheduling/guides/libult/support`.
 It contains a minimalist **user-level threads** scheduler.
 Compiling it produces a shared library called `libult.so`.
 You can also consult its [documentation](https://www.schaertl.me/posts/a-bare-bones-user-level-thread-library/).
@@ -12,7 +12,7 @@ It is only made up of 3 functions:
 - `threads_exit()` moves the current ULT to the COMPLETED state
 - `threads_join()` waits for a given thread to end and saves its return value in the `result` argument
 
-Look inside `libult/support/threads.c`.
+Look inside `chapters/compute/scheduling/guides/libult/support/threads.c`.
 Here you will find the 3 functions mentioned above.
 
 The scheduler only uses 3 states: RUNNING, READY, COMPLETED.

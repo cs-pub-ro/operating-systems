@@ -1,7 +1,7 @@
 # Synchronization - Thread-Safe Data Structure
 
 Now it's time for a fully practical exercise.
-Go to `CLIST/support/`.
+Go to `chapters/compute/synchronization/drills/tasks/threadsafe-data-struct/support/`.
 In the file `clist.c` you'll find a simple implementation of an array list.
 Although correct, it is not (yet) thread-safe.
 

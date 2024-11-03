@@ -1,6 +1,6 @@
 # Shared Memory
 
-As you remember from the [Data chapter](reading/process-memory.md#memory-mapping), one way to allocate a given number of pages is to use the `mmap()` syscall.
+As you remember from the [Data chapter](../../../../../data/process-memory/reading/process-memory.md), one way to allocate a given number of pages is to use the `mmap()` syscall.
 Let's look at its [man page](https://man7.org/linux/man-pages/man2/mmap.2.html), specifically at the `flags` argument.
 Its main purpose is to determine the way in which child processes interact with the mapped pages.
 

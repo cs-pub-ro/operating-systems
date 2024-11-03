@@ -17,7 +17,7 @@ If we need to drastically change the behaviour of the program, we need a new pro
 
 ### Safety
 
-Compile and run the two programs in `sum-array-bugs/support/seg-fault/`, first with 2 processes and threads and then with 4.
+Compile and run the two programs in `chapters/compute/threads/drills/tasks/sum-array-bugs/support/seg-fault/`, first with 2 processes and threads and then with 4.
 They do the same thing as before: compute the sum of the elements in an array, but with a twist: each of them contains a bug causing a segfault.
 Notice that `sum_array_threads` doesn't print anything with 4 threads, but merely a "Segmentation fault" message.
 On the other hand, `sum_array_processes` prints a sum and a running time, albeit different from the sums we've seen so far.
@@ -37,7 +37,7 @@ student@os:~$ ulimit -s
 8192
 ```
 
-Enter the `multithreaded/support/` directory to observe the update of the memory layout when creating new threads.
+Enter the `chapters/compute/threads/drills/tasks/multithreaded/support/` directory to observe the update of the memory layout when creating new threads.
 
 Build the `multithreaded` executable:
 

@@ -90,7 +90,7 @@ lab_structure:
       - guides/sum-array-processes.md
       - guides/system-dissected.md
       - guides/sum-array-threads.md
-      - guides/wait-for-me-threads.md
+      # - guides/wait-for-me-threads.md
       - guides/clone.md
   - title: Lab 7 - Copy-on-Write
     filename: lab7.md

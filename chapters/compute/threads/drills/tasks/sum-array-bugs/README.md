@@ -1,7 +1,7 @@
 # Wait for It
 
 The process that spawns all the others and subsequently calls `waitpid` to wait for them to finish can also get their return codes.
-Update the code in `sum-array-bugs/support/seg-fault/sum_array_processes.c` and modify the call to `waitpid` to obtain and investigate this return code.
+Update the code in `chapters/compute/threads/drills/tasks/sum-array-bugs/support/seg-fault/sum_array_processes.c` and modify the call to `waitpid` to obtain and investigate this return code.
 Display an appropriate message if one of the child processes returns an error.
 
 Remember to use the appropriate [macros](https://linux.die.net/man/2/waitpid) for handling the `status` variable that is modified by `waitpid()`, as it is a bit-field.
@@ -45,4 +45,6 @@ At this point, this process receives its own separate copies of the previously s
 
 Note that in order for the processes to share the `sums` dictionary, it is not created as a regular dictionary, but using the `Manager` module.
 This module provides some special data structures that are allocated in **shared memory** so that all processes can access them.
-You can learn more about shared memory and its various implementations [in the Arena section](shared-memory).
+You can learn more about shared memory and its various implementations [in this section](../../../../copy-on-write/drills/tasks/shared-memory/README.md).
+
+If you're having difficulties solving this exercise, go through [this](../../../guides/sum-array-processes/README.md) reading material.

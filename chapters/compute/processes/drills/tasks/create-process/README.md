@@ -1,6 +1,6 @@
 # Create Process
 
-Enter the `chapters/compute/processes/drills/tasks/create-process/` folder, run `make skels`, open the `support/src` folder and go through the practice items below.
+Enter the `chapters/compute/processes/drills/tasks/create-process/` directory, run `make skels`, open the `support/src` folder and go through the practice items below.
 
 Use the `tests/checker.sh` script to check your solutions.
 

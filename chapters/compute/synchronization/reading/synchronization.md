@@ -31,7 +31,7 @@ But this is up to the scheduler and is non-deterministic.
 Such undefined behaviours can cripple the execution of a program if `var` is some critical variable.
 
 Let's see this bug in action.
-Go to `race-condition/support/c/race_condition.c`, compile and run the code a few times.
+Go to `chapters/compute/synchronization/drills/tasks/race-condition/support/c/race_condition.c`, compile and run the code a few times.
 It spawns to threads that do exactly what we've talked about so far: one thread increments `var` 10 million times, while the other decrements it 10 million times.
 
 As you can see from running the program, the differences between subsequent runs can be substantial.
@@ -41,7 +41,8 @@ A critical section is a piece of code that can only be executed by **one thread*
 So we need some sort of _mutual exclusion mechanism_ so that when one thread runs the critical section, the other has to **wait** before entering it.
 This mechanism is called a **mutex**, whose name comes from "mutual exclusion".
 
-Go to `race-condition/support/c/race_condition_mutex.c` and notice the differences between this code and the buggy one.
+Go to `chapters/compute/synchronization/drills/tasks/race-condition/support/c/race_condition_mutex.c` and notice the differences between this code and the buggy one.
+
 We now use a `pthread_mutex_t` variable, which we `lock` at the beginning of a critical section, and we `unlock` at the end.
 Generally speaking, `lock`-ing a mutex makes a thread enter a critical section, while calling `pthread_mutex_unlock()` makes the thread leave said critical section.
 Therefore, as we said previously, the critical sections in our code are `var--` and `var++`.
@@ -98,7 +99,7 @@ Modern processors are capable of _atomically_ accessing data, either for reads o
 An atomic action is an indivisible sequence of operations that a thread runs without interference from others.
 Concretely, before initiating an atomic transfer on one of its data buses, the CPU first makes sure all other transfers have ended, then **locks** the data bus by stalling all cores attempting to transfer data on it.
 This way, one thread obtains **exclusive** access to the data bus while accessing data.
-As a side note, the critical sections in `race-condition/support/c/race_condition_mutex.c` are also atomic once they are wrapped between calls to `pthread_mutex_lock()` and `pthread_mutex_unlock()`.
+As a side note, the critical sections in `chapters/compute/synchronization/drills/tasks/race-condition/support/c/race_condition_mutex.c` are also atomic once they are wrapped between calls to `pthread_mutex_lock()` and `pthread_mutex_unlock()`.
 
 As with every hardware feature, the `x86` ISA exposes an instruction for atomic operations.
 In particular, this instruction is a **prefix**, called `lock`.
@@ -107,20 +108,19 @@ The `lock` prefix ensures that the core performing the instruction has exclusive
 This is how the increment is made into an indivisible unit.
 
 For example, `inc dword [x]` can be made atomic, like so: `lock inc dword [x]`.
-You can play with the `lock` prefix [in the Arena](atomic-assembly).
 
 Compilers provide support for such hardware-level atomic operations.
 GCC exposes [built-ins](https://gcc.gnu.org/onlinedocs/gcc/_005f_005fatomic-Builtins.html) such as `__atomic_load()`, `__atomic_store()`, `__atomic_compare_exchange()` and many others.
 All of them rely on the mechanism described above.
 
-Go to `race-condition/support/c/race_condition_atomic.c` and complete the function `decrement_var()`.
+Go to `chapters/compute/synchronization/drills/tasks/race-condition/support/c/race_condition_atomic.c` and complete the function `decrement_var()`.
 Compile and run the code.
 Now measure its running time against the mutex implementations.
-It should be somewhere between `race_condition.c` and `race_condition_mutex.c`.
+It should be somewhere between `race_condition` and `race_condition_mutex`.
 
 The C standard library also provides atomic data types.
 Access to these variables can be done only by one thread at a time.
-Go to `race-condition/support/c/race_condition_atomic2.c`, compile and run the code.
+Go to `chapters/compute/synchronization/drills/tasks/race-condition/support/c/race_condition_atomic2.c`, compile and run the code.
 Now measure its running time against the other implementations.
 Notice that the time is similar to `race_condition_atomic`.
 
@@ -132,7 +132,7 @@ And the fact that high-level languages also expose an API for atomic operations 
 Up to now, we've learned how to create critical sections that can be accessed by **only one thread** at a time.
 These critical sections revolved around **data**.
 Whenever we define a critical section, there is some specific data to which we cannot allow parallel access.
-The reason why we can't allow it is, in general, data integrity, as we've seen in our examples in `race-condition/support/`
+The reason why we can't allow it is, in general, data integrity, as we've seen in our examples in `chapters/compute/synchronization/drills/tasks/race-condition/support/`
 
 But what if threads need to count?
 Counting is inherently thread-unsafe because it's a _read-modify-write_ operation.

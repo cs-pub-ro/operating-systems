@@ -1,6 +1,6 @@
 # Wait for Me Once More
 
-Go to `support/wait-for-me/wait_for_me_threads.c`.
+Go to `chapters/compute/threads/guides/wait-for-me-threads/support/wait_for_me_threads.c`.
 Spawn a thread that executes the `negate_array()` function.
 For now, do not wait for it to finish;
 simply start it.

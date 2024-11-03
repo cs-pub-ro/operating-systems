@@ -16,11 +16,11 @@ clone(child_stack=NULL, flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD, c
 ```
 
 We ran each program with an argument of 2, so we have 2 calls to `clone`.
-Notice that in the case of threads, the `clone3 syscall receives more arguments.
+Notice that in the case of threads, the `clone3` syscall receives more arguments.
 The relevant flags passed as arguments when creating threads are documented in [`clone`'s man page](<https://man.archlinux.org/man/clone3.2.en>):
 
 - `CLONE_VM`: the child and the parent process share the same VAS
-- `CLONE_{FS,FILES,SIGHAND}`: the new thread shares the filesystem information, file and signal handlers with the one that created it
+- `CLONE_{FS,FILES,SIGHAND}`: the new thread shares the filesystem information, file and signal handlers with the one that created it.
 The syscall also receives valid pointers to the new thread's stack and TLS, i.e. the only parts of the VAS that are distinct between threads (although they are technically accessible from all threads).
 
 By contrast, when creating a new process, the arguments of the `clone` syscall are simpler (i.e. fewer flags are present).

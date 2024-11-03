@@ -2,7 +2,7 @@
 
 ## Higher level - Python
 
-Enter the `chapters/compute/processes/drills/tasks/sleepy` folder, run `make skels`, open the `support/src` folder and go through the practice items below.
+Enter the `chapters/compute/processes/drills/tasks/sleepy` directory, run `make skels`, open the `support/src` folder and go through the practice items below.
 
 Use the `tests/checker.sh` script to check your solutions.
 
@@ -92,6 +92,8 @@ Head over to `sleepy_creator.py`.
 
    Note that the parent process `sleepy_creator_wait.py` (`PID 16107`) is still alive, and its child processes (the 10 `sleep 1000`) have its ID as their `PPID`.
    You've successfully waited for the child processes to finish their execution.
+
+   If you're having difficulties solving this exercise, go through [this](../../../guides/create-process.md) reading material.
 
 ## Lower level - C
 

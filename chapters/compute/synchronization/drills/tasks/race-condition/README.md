@@ -6,7 +6,7 @@ The perspective of C towards TLS is the following: everything is shared by defau
 This makes multithreading easier and more lightweight to implement than in other languages, like D, because synchronization is left entirely up to the developer, at the cost of potential unsafety.
 
 Of course, we can specify that some data belongs to the TLS, by preceding the declaration of a variable with `__thread` keyword.
-First, compile and run the code in `race-condition/support/c/race_condition_tls.c` a few times.
+First, compile and run the code in `chapters/compute/synchronization/drills/tasks/race-condition/support/c/race_condition_tls.c` a few times.
 As expected, the result is different each time.
 
 1. Modify the declaration of `var` and add the `__thread` keyword to place the variable in the TLS of each thread.
@@ -37,8 +37,9 @@ It is not an instruction with its own separate opcode, but a prefix that slightl
 For example, we cannot place it before a `mov` instruction, as the action of a `mov` is simply `read` or `write`.
 Instead, we can place it in front of an `inc` instruction if its operand is memory.
 
-Look at the code in `race-condition/support/asm/race_condition_lock.S`.
-It's an Assembly equivalent of the code you've already seen many times so far (such as `race-condition/support/c/race_condition.c`).
+Go to `chapters/compute/synchronization/drills/tasks/race-condition/support/`.
+Look at the code in `asm/race_condition_lock.S`.
+It's an Assembly equivalent of the code you've already seen many times so far (such as `c/race_condition.c`).
 Assemble and run it a few times.
 Notice the different results you get.
 

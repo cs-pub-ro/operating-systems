@@ -1,6 +1,6 @@
 # Libraries for Parallel Processing
 
-In `sum-array/support/c/sum_array_threads.c` we spawned threads "manually" by using the `pthread_create()` function.
+In `chapters/compute/threads/drills/tasks/sum-array/support/c/sum_array_threads.c` we spawned threads "manually" by using the `pthread_create()` function.
 This is **not** a syscall, but a wrapper over the common syscall used by both `fork()` (which is also not a syscall) and `pthread_create()`.
 
 Still, `pthread_create()` is not yet a syscall.
@@ -28,7 +28,7 @@ Follow the code in `support/sum-array/c/sum_array_threads_openmp.c`.
 
 The `#pragma` used in the code instructs the compiler to enable the `omp` module, and to parallelise the code.
 In this case, we instruct the compiler to perform a reduce of the array, using the `+` operator, and to store the results in the `result` variable.
-This reduction uses threads to calculate the sum, similar to `summ_array_threads.c`, but in a much more optimised form.
+This reduction uses threads to calculate the sum, similar to `sum_array_threads.c`, but in a much more optimised form.
 
 Now compile and run the `sum_array_threads_openmp` binary using 1, 2, 4, and 8 threads as before.
 You'll see lower running times than `sum_array_threads` due to the highly-optimised code emitted by the compiler.
@@ -43,6 +43,8 @@ Notice that the running times of the multithreaded implementation do not decreas
 This is because the GIL makes it so that those threads that you create essentially run sequentially.
 
 The GIL also makes it so that individual Python instructions are atomic.
-Run the code in `race-condition/support/python/race_condition.py`.
+Run the code in `chapters/compute/synchronization/drills/tasks/race-condition/support/python/race_condition.py`.
 Every time, `var` will be 0 because the GIL doesn't allow the two threads to run in parallel and reach the critical section at the same time.
 This means that the instructions `var += 1` and `var -= 1` become atomic.
+
+If you're having difficulties solving this exercise, go through [this](../../../guides/sum-array-threads.md) reading material.

@@ -16,7 +16,7 @@ Apart from the tests above, other benchmarks might focus on different performanc
 
 Other approaches are less artificial, measuring performance on real-world applications such as compile times and performance in the latest (and most resource-demanding) video games.
 The latter metric revolves around how many average FPS (frames per second) a given CPU is able to crank out in a specific video game.
-[This article](https://www.gamersnexus.net/guides/3577-cpu-test-methodology-unveil-for-2020-compile-gaming-more) goes into more detail regarding the methodology of running CPU benchmarks on real-world applications.
+You can find a lot of articles online on how CPU benchmarking is done.
 
 Most benchmarks, unfortunately, are not open source, especially the more popular ones, such as [Geekbench 5](https://browser.geekbench.com/processor-benchmarks).
 Despite this shortcoming, benchmarks are widely used to compare the performance of various computer **hardware**, CPUs included.
