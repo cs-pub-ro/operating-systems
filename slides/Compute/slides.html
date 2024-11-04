@@ -52,7 +52,7 @@ How?
 
 #### Some CPU internals
 
-![CPU Internals](../media/cpu-internals.jpg)
+![CPU Internals](overview/media/cpu-internals.jpg)
 
 * Multiple **cores** per CPU
 * Still not enough for all processes
@@ -129,7 +129,7 @@ Way more processes than cores!
 
 #### Resource Management - Overview
 
-![Resource Management](../media/resource-management.svg)
+![Resource Management](processes/media/resource-management.svg)
 
 ----
 
@@ -151,7 +151,7 @@ Way more processes than cores!
 
 #### Process Virtual Address Space
 
-![Process VAS](../media/vas.svg)
+![Process VAS](processes/media/vas.svg)
 
 ---
 
@@ -344,7 +344,7 @@ struct task_struct {
 * `fork` also creates a new thread...
 * ... but part of a different process
 
-![fork - new Thread](../media/fork-thread.svg)
+![fork - new Thread](processes/media/fork-thread.svg)
 
 ---
 
@@ -356,7 +356,7 @@ struct task_struct {
 
 When `fork` returns, the child duplicates the contents of the parent's page table.
 
-![Copy-on-write after fork()](../media/copy-on-write-initial.svg)
+![Copy-on-write after fork()](copy-on-write/media/copy-on-write-initial.svg)
 
 ----
 
@@ -365,7 +365,7 @@ When `fork` returns, the child duplicates the contents of the parent's page tabl
 * Writable pages are **copied and modified only** when written: `demo/copy-on-write/copy_on_write_overhead.c`
 * [Quiz](../drills/questions/sections-always-shared.md)
 
-![Copy-on-write after Write](../media/copy-on-write-final.svg)
+![Copy-on-write after Write](copy-on-write/media/copy-on-write-final.svg)
 
 ----
 
@@ -409,7 +409,7 @@ student@os:~$ cat /proc/`pidof copy_on_write_overhead`/stat | cut -d ' ' -f 10  
 
 #### Typical Thread Execution
 
-![Thread Execution](../media/thread-behaviour.svg)
+![Thread Execution](scheduling/media/thread-behaviour.svg)
 
 ----
 
@@ -439,7 +439,7 @@ A more detailed diagram is [here](./cool-extra-stuff.md#the-suspended-states)
 
 #### Context Switch - How?
 
-![Context Switch and TCBs](../media/context-switch-tcb.svg)
+![Context Switch and TCBs](scheduling/media/context-switch-tcb.svg)
 
 ---
 
@@ -709,7 +709,7 @@ student@os:~$ ps -e -o pid,ni,comm | grep 5753
 * The scheduler keeps a list of queues, one for each priority
 * During a context switch, the new RUNNING thread is chosen from the highest priority non-empty queue
 
-![Priority-Based Round-Robin](../media/priority-round-robin.svg)
+![Priority-Based Round-Robin](scheduling/media/priority-round-robin.svg)
 
 ---
 
@@ -752,7 +752,7 @@ student@os:~$ ps -e -o pid,ni,comm | grep 5753
 * `demo/race-condition/race_condition.c`
 * `var++` equivalency (**critical section**):
 
-![Race Condition - Instructions](../generated-media/race-condition-generated.gif)
+![Race Condition - Instructions](synchronization/media/race-condition-generated.gif)
 
 * In the end `var = 1` or `var = 2`
 
@@ -768,7 +768,7 @@ if (lock = 0) {
 }
 ```
 
-![Race Condition - TOCTOU](../generated-media/race-condition-toctou-generated.gif)
+![Race Condition - TOCTOU](synchronization/media/race-condition-toctou-generated.gif)
 
 * **Wrong:** threads enter critical section simultaneously
 
@@ -778,7 +778,7 @@ if (lock = 0) {
 
 * Only allow **one thread** to access the critical section at a given time (mutual exclusion)
 
-![Race Condition - Using a lock](../generated-media/race-condition-lock-generated.gif)
+![Race Condition - Using a lock](synchronization/media/race-condition-lock-generated.gif)
 
 * In the end `var` is **always** 2
 * [Quiz](../drills/questions/not-race-condition.md)
@@ -888,7 +888,7 @@ void mutex_unlock(struct mutex *m)
 
 #### Who Should Release the Lock?
 
-![Locks Undefined Behaviour](../media/lock-undefined-behaviour.svg)
+![Locks Undefined Behaviour](synchronization/media/lock-undefined-behaviour.svg)
 
 ---
 
@@ -943,7 +943,7 @@ var = 2000000; time = 1268 ms
 * Circular dependency
 * Threads cyclically wait for each other
 
-![Deadlock](../media/deadlock.svg)
+![Deadlock](synchronization/media/deadlock.svg)
 
 ```console
 student@os:~/.../compute/lecture/demo/deadlock$ python3 deadlock.py
@@ -1090,7 +1090,7 @@ After barrier: thread name = thread-1
 * **Reentrant function:** preempted at any time and re-called from the same thread with the same effects
   * Different from recursion:
 
-![Recursion vs reentrancy](../media/recursive-vs-reentrant.svg)
+![Recursion vs reentrancy](synchronization/media/recursive-vs-reentrant.svg)
 
 ----
 
