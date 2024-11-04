@@ -205,7 +205,7 @@ student@os:~$ ps -e -o pid,ni,comm | grep 5753
 * The scheduler keeps a list of queues, one for each priority
 * During a context switch, the new RUNNING thread is chosen from the highest priority non-empty queue
 
-![Priority-Based Round-Robin](../media/priority-round-robin.svg)
+![Priority-Based Round-Robin](scheduling/media/priority-round-robin.svg)
 
 ---
 

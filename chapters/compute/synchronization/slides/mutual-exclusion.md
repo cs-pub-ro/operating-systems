@@ -103,7 +103,7 @@ void mutex_unlock(struct mutex *m)
 
 #### Who Should Release the Lock?
 
-![Locks Undefined Behaviour](../media/lock-undefined-behaviour.svg)
+![Locks Undefined Behaviour](synchronization/media/lock-undefined-behaviour.svg)
 
 ---
 
@@ -158,7 +158,7 @@ var = 2000000; time = 1268 ms
 * Circular dependency
 * Threads cyclically wait for each other
 
-![Deadlock](../media/deadlock.svg)
+![Deadlock](synchronization/media/deadlock.svg)
 
 ```console
 student@os:~/.../compute/lecture/demo/deadlock$ python3 deadlock.py

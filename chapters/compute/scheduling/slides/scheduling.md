@@ -14,7 +14,7 @@
 
 #### Typical Thread Execution
 
-![Thread Execution](../media/thread-behaviour.svg)
+![Thread Execution](scheduling/media/thread-behaviour.svg)
 
 ----
 
@@ -44,7 +44,7 @@ A more detailed diagram is [here](./cool-extra-stuff.md#the-suspended-states)
 
 #### Context Switch - How?
 
-![Context Switch and TCBs](../media/context-switch-tcb.svg)
+![Context Switch and TCBs](scheduling/media/context-switch-tcb.svg)
 
 ---
 

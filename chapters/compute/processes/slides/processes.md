@@ -26,7 +26,7 @@
 
 #### Resource Management - Overview
 
-![Resource Management](../media/resource-management.svg)
+![Resource Management](processes/media/resource-management.svg)
 
 ----
 
@@ -48,7 +48,7 @@
 
 #### Process Virtual Address Space
 
-![Process VAS](../media/vas.svg)
+![Process VAS](processes/media/vas.svg)
 
 ---
 

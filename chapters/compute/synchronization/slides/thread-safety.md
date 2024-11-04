@@ -10,7 +10,7 @@
 * **Reentrant function:** preempted at any time and re-called from the same thread with the same effects
   * Different from recursion:
 
-![Recursion vs reentrancy](../media/recursive-vs-reentrant.svg)
+![Recursion vs reentrancy](synchronization/media/recursive-vs-reentrant.svg)
 
 ----
 

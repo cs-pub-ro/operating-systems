@@ -22,4 +22,4 @@
 * `fork` also creates a new thread...
 * ... but part of a different process
 
-![fork - new Thread](../media/fork-thread.svg)
+![fork - new Thread](processes/media/fork-thread.svg)

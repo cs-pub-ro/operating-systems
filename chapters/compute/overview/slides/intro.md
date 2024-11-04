@@ -23,7 +23,7 @@ How?
 
 #### Some CPU internals
 
-![CPU Internals](../media/cpu-internals.jpg)
+![CPU Internals](overview/media/cpu-internals.jpg)
 
 * Multiple **cores** per CPU
 * Still not enough for all processes

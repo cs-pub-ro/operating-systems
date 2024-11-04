@@ -8,7 +8,7 @@
 
 When `fork` returns, the child duplicates the contents of the parent's page table.
 
-![Copy-on-write after fork()](../media/copy-on-write-initial.svg)
+![Copy-on-write after fork()](copy-on-write/media/copy-on-write-initial.svg)
 
 ----
 
@@ -17,7 +17,7 @@ When `fork` returns, the child duplicates the contents of the parent's page tabl
 * Writable pages are **copied and modified only** when written: `demo/copy-on-write/copy_on_write_overhead.c`
 * [Quiz](../drills/questions/sections-always-shared.md)
 
-![Copy-on-write after Write](../media/copy-on-write-final.svg)
+![Copy-on-write after Write](copy-on-write/media/copy-on-write-final.svg)
 
 ----
 
