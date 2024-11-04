@@ -6,7 +6,7 @@
 
 ### Locks vs Notifications
 
-![Lock vs Notification](../media/lock-vs-notify.svg)
+![Lock vs Notification](synchronization/media/lock-vs-notify.svg)
 
 ----
 

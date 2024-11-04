@@ -27,7 +27,7 @@
 
 * [Quiz](../drills/questions/threads-shared-data.md)
 
-![Application Architecture](../media/app-process-thread.svg)
+![Application Architecture](threads/media/app-process-thread.svg)
 
 ---
 
