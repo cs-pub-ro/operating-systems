@@ -1,7 +1,7 @@
 CC = gcc
 SRCS = stack_protector.c
 OBJS = $(SRCS:.c=.o)
-CFLAGS += -fno-stack-protector -fno-PIC
+CFLAGS += -fno-PIC
 LDFLAGS += -no-pie
 TARGET = stack_protector
 
