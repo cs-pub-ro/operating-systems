@@ -1,6 +1,6 @@
 # Wild Pointer Arithmetic Info Leak
 
-Navigate to the `chapters/data/memory-security/drills/tasks/bypassing-stack-protector/support/` directory.
+Navigate to the `chapters/data/memory-security/drills/tasks/pointer-arithmetic-leak/support/` directory.
 Open and analyze the `buff_leak.c` file.
 
 The pointer `p` points to the stack.
