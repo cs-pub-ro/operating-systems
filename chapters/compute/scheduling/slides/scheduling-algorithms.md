@@ -74,7 +74,7 @@
 
 #### Round-Robin - Live Scheduling
 
-![Round-Robin Scheduling](../generated-media/round-robin-generated.gif)
+![Round-Robin Scheduling](synchronization/generated-media/round-robin-generated.gif)
 
 ----
 

@@ -6,7 +6,6 @@ FFMPEG = ffmpeg
 
 SLIDES ?= slides.mdpp
 SLIDES_OUT ?= slides.md
-MEDIA_DIR ?= generated-media
 SITE ?= _site
 OPEN ?= xdg-open
 
@@ -21,17 +20,17 @@ $(SITE): $(SLIDES)
 	$(RVMD) $(SLIDES_OUT) --static $@
 
 videos:
-	mkdir -p $(MEDIA_DIR)
 	for TARGET in $(TARGETS); do \
 		TARGET_DIR=$$(find -name $$TARGET -type d | grep media); \
+		MEDIA_DIR=$$(dirname $$TARGET_DIR); \
 		$(FFMPEG) -framerate 0.5 -f image2 -y \
-			-i "$$TARGET_DIR/$$TARGET-%d.svg" -vf format=yuv420p $(MEDIA_DIR)/$$TARGET-generated.gif; \
+			-i "$$TARGET_DIR/$$TARGET-%d.svg" -vf format=yuv420p $$MEDIA_DIR/$$TARGET-generated.gif; \
 	done
 
 open: $(SITE)
 	$(OPEN) $</index.html
 
 clean:
-	-rm -f $(MEDIA_DIR)/*-generated.gif
+	-for i in $$(find -name "*-generated.gif"); do rm -f $$i; done
 	-rm -f *~
 	-rm -fr $(SITE) $(SLIDES_OUT)

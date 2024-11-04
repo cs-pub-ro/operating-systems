@@ -28,7 +28,7 @@
 * `demo/race-condition/race_condition.c`
 * `var++` equivalency (**critical section**):
 
-![Race Condition - Instructions](../generated-media/race-condition-generated.gif)
+![Race Condition - Instructions](synchronization/media/race-condition-generated.gif)
 
 * In the end `var = 1` or `var = 2`
 
@@ -44,7 +44,7 @@ if (lock = 0) {
 }
 ```
 
-![Race Condition - TOCTOU](../generated-media/race-condition-toctou-generated.gif)
+![Race Condition - TOCTOU](synchronization/media/race-condition-toctou-generated.gif)
 
 * **Wrong:** threads enter critical section simultaneously
 
@@ -54,7 +54,7 @@ if (lock = 0) {
 
 * Only allow **one thread** to access the critical section at a given time (mutual exclusion)
 
-![Race Condition - Using a lock](../generated-media/race-condition-lock-generated.gif)
+![Race Condition - Using a lock](synchronization/media/race-condition-lock-generated.gif)
 
 * In the end `var` is **always** 2
 * [Quiz](../drills/questions/not-race-condition.md)
