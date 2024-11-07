@@ -24,10 +24,10 @@ Now let's test this flag, as well as its opposite: `MAP_SHARED`.
 Compile and run the code in `shared-memory/support/src/shared_memory.c`.
 
 1. See the value read by the parent is different from that written by the child.
-Modify the `flags` parameter of `mmap()` so they are the same.
+   Modify the `flags` parameter of `mmap()` so they are the same.
 
 1. Create a semaphore in the shared page and use it to make the parent signal the child before it can exit.
-Use the API defined in [`semaphore.h`](https://man7.org/linux/man-pages/man0/semaphore.h.0p.html).
+   Use the API defined in [`semaphore.h`](https://man7.org/linux/man-pages/man0/semaphore.h.0p.html).
 
     **Be careful!**
     The value written and read previously by the child and the parent, respectively, must not change.

@@ -23,7 +23,7 @@ Unlike Bigfoot, or the Loch Ness monster, we have proof that the GIL is real.
 At first glance, this seems like a huge disadvantage.
 Why force threads to run sequentially?
 The answer has to do with memory management.
-In the [Data chapter](../../../data), you learned that one way of managing memory is via _garbage collection_ (GC).
+In the [Data chapter](../../../../data/process-memory/reading/process-memory.md), you learned that one way of managing memory is via _garbage collection_ (GC).
 In Python, the GC uses reference counting, i.e. each object also stores the number of live pointers to it (variables that reference it).
 You can see that this number needs to be modified atomically by the interpreter to avoid race conditions.
 This involves adding locks to **all** Python data structures.

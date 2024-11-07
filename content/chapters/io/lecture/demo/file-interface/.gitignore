@@ -1,6 +1,0 @@
-*
-!*.c
-!*.py
-!*.md
-!.gitignore
-!Makefile

@@ -13,7 +13,7 @@ Now go through the practice items below.
    Use `strace` to check the system calls invoked by `malloc()` and `free()`.
    You'll see that, depending on the size, the `brk()` or `mmap()` / `munmap()` system calls are invoked.
    And for certain calls to `malloc()` / `free()` no syscall is happening.
-   You'll find more about them in the [Data chapter](../../../data/lab).
+   You'll find more about them in the [Data chapter](../../../../../data/working-with-memory/reading/working-with-memory.md).
 
    [Quiz](../../questions/malloc.md)
 

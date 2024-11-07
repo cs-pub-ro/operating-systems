@@ -97,6 +97,7 @@ lab_structure:
       - tasks/page-faults.md
       - tasks/mini-shell.md
       - tasks/apache2.md
+      - tasks/shared-memory.md
       - reading/processes-threads-apache2.md
       - reading/copy-on-write.md
       - guides/apache2.md
@@ -116,6 +117,44 @@ lab_structure:
       - reading/scheduling.md
       - guides/user-level-threads.md
       - guides/libult.md
+  - title: Lab 9 - File Descriptors
+    filename: lab9.md
+    content:
+      - tasks/my-cat.md
+      - tasks/mmap_cp.md
+      - tasks/anon-pipes.md
+      - reading/file-descriptors.md
+      - reading/fd-operations.md
+      - reading/pipes.md
+      - guides/simple-file-operations.md
+      - guides/redirections.md
+      - guides/fd-table.md
+      - guides/libc-FILE-struct.md
+      - guides/file-mappings.md
+      - guides/reading-linux-dirs.md
+  - title: Lab 10 - Inter-Process Communication
+    filename: lab10.md
+    content:
+      - tasks/named-pipes.md
+      - tasks/unix-socket.md
+      - tasks/network-socket.md
+      - tasks/receive-challenges.md
+      - reading/unix-sockets.md
+      - reading/network-sockets.md
+      - reading/client-server-model.md
+      - guides/networking-101.md
+  - title: Lab 11 - IO Optimizations
+    filename: lab11.md
+    content:
+      - tasks/client-server.md
+      - tasks/multiplexed-client-server.md
+      - tasks/async-server.md
+      - reading/io-multiplexing.md
+      - reading/async-io.md
+      - reading/zero-copy.md
+      - guides/benchmarking-sendfile.md
+      - guides/kernel-caching.md
+      - guides/async.md
 
 
 make_assets:
@@ -126,7 +165,7 @@ make_assets:
       - chapters/software-stack
       - chapters/data
       - chapters/compute
-      - content/chapters/io/lecture
+      - chapters/io
       - content/chapters/app-interact/lecture
     args:
       - all
@@ -260,33 +299,41 @@ docusaurus:
             - Lab 6 - Multiprocess and Multithread: lab6.md
             - Lab 7 - Copy-on-Write: lab7.md
             - Lab 8 - Syncronization: lab8.md
+      - IO:
+          path: /build/prepare_view/.view
+          extra:
+            - media
+          subsections:
+            - Slides: /build/embed_reveal/IO/IO.mdx
+            - Overview: /build/prepare_view/.view/io-overview.md
+            - Questions:
+                path: questions
+                subsections:
+                  - Bind Error Cause: bind-error-cause.md
+                  - Anonymous Pipes Limitation: anonymous-pipes-limitation.md
+                  - Pipe Ends: pipe-ends.md
+                  - Receiver Socket FD: receiver-socket-fd.md
+                  - Client Server Sender Receiver: client-server-sender-receiver.md
+                  - Firefox TCP UDP: firefox-tcp-udp.md
+                  - Server Copies: server-copies.md
+                  - Fewer Than 2 Copies: fewer-than-2-copies.md
+                  - Strace Printf: strace-printf.md
+                  - Mmap Read Write Benchmark: mmap-read-write-benchmark.md
+                  - Syscalls CP: syscalls-cp.md
+                  - File Handler C: file-handler-c.md
+                  - Flush Libc Buffer: flush-libc-buffer.md
+                  - Stderr FD: stderr-fd.md
+                  - Local IO Errors: local-io-errors.md
+                  - Fopen Syscall: fopen-syscall.md
+            - Lab 9 - File Descriptors: lab9.md
+            - Lab 10 - Inter-Process Communication: lab10.md
+            - Lab 11 - IO Optimizations: lab11.md
       - Lecture:
           path: /build/embed_reveal
           subsections:
             - IO: IO/IO.mdx
             - Application Interaction: Application-Interaction/Application-Interaction.mdx
       # - Lab:
-      #   - IO:
-      #       path: content/chapters/io/lab/content
-      #       extra:
-      #         - ../media
-      #         - ../quiz
-      #       subsections:
-      #         - Overview: overview.md
-      #         - File Handlers: file-handlers.md
-      #         - File Descriptors: file-descriptors.md
-      #         - Redirections: redirections.md
-      #         - Pipes: pipes.md
-      #         - Local IO in Action: local-io-in-action.md
-      #         - Remote IO: remote-io.md
-      #         - Networking 101: networking-101.md
-      #         - Client-Server Model: client-server-model.md
-      #         - Beyond Network Sockets: beyond-network-sockets.md
-      #         - File Mappings: file-mappings.md
-      #         - IO Internals: io-internals.md
-      #         - Zero-Copy: zero-copy.md
-      #         - Asynchronous IO: async-io.md
-      #         - IO Multiplexing: io-multiplexing.md
       #   - Application Interaction:
       #       path: content/chapters/app-interact/lab/content
       #       extra:
@@ -352,7 +399,7 @@ docusaurus:
       - slides/Compute: /build/make_assets/chapters/compute/_site
       - slides/Data: /build/make_assets/chapters/data/_site
       - slides/Software-Stack: /build/make_assets/chapters/software-stack/_site
-      - slides/IO: /build/make_assets/content/chapters/io/lecture/_site
+      - slides/IO: /build/make_assets/chapters/io/_site
       - slides/Application-Interaction: /build/make_assets/content/chapters/app-interact/lecture/_site
     config_meta:
       title: Operating Systems
