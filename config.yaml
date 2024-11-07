@@ -156,7 +156,6 @@ lab_structure:
       - guides/kernel-caching.md
       - guides/async.md
 
-
   - title: Lab 12 - Aplication Interaction
     filename: lab12.md
     content:
@@ -178,7 +177,7 @@ make_assets:
       - chapters/data
       - chapters/compute
       - chapters/io
-      - content/chapters/app-interact/lecture
+      - chapters/app-interact
     args:
       - all
 
@@ -429,7 +428,7 @@ docusaurus:
       - slides/Data: /build/make_assets/chapters/data/_site
       - slides/Software-Stack: /build/make_assets/chapters/software-stack/_site
       - slides/IO: /build/make_assets/chapters/io/_site
-      - slides/Application-Interaction: /build/make_assets/content/chapters/app-interact/lecture/_site
+      - slides/Application-Interaction: /build/make_assets/chapters/app-interact/_site
     config_meta:
       title: Operating Systems
       url: http://localhost/
