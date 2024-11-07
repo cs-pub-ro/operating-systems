@@ -14,17 +14,34 @@ LOGGER_OBJ = log.o
 LOGGER = $(LOGGER_DIR)/$(LOGGER_OBJ)
 
 # Source files and corresponding binaries
+<<<<<<<< HEAD:chapters/io/optimizations/drills/tasks/async-server/solution/Makefile
 BINARIES = server client
+========
+BINARIES = mmap_cp
+>>>>>>>> 3616d2929 (chapter/io: Restructure IO chapter):chapters/io/file-descriptors/drills/tasks/mmap_cp/solution/Makefile
 SRCS = $(BINARIES:=.c)
 OBJS = $(SRCS:.c=.o)
 
 # Default rule: build all binaries
 all: $(BINARIES)
 
+<<<<<<<< HEAD:chapters/io/optimizations/drills/tasks/async-server/solution/Makefile
 # Rule to compile the binaries
 $(BINARIES): %: %.o $(LOGGER)
 	$(CC) $(LDFLAGS) $^ -o $@
 
+========
+large-file:
+	dd if=/dev/urandom of=large-file.txt bs=1024 count=1M
+
+test-file:
+	dd if=/dev/urandom of=test-file.txt bs=1024 count=1K
+
+# Rule to compile the binaries
+$(BINARIES): %: %.o $(LOGGER)
+	$(CC) $(LDFLAGS) $^ -o $@
+
+>>>>>>>> 3616d2929 (chapter/io: Restructure IO chapter):chapters/io/file-descriptors/drills/tasks/mmap_cp/solution/Makefile
 # Rule to compile the logger object
 $(LOGGER): $(LOGGER_DIR)/log.c
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
@@ -33,8 +50,13 @@ $(LOGGER): $(LOGGER_DIR)/log.c
 clean:
 	-rm -f $(OBJS) $(BINARIES)
 	-rm -f $(LOGGER)
+<<<<<<<< HEAD:chapters/io/optimizations/drills/tasks/async-server/solution/Makefile
 
 test-file.txt:
 	dd if=/dev/urandom of=test-file.txt bs=1024 count=1M
 
+========
+	-rm -f *.txt
+
+>>>>>>>> 3616d2929 (chapter/io: Restructure IO chapter):chapters/io/file-descriptors/drills/tasks/mmap_cp/solution/Makefile
 .PHONY: all clean

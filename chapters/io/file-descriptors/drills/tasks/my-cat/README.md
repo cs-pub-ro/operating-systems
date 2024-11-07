@@ -3,6 +3,7 @@
 Navigate to `chapters/io/file-descriptors/drills/tasks/my-cat/support/src` and checkout `my_cat.c`.
 We propose to implement the Linux command `cat` that reads one or more files, **concatenates** them (hence the name `cat`), and prints them to standard output.
 
+<<<<<<< HEAD
 1. Inside the `tests/` directory, you will need to run `checker.sh`. The output for a successful implementation should look like this:
 
 ```bash
@@ -18,6 +19,8 @@ Good job!
 ----------------------------------------
 ```
 
+=======
+>>>>>>> 3616d2929 (chapter/io: Restructure IO chapter)
 1. Implement `rread()` wrapper over `read()`.
 
    `read()` system call does not guarantee that it will read the requested number of bytes in a single call.

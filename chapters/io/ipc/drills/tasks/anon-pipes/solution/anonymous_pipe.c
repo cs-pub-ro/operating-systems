@@ -13,7 +13,7 @@
 #define BUFSIZE 131072
 ========
 #define BUFSIZE 	128
->>>>>>>> cb9fe3ee8d (chapter/io: Restructure IO chapter):chapters/io/ipc/drills/tasks/anon-pipes/solution/anonymous_pipe.c
+>>>>>>>> 3616d2929 (chapter/io: Restructure IO chapter):chapters/io/ipc/drills/tasks/anon-pipes/solution/anonymous_pipe.c
 #define PIPE_READ	0
 #define PIPE_WRITE	1
 

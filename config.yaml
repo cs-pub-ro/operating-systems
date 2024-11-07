@@ -168,6 +168,7 @@ lab_structure:
       - reading/os-cloud.md
       - reading/dbus.md
       - reading/x-window-system.md
+
 make_assets:
   plugin: command
   options:

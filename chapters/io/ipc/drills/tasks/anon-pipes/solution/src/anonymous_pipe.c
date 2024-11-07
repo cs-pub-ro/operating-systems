@@ -9,7 +9,11 @@
 
 #include "utils/utils.h"
 
+<<<<<<<< HEAD:chapters/io/ipc/drills/tasks/anon-pipes/solution/src/anonymous_pipe.c
 #define BUFSIZE 131072
+========
+#define BUFSIZE 	128
+>>>>>>>> 3616d2929 (chapter/io: Restructure IO chapter):chapters/io/ipc/drills/tasks/anon-pipes/solution/anonymous_pipe.c
 #define PIPE_READ	0
 #define PIPE_WRITE	1
 

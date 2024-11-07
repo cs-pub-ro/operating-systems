@@ -18,7 +18,7 @@ LOGGER = $(LOGGER_DIR)/$(LOGGER_OBJ)
 BINARIES = server client
 ========
 BINARIES = mmap_cp
->>>>>>>> cb9fe3ee8d (chapter/io: Restructure IO chapter):chapters/io/file-descriptors/drills/tasks/mmap_cp/solution/Makefile
+>>>>>>>> 3616d2929 (chapter/io: Restructure IO chapter):chapters/io/file-descriptors/drills/tasks/mmap_cp/solution/Makefile
 SRCS = $(BINARIES:=.c)
 OBJS = $(SRCS:.c=.o)
 
@@ -41,7 +41,7 @@ test-file:
 $(BINARIES): %: %.o $(LOGGER)
 	$(CC) $(LDFLAGS) $^ -o $@
 
->>>>>>>> cb9fe3ee8d (chapter/io: Restructure IO chapter):chapters/io/file-descriptors/drills/tasks/mmap_cp/solution/Makefile
+>>>>>>>> 3616d2929 (chapter/io: Restructure IO chapter):chapters/io/file-descriptors/drills/tasks/mmap_cp/solution/Makefile
 # Rule to compile the logger object
 $(LOGGER): $(LOGGER_DIR)/log.c
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
@@ -58,5 +58,5 @@ test-file.txt:
 ========
 	-rm -f *.txt
 
->>>>>>>> cb9fe3ee8d (chapter/io: Restructure IO chapter):chapters/io/file-descriptors/drills/tasks/mmap_cp/solution/Makefile
+>>>>>>>> 3616d2929 (chapter/io: Restructure IO chapter):chapters/io/file-descriptors/drills/tasks/mmap_cp/solution/Makefile
 .PHONY: all clean
