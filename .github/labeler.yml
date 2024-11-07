@@ -8,7 +8,7 @@ topic/compute:
   - 'chapters/compute/**/*'
 
 topic/io:
-  - 'content/chapters/io/**/*'
+  - 'chapters/io/**/*'
 
 topic/app-interact:
   - 'content/chapters/app-interact/**/*'

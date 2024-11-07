@@ -45,7 +45,7 @@ Answer in this [quiz](../drills/questions/sleeping-on-a-fiber.md).
 Use `strace` to find calls to `clone()` in the execution of `simple`.
 Can you find any?
 Provide your answer in this [quiz](../drills/questions/fiber-strace.md)
-Remember that `clone()` is the system call used to create **kernel-level** threads, as pointed out [here](../../processes/guides/clone.md).
+`clone` is the system call used to create **kernel-level** threads, as pointed out [in this guide on creating threads and processes](../../threads/guides/clone/README.md).
 
 ## Synchronization
 

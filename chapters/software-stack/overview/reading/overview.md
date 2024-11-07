@@ -39,8 +39,6 @@ The last two characteristics rely on two items:
 
 ![Software Stack](../media/software-stack.svg)
 
-[Quiz](../drills/software.md)
-
 ## Contents
 
 - [Modern Software Stacks](../../modern-software-stacks/reading/modern-sw-stack.md)

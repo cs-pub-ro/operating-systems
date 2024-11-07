@@ -1,0 +1,34 @@
+---
+title: "OS: Input / Output"
+revealOptions:
+  background-color: 'aquamarine'
+  transition: 'none'
+  slideNumber: true
+  autoAnimateDuration: 0.0
+---
+
+# IO
+
+1. File Interface
+1. Interprocess Communication
+1. IO Optimizations
+
+---
+
+!INCLUDE "overview/slides/intro.md"
+
+---
+
+!INCLUDE "file-descriptors/slides/file-interface.md"
+
+---
+
+!INCLUDE "file-descriptors/slides/devices.md"
+
+---
+
+!INCLUDE "ipc/slides/IPC.md"
+
+---
+
+!INCLUDE "optimizations/slides/optimizations.md"

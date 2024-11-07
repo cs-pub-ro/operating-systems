@@ -82,7 +82,7 @@ int handle_client(int sockfd)
 	return 1;
 }
 
-int main()
+int main(void)
 {
 	int sockfd;
 

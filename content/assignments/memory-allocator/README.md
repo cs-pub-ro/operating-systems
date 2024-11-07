@@ -102,7 +102,7 @@ The structure `block_meta` will be used to manage the metadata of a block.
 Each allocated zone will comprise of a `block_meta` structure placed at the start, followed by data (**payload**).
 For all functions, the returned address will be that of the **payload** (not of the `block_meta` structure).
 
-```C
+```c
 struct block_meta {
 	size_t size;
 	int status;

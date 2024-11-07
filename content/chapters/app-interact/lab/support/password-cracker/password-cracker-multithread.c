@@ -98,7 +98,7 @@ void create_workers(pthread_t *tids)
 	}
 }
 
-int main()
+int main(void)
 {
 	pthread_t tids[NUM_WORKERS];
 	int i;

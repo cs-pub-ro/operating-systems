@@ -18,7 +18,7 @@ Using the [man page](https://man7.org/linux/man-pages/man2/setitimer.2.html), wh
 
 The code we're interested in lies in the function `init_profiling_timer()`:
 
-```C
+```c
 const struct itimerval timer = {
 	{ 0, 10000 },
 	{ 0, 1 }  // arms the timer as soon as possible
@@ -27,7 +27,7 @@ const struct itimerval timer = {
 
 The [man page](https://man7.org/linux/man-pages/man2/setitimer.2.html) gives the following definition the `struct itimerval`:
 
-```C
+```c
 struct itimerval {
 	struct timeval it_interval; /* Interval for periodic timer */
 	struct timeval it_value;    /* Time until next expiration */

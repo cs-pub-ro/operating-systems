@@ -158,7 +158,7 @@ void create_workers(int *request_pipefd, int *result_pipefd)
 	}
 }
 
-int main()
+int main(void)
 {
 	int i;
 	int request_pipefd[NUM_WORKERS];

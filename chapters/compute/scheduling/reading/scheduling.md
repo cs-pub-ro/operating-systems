@@ -13,9 +13,6 @@ To do this, the scheduler must decide, at given times, to suspend a thread, save
 This event is called a **context switch**.
 A context switch means changing the state of one thread (the replaced thread) from RUNNING to WAITING, and the state of the replacement thread from READY / WAITING to RUNNING.
 
-<!-- TODO -->
-- Quiz?
-
 ## User-Level vs Kernel-Level Threads
 
 There are two types of threads.
@@ -36,14 +33,14 @@ In such cases, user-level threads may be useful as context switches bring less o
 
 Let's dissect the `threads_create()` function a bit.
 It first initialises its queues and the timer for preemption.
-We'll discuss preemption [in the next section](#scheduling---how-is-it-done).
+We'll discuss preemption separately, in a [section of its own](#scheduling---how-is-it-done).
 After performing initialisations, the function creates a `TCB` object.
 TCB stands for **Thread Control Block**.
 
 During the lecture, you saw that the kernel stores one instance of a [`task_struct`](https://elixir.bootlin.com/linux/v5.19.11/source/include/linux/sched.h#L726) for each thread.
 Remember that its most important fields are:
 
-```C
+```c
 struct task_struct {
  unsigned int                    __state;
 
@@ -150,7 +147,6 @@ If you encounter the following error when running `test_ult`, remember what you 
 > Hint: Use the `LD_LIBRARY_PATH` variable.
 
 Notice that the threads run their code and alternatively, because their prints appear interleaved.
-[In the next section](#scheduling---how-is-it-done), we'll see how this is done.
 
 [Quiz](questions/ult-thread-ids.md)
 
@@ -190,7 +186,7 @@ It is this handler that performs the context switch per se.
 Look at its code.
 It first saves the context of the current thread:
 
-```C
+```c
 ucontext_t *stored = &running->context;
 ucontext_t *updated = (ucontext_t *) context;
 
@@ -203,7 +199,7 @@ stored->uc_sigmask = updated->uc_sigmask;
 Then it places the current thread in the `ready` queue and replaces it with the first thread in the same queue.
 This algorithm (that schedules the first thread in the READY queue) is called _Round-Robin_:
 
-```C
+```c
 if (queue_enqueue(ready, running) != 0) {
  abort();
 }
@@ -215,7 +211,7 @@ if ((running = queue_dequeue(ready)) == NULL) {
 
 The new `running` thread is resumed upon setting the current context to it:
 
-```C
+```c
 if (setcontext(&running->context) == -1) {
  abort();
 }
