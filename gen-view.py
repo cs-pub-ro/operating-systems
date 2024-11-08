@@ -132,6 +132,9 @@ def solve_links(filename: str, fileToLab: dict) -> str:
 
     # Remove relative links to reading, media, tasks, and guides
     for section in ["reading", "media", "tasks", "guides"]:
+        # Questions are placed in a directory of their own, just like media, so we need to go up one level
+        if "questions" in filename and section == "media":
+            section = "../" + section
         text = re.sub(
             r"(\[.*\])\(.*" + section + r"/(.*)\)", rf"\1({section}/\2)", text
         )
