@@ -128,7 +128,7 @@ def solve_links(filename: str, fileToLab: dict) -> str:
         text = f.read()
 
     # Questions from the same chapter are at Questions/<question>, without the .md extension
-    text = re.sub(r"(\[.*\])\(.*questions/(.*)\.md\)", r"\1(Questions/\2)", text)
+    text = re.sub(r"(\[.*?\])\(.*?questions/(.*?)\.md\)", r"\1(Questions/\2)", text)
 
     # Remove relative links to reading, media, tasks, and guides
     for section in ["reading", "media", "tasks", "guides"]:
@@ -136,12 +136,12 @@ def solve_links(filename: str, fileToLab: dict) -> str:
         if "questions" in filename and section == "media":
             section = "../" + section
         text = re.sub(
-            r"(\[.*\])\(.*" + section + r"/(.*)\)", rf"\1({section}/\2)", text
+            r"(\[.*?\])\([^\)]*" + section + r"/(.*?)\)", rf"\1({section}/\2)", text
         )
 
     # Reading links [text](.*/reading/<file>.md) should be replaced with [text](.view/labQ#<chapter>)
     # Where Q is the lab number and chapter is the heading of the file
-    matches = re.findall(r"\[.*\]\((.*\.md)\)", text)
+    matches = re.findall(r"\[[^\]]*\]\(([^\)]+\.md)\)", text)
     for sourceFile in matches:
         origName = sourceFile  # Save the original name for the regex
         if sourceFile.endswith("README.md"):
