@@ -136,6 +136,10 @@ def solve_links(text: str, fileToLab: dict) -> str:
     # Where Q is the lab number and chapter is the heading of the file
     matches = re.findall(r"\[.*\]\((.*\.md)\)", text)
     for sourceFile in matches:
+        origName = sourceFile  # Save the original name for the regex
+        if sourceFile.endswith("README.md"):
+            sourceFile = os.path.dirname(sourceFile) + ".md"
+
         filepath = os.path.join(viewDir, sourceFile)
 
         # Tasks and guides are prefixed with the section name
@@ -156,7 +160,7 @@ def solve_links(text: str, fileToLab: dict) -> str:
             continue
 
         text = re.sub(
-            rf"(\[.*\])\({sourceFile}\)",
+            rf"(\[.*\])\({origName}\)",  # Use origName because tasks 'sourceFile' has changed
             rf"\1({fileToLab[sourceFile]}#{subchapter})",
             text,
         )
