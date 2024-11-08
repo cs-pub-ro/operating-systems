@@ -176,6 +176,35 @@ def solve_links(filename: str, fileToLab: dict) -> str:
         f.write(text)
 
 
+def find_broken_links():
+    """
+    Find potentially broken links in the markdown file.
+    """
+    prefixes = ["lab", "media", "tasks", "Questions", "reading", "guides", "http"]
+
+    for root, _, files in os.walk(viewDir):
+        for f in files:
+            if "lab" in f:  # Skip lab files, check source files only
+                continue
+
+            if f.endswith(".md"):
+                with open(os.path.join(root, f)) as f:
+                    text = f.read()
+
+                # Find all links that do not point to a markdown file
+                matches = re.findall(r"\[[^\]]*\]\(([^\)]+)\)", text)
+                for link in matches:
+                    # Questions media links corner case
+                    isValidQMediaLink = "questions" in root and link.startswith(
+                        "../media/"
+                    )
+
+                    if (
+                        not any([link.startswith(p) for p in prefixes])
+                    ) and not isValidQMediaLink:
+                        print(f"Possibly broken link in {f.name}: ({link})")
+
+
 class Lab:
     def __init__(self, title: str, filename: str, content: List[str]):
         self.text = f"# {title}\n\n"
@@ -265,6 +294,9 @@ def main():
         for f in files:
             if f.endswith(".md"):
                 solve_links(os.path.join(root, f), config.get_file_to_lab_dict())
+
+    # Check for broken links
+    find_broken_links()
 
 
 if __name__ == "__main__":
