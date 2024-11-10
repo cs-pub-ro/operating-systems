@@ -17,16 +17,20 @@ int main(void)
 	int rc;
 	sem_t *sem;
 
-	/* TODO 1: Change the flags to disable copy-on-write. */
+
+	/* TODO 2: Change the flags to disable copy-on-write. */
 	p = mmap(NULL, getpagesize(), PROT_READ | PROT_WRITE,
-		MAP_SHARED | MAP_ANONYMOUS, -1, 0);
+			MAP_SHARED | MAP_ANONYMOUS, -1, 0);
+	/* REPLACE 2 */
+	/* p = mmap(NULL, getpagesize(), PROT_READ | PROT_WRITE, */
+			/* MAP_PRIVATE | MAP_ANONYMOUS, -1, 0); */
+
 	DIE(p == MAP_FAILED, "mmap");
 
 	*p = 42;
 
-	/**
-	 * TODO 2.1: Create a semaphore in the shared page and use it to signal
-	 * the child process to end.
+	/* TODO 3: Create a semaphore in the shared page and use it
+	 * to signal the child process to end.
 	 */
 	sem = (sem_t *)(p + 10);
 	rc = sem_init(sem, 1, 0);
@@ -44,10 +48,9 @@ int main(void)
 		*p = 69;
 		printf("[child] Wrote value %d at address %p\n", *p, p);
 
-		/**
-		* TODO 2.2: Wait for the semaphore to be signalled by the
-		* parent.
-		*/
+		/* TODO 2: Wait for the semaphore to be signalled by the
+		 * parent.
+		 */
 		rc = sem_wait(sem);
 		DIE(rc < 0, "sem_wait");
 
@@ -55,9 +58,8 @@ int main(void)
 
 	default:
 		/* Parent process */
-		/**
-		 * TODO 2.3: Sleep for a few seconds before signalling the child
-		 * process to end.
+		/* TODO 3: Sleep for a few seconds before signalling
+		 * the child process to end.
 		 */
 		sleep(2);
 		rc = sem_post(sem);
@@ -66,12 +68,14 @@ int main(void)
 		ret_pid = waitpid(pid, NULL, 0);
 		DIE(ret_pid < 0, "waitpid parent");
 
-		/**
-		 * TODO 2.4: Make sure the value read by the parent is still the
-		 * one written by the child.
+		/* TODO 2: Make sure the value read by the parent is still
+		 * the one written by the child.
 		 */
-		printf("[parent] Child process exited. Data at address %p = %d\n",
-			p, *p);
+		printf("[parent] Child process exited. Data at address %p = %d\n"
+			, p, *p);
+		/* REPLACE 2 */
+		/* printf("[parent] Child process exited. Data at address %p = %d\n" */
+			/* , , ); */
 		break;
 	}
 

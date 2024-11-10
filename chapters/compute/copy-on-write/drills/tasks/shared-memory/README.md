@@ -1,13 +1,27 @@
 # Shared Memory
 
+Navigate to the `chapters/compute/copy-on-write/drills/tasks/shared-memory/` directory, run `make skels` to generate the `support/` folder, enter the `support/src/` folder, open `shared_memory.c` and go through the practice items below.
+
+Use the `support/tests/checker.sh` script to check your solution.
+
+```bash
+./checker.sh
+mmap ............................ passed ... 25
+sem_wait ........................ passed ... 25
+sem_post ........................ passed ... 25
+match value ..................... passed ... 25
+Total: 100 / 100
+```
+
 As you remember from the [Data chapter](../../../../../data/process-memory/reading/process-memory.md), one way to allocate a given number of pages is to use the `mmap()` syscall.
+
 Let's look at its [man page](https://man7.org/linux/man-pages/man2/mmap.2.html), specifically at the `flags` argument.
 Its main purpose is to determine the way in which child processes interact with the mapped pages.
 
-[Quiz](../drills/questions/mmap-cow-flag.md)
+[Quiz](../../questions/mmap-cow-flag.md)
 
 Now let's test this flag, as well as its opposite: `MAP_SHARED`.
-Compile and run the code in `shared-memory/support/shared_memory.c`.
+Compile and run the code in `shared-memory/support/src/shared_memory.c`.
 
 1. See the value read by the parent is different from that written by the child.
 Modify the `flags` parameter of `mmap()` so they are the same.
