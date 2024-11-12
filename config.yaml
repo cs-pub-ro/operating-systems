@@ -79,7 +79,6 @@ lab_structure:
       - tasks/sleepy.md
       - tasks/wait-for-me-processes.md
       - tasks/create-process.md
-      - tasks/mini-shell.md
       - tasks/multithreaded.md
       - tasks/sum-array.md
       - tasks/sum-array-bugs.md
@@ -98,6 +97,7 @@ lab_structure:
       - tasks/apache2.md
       - tasks/page-faults.md
       - tasks/shared-memory.md
+      - tasks/mini-shell.md
       - reading/processes-threads-apache2.md
       - reading/copy-on-write.md
       - guides/apache2.md
