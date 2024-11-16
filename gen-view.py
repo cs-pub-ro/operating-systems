@@ -6,7 +6,7 @@ import re
 from typing import List
 import yaml
 
-CHAPTERS = ["Software Stack", "Data", "Compute", "IO"]
+CHAPTERS = ["Software Stack", "Data", "Compute", "IO", "App Interact"]
 CHAPTERS_PATH = "chapters/"
 
 viewDir = ".view"
