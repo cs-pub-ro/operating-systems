@@ -94,10 +94,9 @@ lab_structure:
   - title: Lab 7 - Copy-on-Write
     filename: lab7.md
     content:
-      - tasks/apache2.md
       - tasks/page-faults.md
-      - tasks/shared-memory.md
       - tasks/mini-shell.md
+      - tasks/apache2.md
       - reading/processes-threads-apache2.md
       - reading/copy-on-write.md
       - guides/apache2.md
@@ -107,6 +106,7 @@ lab_structure:
     content:
       - tasks/race-condition.md
       - tasks/threadsafe-data-struct.md
+      - tasks/shared-memory.md
       - tasks/libult.md
       - reading/synchronization.md
       - reading/user-level-threads.md
