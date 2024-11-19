@@ -2,7 +2,8 @@
 
 Enter the `chapters/compute/processes-threads-apache2/drills/tasks/apache2/support/` folder and go through the practice items below.
 
-1. Use `strace` to discover the server document root.
+1. Use `make run` to start the container.
+   Use `strace` inside the container to discover the server document root.
    The document root is the path in the filesystem from where `httpd` serves all the files requested by the clients.
 
 First, you will have to stop the running container using `make stop`, then restart it with `make run-privileged`.
