@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkso=self.webpackChunkso||[]).push([[8614],{8476:e=>{e.exports=JSON.parse('{"title":"Lecture","slug":"/Lecture/","permalink":"/operating-systems/75/Lecture/","navigation":{"previous":{"title":"Lab 11 - IO Optimizations","permalink":"/operating-systems/75/IO/lab11"},"next":{"title":"IO","permalink":"/operating-systems/75/Lecture/IO"}}}')}}]);
