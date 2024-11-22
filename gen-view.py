@@ -6,7 +6,7 @@ import re
 from typing import List
 import yaml
 
-CHAPTERS = ["Software Stack", "Data", "Compute", "IO"]
+CHAPTERS = ["Software Stack", "Data", "Compute", "IO", "App Interact"]
 CHAPTERS_PATH = "chapters/"
 
 viewDir = ".view"
@@ -71,7 +71,6 @@ def group_questions():
         for f in files:
             if "questions" in root:
                 os.popen(f"cp {os.path.join(root, f)} {questionsDir}/")
-
 
 def group_guides():
     """

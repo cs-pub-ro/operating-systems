@@ -113,8 +113,18 @@ lab_structure:
       - reading/scheduling.md
       - guides/user-level-threads.md
       - guides/libult.md
-
-
+  - title: Lab 12 - Aplication Interaction
+    filename: lab12.md
+    content:
+      - tasks/time-server.md
+      - tasks/password-cracker.md
+      - tasks/dbus.md
+      - tasks/os-cloud.md
+      - reading/time-server.md
+      - reading/password-cracker.md
+      - reading/os-cloud.md
+      - reading/dbus.md
+      - reading/x-window-system.md
 make_assets:
   plugin: command
   options:
@@ -123,6 +133,7 @@ make_assets:
       - chapters/software-stack
       - chapters/data
       - chapters/compute
+      - chapters/app-interact
       - content/chapters/io/lecture
       - content/chapters/app-interact/lecture
     args:
@@ -257,6 +268,23 @@ docusaurus:
             - Lab 6 - Multiprocess and Multithread: lab6.md
             - Lab 7 - Copy-on-Write: lab7.md
             - Lab 8 - Syncronization: lab8.md
+      - Application Interaction:
+          path: /build/prepare_view/.view
+          extra:
+            - media
+          subsections:
+            - Slides: /build/embed_reveal/Application-Interaction/Application-Interaction.mdx
+            - Overview: /build/prepare_view/.view/app-interact-overview.md
+            - Questions:
+                path: questions
+                subsections:
+                  - Time Server: time-server.md
+                  - Time Server Interop: time-server-interop.md
+                  - X Window System: timer.md
+                  - Vm Creation: vm-creation.md
+                  - Container versus VM: container-vs-vm.md
+                  - Cgroups versus namespaces: cgroups-vs-namespaces.md
+            - Lab 12 - Aplication Interaction: lab12.md
       - Lecture:
           path: /build/embed_reveal
           subsections:
@@ -349,8 +377,8 @@ docusaurus:
       - slides/Compute: /build/make_assets/chapters/compute/_site
       - slides/Data: /build/make_assets/chapters/data/_site
       - slides/Software-Stack: /build/make_assets/chapters/software-stack/_site
+      - slides/Application-Interaction: /build/make_assets/chapters/app-interact/_site
       - slides/IO: /build/make_assets/content/chapters/io/lecture/_site
-      - slides/Application-Interaction: /build/make_assets/content/chapters/app-interact/lecture/_site
     config_meta:
       title: Operating Systems
       url: http://localhost/
