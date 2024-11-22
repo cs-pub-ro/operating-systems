@@ -169,6 +169,18 @@ lab_structure:
       - reading/dbus.md
       - reading/x-window-system.md
 
+  - title: Lab 12 - Aplication Interaction
+    filename: lab12.md
+    content:
+      - tasks/time-server.md
+      - tasks/password-cracker.md
+      - tasks/dbus.md
+      - tasks/os-cloud.md
+      - reading/time-server.md
+      - reading/password-cracker.md
+      - reading/os-cloud.md
+      - reading/dbus.md
+      - reading/x-window-system.md
 make_assets:
   plugin: command
   options:
