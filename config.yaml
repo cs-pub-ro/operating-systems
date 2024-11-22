@@ -157,6 +157,18 @@ lab_structure:
       - guides/async.md
 
 
+  - title: Lab 12 - Aplication Interaction
+    filename: lab12.md
+    content:
+      - tasks/time-server.md
+      - tasks/password-cracker.md
+      - tasks/dbus.md
+      - tasks/os-cloud.md
+      - reading/time-server.md
+      - reading/password-cracker.md
+      - reading/os-cloud.md
+      - reading/dbus.md
+      - reading/x-window-system.md
 make_assets:
   plugin: command
   options:
@@ -328,6 +340,23 @@ docusaurus:
             - Lab 9 - File Descriptors: lab9.md
             - Lab 10 - Inter-Process Communication: lab10.md
             - Lab 11 - IO Optimizations: lab11.md
+      - Application Interaction:
+          path: /build/prepare_view/.view
+          extra:
+            - media
+          subsections:
+            - Slides: /build/embed_reveal/Application-Interaction/Application-Interaction.mdx
+            - Overview: /build/prepare_view/.view/app-interact-overview.md
+            - Questions:
+                path: questions
+                subsections:
+                  - Time Server: time-server.md
+                  - Time Server Interop: time-server-interop.md
+                  - X Window System: timer.md
+                  - Vm Creation: vm-creation.md
+                  - Container versus VM: container-vs-vm.md
+                  - Cgroups versus namespaces: cgroups-vs-namespaces.md
+            - Lab 12 - Aplication Interaction: lab12.md
       - Lecture:
           path: /build/embed_reveal
           subsections:

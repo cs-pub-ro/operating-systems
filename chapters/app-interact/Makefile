@@ -1,5 +1,5 @@
 # The script expect the source .svg files to be named as $TARGET-$i.svg, where $i is the frame number.
-TARGETS = ""
+TARGETS =
 RVMD = reveal-md
 MDPP = markdown-pp
 FFMPEG = ffmpeg
