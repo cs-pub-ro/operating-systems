@@ -1,5 +1,8 @@
 ## Shellcode Executor
 
+Navigate to `chapters/data/memory-security/drills/tasks/exec-shellcode` and run `make skels` to generate the `support/` folder.
+Then navigate to `support/src`.
+
 Navigate to the `chapters/data/memory-security/drills/tasks/exec-shellcode/support/` directory.
 
 Your goal is to update the `src/exec-shellcode.s` source code file to be able to read and execute shellcodes from a given binary files.

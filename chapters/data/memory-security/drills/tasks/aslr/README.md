@@ -1,5 +1,8 @@
 # ASLR
 
+Navigate to `chapters/data/memory-security/drills/tasks/aslr` and run `make skels` to generate the `support/` folder.
+Then navigate to `support/src`.
+
 Use the `Makefile.aslr` file to compile the `chapters/data/memory-security/drills/tasks/aslr/support/aslr.c` file:
 
 ```console
@@ -26,3 +29,17 @@ Disable PIC by uncommenting the `-fno-PIC` and `LDFLAGS` lines.
 We observe that for randomization to work, we need to instruct the OS to randomize the program sections and the compiler to generate code that is position independent.
 
 If you're having difficulties solving this exercise, go through [this](../../../reading/memory-security.md) reading material.
+
+## Checker
+
+To run the checker, go into the `tests` directory located in `src`, then type `make check`.
+A successful output of the checker should look like this :
+
+```console
+student@os:~/.../drills/tasks/aslr/support/src/tests make check
+test_aslr                        ........................ passed ... 100
+
+========================================================================
+
+Total:                                                           100/100
+```
