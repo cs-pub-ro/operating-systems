@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkso=self.webpackChunkso||[]).push([[462],{6685:e=>{e.exports=JSON.parse('{"title":"IO","slug":"/IO/","permalink":"/operating-systems/75/IO/","navigation":{"previous":{"title":"Lab 8 - Syncronization","permalink":"/operating-systems/75/Compute/lab8"},"next":{"title":"IO","permalink":"/operating-systems/75/IO/"}}}')}}]);
