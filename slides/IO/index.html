@@ -42,7 +42,7 @@ What was missing?
 
 ### Interactive Software is Good Software
 
-![interactive software](./media/interactive-software.png)
+![interactive software](overview/media/interactive-software.png)
 
 ----
 
@@ -57,19 +57,19 @@ What was missing?
 
 ----
 
-![roadmap](./media/roadmap.svg)
+![roadmap](overview/media/roadmap.svg)
 
 ----
 
-![roadmap Data](./media/roadmap-Data.svg)
+![roadmap Data](overview/media/roadmap-Data.svg)
 
 ----
 
-![roadmap Compute](./media/roadmap-Compute.svg)
+![roadmap Compute](overview/media/roadmap-Compute.svg)
 
 ----
 
-![roadmap IO](./media/roadmap-IO.svg)
+![roadmap IO](overview/media/roadmap-IO.svg)
 
 ----
 
@@ -90,7 +90,7 @@ What was missing?
 
 ### File Interface - `open()`
 
-![open](./media/file-interface-open.svg)
+![open](file-descriptors/media/file-interface-open.svg)
 
 ----
 
@@ -110,7 +110,7 @@ What was missing?
 
 ### File Descriptor Table
 
-![File Descriptor Table](./media/file-descriptor-table.svg)
+![File Descriptor Table](file-descriptors/media/file-descriptor-table.svg)
 
 ----
 
@@ -127,7 +127,7 @@ What was missing?
 
 ### File Interface - `read()`/`write()`
 
-![read write](./media/file-interface-read-write.svg)
+![read write](file-descriptors/media/file-interface-read-write.svg)
 
 ----
 
@@ -137,7 +137,7 @@ What was missing?
 - Return number of read bytes
   - **-1**    - read failed
   - **0**     - EOF reached
-  - **< num** - partial read
+  - **< `num`** - partial read
 
 ----
 
@@ -146,13 +146,13 @@ What was missing?
 - Uses the **file handle** to write bytes
 - Return number of written bytes
   - **-1**    - write failed
-  - **< num** - partial write
+  - **< `num`** - partial write
 
 ---
 
 ### File Interface - `close()`
 
-![close](./media/file-interface-close.svg)
+![close](file-descriptors/media/file-interface-close.svg)
 
 ----
 
@@ -164,7 +164,7 @@ What was missing?
 
 ### File Interface - `lseek()`
 
-![lseek](./media/file-interface-lseek.svg)
+![lseek](file-descriptors/media/file-interface-lseek.svg)
 
 ----
 
@@ -184,7 +184,7 @@ What happens if the **offset** is bigger than the file size?
 
 ### File Interface - `ftruncate()`
 
-![ftruncate](./media/file-interface-ftruncate.svg)
+![ftruncate](file-descriptors/media/file-interface-ftruncate.svg)
 
 ----
 
@@ -213,7 +213,7 @@ What happens if the **offset** is bigger than the file size?
 
 ### File Interface - `dup()`
 
-![dup](./media/file-interface-dup.svg)
+![dup](file-descriptors/media/file-interface-dup.svg)
 
 ----
 
@@ -250,19 +250,19 @@ What happens if the **offset** is bigger than the file size?
 
 ----
 
-![mouse keyboard](./media/dev-mouse-keyboard.png)
+![mouse keyboard](file-descriptors/media/dev-mouse-keyboard.png)
 
 ----
 
-![hard disk](./media/dev-storage.png)
+![hard disk](file-descriptors/media/dev-storage.png)
 
 ----
 
-![sensors](./media/dev-sensors.png)
+![sensors](file-descriptors/media/dev-sensors.png)
 
 ----
 
-![devices](./media/devices.png)
+![devices](file-descriptors/media/devices.png)
 
 How does the OS operate them?
 
@@ -281,7 +281,7 @@ How does the OS operate them?
 
 ### Representing I/O Devices
 
-![char and block devices](./media/char-block-devices.svg)
+![char and block devices](file-descriptors/media/char-block-devices.svg)
 
 Linux abstracts an I/O device as a **special file**
 
@@ -329,13 +329,13 @@ student@OS:~$ cat /dev/input/mouse1
 
 If not friend, why friend shaped?
 
-![snow leopard](./media/snow-leopard.png)
+![snow leopard](file-descriptors/media/snow-leopard.png)
 
 ----
 
 ### Software Stacks All Over Again
 
-![Device Software Stack](./media/device-software-stack.svg)
+![Device Software Stack](file-descriptors/media/device-software-stack.svg)
 
 ----
 
@@ -423,11 +423,11 @@ static ssize_t write_zero(struct file *file,
 
 ---
 
-### Interprocess Communication
+### Inter-Process Communication
 
 ---
 
-### Interprocess Communication
+### Inter-Process Communication
 
 - A communication channel involves a process and a data endpoint
 - We can use persistent data and I/O devices as endpoints with the **file interface**
@@ -439,7 +439,7 @@ static ssize_t write_zero(struct file *file,
 
 ### IPC - File Interface
 
-![IPC through File Interface](./media/IPC-file-interface.svg)
+![IPC through File Interface](ipc/media/IPC-file-interface.svg)
 
 - Writing to disk and reading from disk is tedious
 
@@ -447,7 +447,7 @@ static ssize_t write_zero(struct file *file,
 
 ### IPC - Pipe
 
-![IPC through pipe](./media/IPC-pipe.svg)
+![IPC through pipe](ipc/media/IPC-pipe.svg)
 
 - Same idea as above
 
@@ -463,31 +463,31 @@ static ssize_t write_zero(struct file *file,
 
 ### Pipe - Walkthrough
 
-![Pipe walkthrough - 1](./media/pipe-walkthrough-1.svg)
+![Pipe walkthrough - 1](ipc/media/pipe-walkthrough-1.svg)
 
 ----
 
 ### Pipe - Walkthrough
 
-![Pipe walkthrough - 2](./media/pipe-walkthrough-2.svg)
+![Pipe walkthrough - 2](ipc/media/pipe-walkthrough-2.svg)
 
 ----
 
 ### Pipe - Walkthrough
 
-![Pipe walkthrough - 3](./media/pipe-walkthrough-3.svg)
+![Pipe walkthrough - 3](ipc/media/pipe-walkthrough-3.svg)
 
 ----
 
 ### Pipe - Walkthrough
 
-![Pipe walkthrough - 4](./media/pipe-walkthrough-4.svg)
+![Pipe walkthrough - 4](ipc/media/pipe-walkthrough-4.svg)
 
 ----
 
 ### Pipe - Walkthrough
 
-![Pipe walkthrough - 5](./media/pipe-walkthrough-5.svg)
+![Pipe walkthrough - 5](ipc/media/pipe-walkthrough-5.svg)
 
 ----
 
@@ -519,13 +519,13 @@ prw-r--r-- 1 student student 0 nov 22 18:38 my_fifo
 
 ### IPC - Socket Interface
 
-![Socket Interface](./media/socket-interface.svg)
+![Socket Interface](ipc/media/socket-interface.svg)
 
 ----
 
 ### Socket
 
-- The endpoint in the interprocess communication
+- The endpoint in the inter-process communication
 - Uniquely identifies the process in the communication
 - Supports multiple transmission types
   - e.g.: `stream`, `datagram`
@@ -534,7 +534,7 @@ prw-r--r-- 1 student student 0 nov 22 18:38 my_fifo
 
 ### Socket Interface - `socket()`
 
-![socket()](./media/socket-interface-socket.svg)
+![socket()](ipc/media/socket-interface-socket.svg)
 
 ----
 
@@ -558,7 +558,7 @@ prw-r--r-- 1 student student 0 nov 22 18:38 my_fifo
 
 ### Stream and Datagram
 
-![Stream and Datagram simplified](./media/stream-datagram-simplified.png)
+![Stream and Datagram simplified](ipc/media/stream-datagram-simplified.png)
 
 ---
 
@@ -580,7 +580,7 @@ prw-r--r-- 1 student student 0 nov 22 18:38 my_fifo
 
 #### Server - `socket()`
 
-![socket()](./media/socket-interface-socket.svg)
+![socket()](ipc/media/socket-interface-socket.svg)
 
 - Create socket
 
@@ -588,7 +588,7 @@ prw-r--r-- 1 student student 0 nov 22 18:38 my_fifo
 
 #### Server - `bind()`
 
-![bind()](./media/socket-interface-bind.svg)
+![bind()](ipc/media/socket-interface-bind.svg)
 
 - Assign address to the socket
 
@@ -596,7 +596,7 @@ prw-r--r-- 1 student student 0 nov 22 18:38 my_fifo
 
 #### Server - `listen()`
 
-![listen()](./media/socket-interface-listen.svg)
+![listen()](ipc/media/socket-interface-listen.svg)
 
 - Mark the socket **passive** - will be used to accept connections
 
@@ -604,7 +604,7 @@ prw-r--r-- 1 student student 0 nov 22 18:38 my_fifo
 
 #### Server - `accept()`
 
-![accept()](./media/socket-interface-accept.svg)
+![accept()](ipc/media/socket-interface-accept.svg)
 
 - Wait for a connection
 - Accept the connection and create a socket for it
@@ -617,7 +617,7 @@ prw-r--r-- 1 student student 0 nov 22 18:38 my_fifo
 
 #### Client - `socket()`
 
-![socket()](./media/socket-interface-socket.svg)
+![socket()](ipc/media/socket-interface-socket.svg)
 
 - Create a socket
 
@@ -625,7 +625,7 @@ prw-r--r-- 1 student student 0 nov 22 18:38 my_fifo
 
 #### Client - `connect()`
 
-![TCP socket](./media/socket-interface-connect.svg)
+![TCP socket](ipc/media/socket-interface-connect.svg)
 
 - Establish connection with server
 
@@ -633,7 +633,7 @@ prw-r--r-- 1 student student 0 nov 22 18:38 my_fifo
 
 ### `send()`/`recv()`
 
-![Socket send recv](./media/socket-interface-send-recv.svg)
+![Socket `send()/recv()`](ipc/media/socket-interface-send-recv.svg)
 
 - Same as `read()`/`write()`
 
@@ -643,8 +643,8 @@ prw-r--r-- 1 student student 0 nov 22 18:38 my_fifo
 
 - Use socket to send bytes
 - Return number of sent bytes
-  - **-1** - send failed
-  - **<num** - partial send
+  - **-1** - `send()` failed
+  - **< `num`** - partial `send()`
 
 ----
 
@@ -652,9 +652,9 @@ prw-r--r-- 1 student student 0 nov 22 18:38 my_fifo
 
 - Use socket to receive bytes
 - Return number of received bytes
-  - **-1** - recv failed
+  - **-1** - `recv()` failed
   - **0** - connection end (similar to EOF)
-  - **<num** - partial recv
+  - **< `num`** - partial `recv()`
 
 ---
 
@@ -706,7 +706,7 @@ srwxrwxr-x 1 student student    0 dec  2 16:03 unix_socket
 
 ### Socket Summary
 
-![Socket Summary](./media/socket-summary-generated.gif)
+![Socket Summary](ipc/media/socket-summary-generated.gif)
 
 ---
 
@@ -795,7 +795,7 @@ student@os:~$ cat /proc/sys/vm/dirty_expire_centisecs
 
 ### Overview
 
-![IO Buffering Overview](./media/io-buffering-overview.svg)
+![IO Buffering Overview](optimizations/media/io-buffering-overview.svg)
 
 ----
 
@@ -819,7 +819,7 @@ student@os:~$ cat /proc/sys/vm/dirty_expire_centisecs
 
 ## Kernel Buffers Transfer
 
-![Repeated Copy](./media/repeated-copy.svg)
+![Repeated Copy](optimizations/media/repeated-copy.svg)
 
 ----
 
@@ -834,7 +834,7 @@ student@os:~$ cat /proc/sys/vm/dirty_expire_centisecs
 
 ### `zero-copy`
 
-![Zero-copy](./media/zero-copy.svg)
+![Zero-copy](optimizations/media/zero-copy.svg)
 
 ----
 
@@ -880,49 +880,49 @@ student@os:~$ cat /proc/sys/vm/dirty_expire_centisecs
 
 ### `epoll_create()`
 
-![epoll_create()](./media/epoll-create.svg)
+![epoll_create()](optimizations/media/epoll-create.svg)
 
 ---
 
 ### `epoll_ctl()`
 
-![epoll_ctl()](./media/epoll-ctl-1.svg)
+![epoll_ctl()](optimizations/media/epoll-ctl-1.svg)
 
 ----
 
 #### `epoll_ctl()`
 
-![epoll_ctl()](./media/epoll-ctl-2.svg)
+![epoll_ctl()](optimizations/media/epoll-ctl-2.svg)
 
 ----
 
 #### `epoll_ctl()`
 
-![epoll_ctl()](./media/epoll-ctl-3.svg)
+![epoll_ctl()](optimizations/media/epoll-ctl-3.svg)
 
 ----
 
 #### `epoll_ctl()`
 
-![epoll_ctl()](./media/epoll-ctl-4.svg)
+![epoll_ctl()](optimizations/media/epoll-ctl-4.svg)
 
 ----
 
 #### `epoll_ctl()`
 
-![epoll_ctl()](./media/epoll-ctl-5.svg)
+![epoll_ctl()](optimizations/media/epoll-ctl-5.svg)
 
 ----
 
 #### `epoll_ctl()`
 
-![epoll_ctl()](./media/epoll-ctl-6.svg)
+![epoll_ctl()](optimizations/media/epoll-ctl-6.svg)
 
 ---
 
 ### `epoll_wait()`
 
-![epoll_wait()](./media/epoll-wait.svg)
+![epoll_wait()](optimizations/media/epoll-wait.svg)
 
 ---
 
@@ -969,7 +969,7 @@ student@os:~$ cat /proc/sys/vm/dirty_expire_centisecs
 
 - The python asynchronous interface abstracts a lot of the functionality
 - The idea behind:
-  - The server socket is added to an **epoll instance**
+  - The server socket is added to an **`epoll` instance**
   - The specified **handle** is called for each event (new connection)
 
           </textarea>
