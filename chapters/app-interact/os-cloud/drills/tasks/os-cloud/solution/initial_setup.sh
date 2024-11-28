@@ -19,4 +19,3 @@ done
 
 # Pull docker images
 docker pull mariadb:10.7
-
