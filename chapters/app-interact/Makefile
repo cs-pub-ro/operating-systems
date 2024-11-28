@@ -1,5 +1,5 @@
 # The script expect the source .svg files to be named as $TARGET-$i.svg, where $i is the frame number.
-TARGETS =
+TARGETS = synchronization interruption
 RVMD = reveal-md
 MDPP = markdown-pp
 FFMPEG = ffmpeg
@@ -33,4 +33,3 @@ open: $(SITE)
 clean:
 	-for i in $$(find -name "*-generated.gif"); do rm -f $$i; done
 	-rm -f *~
-	-rm -fr $(SITE) $(SLIDES_OUT)

@@ -1,3 +1,5 @@
+# Password cracker
+
 Creating 26 processes is not very realistic, since it's unlikely that a usual machine has that many cores.
 
 Modify the program so that it only creates 4 workers.

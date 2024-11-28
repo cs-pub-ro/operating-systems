@@ -134,7 +134,7 @@ int main(void)
 
 ### Exhibit 4 - WhatsApp Application
 
-![App1](./media/whatsApp.svg)
+![App1](overview/media/whatsApp.svg)
 
 ----
 

@@ -36,9 +36,9 @@
 
 ### Synchronization Demos
 
-In `./demo/lock/`
+In `/chapters/app-interact/overview/guides/demo/lock/`
 
-In `./demo/sync/`
+In `/chapters/app-interact/overview/guides/demo/sync/`
 
 ---
 
@@ -54,7 +54,7 @@ In `./demo/sync/`
 
 ### Interruption Demos
 
-In `./demo/interrupt/`
+In `/chapters/app-interact/overview/guides/demo/interrupt/`
 
 ---
 
@@ -71,7 +71,7 @@ In `./demo/interrupt/`
 
 ### Shared Memory Demos
 
-In `./demo/shared-mem/`
+In `/chapters/app-interact/overview/guides/demo/shared-mem/`
 
 ---
 
@@ -89,7 +89,7 @@ In `./demo/shared-mem/`
 
 ### Communication Channels
 
-In `./demo/comm-channels/`
+In `/chapters/app-interact/overview/guides/demo/comm-channels/`
 
 ----
 
@@ -106,4 +106,4 @@ In `./demo/comm-channels/`
 
 ## Case study: Our Own Server
 
-In `./demo/fibonacci-server/`
+In `/chapters/app-interact/overview/guides/demo/fibonacci-server/`
