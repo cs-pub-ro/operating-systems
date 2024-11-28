@@ -43,13 +43,13 @@ App components interact via interaction channels.
 
 ### Synchronization
 
-![Synchronization](./media/synchronization-generated.gif)
+![Synchronization](overview/media/synchronization-generated.gif)
 
 ----
 
 ### Interruption
 
-![Interruption](./media/interruption-generated.gif)
+![Interruption](overview/media/interruption-generated.gif)
 
 ---
 
@@ -77,7 +77,7 @@ App components interact via interaction channels.
 
 ### Shared Memory
 
-![Shared Memory](./media/shared-memory.svg)
+![Shared Memory](overview/media/shared-memory.svg)
 
 ----
 
@@ -96,4 +96,4 @@ App components interact via interaction channels.
 
 ### Communication Channel
 
-![Communication Channel](./media/communication-channel.svg)
+![Communication Channel](overview/media/communication-channel.svg)

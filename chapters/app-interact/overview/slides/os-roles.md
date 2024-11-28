@@ -41,4 +41,4 @@
 
 ## OS - The Lawmaker
 
-![Multiple Apps Interacting through the OS](./media/multiple-apps-interaction.svg)
+![Multiple Apps Interacting through the OS](overview/media/multiple-apps-interaction.svg)

@@ -14,7 +14,7 @@
 
 ### App Components
 
-![App Components](./media/app-components.svg)
+![App Components](overview/media/app-components.svg)
 
 ---
 
@@ -81,13 +81,13 @@
 
 ### Postfix
 
-![Postfix](./media/postfix-architecture.svg) ([source](https://commons.wikimedia.org/wiki/File:Postfix_architecture.svg))
+![Postfix](overview/media/postfix-architecture.svg) ([source](https://commons.wikimedia.org/wiki/File:Postfix_architecture.svg))
 
 ----
 
 ### GitLab
 
-<img src="./media/gitlab-architecture.png" width="400" /> ([source](https://docs.gitlab.com/ee/development/architecture.html))
+<img src="overview/media/gitlab-architecture.png" width="400" /> ([source](https://docs.gitlab.com/ee/development/architecture.html))
 
 ----
 
@@ -103,4 +103,4 @@
 
 ### Kubernetes
 
-![Kubernetes Architecture](./media/kubernetes-architecture.png) ([source](https://medium.com/devops-mojo/kubernetes-architecture-overview-introduction-to-k8s-architecture-and-understanding-k8s-cluster-components-90e11eb34ccd))
+![Kubernetes Architecture](overview/media/kubernetes-architecture.png) ([source](https://medium.com/devops-mojo/kubernetes-architecture-overview-introduction-to-k8s-architecture-and-understanding-k8s-cluster-components-90e11eb34ccd))
