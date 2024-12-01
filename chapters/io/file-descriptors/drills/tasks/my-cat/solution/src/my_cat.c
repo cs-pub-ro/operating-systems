@@ -76,8 +76,10 @@ void cat(const char *filename)
 	int fd, bytes_read;
 	int rc;
 
+	/* TODO 2: Open the file in read-only mode */
 	fd = open(filename, O_RDONLY);
 	DIE(fd < 0, "open");
+
 
 	/* TODO 8: Read the entire file and print it to stdout */
 	while (true) {
