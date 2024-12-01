@@ -5,6 +5,16 @@ In this exercise, you'll implement client-server communication between a parent 
 The parent will act as the sender, while the child acts as the receiver, with both processes sharing messages through the pipe.
 Since pipes are unidirectional, each process should close the end of the pipe it does not use.
 
+1. Inside the `tests/` directory, you will need to run `checker.sh`. The output for a successful implementation should look like this:
+
+```bash
+./checker.sh
+make: Nothing to be done for 'all'.
+
+Test for short string ........... PASSED
+Test for long string  ........... PASSED
+```
+
 1. Use the [`pipe()` syscall](https://man7.org/linux/man-pages/man7/pipe.7.html) to create the pipe.
    Remember, the first file descriptor (`fds[0]`) is the read end, and the second (`fds[1]`) is the write end, similar to how `stdin` and `stdout` are represented by file descriptors `0` and `1`.
 

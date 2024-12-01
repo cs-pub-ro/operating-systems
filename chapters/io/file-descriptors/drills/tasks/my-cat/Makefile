@@ -3,7 +3,9 @@ SCRIPT = generate_skels.py
 
 skels:
 	mkdir -p support/
-	$(PYTHON) $(SCRIPT) --input ./solution/ --output ./support/
+	mkdir -p support/tests
+	cp solution/tests/checker.sh support/tests/checker.sh
+	$(PYTHON) $(SCRIPT) --input ./solution/src --output ./support/src
 
 clean:
 	rm -rf support/

@@ -9,7 +9,7 @@
 
 #include "utils/utils.h"
 
-#define BUFSIZE 	128
+#define BUFSIZE 131072
 #define PIPE_READ	0
 #define PIPE_WRITE	1
 

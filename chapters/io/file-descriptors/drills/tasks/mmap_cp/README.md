@@ -7,6 +7,15 @@ The benchmarking is automated by `benchmark_cp.sh` so focus on completing `mmap_
 
 [Quiz: Checkout what syscalls `cp` uses](../../questions/syscalls-cp.md)
 
+1. Inside the `tests/` directory, you will need to run `checker.sh`. The output for a successful implementation should look like this:
+
+```bash
+./checker.sh
+make: Nothing to be done for 'all'.
+
+Test PASSED (File copies are identical)
+```
+
 1. Open `mmap_cp.c` and complete the TODOs to map the files in memory and copy the contents.
    Do not forget to clean up by unmapping and closing the files.
 
