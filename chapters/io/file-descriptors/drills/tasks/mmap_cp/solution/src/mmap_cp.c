@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
 	 * of the output file to the size of the input file.
 	 */
 
-	/* TODO 2: Use ftstat() to get the size of the input file. */
+	/* TODO 2: Use fstat() to get the size of the input file. */
 	rc = fstat(fdin, &statbuf);
 	DIE(rc < 0, "fstat");
 
