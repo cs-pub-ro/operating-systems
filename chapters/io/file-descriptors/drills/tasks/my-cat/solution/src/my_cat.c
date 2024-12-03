@@ -25,7 +25,7 @@ size_t rread(int fd, void *buf, size_t size)
 	size_t total_bytes_read = 0;
 
 	while (true) {
-		bytes_read = read(fd, buf, size);
+		bytes_read = read(fd, buf + total_bytes_read, size - total_bytes_read);
 		DIE(bytes_read < 0, "read");
 
 		if (bytes_read == 0)
@@ -57,7 +57,7 @@ size_t wwrite(int fd, const void *buf, size_t size)
 	size_t total_bytes_written = 0;
 
 	while (true) {
-		bytes_written = write(fd, buf, size);
+		bytes_written = write(fd, buf + total_bytes_written, size - total_bytes_written);
 		DIE(bytes_written < 0, "write");
 
 		total_bytes_written += bytes_written;
