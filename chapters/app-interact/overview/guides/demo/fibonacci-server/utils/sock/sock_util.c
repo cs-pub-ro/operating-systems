@@ -18,9 +18,9 @@
 #include <unistd.h>
 #include <fcntl.h>
 
-#include "utils/utils.h"
-#include "utils/log/log.h"
-#include "utils/sock/sock_util.h"
+#include "../utils.h"
+#include "../log/log.h"
+#include "sock_util.h"
 
 /*
  * Connect to a TCP server identified by name (DNS name or dotted decimal

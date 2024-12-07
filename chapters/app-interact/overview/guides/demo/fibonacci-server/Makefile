@@ -1,39 +1,50 @@
-BINARIES = server mt_server mp_server mt_pool_server mp_pool_server mp_pool_server_works
+BINARIES = server mt_server mp_server mt_pool_server mp_pool_server_works
 
-include makefiles/multiple.mk
+CC = gcc
+MAKEFILE_DIR := $(dir $(lastword $(MAKEFILE_LIST)))
+INCLUDES_DIR := $(MAKEFILE_DIR)utils
+LOGGER_DIR := $(INCLUDES_DIR)/log
+SOCK_DIR := $(INCLUDES_DIR)/sock
 
-server: server.o connection.o utils/sock/sock_util.o
+CPPFLAGS += -I$(INCLUDES_DIR)
+CFLAGS += -g -Wall -Wextra
+LDFLAGS += -z lazy
 
-mt_server: mt_server.o connection.o utils/sock/sock_util.o
-	$(CC) -o $@ $^ -lpthread
+LOGGER_OBJ = $(LOGGER_DIR)/log.o
+SOCK_OBJ = $(SOCK_DIR)/sock_util.o
+CONNECTIONS_OBJ = connection.o
+TASK_OBJ = task.o
 
-mp_server: mp_server.o connection.o utils/sock/sock_util.o
+all: $(BINARIES)
 
-mt_pool_server: mt_pool_server.o task.o connection.o utils/sock/sock_util.o
-	$(CC) -o $@ $^ -lpthread
+server: server.o $(LOGGER_OBJ) $(SOCK_OBJ) $(CONNECTIONS_OBJ)
+	$(CC) $(CPPFLAGS) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
-mp_pool_server: mp_pool_server.o task.o connection.o utils/sock/sock_util.o
-	$(CC) -o $@ $^ -lpthread
+mt_server: mt_server.o $(LOGGER_OBJ) $(SOCK_OBJ) $(CONNECTIONS_OBJ)
+	$(CC) $(CPPFLAGS) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
-mp_pool_server_works: mp_pool_server_works.o connection.o utils/sock/sock_util.o
+mp_server: mp_server.o $(LOGGER_OBJ) $(SOCK_OBJ) $(CONNECTIONS_OBJ)
+	$(CC) $(CPPFLAGS) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
-server.o: connection.h
+mt_pool_server: mt_pool_server.o $(LOGGER_OBJ) $(SOCK_OBJ) $(CONNECTIONS_OBJ) $(TASK_OBJ)
+	$(CC) $(CPPFLAGS) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
-mt_server.o: connection.h
+mp_pool_server_works: mp_pool_server_works.o $(LOGGER_OBJ) $(SOCK_OBJ) $(CONNECTIONS_OBJ) $(TASK_OBJ)
+	$(CC) $(CPPFLAGS) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
-mp_server.o: connection.h
+$(LOGGER_OBJ): $(LOGGER_DIR)/log.c $(LOGGER_DIR)/log.h
+	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
 
-mt_pool_server.o: task.h connection.h
+$(SOCK_OBJ): $(SOCK_DIR)/sock_util.c $(SOCK_DIR)/sock_util.h
+	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
 
-mp_pool_server.o: task.h connection.h
+$(CONNECTIONS_OBJ): connection.c connection.h
+	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
 
-mp_pool_server_works.o: connection.h
+$(TASK_OBJ): task.c task.h
+	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
 
-connection.o: connection.h
+clean:
+	rm -f $(BINARIES) *.o $(LOGGER_OBJ) $(SOCK_OBJ) $(CONNECTIONS_OBJ) $(TASK_OBJ)
 
-task.o: task.h
-
-utils/sock/sock_util.o: utils/sock/sock_util.c utils/sock/sock_util.h
-
-clean::
-	-rm -f utils/sock/sock_util.o
+.PHONY: all clean
