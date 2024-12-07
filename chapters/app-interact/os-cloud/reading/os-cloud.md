@@ -63,7 +63,7 @@ If not, maybe you need to add it to the `docker` group:
 sudo usermod -aG docker student
 ```
 
-Then, after relogin:
+Then, after re-login:
 
 ```console
 student@os:~$ docker ps

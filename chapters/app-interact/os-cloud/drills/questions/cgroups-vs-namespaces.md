@@ -1,4 +1,4 @@
-# Cgroups versus namespaces
+# Cgroups Versus namespaces
 
 ## Question Text
 

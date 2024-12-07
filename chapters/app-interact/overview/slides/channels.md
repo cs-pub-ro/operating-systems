@@ -68,7 +68,7 @@ App components interact via interaction channels.
 
 - Threads share the virtual address space of a process
   - Different threads use the same virtual address
-- Processes use virtual memory to share a phyisical memory region
+- Processes use virtual memory to share a physical memory region
   - Different processes use different virtual addresses mapped to the same physical address
 - Communication is not synchronized
   - Receiver doesn't know when data has been sent
