@@ -213,7 +213,6 @@ def vm_create(
     disk_size: int,
     ssh_pub_key: str,
 ):
-
     if len(db.get_vm_by_name(name)) > 0:
         raise errors.VMAlreadyExistsException(name)
 

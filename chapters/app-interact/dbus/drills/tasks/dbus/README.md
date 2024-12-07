@@ -1,4 +1,4 @@
-# D-Bus - battery level
+# D-Bus - Battery level
 
 Use D-Bus to find out the computer's battery level.
 There is the `org.freedesktop.UPower` interface on the system bus that can provide this information.

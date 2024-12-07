@@ -2,7 +2,7 @@
 
 ## Question Text
 
-What is the purpose of the timer used in the Oneko's implementantion
+What is the purpose of the timer used in the Oneko's implementation
 
 ## Question Answers
 

@@ -155,7 +155,6 @@ lab_structure:
       - guides/benchmarking-sendfile.md
       - guides/kernel-caching.md
       - guides/async.md
-
   - title: Lab 12 - Aplication Interaction
     filename: lab12.md
     content:
@@ -167,19 +166,11 @@ lab_structure:
       - reading/password-cracker.md
       - reading/os-cloud.md
       - reading/dbus.md
-      - reading/x-window-system.md
-
-  - title: Lab 12 - Aplication Interaction
-    filename: lab12.md
-    content:
-      - tasks/time-server.md
-      - tasks/password-cracker.md
-      - tasks/dbus.md
-      - tasks/os-cloud.md
-      - reading/time-server.md
-      - reading/password-cracker.md
-      - reading/os-cloud.md
-      - reading/dbus.md
+      - reading/dbus-dfeet.md
+      - reading/calling-dbus-methods.md
+      - reading/inspecting-low-level-communication.md
+      - reading/dbus-usage-python.md
+      - reading/firefox.md
       - reading/x-window-system.md
 make_assets:
   plugin: command
@@ -369,24 +360,6 @@ docusaurus:
                   - Container versus VM: container-vs-vm.md
                   - Cgroups versus namespaces: cgroups-vs-namespaces.md
             - Lab 12 - Aplication Interaction: lab12.md
-      - Lecture:
-          path: /build/embed_reveal
-          subsections:
-            - IO: IO/IO.mdx
-            - Application Interaction: Application-Interaction/Application-Interaction.mdx
-      # - Lab:
-      #   - Application Interaction:
-      #       path: content/chapters/app-interact/lab/content
-      #       extra:
-      #         - ../media
-      #         - ../quiz
-      #       subsections:
-      #         - Overview: overview.md
-      #         - Time Server: time-server.md
-      #         - Password Cracker: password-cracker.md
-      #         - The X Window System: x-window-system.md
-      #         - D-Bus: dbus.md
-      #         - OS Cloud: os-cloud.md
       - Assignments:
           # These all have the same filename so we need to create separate
           # subdirectories for them, otherwise they will overwrite each other.
