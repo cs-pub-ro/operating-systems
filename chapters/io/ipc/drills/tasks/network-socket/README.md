@@ -18,4 +18,20 @@ Both the sender and receiver are created from the same binary: run without argum
    Open `udp_socket.c` and complete the TODOs for `sender_loop()` and `receiver_loop()` functions.
    The workflow is similar, but `listen()`, `accept()`, and `connect()` are not required for datagram sockets.
 
+1. Inside the `tests/` directory, you will need to run `checker.sh`.
+   The output for a successful implementation should look like this:
+
+```bash
+./checker.sh
+Test for TCP state: PASSED
+[Sender]: OS{Hello OS enjoyers!!}
+[Sender]:
+Test for TCP receiving the message: PASSED
+
+Test for UDP state: PASSED
+[Sender]: OS{Are you enjoying this lab?!}
+[Sender]:
+Test for UDP receiving the message: PASSED
+```
+
 If you're having difficulties solving this exercise, go through [this reading material](../../../reading/network-sockets.md).

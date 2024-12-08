@@ -21,8 +21,7 @@ void create_fifo_if_needed(void)
 	int rc = access(fifo_path, R_OK | W_OK);
 
 	if (rc < 0) {
-		rc = unlink(fifo_path);
-		DIE(rc < 0, "unlink");
+		unlink(fifo_path);
 
 		rc = mkfifo(fifo_path, 0666);
 		DIE(rc < 0, "mkfifo");

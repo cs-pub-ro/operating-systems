@@ -15,3 +15,12 @@ Both the sender and receiver are created from the same binary: run without argum
    **Bonus**: Run two receivers and a single sender in different terminals.
    You may notice some "strange" behavior due to how named pipes manage data with multiple readers.
    For more on this, see [this Stack Overflow thread](https://stackoverflow.com/a/69325284).
+
+1. Inside the `tests/` directory, you will need to run `checker.sh`.
+   The output for a successful implementation should look like this:
+
+```bash
+./checker.sh
+Test for FIFO creation: PASSED
+Test for send and receive: PASSED
+```

@@ -14,4 +14,13 @@ Both the sender and receiver are created from the same binary: run without argum
    Instead of connecting, you will **listen** for and **accept** incoming connections.
    When `accept()` receives a connection request, it will return a new socket file descriptor that you can use to receive messages via `recv()`.
 
+1. Inside the `tests/` directory, you will need to run `checker.sh`.
+   The output for a successful implementation should look like this:
+
+```bash
+./checker.sh
+Test for socket creation: PASSED
+Test for send and receive: PASSED
+```
+
 If you're having difficulties solving this exercise, go through [this reading material](../../../reading/unix-sockets.md).
