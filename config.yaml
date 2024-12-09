@@ -155,8 +155,23 @@ lab_structure:
       - guides/benchmarking-sendfile.md
       - guides/kernel-caching.md
       - guides/async.md
-
-
+  - title: Lab 12 - Application Interaction
+    filename: lab12.md
+    content:
+      - tasks/time-server.md
+      - tasks/password-cracker.md
+      - tasks/dbus.md
+      - tasks/os-cloud.md
+      - reading/time-server.md
+      - reading/password-cracker.md
+      - reading/os-cloud.md
+      - reading/dbus.md
+      - reading/dbus-dfeet.md
+      - reading/calling-dbus-methods.md
+      - reading/inspecting-low-level-communication.md
+      - reading/dbus-usage-python.md
+      - reading/firefox.md
+      - reading/x-window-system.md
 make_assets:
   plugin: command
   options:
@@ -166,7 +181,7 @@ make_assets:
       - chapters/data
       - chapters/compute
       - chapters/io
-      - content/chapters/app-interact/lecture
+      - chapters/app-interact
     args:
       - all
 
@@ -328,24 +343,23 @@ docusaurus:
             - Lab 9 - File Descriptors: lab9.md
             - Lab 10 - Inter-Process Communication: lab10.md
             - Lab 11 - IO Optimizations: lab11.md
-      - Lecture:
-          path: /build/embed_reveal
+      - Application Interaction:
+          path: /build/prepare_view/.view
+          extra:
+            - media
           subsections:
-            - IO: IO/IO.mdx
-            - Application Interaction: Application-Interaction/Application-Interaction.mdx
-      # - Lab:
-      #   - Application Interaction:
-      #       path: content/chapters/app-interact/lab/content
-      #       extra:
-      #         - ../media
-      #         - ../quiz
-      #       subsections:
-      #         - Overview: overview.md
-      #         - Time Server: time-server.md
-      #         - Password Cracker: password-cracker.md
-      #         - The X Window System: x-window-system.md
-      #         - D-Bus: dbus.md
-      #         - OS Cloud: os-cloud.md
+            - Slides: /build/embed_reveal/Application-Interaction/Application-Interaction.mdx
+            - Overview: /build/prepare_view/.view/app-interact-overview.md
+            - Questions:
+                path: questions
+                subsections:
+                  - Time Server: time-server.md
+                  - Time Server Interop: time-server-interop.md
+                  - X Window System: timer.md
+                  - Vm Creation: vm-creation.md
+                  - Container versus VM: container-vs-vm.md
+                  - Cgroups versus namespaces: cgroups-vs-namespaces.md
+            - Lab 12 - Application Interaction: lab12.md
       - Assignments:
           # These all have the same filename so we need to create separate
           # subdirectories for them, otherwise they will overwrite each other.
@@ -400,7 +414,7 @@ docusaurus:
       - slides/Data: /build/make_assets/chapters/data/_site
       - slides/Software-Stack: /build/make_assets/chapters/software-stack/_site
       - slides/IO: /build/make_assets/chapters/io/_site
-      - slides/Application-Interaction: /build/make_assets/content/chapters/app-interact/lecture/_site
+      - slides/Application-Interaction: /build/make_assets/chapters/app-interact/_site
     config_meta:
       title: Operating Systems
       url: http://localhost/
