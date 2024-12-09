@@ -155,7 +155,7 @@ lab_structure:
       - guides/benchmarking-sendfile.md
       - guides/kernel-caching.md
       - guides/async.md
-  - title: Lab 12 - Aplication Interaction
+  - title: Lab 12 - Application Interaction
     filename: lab12.md
     content:
       - tasks/time-server.md
@@ -359,7 +359,7 @@ docusaurus:
                   - Vm Creation: vm-creation.md
                   - Container versus VM: container-vs-vm.md
                   - Cgroups versus namespaces: cgroups-vs-namespaces.md
-            - Lab 12 - Aplication Interaction: lab12.md
+            - Lab 12 - Application Interaction: lab12.md
       - Assignments:
           # These all have the same filename so we need to create separate
           # subdirectories for them, otherwise they will overwrite each other.
