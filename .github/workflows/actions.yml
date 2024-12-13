@@ -15,15 +15,6 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  super-linter:
-    name: Super Linter
-    runs-on: ubuntu-latest
-    steps:
-      - name: Super Linter
-        uses: open-education-hub/actions/super-linter@main
-        with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
   spellcheck:
     name: Spellcheck
     runs-on: ubuntu-latest
