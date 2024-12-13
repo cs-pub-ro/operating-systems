@@ -217,9 +217,7 @@ quizzes:
     quiz_regex: \[Quiz.*\]\((\.\.\/.*\.md)\)
     template: simple_quiz
     locations:
-      - chapters/**/reading/*.md
-      - chapters/**/guides/*.md
-      - chapters/**/drills/tasks/*/README.md
+      - /build/prepare_view/.view/lab*.md
 
 docusaurus:
   input: $$quizzes$$
