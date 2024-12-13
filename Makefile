@@ -40,8 +40,8 @@ clean: stop_bash
 cleanall: clean
 	-docker inspect --type=image $(IMAGE_NAME) > /dev/null 2>&1 && docker image rm $(IMAGE_NAME)
 
-.PHONY: lint markdownlint
-lint: markdownlint
+.PHONY: lint markdownlint cpplint
+lint: markdownlint cpplint
 
 CHANGED_MD_FILES = $(call get_changed_files,\.md$$)
 markdownlint:
@@ -53,6 +53,12 @@ markdownlint:
 			$(CHANGED_MD_FILES); \
 	fi
 
+CHANGED_CPP_FILES = $(call get_changed_files,\.\(c\|cc\|cpp\|h\|hpp\)$$)
+cpplint: # Runs locally, requires cpplint installed
+	@echo "Checking C/C++ files ..."
+	@if [ "$(CHANGED_CPP_FILES)" ]; then \
+		cpplint --recursive --quiet $(CHANGED_CPP_FILES); \
+	fi
 
 # Get a list of files that changed in the current branch and match the given pattern
 define get_changed_files # $(1): pattern
