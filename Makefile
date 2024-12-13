@@ -40,8 +40,8 @@ clean: stop_bash
 cleanall: clean
 	-docker inspect --type=image $(IMAGE_NAME) > /dev/null 2>&1 && docker image rm $(IMAGE_NAME)
 
-.PHONY: lint markdownlint cpplint
-lint: markdownlint cpplint
+.PHONY: lint markdownlint cpplint black
+lint: markdownlint cpplint black
 
 CHANGED_MD_FILES = $(call get_changed_files,\.md$$)
 markdownlint:
@@ -58,6 +58,14 @@ cpplint: # Runs locally, requires cpplint installed
 	@echo "Checking C/C++ files ..."
 	@if [ "$(CHANGED_CPP_FILES)" ]; then \
 		cpplint --recursive --quiet $(CHANGED_CPP_FILES); \
+	fi
+
+CHANGED_PY_FILES = $(call get_changed_files,\.py$$)
+black:
+	@echo "Checking Python files ..."
+	@if [ "$(CHANGED_PY_FILES)" ]; then \
+		docker run --rm -v $(PWD):/data --workdir=/data pyfound/black:latest \
+			black --check --diff $(CHANGED_PY_FILES); \
 	fi
 
 # Get a list of files that changed in the current branch and match the given pattern

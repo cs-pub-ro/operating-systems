@@ -81,3 +81,30 @@ jobs:
           if [[ -n "${{ env.FILES }}" ]]; then
             cpplint --recursive --quiet ${{ env.FILES }}
           fi
+
+  black:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get changed Python files
+        uses: tj-actions/changed-files@v45
+        id: changed-files
+        with:
+          files: "**/*.py"
+          separator: " "
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: 3.12
+
+      - uses: psf/black@stable
+        env:
+          # Black will fail if no arguments are provided.
+          # In that case check a directory without any python files.
+          FILES: ${{ steps.changed-files.outputs.all_changed_files || '.github' }}
+        with:
+          options: "--check --diff"
+          src: ${{ env.FILES }}
