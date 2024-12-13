@@ -23,3 +23,35 @@ jobs:
         uses: open-education-hub/actions/spellcheck@main
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  markdownlint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get changed markdown files
+        uses: tj-actions/changed-files@v45
+        id: changed-files
+        with:
+          files: "**/*.md"
+          separator: " "
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - run: npm install -g markdownlint-cli@0.43.0
+      - env:
+          MARKDOWNLINT_CONFIG: ".github/.markdownlint.yaml"
+          MARKDOWNLINT_RULES: ".github/markdownlint-custom/rules.js"
+          # Markdownlint will fail if no arguments are provided.
+          # In that case check README.md.
+          FILES: ${{ steps.changed-files.outputs.all_changed_files || 'README.md' }}
+        run:
+          markdownlint
+            --config ${{ env.MARKDOWNLINT_CONFIG }}
+            --rules ${{ env.MARKDOWNLINT_RULES }}
+            ${{ env.FILES }}

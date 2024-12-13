@@ -39,3 +39,22 @@ clean: stop_bash
 
 cleanall: clean
 	-docker inspect --type=image $(IMAGE_NAME) > /dev/null 2>&1 && docker image rm $(IMAGE_NAME)
+
+.PHONY: lint markdownlint
+lint: markdownlint
+
+CHANGED_MD_FILES = $(call get_changed_files,\.md$$)
+markdownlint:
+	@echo "Checking markdown files ..."
+	@if [ "$(CHANGED_MD_FILES)" ]; then \
+		docker run --rm -v $(PWD):/md peterdavehello/markdownlint markdownlint \
+			--config .github/.markdownlint.yaml \
+			--rules .github/markdownlint-custom/rules.js \
+			$(CHANGED_MD_FILES); \
+	fi
+
+
+# Get a list of files that changed in the current branch and match the given pattern
+define get_changed_files # $(1): pattern
+$(shell git diff --name-only HEAD $(shell git merge-base HEAD main) | grep "$(1)" | tr '\n' ' ')
+endef
