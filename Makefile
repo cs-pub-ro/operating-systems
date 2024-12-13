@@ -40,8 +40,8 @@ clean: stop_bash
 cleanall: clean
 	-docker inspect --type=image $(IMAGE_NAME) > /dev/null 2>&1 && docker image rm $(IMAGE_NAME)
 
-.PHONY: lint markdownlint cpplint black
-lint: markdownlint cpplint black
+.PHONY: lint markdownlint cpplint black shellcheck
+lint: markdownlint cpplint black shellcheck
 
 CHANGED_MD_FILES = $(call get_changed_files,\.md$$)
 markdownlint:
@@ -66,6 +66,14 @@ black:
 	@if [ "$(CHANGED_PY_FILES)" ]; then \
 		docker run --rm -v $(PWD):/data --workdir=/data pyfound/black:latest \
 			black --check --diff $(CHANGED_PY_FILES); \
+	fi
+
+CHANGED_SHELL_FILES = $(call get_changed_files,\.\(sh\|bash\)$$)
+shellcheck:
+	@echo "Checking shell scripts ..."
+	@if [ "$(CHANGED_SHELL_FILES)" ]; then \
+		docker run --rm -v $(PWD):/data --workdir=/data koalaman/shellcheck-alpine:v0.10.0 \
+			shellcheck --severity=warning $(CHANGED_SHELL_FILES); \
 	fi
 
 # Get a list of files that changed in the current branch and match the given pattern
