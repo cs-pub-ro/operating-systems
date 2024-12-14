@@ -15,15 +15,6 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  super-linter:
-    name: Super Linter
-    runs-on: ubuntu-latest
-    steps:
-      - name: Super Linter
-        uses: open-education-hub/actions/super-linter@main
-        with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
   spellcheck:
     name: Spellcheck
     runs-on: ubuntu-latest
@@ -32,3 +23,101 @@ jobs:
         uses: open-education-hub/actions/spellcheck@main
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  markdownlint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get changed markdown files
+        uses: tj-actions/changed-files@v45
+        id: changed-files
+        with:
+          files: "**/*.md"
+          separator: " "
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - run: npm install -g markdownlint-cli@0.43.0
+      - env:
+          MARKDOWNLINT_CONFIG: ".github/.markdownlint.yaml"
+          MARKDOWNLINT_RULES: ".github/markdownlint-custom/rules.js"
+          # Markdownlint will fail if no arguments are provided.
+          # In that case check README.md.
+          FILES: ${{ steps.changed-files.outputs.all_changed_files || 'README.md' }}
+        run:
+          markdownlint
+            --config ${{ env.MARKDOWNLINT_CONFIG }}
+            --rules ${{ env.MARKDOWNLINT_RULES }}
+            ${{ env.FILES }}
+
+  cpplint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get changed C and C++ files
+        uses: tj-actions/changed-files@v45
+        id: changed-files
+        with:
+          files: "**/*.{c,cc,cpp,h,hpp}"
+          separator: " "
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: 3.12
+
+      - run: pip install cpplint
+      - env:
+          FILES: ${{ steps.changed-files.outputs.all_changed_files }}
+        run: |
+          if [[ -n "${{ env.FILES }}" ]]; then
+            cpplint --recursive --quiet ${{ env.FILES }}
+          fi
+
+  black:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get changed Python files
+        uses: tj-actions/changed-files@v45
+        id: changed-files
+        with:
+          files: "**/*.py"
+          separator: " "
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: 3.12
+
+      - uses: psf/black@stable
+        env:
+          # Black will fail if no arguments are provided.
+          # In that case check a directory without any python files.
+          FILES: ${{ steps.changed-files.outputs.all_changed_files || '.github' }}
+        with:
+          options: "--check --diff"
+          src: ${{ env.FILES }}
+
+  shellcheck: # Runs on all shell scripts in the repository.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: shellcheck
+        uses: ludeeus/action-shellcheck@2.0.0
+        with:
+          version: v0.10.0
+          severity: "warning"

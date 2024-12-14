@@ -501,7 +501,10 @@ main() {
     run_tests "$@"
 
     if [[ $# -eq 0 ]]; then
-        PADDING=$(printf '.%.0s' $(eval echo "{1..$((PADDING_LEN+6))}"))
+        PADDING=""
+        for ((i=0; i<((PADDING_LEN+6)); i++)); do
+            PADDING+="."
+        done
         printf "Total Score%s[%+3s/%-3s]\n" "$PADDING" $TOTAL_SCORE $MAX_TOTAL_SCORE
     fi
 }
