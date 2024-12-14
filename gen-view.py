@@ -128,7 +128,7 @@ def solve_links(filename: str, fileToLab: dict) -> str:
         text = f.read()
 
     # Questions from the same chapter are at Questions/<question>, without the .md extension
-    text = re.sub(r"(\[.*?\])\(.*?questions/(.*?)\.md\)", r"\1(Questions/\2)", text)
+    text = re.sub(r"(\[.*?\])\(.*?questions/(.*?)\.md\)", r"\1(questions/\2\.md)", text)
 
     # Remove relative links to reading, media, tasks, and guides
     for section in ["reading", "media", "tasks", "guides"]:
