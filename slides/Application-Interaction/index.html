@@ -111,9 +111,9 @@ int main(void)
 
 ### Exhibit 1 - Creating Interaction
 
-- `demo/comm-channels/reader.c`
-- `demo/comm-channels/writer.c`
-- `demo/comm-channels/send_receive_pipe.c`
+- `chapters/app-interact/overview/guides/comm-channels/reader.c`
+- `chapters/app-interact/overview/guides/comm-channels/writer.c`
+- `chapters/app-interact/overview/guides/comm-channels/send_receive_pipe.c`
 
 ---
 
@@ -209,7 +209,7 @@ int main(void)
 
 ### Exhibit 4 - WhatsApp Application
 
-![App1](./media/whatsApp.svg)
+![App1](overview/media/whatsApp.svg)
 
 ----
 
@@ -271,7 +271,7 @@ int main(void)
 
 ### App Components
 
-![App Components](./media/app-components.svg)
+![App Components](overview/media/app-components.svg)
 
 ---
 
@@ -338,13 +338,13 @@ int main(void)
 
 ### Postfix
 
-![Postfix](./media/postfix-architecture.svg) ([source](https://commons.wikimedia.org/wiki/File:Postfix_architecture.svg))
+![Postfix](overview/media/postfix-architecture.svg) ([source](https://commons.wikimedia.org/wiki/File:Postfix_architecture.svg))
 
 ----
 
 ### GitLab
 
-<img src="./media/gitlab-architecture.png" width="400" /> ([source](https://docs.gitlab.com/ee/development/architecture.html))
+<img src="overview/media/gitlab-architecture.png" width="400" /> ([source](https://docs.gitlab.com/ee/development/architecture.html))
 
 ----
 
@@ -360,7 +360,7 @@ int main(void)
 
 ### Kubernetes
 
-![Kubernetes Architecture](./media/kubernetes-architecture.png) ([source](https://medium.com/devops-mojo/kubernetes-architecture-overview-introduction-to-k8s-architecture-and-understanding-k8s-cluster-components-90e11eb34ccd))
+![Kubernetes Architecture](overview/media/kubernetes-architecture.png) ([source](https://medium.com/devops-mojo/kubernetes-architecture-overview-introduction-to-k8s-architecture-and-understanding-k8s-cluster-components-90e11eb34ccd))
 
 ---
 
@@ -407,13 +407,13 @@ App components interact via interaction channels.
 
 ### Synchronization
 
-![Synchronization](./media/synchronization-generated.gif)
+![Synchronization](overview/media/synchronization-generated.gif)
 
 ----
 
 ### Interruption
 
-![Interruption](./media/interruption-generated.gif)
+![Interruption](overview/media/interruption-generated.gif)
 
 ---
 
@@ -432,7 +432,7 @@ App components interact via interaction channels.
 
 - Threads share the virtual address space of a process
   - Different threads use the same virtual address
-- Processes use virtual memory to share a phyisical memory region
+- Processes use virtual memory to share a physical memory region
   - Different processes use different virtual addresses mapped to the same physical address
 - Communication is not synchronized
   - Receiver doesn't know when data has been sent
@@ -441,7 +441,7 @@ App components interact via interaction channels.
 
 ### Shared Memory
 
-![Shared Memory](./media/shared-memory.svg)
+![Shared Memory](overview/media/shared-memory.svg)
 
 ----
 
@@ -460,7 +460,7 @@ App components interact via interaction channels.
 
 ### Communication Channel
 
-![Communication Channel](./media/communication-channel.svg)
+![Communication Channel](overview/media/communication-channel.svg)
 
 ---
 
@@ -505,7 +505,7 @@ App components interact via interaction channels.
 
 ## OS - The Lawmaker
 
-![Multiple Apps Interacting through the OS](./media/multiple-apps-interaction.svg)
+![Multiple Apps Interacting through the OS](overview/media/multiple-apps-interaction.svg)
 
 ---
 
@@ -545,9 +545,9 @@ App components interact via interaction channels.
 
 ### Synchronization Demos
 
-In `./demo/lock/`
+In `chapters/app-interact/overview/guides/lock/`
 
-In `./demo/sync/`
+In `chapters/app-interact/overview/guides/sync/`
 
 ---
 
@@ -563,7 +563,7 @@ In `./demo/sync/`
 
 ### Interruption Demos
 
-In `./demo/interrupt/`
+In `chapters/app-interact/overview/guides/interrupt/`
 
 ---
 
@@ -580,7 +580,7 @@ In `./demo/interrupt/`
 
 ### Shared Memory Demos
 
-In `./demo/shared-mem/`
+In `chapters/app-interact/overview/guides/shared-mem/`
 
 ---
 
@@ -598,7 +598,7 @@ In `./demo/shared-mem/`
 
 ### Communication Channels
 
-In `./demo/comm-channels/`
+In `/chapters/app-interact/overview/guides/comm-channels/`
 
 ----
 
@@ -615,7 +615,7 @@ In `./demo/comm-channels/`
 
 ## Case study: Our Own Server
 
-In `./demo/fibonacci-server/`
+In `/chapters/app-interact/overview/guides/fibonacci-server/`
 
           </textarea>
         </section>
