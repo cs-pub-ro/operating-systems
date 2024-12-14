@@ -362,11 +362,10 @@ You will be informed if the transfer is accepted.
 
 After the semester, students will be rewarded with distinctions based on their involvement in certain activities.
 
-The distinctions to be awarded in the 2023-2024 academic year are as follows:
+The distinctions to be awarded in the 2024-2025 academic year are as follows:
 
 - 8 distinctions for involvement in lecture activities.
-- 20 distinctions for involvement in laboratory activities.
-- 5 distinctions for interesting implementations of assignments.
+- 19 distinctions for involvement in laboratory activities.
 - 8 distinctions for exam results.
 - 10 distinctions for community involvement (pull requests, forum discussions, etc.).
 
