@@ -214,7 +214,7 @@ quizzes:
     parser: md_parser.py
     quiz_type: link
     quiz_embed: iframe_inline
-    quiz_regex: \[Quiz.\]\((\.\.\/questions\/.\.md)\)
+    quiz_regex: \[Quiz.\]\((questions\/.*\.md)\)
     template: simple_quiz
     iframe_template: simple_quiz
     locations:
