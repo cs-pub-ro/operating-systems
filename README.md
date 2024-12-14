@@ -25,8 +25,10 @@ It currently consists of 5 chapters:
 Each chapter has its own folder.
 Content for each chapter is split in two subfolders:
 
+* `leccture/`: conntent to be presented and discussed as part of lectures
 * `lecture/`: content to be presented and discussed as part of lectures
 * `lab/`: content to be worked on as practical activities during labs / seminars
+* Some names Razvan, Răzvan, organise
 
 Lecture content is expected to be presented and followed.
 Lab content is expected to be used as practice work.

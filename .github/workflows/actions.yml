@@ -24,11 +24,15 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  spellcheck:
-    name: Spellcheck
+  misspell:
+    name: misspell
     runs-on: ubuntu-latest
     steps:
-      - name: Spellcheck
-        uses: open-education-hub/actions/spellcheck@main
+      - uses: actions/checkout@v4
+      - name: misspell
+        uses: reviewdog/action-misspell@v1
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.github_token }}
+          locale: "US"
+          level: "info"
+          fail_level: "any"
