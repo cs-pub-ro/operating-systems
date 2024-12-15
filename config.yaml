@@ -102,7 +102,7 @@ lab_structure:
       - reading/copy-on-write.md
       - guides/apache2.md
       - guides/fork-faults.md
-  - title: Lab 8 - Syncronization
+  - title: Lab 8 - Synchronization
     filename: lab8.md
     content:
       - tasks/race-condition.md
@@ -313,7 +313,7 @@ docusaurus:
                   - Not Race Condition: not-race-condition.md
             - Lab 6 - Multiprocess and Multithread: lab6.md
             - Lab 7 - Copy-on-Write: lab7.md
-            - Lab 8 - Syncronization: lab8.md
+            - Lab 8 - Synchronization: lab8.md
       - IO:
           path: /build/prepare_view/.view
           extra:

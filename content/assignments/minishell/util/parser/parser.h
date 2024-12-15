@@ -157,7 +157,7 @@ typedef enum {
  * (the father of the current node in the parse tree)
  * The root of the tree has up == NULL
 
- * The parsed expressions do not contain parantheses, this means that
+ * The parsed expressions do not contain parentheses, this means that
  * the following holds:
  * for any op_lower that has a lower priority than op, there is no
  * parent in the tree with op == op_lower
@@ -194,7 +194,7 @@ void parse_error(const char *str, const int where);
 /*
  * Call this to parse a line
 
- * line must point to a string containig a single line
+ * line must point to a string containing a single line
  * The line must end with "\r\n\0" or "\n\0" or "\0"
  * (*root) must point to NULL ((*root) == NULL)
 

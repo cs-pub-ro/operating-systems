@@ -15,7 +15,7 @@ typedef struct so_ring_buffer_t {
 	size_t len;
 	size_t cap;
 
-	/* TODO: Add syncronization primitives */
+	/* TODO: Add synchronization primitives */
 } so_ring_buffer_t;
 
 int     ring_buffer_init(so_ring_buffer_t *rb, size_t cap);

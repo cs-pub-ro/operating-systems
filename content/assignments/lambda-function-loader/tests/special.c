@@ -26,5 +26,5 @@ void reset(void)
 {
 	/* Let's erase the history, shall we? */
 	counter = 0;
-	printf("Reseted the counter!\n");
+	printf("Reset the counter!\n");
 }

@@ -17,7 +17,7 @@ mediaDir = f"{viewDir}/media"
 questionsDir = f"{viewDir}/questions"
 
 
-def hypenate(text: str) -> str:
+def hyphenate(text: str) -> str:
     return "-".join(text.strip().split(" ")).lower()
 
 
@@ -92,8 +92,8 @@ def setup_overview():
     """
     Copy the overview.md file for each chapter to the .view directory.
     """
-    hypenChapters = [hypenate(c) for c in CHAPTERS]
-    for c in hypenChapters:
+    hyphenChapters = [hyphenate(c) for c in CHAPTERS]
+    for c in hyphenChapters:
         # FIXME: We use "." instead of CHAPTERS_PATH to account for the segregated chapters.
         # This is a temporary solution until all chapters are merged under CHAPTERS_PATH.
         for root, _, files in os.walk("."):
@@ -102,7 +102,7 @@ def setup_overview():
                 print(f"Copying {root}/overview.md to {dst}")
                 os.popen(f"cp {os.path.join(root, 'overview.md')} {dst}")
 
-    for c in hypenChapters:
+    for c in hyphenChapters:
         if not os.path.isfile(f"{viewDir}/{c}-overview.md"):
             continue
 
@@ -157,11 +157,11 @@ def solve_links(filename: str, fileToLab: dict) -> str:
         elif "guides/" in sourceFile:
             prefix = "guide-"
 
-        # Get the first line of the file to extract the chapter in hypenated format
+        # Get the first line of the file to extract the chapter in hyphenated format
         try:
             with open(filepath) as f:
                 title = f.readline().strip("#").replace("`", "").replace(":", "")
-                subchapter = prefix + hypenate(title)
+                subchapter = prefix + hyphenate(title)
         except:
             print(f"Error: Could not solve link to {filepath} for {filename}")
             continue

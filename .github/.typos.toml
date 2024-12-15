@@ -1,0 +1,10 @@
+[default]
+# ```(console)?[\\s\\S]+?```    -> Ignore fenced sequences
+# -\\w+|--\\w+                  -> Ignore command flags
+extend-ignore-re= ["```(console)?[\\s\\S]+?```", "-\\w+|--\\w+"]
+[files]
+extend-exclude = ["*.svg", "*.drawio", "ssh_key", "ssh_key.pub"]
+[default.extend-words]
+# word1 = "word2" to correct word1 to word2
+# word3 = "word3" to consider word3 a valid word
+VAS = "VAS"

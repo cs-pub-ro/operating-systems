@@ -177,7 +177,7 @@ static word_t * add_part_to_word(word_t * w, word_t * lst)
 	assert(w != NULL);
 
 	/*
-	 we could insert at the beginnig and then invert the list
+	 we could insert at the beginning and then invert the list
 	 but this would make the code a bit more complicated
 	 thus, we assume we have small lists and O(n*n) is acceptable
 	*/

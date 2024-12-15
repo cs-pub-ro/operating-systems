@@ -58,7 +58,7 @@ void queue_destroy(QUEUE *queue);
 size_t queue_size(const QUEUE *queue);
 
 
-/* Add elem to the end of queue. Returns 0 on succes and non-zero on
+/* Add elem to the end of queue. Returns 0 on success and non-zero on
  * failure.
  */
 int queue_enqueue(QUEUE *queue, TCB *elem);

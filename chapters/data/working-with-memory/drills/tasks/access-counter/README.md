@@ -29,15 +29,15 @@ In case of a correct solution, you will get an output such as:
 
 ```text
 ./run_all_tests.sh
-test_acess_read                  ........................ passed ...   9
-test_acess_write                 ........................ passed ...   9
-test_acess_exec                  ........................ passed ...  10
-test_acess_read_write            ........................ passed ...  12
-test_acess_read_exec             ........................ passed ...  12
-test_acess_write_exec            ........................ passed ...  12
-test_acess_exec_read             ........................ passed ...  12
-test_acess_exec_write            ........................ passed ...  12
-test_acess_write_read            ........................ passed ...  12
+test_access_read                  ........................ passed ...   9
+test_access_write                 ........................ passed ...   9
+test_access_exec                  ........................ passed ...  10
+test_access_read_write            ........................ passed ...  12
+test_access_read_exec             ........................ passed ...  12
+test_access_write_exec            ........................ passed ...  12
+test_access_exec_read             ........................ passed ...  12
+test_access_exec_write            ........................ passed ...  12
+test_access_write_read            ........................ passed ...  12
 
 Total:                                                           100/100
 ```

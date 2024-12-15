@@ -59,7 +59,7 @@ typedef struct CList
                                                                 /* Returns object with first match of string or byte compare */
   void * (* lastMatch)   (struct CList *l, const void *o, size_t shift, size_t size, int string);
                                                                 /* Returns object with last match of string or byte compare */
-  int    (* index)       (struct CList *l);                     /* Get index of previos search match */
+  int    (* index)       (struct CList *l);                     /* Get index of previous search match */
   int    (* swap)        (struct CList *l, int a, int b);       /* Swap, replace two items with index a b */
   int    (* allocSize)   (struct CList *l);                     /* Get allocated size in items */
   size_t (* itemSize)    (struct CList *l);                     /* Get item size in bytes */

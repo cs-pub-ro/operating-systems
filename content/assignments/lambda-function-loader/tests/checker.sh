@@ -82,7 +82,7 @@ gen_big_test() {
         elif [ $((CLIENT_NUM%4)) -eq 1 ]; then
             cat "${BIG_DIR}/test_${CLIENT_NUM}" >> "$GEN_REF_FILE"
         elif [ $((CLIENT_NUM%4)) -eq 2 ]; then
-            echo "Reseted the counter!" >> "$GEN_REF_FILE"
+            echo "Reset the counter!" >> "$GEN_REF_FILE"
         else
             echo "Error: $CHECKER_DIR/libfictional.so reset could not be executed." >> "$GEN_REF_FILE"
         fi

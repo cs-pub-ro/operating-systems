@@ -45,7 +45,7 @@ static void access_handler(int signum, siginfo_t *si, void *arg)
 		return;
 	}
 
-	/* TODO 2: Obtain page strart address in start variable. */
+	/* TODO 2: Obtain page start address in start variable. */
 	start = (void *) ((unsigned long) si->si_addr & ~0xFFFUL);
 	log_debug("start: %p", start);
 
