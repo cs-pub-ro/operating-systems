@@ -16,7 +16,7 @@ void incrementVar()
         // `atomicOp` is a template function. It can perform any simple
         // operation, such as `+=`, &= or `-=`, atomically. The operations is
         // given to the function as a template argument using the following
-        // construction: !"+=". The values in parantheses are the operands
+        // construction: !"+=". The values in parentheses are the operands
         // of the atomic operation.
         atomicOp!"+="(var, 1);
     }

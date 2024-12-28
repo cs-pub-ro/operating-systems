@@ -29,7 +29,7 @@ static void do_exec(void *addr)
 	((void (*)(void)) addr)();
 }
 
-static int test_acess_read(void)
+static int test_access_read(void)
 {
 	void *addr;
 
@@ -42,7 +42,7 @@ static int test_acess_read(void)
 	return counter == 1;
 }
 
-static int test_acess_write(void)
+static int test_access_write(void)
 {
 	void *addr;
 
@@ -55,7 +55,7 @@ static int test_acess_write(void)
 	return counter == 2;
 }
 
-static int test_acess_exec(void)
+static int test_access_exec(void)
 {
 	void *addr;
 
@@ -68,7 +68,7 @@ static int test_acess_exec(void)
 	return counter == 3;
 }
 
-static int test_acess_read_write(void)
+static int test_access_read_write(void)
 {
 	void *addr;
 
@@ -82,7 +82,7 @@ static int test_acess_read_write(void)
 	return counter == 1;
 }
 
-static int test_acess_read_exec(void)
+static int test_access_read_exec(void)
 {
 	void *addr;
 
@@ -96,7 +96,7 @@ static int test_acess_read_exec(void)
 	return counter == 2;
 }
 
-static int test_acess_write_exec(void)
+static int test_access_write_exec(void)
 {
 	void *addr;
 
@@ -110,7 +110,7 @@ static int test_acess_write_exec(void)
 	return counter == 1;
 }
 
-static int test_acess_exec_read(void)
+static int test_access_exec_read(void)
 {
 	void *addr;
 
@@ -124,7 +124,7 @@ static int test_acess_exec_read(void)
 	return counter == 0;
 }
 
-static int test_acess_exec_write(void)
+static int test_access_exec_write(void)
 {
 	void *addr;
 
@@ -138,7 +138,7 @@ static int test_acess_exec_write(void)
 	return counter == 0;
 }
 
-static int test_acess_write_read(void)
+static int test_access_write_read(void)
 {
 	void *addr;
 
@@ -153,15 +153,15 @@ static int test_acess_write_read(void)
 }
 
 static struct graded_test all_tests[] = {
-	{ test_acess_read, "test_acess_read", 9 },
-	{ test_acess_write, "test_acess_write", 9 },
-	{ test_acess_exec, "test_acess_exec", 10 },
-	{ test_acess_read_write, "test_acess_read_write", 12 },
-	{ test_acess_read_exec, "test_acess_read_exec", 12 },
-	{ test_acess_write_exec, "test_acess_write_exec", 12 },
-	{ test_acess_exec_read, "test_acess_exec_read", 12 },
-	{ test_acess_exec_write, "test_acess_exec_write", 12 },
-	{ test_acess_write_read, "test_acess_write_read", 12 }
+	{ test_access_read, "test_access_read", 9 },
+	{ test_access_write, "test_access_write", 9 },
+	{ test_access_exec, "test_access_exec", 10 },
+	{ test_access_read_write, "test_access_read_write", 12 },
+	{ test_access_read_exec, "test_access_read_exec", 12 },
+	{ test_access_write_exec, "test_access_write_exec", 12 },
+	{ test_access_exec_read, "test_access_exec_read", 12 },
+	{ test_access_exec_write, "test_access_exec_write", 12 },
+	{ test_access_write_read, "test_access_write_read", 12 }
 };
 
 int main(void)

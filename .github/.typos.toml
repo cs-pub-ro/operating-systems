@@ -1,0 +1,19 @@
+[default]
+# ```(console)?[\\s\\S]+?```    -> Ignore fenced sequences
+# -\\w+|--\\w+                  -> Ignore command flags
+extend-ignore-re = ["```(console)?[\\s\\S]+?```", "-\\w+|--\\w+"]
+[files]
+extend-exclude = [
+    "*.svg",
+    "*.drawio",
+    "ssh_key",
+    "ssh_key.pub",
+    "content/assignments/async-web-server/src/http-parser/samples/Makefile", # Windows compile flags
+    # Third-party files
+    "chapters/compute/processes-threads-apache2/guides/apache2/support/httpd.conf",
+    "chapters/compute/processes-threads-apache2/drills/tasks/apache2/support/httpd.conf"
+]
+[default.extend-words]
+# word1 = "word2" to correct word1 to word2
+# word3 = "word3" to consider word3 a valid word
+VAS = "VAS"

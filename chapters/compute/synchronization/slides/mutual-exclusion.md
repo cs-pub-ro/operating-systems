@@ -97,7 +97,7 @@ void mutex_unlock(struct mutex *m)
 * Prevents overhead from busy-waiting
 * Threads move to WAITING state while waiting for the lock
 * Introduces overhead from context switch
-* Releasing a mutex held by another thread is [**undefinded behaviour**](https://pubs.opengroup.org/onlinepubs/9699919799/functions/pthread_mutex_lock.html)
+* Releasing a mutex held by another thread is [**undefined behaviour**](https://pubs.opengroup.org/onlinepubs/9699919799/functions/pthread_mutex_lock.html)
 
 ----
 

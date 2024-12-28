@@ -242,7 +242,7 @@ int main(void)
 
 	/******************************************************* POINTERS LIST */
 
-	/* If we want create list of objects located in diffent places of memory, */
+	/* If we want create list of objects located in different places of memory, */
 	/* let create pointers list or in our case "uintptr_t" address list       */
 
 	printf("Size of 'uintptr_t' = %zu bytes\n", sizeof(uintptr_t));

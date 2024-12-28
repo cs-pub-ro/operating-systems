@@ -31,7 +31,7 @@ int main(void)
 
 	time = 1000 * (stop.tv_sec - start.tv_sec) + (stop.tv_usec - start.tv_usec) / 1000;
 
-	printf("Array sum is %ld\nTime spent: %lu miliseconds\n", result, time);
+	printf("Array sum is %ld\nTime spent: %lu milliseconds\n", result, time);
 
 	free(array);
 

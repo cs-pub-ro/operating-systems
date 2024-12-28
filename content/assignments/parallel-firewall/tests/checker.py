@@ -142,12 +142,12 @@ def file_line_count(file_path: str) -> int:
 
 
 def line_count_probe_check(probe: List[int]) -> bool:
-    double_occurences = 0
+    double_occurrences = 0
     for i in range(1, len(probe)):
         if probe[i] == probe[i - 1] and probe[i] != 0 and probe[i] not in TEST_SIZES:
-            double_occurences += 1
+            double_occurrences += 1
 
-    return double_occurences / len(probe) <= 0.5
+    return double_occurrences / len(probe) <= 0.5
 
 
 def file_exists_probe_check(probe: List[bool]) -> bool:

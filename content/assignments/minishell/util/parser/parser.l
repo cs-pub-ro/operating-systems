@@ -11,7 +11,7 @@
 #ifdef _MSC_VER
 /* Speaking of MS, they do not implement standard C;
  * YY_USE_CONST is defined only if __STDC__ is defined;
- * here is alread too late to redefine YY_USE_CONST so
+ * here is already too late to redefine YY_USE_CONST so
  * we use pragma instead ^^.
  */
 #pragma warning(disable:4090)

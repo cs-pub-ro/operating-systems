@@ -59,7 +59,7 @@ typedef struct CList
                                                                 /* Returns object with first match of string or byte compare */
   void * (* lastMatch)   (struct CList *l, const void *o, size_t shift, size_t size, int string);
                                                                 /* Returns object with last match of string or byte compare */
-  int    (* index)       (struct CList *l);                     /* Get index of previos search match */
+  int    (* index)       (struct CList *l);                     /* Get index of previous search match */
   int    (* swap)        (struct CList *l, int a, int b);       /* Swap, replace two items with index a b */
   int    (* allocSize)   (struct CList *l);                     /* Get allocated size in items */
   size_t (* itemSize)    (struct CList *l);                     /* Get item size in bytes */
@@ -88,7 +88,7 @@ CList *CList_init(size_t objSize); /* Set list object size in bytes */
 
     void *firstMatch(struct CList *l, const void *o, size_t shift, size_t size, int string);
         Returns pointer to list item when first match found. Straight scanning, from 0 to list end.
-        Returns NULL if search failed.  
+        Returns NULL if search failed.
 
     void *lastMatch(struct CList *l, const void *o, size_t shift, size_t size, int string);
         Returns pointer to list item when first match found. Reverse scanning, from list end to 0.
@@ -96,11 +96,11 @@ CList *CList_init(size_t objSize); /* Set list object size in bytes */
 
     int index(struct CList *l);
         Returns index of last search firstMatch or lastMatch. Returns -1 if search failed.
-    
+
     void print(struct CList *l, size_t shift, int n, const char *type);
         Prints data of "int n" list items with offset "size_t shift" and type "const char *type".
         Supported types: char, short, int, long, uintptr_t, size_t, double, string.
-        If type is NULL just pointers data will be printed. 
+        If type is NULL just pointers data will be printed.
 */
 
 #ifdef __cplusplus

@@ -39,3 +39,16 @@ clean: stop_bash
 
 cleanall: clean
 	-docker inspect --type=image $(IMAGE_NAME) > /dev/null 2>&1 && docker image rm $(IMAGE_NAME)
+
+# Linters
+.PHONY: lint typos
+lint: typos
+
+typos:
+	@echo "Running crate-ci/typos"
+	@# Replace ghcr.io/alex-devis/typos:1.28.4 with ghcr.io/crate-ci/typos:latest
+	@# once https://github.com/crate-ci/typos/pull/1183 or equivalent is merged.
+	@docker run --rm -v $(PWD):/data -w /data \
+		ghcr.io/alex-devis/typos:latest \
+		--config .github/.typos.toml . \
+		--exclude spellcheck # Do not validate spellcheck wordlist

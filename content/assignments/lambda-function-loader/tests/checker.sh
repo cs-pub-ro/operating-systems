@@ -61,7 +61,7 @@ gen_big_test() {
     mkdir -p "$BIG_DIR"
     GEN_REF_FILE="$REF_DIR/test9"
 
-    if [[ "$(ls "$BIG_DIR" | wc -l)" -ne $((_NUMBER_OF_CLIENTS/4)) ]]; then
+    if [[ "$(find "$BIG_DIR" | wc -l)" -ne $((_NUMBER_OF_CLIENTS/4)) ]]; then
         # echo "Generating..."
         rm -rf "${BIG_DIR:?}/*"
         rm -f "$GEN_REF_FILE"
@@ -82,7 +82,7 @@ gen_big_test() {
         elif [ $((CLIENT_NUM%4)) -eq 1 ]; then
             cat "${BIG_DIR}/test_${CLIENT_NUM}" >> "$GEN_REF_FILE"
         elif [ $((CLIENT_NUM%4)) -eq 2 ]; then
-            echo "Reseted the counter!" >> "$GEN_REF_FILE"
+            echo "Reset the counter!" >> "$GEN_REF_FILE"
         else
             echo "Error: $CHECKER_DIR/libfictional.so reset could not be executed." >> "$GEN_REF_FILE"
         fi
@@ -196,7 +196,7 @@ kill_server_once() {
 test_simple_response() {
     local OUTPUT_FILE="$1"
 
-    if [[ "$(cat "$OUTPUT_FILE" | wc -w)" -le 0 ]]; then
+    if [[ "$(wc -w < "$OUTPUT_FILE")" -le 0 ]]; then
         echo "No response"
     fi
 }
@@ -204,7 +204,7 @@ test_simple_response() {
 test_output_exists() {
     local OUTPUT_FILE="$1"
 
-    if [[ "$(cat "$OUTPUT_FILE" | wc -w)" -le 0 ]]; then
+    if [[ "$(wc -w < "$OUTPUT_FILE")" -le 0 ]]; then
         echo "No response"
     elif [[ ! -f "$(head -n1 "${OUTPUT_FILE}")" ]]; then
         echo "Output file ($(head -n1 "${OUTPUT_FILE}")) does not exist"
@@ -218,7 +218,7 @@ test_output_with_ref() {
     local AGGREGATE_OUT
     AGGREGATE_OUT=$(mktemp "$OUTPUT_FILE.XXXXXX")
 
-    if [ "$(cat "$OUTPUT_FILE" | wc -w)" -le 0 ]; then
+    if [ "$(wc -w < "$OUTPUT_FILE")" -le 0 ]; then
         echo "No response"
     elif [ ! -f "$(head -n1 "${OUTPUT_FILE}")" ]; then
         echo "Output file ($(head -n1 "${OUTPUT_FILE}")) does not exist"
@@ -442,6 +442,7 @@ run_tests() {
 
     start_server_once
 
+    # shellcheck disable=SC2016
     TESTS=(
 
     'test_harness         1 "Basic response"               5 test_simple_response 1    "${CHECKER_DIR}/libbasic.so"'
@@ -501,7 +502,7 @@ main() {
     run_tests "$@"
 
     if [[ $# -eq 0 ]]; then
-        PADDING=$(printf '.%.0s' $(eval echo "{1..$((PADDING_LEN+6))}"))
+        PADDING=$(printf '.%.0s' $(seq 1 $((PADDING_LEN + 6))))
         printf "Total Score%s[%+3s/%-3s]\n" "$PADDING" $TOTAL_SCORE $MAX_TOTAL_SCORE
     fi
 }

@@ -129,7 +129,7 @@ execute_cmd() {
 	mkdir -p "${OUT_DIR}" && cd "${OUT_DIR}" &>"$LOG_FILE" || exit 1
 	# shellcheck disable=SC2086
 	timeout "$TEST_TIMEOUT" $BUFFERING_WRAPPER $EXEC <"${INPUT}" &>"$OUTPUT"
-	# Ocasionally, in a virtualized environment, the diff that compares the
+	# Occasionally, in a virtualized environment, the diff that compares the
 	# target implementation with the reference output starts before the
 	# target implementation has finished writing files to disk. Handle this
 	# by mandating that all I/O buffers be flushed.

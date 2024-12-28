@@ -24,11 +24,9 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  spellcheck:
-    name: Spellcheck
+  typos:
+    name: Typos
     runs-on: ubuntu-latest
     steps:
-      - name: Spellcheck
-        uses: open-education-hub/actions/spellcheck@main
-        with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Typos
+        uses: open-education-hub/actions/typos@main
