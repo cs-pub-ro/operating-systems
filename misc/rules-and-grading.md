@@ -176,7 +176,7 @@ During the hackathon, teams will receive assistance from OS teaching assistants.
 
 #### Date
 
-Saturday, December 16, 2023, within the interval 10:00-18:00.
+Saturday, Januray 11, 2025, within the interval 10:00-18:00.
 
 #### Location
 
@@ -184,39 +184,28 @@ The hackathon takes place physically in rooms:
 
 - PR 703
 - PR 705
-- PR 706
 
 #### Prerequisites
 
-1. Students enrolled in the OS course in the academic year 2023-2024 can participate.
+1. Students enrolled in the OS course in the academic year 2024-2025 can participate.
 1. Participants will form teams of two.
 1. Participants will work on their own systems.
 
 #### Registration
 
-Participating teams can register for the hackathon by completing the form [here]([https://forms.gle/qs5wKBwCe86RdQPGA\](https://forms.gle/qs5wKBwCe86RdQPGA/)) until December 10, 2023, at 23:55.
-Up to 30 teams will be selected.
+Registration is closed.
 
 #### Regulations
 
 1. Versioned code must be added to a **private** repository using GitHub.
 Create a private repository, add the supervising assistants, and include a README with the team composition.
 Follow [these steps](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-access-to-your-personal-repositories/inviting-collaborators-to-a-personal-repository#inviting-a-collaborator-to-a-personal-repository) to add your teammate and teaching assistants as collaborators to the repository.
-The supervising assistants and their GitLab accounts are:
-
-- `elena19m`
-- `fabianpatras`
-- `teodutu`
-- `gabrielmocanu`
-- `Alex-deVis`
-- `razvanvirtan`
-- `StefanJum`
 
 1. The code must pass a set of tests provided by the OS team.
 
 ##### Submission
 
-Submissions will be uploaded on [Moodle](https://curs.upb.ro/2023/mod/assign/view.php?id=80182).
+Submissions will be uploaded on [Moodle](https://curs.upb.ro/2024/mod/assign/view.php?id=93326).
 
 - A submission consists of a `.zip` archive containing the directory `operating-systems/content/assignments/lambda-function-loader/` (with directories `tests` and `src`).
 - The archive is uploaded by one team member only.
@@ -236,11 +225,11 @@ Each member of the winning teams will receive a prize based on their ranking:
 
 #### Equivalence
 
-All participating teams are **eligible** for one point equivalence in the OS subject (depending on **implementation complexity and project stage developed during the hackathon**).
+All participating teams are **eligible** for up to 0.75 points equivalence in the OS subject (depending on **implementation complexity and project stage developed during the hackathon**).
 
 #### Winners Announcement
 
-Winning teams will be announced by December 20, 2023.
+Winning teams will be announced by January 17, 2025.
 
 ### Lecture Quizzes (1 point)
 
