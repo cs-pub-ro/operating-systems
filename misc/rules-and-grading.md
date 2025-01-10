@@ -176,7 +176,7 @@ During the hackathon, teams will receive assistance from OS teaching assistants.
 
 #### Date
 
-Saturday, Januray 11, 2025, within the interval 10:00-18:00.
+Saturday, January 11, 2025, within the interval 10:00-18:00.
 
 #### Location
 
