@@ -377,32 +377,44 @@ docusaurus:
                 subsections:
                   - Syscall Tracing/: syscall-tracing.md
                   - Sysinfo Library/: sysinfo-library.md
-            - Digital Forensics/: digital-forensics.md
-            - Distributed System/: distributed-system.md
-            - Aggregator Application/: aggregator-application.md
-            - Benchmarking Application/: benchmarking-application.md
-            - Database Application/: database-application.md
-            - Application Investigator/: application-investigator.md
-            - Network Performance Utility/: network-performance-utility.md
-            - Nightly Builds System/: nightly-builds-system.md
-            - User-level Threading Library/: user-level-threading-library.md
-            - System Process Monitoring Tool/: system-process-monitoring-tool.md
-            - Network Configurations Manager/: network-configurations-manager.md
-            - FaaS Application/: faas-application.md
-            - Industrial System/: industrial-system.md
-            - Blockchain System/: blockchain-system.md
-            - Supervisor-type Service/: supervisor-type-service.md
-            - Header Analysis Application/: header-analysis-application.md
-            - Extending an App Manager/: extending-an-app-manager.md
-            - Backup System/: backup-system.md
-            - File Changes Notifier/: file-changes-notifier.md
-            - Intrusion Detection System/: intrusion-detection-system.md
-            - Resource Monitor/: resource-monitor.md
-            - Library Warmer/: library-warmer.md
-            - Web GUI 1/: web-gui-1.md
-            - Web GUI 2/: web-gui-2.md
-            - Memory Deduplication/: memory-deduplication.md
-            - Cloud System/: cloud-system.md
+            - 2024 Winter:
+                subsections:
+                  - Digital Forensics/: digital-forensics.md
+                  - Distributed System/: distributed-system.md
+                  - Network Performance Utility/: network-performance-utility.md
+                  - FaaS Application/: faas-application.md
+            - 2023 Autumn:
+                subsections:
+                  - Nightly Builds System/: nightly-builds-system.md
+                  - Aggregator Application/: aggregator-application.md
+            - 2023 Summer:
+                subsections:
+                  - Database Application/: database-application.md
+                  - Network Configurations Manager/: network-configurations-manager.md
+                  - System Process Monitoring Tool/: system-process-monitoring-tool.md
+                  - Application Investigator/: application-investigator.md
+                  - User-level Threading Library/: user-level-threading-library.md
+                  - Benchmarking Application/: benchmarking-application.md
+            - 2023 Winter:
+                subsections:
+                  - Industrial System/: industrial-system.md
+                  - Blockchain System/: blockchain-system.md
+                  - Supervisor-type Service/: supervisor-type-service.md
+            - 2022 Autumn - Deprecated:
+                subsections:
+                  - Memory Deduplication/: memory-deduplication.md
+                  - Cloud System/: cloud-system.md
+            - 2022 Summer - Deprecated:
+                subsections:
+                  - Header Analysis Application/: header-analysis-application.md
+                  - Extending an App Manager/: extending-an-app-manager.md
+                  - Backup System/: backup-system.md
+                  - File Changes Notifier/: file-changes-notifier.md
+                  - Intrusion Detection System/: intrusion-detection-system.md
+                  - Resource Monitor/: resource-monitor.md
+                  - Library Warmer/: library-warmer.md
+                  - Web GUI 1/: web-gui-1.md
+                  - Web GUI 2/: web-gui-2.md
       - Hackathons:
           path: content/assignments
           subsections:
