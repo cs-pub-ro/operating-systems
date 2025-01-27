@@ -388,6 +388,10 @@ docusaurus:
       - Exams:
           path: chapters/general/drills/tasks
           subsections:
+            - 2024 Autumn:
+                subsections:
+                  - Testing System/: testing-system.md
+                  - Fuzzing System/: fuzzing-system.md
             - 2024 Summer:
                 subsections:
                   - Syscall Tracing/: syscall-tracing.md
