@@ -27,6 +27,8 @@ Then the process' page table points the page to the newly copied frame, as you c
 
 ![Copy-on-Write](../media/copy-on-write-final.svg)
 
+For a real-world example of **Copy-on-Write** in action, take a look at [this brief paragraph](https://redis.io/docs/latest/develop/get-started/faq/#background-saving-fails-with-a-fork-error-on-linux) explaining how [Redis](https://redis.io/) uses this technique to snapshot its data without blocking the server.
+
 **Be careful!**
 Do not confuse **copy-on-write** with **demand paging**.
 Remember from the [Data chapter](reading/working-with-memory.md) that **demand paging** means that when you allocate memory, the OS allocates virtual memory that remains unmapped to physical memory until it's used.
