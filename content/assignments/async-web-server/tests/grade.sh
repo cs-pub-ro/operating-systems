@@ -1,1 +1,0 @@
-../../../common/projects/grade.sh

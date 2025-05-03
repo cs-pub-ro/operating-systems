@@ -1,22 +1,15 @@
-FROM ghcr.io/open-education-hub/openedu-builder:0.6.1
+FROM ruby:3.0-slim
 
-# Install ffmpeg
-RUN apt-get update && \
-    apt-get install -y ffmpeg curl make
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    zlib1g-dev \
+    && rm -rf /var/lib/apt/lists/*
 
-# Install markdown-pp
-RUN pip install MarkdownPP
+WORKDIR /usr/src/app
 
-# Install node LTS (16)
-RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - && \
-    apt-get install -y nodejs
+COPY Gemfile ./
+RUN gem install bundler:2.5.23 && bundle install
 
-# Install reveal md
-RUN npm install -g reveal-md
+EXPOSE 4000
 
-# Install docusaurus
-RUN npm install create-docusaurus@2.1.0
-
-WORKDIR /content
-
-ENTRYPOINT ["oe_builder"]
+CMD ["bundle", "exec", "jekyll", "serve", "--host", "0.0.0.0"]

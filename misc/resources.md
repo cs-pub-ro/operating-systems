@@ -1,3 +1,7 @@
+---
+nav_order: 3
+---
+
 # Resources and Useful Links
 
 ## Need to Know

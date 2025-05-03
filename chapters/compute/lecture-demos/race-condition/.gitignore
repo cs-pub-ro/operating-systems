@@ -1,5 +1,0 @@
-race_condition
-race_condition_mutex
-race_condition_spinlock
-race_condition_atomic_gcc
-race_condition_atomic_assembly

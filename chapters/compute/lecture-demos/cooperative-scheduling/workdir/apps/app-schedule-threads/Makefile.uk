@@ -1,3 +1,0 @@
-$(eval $(call addlib,appschedulethreads))
-
-APPSCHEDULETHREADS_SRCS-y += $(APPSCHEDULETHREADS_BASE)/main.c

@@ -1,8 +1,0 @@
-CFLAGS =/nologo /EHsc /W4 /I../utils
-
-all: create_process.exe
-
-clean:
-	del /Q /F *.obj *.exe
-
-.PHONY: all clean
