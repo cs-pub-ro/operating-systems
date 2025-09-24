@@ -2,20 +2,19 @@
 
 ## Grading
 
-To pass this course you need to obtain  **4.5 points** from a total of **11 points**:
+To pass this course you need to obtain  **5 points** from a total of **11 points**:
 
-- 4 points for the [exam](#exam-4-points)
-- 5 points for [assignments](#assignments-5-points)
-- 1 point for [laboratory sessions](#laboratory-sessions-1-point)
+- 5 points for the [exam](#exam-5-points)
+- 3.5 points for [assignments](#assignments-3.5-points)
+- 0.5 point for [laboratory sessions](#laboratory-sessions-0.5-points)
 - 1 point for [lecture quizzes](#lecture-quizzes-1-point)
+- 1 point for course - each teacher decides how they distribute the bonus points.
 
-### Exam (4 points)
+### Exam (5 points)
 
 The exam covers the entire course material and takes place in person.
 Students can take part in one exam per session.
 They must present the student ID card or a photo ID for identification.
-
-**Passing the course requires obtaining a minimum of 2 out of 4 points (i.e., 50%) of the exam score.**
 
 #### Exam Structure
 
@@ -30,25 +29,24 @@ The exam consists of two components:
    - Students will be given a slot and be announced prior to the exam.
    - Each student will be asked questions will be graded based on provided answers.
    - The maximum score is 11 (out of 10), with 1 point as a bonus.
-   - This component accounts for **70% of the total exam score**, which is **2.8 out of the total 4 points**.
+   - This component accounts for **50% of the total exam score**, which is **2.5 out of the total 5 points**.
    - The oral exam will be recorded internally.
 
 1. Understanding Concepts
    - It lasts **20 minutes**.
-   - This part is also **open-book**;
-   students have access to the internet, with the exception of collaborative resources (e.g., Google Docs, live questions on Stack Overflow, questions on ChatGPT, WhatsApp, etc.).
+   - This part is **closed-book**;
    - All students scheduled for the exam in the same day will take this component at the same time, usually 11:00-11:30.
-   - It will be conducted on [Moodle](https://curs.upb.ro/2023/course/view.php?id=7774).
-   - You will receive **11 True/False questions** that require explanations.
+   - It will be conducted on [Moodle](https://curs.upb.ro/2025).
+   - You will receive **13 True/False questions** that require explanations.
      **You will receive 0 points if you choose the right answer, but the explanation is wrong.**
-   - The maximum score is 11 (out of 10), with 1 point as a bonus.
-   - This component accounts for **30% of the total exam score**, which is **1.2 out of 4 points**.
+   - The maximum score is 13 (out of 10), with 3 points as a bonus.
+   - This component accounts for **50% of the total exam score**, which is **2.5 out of 5 points**.
 
-The total points are truncated to **4 points**.
+The total points are truncated to **5 points**.
 
 #### Exam Simulation
 
-An oral exam simulation will be organized on **Saturday, January 20, 2024, at 15:00 EET**, online, on Microsoft Teams, and it will be recorded.
+An oral exam simulation will be organized on **TBA**, online, on Microsoft Teams, and it will be recorded.
 It will last for **2 hours** and will involve **8 students** that volunteer (first-come, first-served) to take part in the exam simulation.
 All students and members of the team can participate, but only 8 students will be examined, while the others will observe.
 The exam simulation will be recorded.
@@ -72,33 +70,45 @@ Similarly, another announcement will follow the simulation, offering students th
 1. [Understanding Concepts example](https://curs.upb.ro/2023/mod/quiz/view.php?id=42286)
 1. [Lecture notes](https://drive.google.com/drive/folders/1T08PmJ_fKTA8FLHvhXYw33CBK6D0QPpR?usp=drive_link)
 
-### [Assignments](https://cs-pub-ro.github.io/operating-systems/Assignments/) (5 points)
+#### No Exam For Assignment Heroes
 
-Assignments are worth **5 points** of the final grade.
-However, you can get as much as **10 points** in total.
+Those who meet the following requirements will not be required to be part of and pass the interview or the written part of the exam:
+
+- **5/6 points** for the home assignments - you will automatically get full marks for the interview part of the exam
+- **1 point** for the lecture quizzes  (20/22 questions) - you will automatically get full marks for the written part of the exam
+
+In exceptional circumstances, when there is doubt on the correctness of getting the points, the student will still be requested to be part of the exam.
+
+### [Assignments](https://cs-pub-ro.github.io/operating-systems/Assignments/) (3.5 points)
+
+Assignments are worth **3.5 points** of the final grade.
+However, you can get as much as **6 points** in total.
 There are 3 assignments, followed by 2 bonus ones, graded as follows:
 
-1. Assignment 1: 1.66 points
-1. Assignment 2: 1.66 points
-1. Assignment 3: 1.66 points
-1. Bonus Assignment 1: 2.5 points
-1. Bonus Assignment 2: 2.5 points
+1. Assignment 1: 1 point
+1. Assignment 2: 1.25 points
+1. Assignment 3: 1.25 points
+1. Bonus Assignment 1: 1.25 points
+1. Bonus Assignment 2: 1.25 points
 
 The score from the bonus assignments can make up for any points lost on the other assignments.
-Points past **5 points** can be used to make up points for [Laboratory Sessions](#laboratory-sessions-1-point) or [Lecture Quizzes](#lecture-quizzes-1-point).
+
 
 **Each assignment has a single deadline.**
 **Once the deadline passes, the assignment can no longer be submitted.**
 
 Each assignment solution submission gets a maximum of **100 assignment points**.
 These are comprised of:
-
 - **90 points** for the correct implementation of the assignment
 - **10 points** for coding style
 
 Both components are verified and graded automatically by the assignment checker system: automated tests for the implementation, linters and build output analysis for coding style.
-The assignment checker system presents the final grade.
+The assignment checker system presents the final grade for the submission (the final grade for the assignment is described below).
 Coding style points are only provided if the assignment solution submission gets at least **60 points** for the correct implementation.
+
+**Each assignment will be followed by an interview during the laboratory. The interview will contain questions regarding the theoretical aspects that were covered by the assignment. The grade you obtain during the interview will be used to scale the final grade for the assignment.**
+
+The final grade of the homework is computed using the following formula: homework_interview_grade / 10 * assignment_grade. That means that if you obtain 5/10 points during the interview and 80/100 for the submitted solution, your final grade for the assignment will be 40/100 points.
 
 However, **there may be exceptional cases in which this grading scheme is not followed**, for example, if the assignment is implemented only to pass the tests and does not meet the assignment requirements.
 Exceptional cases may include instances of deadlock, incorrect synchronizations between processes/threads, races (whether they are manifested or not), and other unspecified but deemed inappropriate situations.
@@ -112,16 +122,6 @@ Assignments will be subject to [plagiarism detection and penalties](#plagiarism-
 Each assignment comes with a deadline for completion.
 **After the deadline expires, the assignment can no longer be submitted.**
 Assignments cannot be submitted during the summer or inter-semester break.
-
-#### No Exam For Assignment Heroes
-
-Those who meet the following requirements will not be required to be part of and pass the exam:
-
-- **9 points** for the home assignments (out of the total of **10 points**)
-- **0.8 points** for the lecture quizzes  (out of the total of **1 point**)
-- The approval of your teaching assistant
-
-In exceptional circumstances, when there is doubt on the correctness of getting the **9 points**, the student will still be request to be part of the exam.
 
 #### Solving and Submitting Assignments
 
@@ -141,10 +141,11 @@ The high-level steps are:
    See the automatic checking on the Jobs entry on GitLab for your fork.
 1. Configure Moodle to retrieve the submissions for GitLab, or do a Moodle archive submission of your assignment solution.
 
-### [Laboratory Sessions](https://cs-pub-ro.github.io/operating-systems/Lab/) (1 point)
+
+### [Laboratory Sessions](https://cs-pub-ro.github.io/operating-systems/Lab/) (0.5 points)
 
 Each lab is graded between **0 and 12 points** and the final grade is calculated by summing up all scores and dividing to the number of labs.
-The lab score is truncated at **10 lab points** (corresponding to the **1 course point** allocated for the lab).
+The lab score is truncated at **10 lab points** (corresponding to the **0.5 course point** allocated for the lab).
 
 The grade for each lab is composed of the following components:
 
@@ -176,14 +177,12 @@ During the hackathon, teams will receive assistance from OS teaching assistants.
 
 #### Date
 
-Saturday, January 11, 2025, within the interval 10:00-18:00.
+Saturday, TBD, within the interval 10:00-18:00.
 
 #### Location
 
 The hackathon takes place physically in rooms:
-
-- PR 703
-- PR 705
+- TBD
 
 #### Prerequisites
 
@@ -205,7 +204,7 @@ Follow [these steps](https://docs.github.com/en/account-and-profile/setting-up-a
 
 ##### Submission
 
-Submissions will be uploaded on [Moodle](https://curs.upb.ro/2024/mod/assign/view.php?id=93326).
+Submissions will be uploaded on [Moodle](https://curs.upb.ro/).
 
 - A submission consists of a `.zip` archive containing the directory `operating-systems/content/assignments/lambda-function-loader/` (with directories `tests` and `src`).
 - The archive is uploaded by one team member only.
@@ -219,57 +218,42 @@ Submissions will be uploaded on [Moodle](https://curs.upb.ro/2024/mod/assign/vie
 
 Each member of the winning teams will receive a prize based on their ranking:
 
-1. First place: 900 RON gift card
-1. Second place: 800 RON gift card
-1. Third place: 700 RON gift card
+1. First place: TBD
+1. Second place: TBD
+1. Third place: TBD
 
 #### Equivalence
 
-All participating teams are **eligible** for up to 0.75 points equivalence in the OS subject (depending on **implementation complexity and project stage developed during the hackathon**).
+All participating teams are **eligible** for up to TBD points equivalence in the OS subject (depending on **implementation complexity and project stage developed during the hackathon**).
 
 #### Winners Announcement
 
-Winning teams will be announced by January 17, 2025.
+Winning teams will be announced by TBD.
 
 ### Lecture Quizzes (1 point)
 
-To reinforce knowledge, there will be 4 multiple-choice quizzes as follows:
+To reinforce knowledge, there will be 2 written lecture quizzes:
 
-1. Quiz 1 - covering questions from the [Software Stack chapter](https://cs-pub-ro.github.io/operating-systems/Software%20Stack), will take place on the following dates:
+1. Quiz 1 - covering questions from the [Software Stack chapter](https://cs-pub-ro.github.io/operating-systems/Software%20Stack) and [Data chapter](https://cs-pub-ro.github.io/operating-systems/Data/), will take place on the following dates:
 
-    - Series CA: 15.10.2024
-    - Series CB: 16.10.2024
-    - Series CC: 15.10.2024
-    - Series CD: 15.10.2024
+    - Series CA: TBA
+    - Series CB: TBA
+    - Series CC: TBA
+    - Series CD: TBA
 
-1. Quiz 2 - covering questions from the [Data chapter](https://cs-pub-ro.github.io/operating-systems/Data/), will take place on the following dates:
+1. Quiz 2 - covering questions from the [Compute chapter](https://cs-pub-ro.github.io/operating-systems/Compute/) and [I/O chapter](https://cs-pub-ro.github.io/operating-systems/IO/), will take place on the following dates:
 
-    - Series CA: 05.11.2024
-    - Series CB: 06.11.2024
-    - Series CC: 05.11.2024
-    - Series CD: 05.11.2024
+    - Series CA: TBA
+    - Series CB: TBA
+    - Series CC: TBA
+    - Series CD: TBA
 
-1. Quiz 3 - covering questions from the [Compute chapter](https://cs-pub-ro.github.io/operating-systems/Compute/), will take place on the following dates:
-
-    - Series CA: 26.11.2024
-    - Series CB: 27.11.2024
-    - Series CC: 26.11.2024
-    - Series CD: 26.11.2024
-
-1. Quiz 4 - covering questions from the [I/O chapter](https://cs-pub-ro.github.io/operating-systems/IO/), in the written exam format, will take place on the following dates:
-
-    - Series CA: 17.12.2024
-    - Series CB: 18.12.2024
-    - Series CC: 17.12.2024
-    - Series CD: 17.12.2024
 
 Lecture quizzes are closed-book.
-They take place on the [Moodle platform](https://curs.upb.ro) at the beginning of the corresponding lectures.
-The first three quizzes last **5 minutes**.
-The fourth quiz lasts **20 minutes**.
-The first three quizzes consist of **5 multiple-choice questions** with a single answer option.
-The fourth quiz consists of 10 True/False questions that require explanations, following the [written exam format](#exam-structure).
-Each quiz is worth **0.3 points of the final grade**.
+They take place in person at the beginning of the corresponding lectures.
+The quizzes lasts **20 minutes**.
+The quizzes consists of 11 True/False questions that require explanations, following the [written exam format](#exam-structure).
+Each quiz is worth **0.55 points of the final grade**.
 Lecture quiz grade is truncated at **1 point**.
 
 ## Rules
@@ -351,10 +335,10 @@ You will be informed if the transfer is accepted.
 
 After the semester, students will be rewarded with distinctions based on their involvement in certain activities.
 
-The distinctions to be awarded in the 2024-2025 academic year are as follows:
+The distinctions to be awarded in the 2025-2026 academic year are as follows:
 
 - 8 distinctions for involvement in lecture activities.
-- 19 distinctions for involvement in laboratory activities.
+- 18 distinctions for involvement in laboratory activities.
 - 8 distinctions for exam results.
 - 10 distinctions for community involvement (pull requests, forum discussions, etc.).
 
@@ -376,16 +360,15 @@ If, after the resit/improvement session in the fall, you still do not obtain a p
 
 ### Retaking the Course
 
-By default, the grades for the previous academic year (2023-2024) are reset on October 1, 2024.
-If you did not graduate from the course in the 2023-2024 academic year, you will need to retake it in the current academic year (2024-2025), with the possibility of retaining some components, as detailed below:
+By default, the grades for the previous academic year (2024-2025) are reset on September 29, 2025.
+If you did not graduate from the course in the 2024-2025 academic year, you will need to retake it in the current academic year (2025-2026), with the possibility of retaining some components, as detailed below:
 
-- If you wish, you can retain the grades for the course's practical components (laboratory and/or assignments).
-  You **cannot** retain the grades for lecture components (lecture tests and exam).
-- Students interested in preserving their grades should respond on [the designated Moodle thread](https://curs.upb.ro/2024/mod/forum/discuss.php?d=150) by **October 13, 2024, 23:55**.
+- If you wish, you can retain the grades for the laboratory. You **cannot** retain the grades for the assignments. You **cannot** retain the grades for lecture components (lecture tests and exam).
+- Students interested in preserving their grades should respond on [the designated Moodle thread](https://curs.upb.ro/) by **October 12, 2025, 23:55**.
 - The rules and grading system for students retaking the course are the same as for students in the current year (lecture tests + exam, assignments, etc.).
 - Students retaking the course can participate in any lab session as long as there are available slots.
   Like other students, the attendance list becomes fixed starting from the third week.
 - Students retaking the course can participate in any lecture, lecture test, and exam, regardless of the series to which they belonged.
 
-By default, the grades for the 2024-2025 academic year will be reset on October 1, 2025.
+By default, the grades for the 2025-2026 academic year will be reset on October 1, 2026.
 If you do not graduate from the course in the 2024-2025 academic year, you will need to retake it in the 2025-2026 academic year, with the possibility of retaining some components, as detailed above.

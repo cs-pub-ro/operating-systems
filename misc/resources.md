@@ -5,12 +5,12 @@
 List of resources:
 
 - [GitHub Repository](https://github.com/cs-pub-ro/operating-systems)
-- [Moodle Class](https://curs.upb.ro/2024/course/view.php?id=2665) (used for homework submissions, quizzes, announcements, etc.)
-- [Teams Class](https://teams.microsoft.com/l/team/19%3AOL84NjHQxdxL9n7RmphK8rKr0vUVcuea_r08OsoWKQQ1%40thread.tacv2/conversations?groupId=b37b5353-4791-449b-95e0-ab59c39326af&tenantId=2d8cc8ba-8dda-4334-9e5c-fac2092e9bac)
+- [Moodle Class](https://curs.upb.ro/) (used for homework submissions, quizzes, announcements, etc.)
+- [Teams Class](TBA)
 - [Rules and Grading](https://cs-pub-ro.github.io/operating-systems/rules-and-grading)
 - [Books / Reading Materials](http://elf.cs.pub.ro/so/res/doc/) (you will need to log in using your `UPB` account)
 - [OS Calendar](https://calendar.google.com/calendar/embed?src=9a0798c60c5a4a2dad36cde37ef6cbcfc001ccd2d4de2a74e6fa1861a679bbea%40group.calendar.google.com&ctz=Europe%2FBucharest)
-- [OS Course Planning](https://docs.google.com/spreadsheets/d/e/2PACX-1vQ9eom_uRzu-a_lAZ6Yt2Slta5wpTm53b1ZaZlanEWBSBc69xGwKYK8wfImCS_LVhtWZ_4h3U9oVqpx/pubhtml?gid=0&single=true)
+- [OS Course Planning](https://docs.google.com/spreadsheets/d/e/2PACX-1vS33f7xCIyb61aR1MRjsgquc0Agg8wdaLUw6MrJua6PbX9ZM-MGavP0MkqiNveaAMeWhIWAuDBCEDeQ/pubhtml?gid=0&single=true)
 
 ## Documentation and Reading Materials
 
