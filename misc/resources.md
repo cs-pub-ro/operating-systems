@@ -35,7 +35,7 @@ We provide Linux virtual machines with all the setup ready.
 
 ### VirtualBox / VMware
 
-You can download the Linux virtual machine with **NO** GUI [here](https://repository.grid.pub.ro/cs/so/linux-2024-2025/so-vm-2024.ova) and **WITH** GUI [here](https://repository.grid.pub.ro/cs/so/linux-2024-2025/so-vm-gui-2024.ova). You will need to log in using your `UPB` account.
+You can download the Linux virtual machine [here](https://repository.grid.pub.ro/cs/so/linux-2025-2026/VM-SO.ova). You will need to log in using your `UPB` account.
 
 You can import the `.ova` file in [VirtualBox](https://www.virtualbox.org/) or [VMware](https://www.vmware.com/).
 Follow the instructions on the official websites for installation.
@@ -43,7 +43,7 @@ Follow the instructions on the official websites for installation.
 ### UTM (macOS >= 11 users)
 
 If you are using an `M1` Apple system, you will not be able to run the virtual machine using VirtualBox or VMware.
-You will need to use [`UTM`](https://mac.getutm.app/), along with a [`.qcow2`](https://repository.grid.pub.ro/cs/so/linux-2024-2025/so-vm-gui-2024.qcow2) image.
+You will need to use [`UTM`](https://mac.getutm.app/), along with a [`.qcow2`](https://repository.grid.pub.ro/cs/so/linux-2025-2026/VM-SO.qcow2) image.
 You will need to log in using your `UPB` account.
 
 After you install `UTM` and download the `.qcow2` image, you should use it via emulation. Please, follow the instructions provided [here](https://ocw.cs.pub.ro/courses/pclp2/utile).
