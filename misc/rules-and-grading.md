@@ -312,7 +312,7 @@ The concept of plagiarized assignments includes, but is not limited to, situatio
 
 In the event that two assignments are deemed plagiarized, both the source and destination will receive identical penalties, without discussions regarding who copied from whom and whose fault it is.
 
-Copying any part of an assignment results in the entire assignment's score being voided.
+Copying any part of an assignment results in the cancellation of all your assignment scores, for all the assignments of the current semester, submitted before or after the one that was plagiarized.
 **Any assignment submitted (before or after the plagiarized assignment) in the same academic session receives a score of 0 and is not eligible for resubmission within the current academic year.**
 
 We emphasize that our goal is not and will not be to penalize plagiarism.
