@@ -236,25 +236,25 @@ To reinforce knowledge, there will be 2 written lecture quizzes:
 
 1. Quiz 1 - covering questions from the [Software Stack chapter](https://cs-pub-ro.github.io/operating-systems/Software%20Stack) and [Data chapter](https://cs-pub-ro.github.io/operating-systems/Data/), will take place on the following dates:
 
-    - Series CA: TBA
-    - Series CB: TBA
-    - Series CC: TBA
-    - Series CD: TBA
+    - Series CA: 4.11.2025
+    - Series CB: 5.11.2025
+    - Series CC: 4.11.2025
+    - Series CD: 4.11.2025
 
 1. Quiz 2 - covering questions from the [Compute chapter](https://cs-pub-ro.github.io/operating-systems/Compute/) and [I/O chapter](https://cs-pub-ro.github.io/operating-systems/IO/), will take place on the following dates:
 
-    - Series CA: TBA
-    - Series CB: TBA
-    - Series CC: TBA
-    - Series CD: TBA
+    - Series CA: 16.12.2025
+    - Series CB: 17.12.2025
+    - Series CC: 16.12.2025
+    - Series CD: 16.12.2025
 
 
 Lecture quizzes are closed-book.
 They take place in person at the beginning of the corresponding lectures.
-The quizzes lasts **20 minutes**.
-The quizzes consists of 11 True/False questions that require explanations, following the [written exam format](#exam-structure).
+The quizzes last **20 minutes**.
+The quizzes consist of 11 True/False questions that require explanations, following the [written exam format](#exam-structure).
 Each quiz is worth **0.55 points of the final grade**.
-Lecture quiz grade is truncated at **1 point**.
+The lecture quiz grade is truncated at **1 point**.
 
 ## Rules
 
