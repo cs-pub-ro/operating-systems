@@ -1,0 +1,11 @@
+// SPDX-License-Identifier: BSD-3-Clause
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(void)
+{
+	/* TODO: Create one `sleep 1000` process using `system`. */
+	puts("Parent process ending.");
+	return 0;
+}

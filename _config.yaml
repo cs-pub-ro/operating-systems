@@ -1,0 +1,31 @@
+# SPDX-License-Identifier: CC BY-SA 4.0
+
+title: Operating Systems
+remote_theme: just-the-docs/just-the-docs
+repository: cs-pub-ro/operating-systems
+
+exclude:
+  - README.md
+  - REVIEWING.md
+  - config.yaml
+  - chapters/
+  - .git/
+  - .vscode/
+  - .github/
+  - content/
+  - util/
+  - landing-page/
+  - .view/
+  - .output/
+
+plugins:
+  - jekyll-titles-from-headings
+  - jekyll-seo-tag
+
+callouts:
+  warning:
+    title: warning
+    color: yellow
+  tip:
+    title: tip
+    color: green

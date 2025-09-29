@@ -1,3 +1,7 @@
+---
+nav_order: 1
+---
+
 # Operating Systems (OER)
 
 [![copying.md](https://img.shields.io/static/v1?label=license&message=CCBY-SA4.0&color=%23385177)](https://github.com/open-education-hub/operating-systems/blob/master/COPYING.md)
@@ -13,36 +17,28 @@ They are to be used by teachers, trainers, students and hobbyists who want to le
 
 ## Using the Content
 
-Content is located in the `content/` folder.
-It currently consists of 5 chapters:
+The content is built using [Jekyll](https://jekyllrb.com/) and is hosted on [GitHub Pages](https://pages.github.com/).
+It consists of 5 main sections:
 
-* [Software Stack](content/chapters/software-stack/)
-* [Data](content/chapters/data/)
-* [Compute](content/chapters/compute/)
-* [Input/Output](content/chapters/io/)
-* [Application Interaction](content/chapters/app-interact/)
+* Software Stack
+    * [Lab 1 - Operating System Perspective](labs/lab-01/)
+    * [Lab 2 - Library Perspective](labs/lab-02/)
+* Data
+    * [Lab 3 - Memory](labs/lab-03/)
+    * [Lab 4 - Investigate Memory](labs/lab-04/)
+    * [Lab 5 - Memory Security](labs/lab-05/)
+* Compute
+    * [Lab 6 - Multiprocess and Multithread](labs/lab-06/)
+    * [Lab 7 - Copy-on-Write](labs/lab-07/)
+    * [Lab 8 - Synchronization](labs/lab-08/)
+* Input/Output
+    * [Lab 9 - File Descriptors](labs/lab-09/)
+    * [Lab 10 - Inter-Process Communication](labs/lab-10/)
+    * [Lab 11 - IO Optimizations](labs/lab-11/)
+* Application Interaction
+    * [Lab 12 - Application Interaction](labs/lab-12/)
 
-Each chapter has its own folder.
-Content for each chapter is split in two subfolders:
-
-* `lecture/`: content to be presented and discussed as part of lectures
-* `lab/`: content to be worked on as practical activities during labs / seminars
-
-Lecture content is expected to be presented and followed.
-Lab content is expected to be used as practice work.
-
-## Chapter Contents
-
-Lecture content consists of slides and demos.
-Slides are written in [GitHub Markdown](https://guides.github.com/features/mastering-markdown/) and use [reveal-md](https://github.com/webpro/reveal-md) and [reveal.js](https://revealjs.com/) to render HTML output.
-Lecture slides are built from the `slides.md` file using the `make` command (and the `Makefile`).
-Demos are snippets of code and support files that showcase concepts and ideas related to the lecture.
-Demos are located in the `demo/` folder.
-Each demo has its own folder with source code, `Makefile` or other build files (if required) and support files.
-
-Lab content consists of lab text and lab activities.
-Lab text is placed in the `README.md` file.
-Each lab activity has its own folder with source code, `Makefile` or other build files (if required) and support files.
+Each chapter has a dedicated assignment in the [`assignments/`](assignments/) folder.
 
 ## Contributing
 
