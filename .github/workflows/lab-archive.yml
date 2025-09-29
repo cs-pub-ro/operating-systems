@@ -1,0 +1,60 @@
+name: Archive Labs on Commit
+
+on:
+  push:
+    branches:
+      - 'main'
+
+permissions:
+  contents: write
+
+jobs:
+  archive-labs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: pip install pyyaml
+
+      - name: Run archive script
+        run: python3 gen-zip.py config.yaml
+
+      - name: Push archives to lab-archives branch
+        if: success()
+        run: |
+          if [ -z "$(ls -A *.zip 2>/dev/null)" ]; then
+            echo "No archives generated — nothing to push."
+            exit 0
+          fi
+
+          # Create or switch to lab-archives branch
+          if git ls-remote --exit-code origin lab-archives; then
+            git fetch origin lab-archives
+            git checkout lab-archives
+          else
+            git checkout --orphan lab-archives
+            git rm -rf .
+          fi
+
+          # Copy new zips into branch root
+          git add *.zip
+
+          # Only commit if there are changes
+          if ! git diff --cached --quiet; then
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git commit -m "Update lab archives for commit $GITHUB_SHA"
+            git push origin lab-archives
+          else
+            echo "No changes to commit."
+          fi
