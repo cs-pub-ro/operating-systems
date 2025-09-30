@@ -10,8 +10,11 @@ brew install qemu
 
 ## Running the VM
 
-First, download the `so-ubuntu-20-04.img` image from [here](https://repository.grid.pub.ro/cs/so/linux-2024/).
-This may take some time (total size of the image is around 8.8GB).
+First, download the `VM-SO.img.tar.gz` tar archive containing the image from [here](https://repository.grid.pub.ro/cs/so/linux-2025-2026/).
+This may take some time (total size of the archive is around 4GB).
+
+Next, extract the image from the compressed archive.
+This may take some time aswell (total uncompressed size of the image is around 32GB).
 
 Then, use the `qemu_run.sh` script to run the VM:
 
