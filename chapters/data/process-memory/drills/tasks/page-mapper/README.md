@@ -1,6 +1,6 @@
 ## Page Mapper
 
-Navigate to the `chapters/data/process-memory/drills/tasks/page-mapper/support` directory.
+Navigate to the `page-mapper/support/` directory in the lab archive (or `chapters/data/process-memory/drills/tasks/page-mapper/support` if you are working directly in the repository).
 
 Your goal is to update the `src/page_mapper.c` source code file to reserve virtual pages in the address space of the current process.
 Use `mmap()` to reserve virtual pages.

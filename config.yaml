@@ -51,6 +51,7 @@ lab_structure:
   - title: Lab 4 - Investigate Memory
     filename: lab4.md
     content:
+      - reading/lab4.md
       - tasks/alloc-size.md
       - tasks/copy.md
       - tasks/memory-areas.md

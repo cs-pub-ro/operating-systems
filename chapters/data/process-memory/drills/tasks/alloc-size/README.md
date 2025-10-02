@@ -1,6 +1,6 @@
 # Allocating and Deallocating Memory
 
-Navigate to the `chapters/data/process-memory/drills/tasks/alloc-size/support` directory.
+Navigate to the `alloc-size/support/` directory from the lab archive (or `chapters/data/process-memory/drills/tasks/alloc-size/support` if you are working directly in the repository).
 
 1. Use `pmap` to analyze the process address space for `ALLOC_SIZE_KB` initialized to `256`.
    Notice the new memory areas and the difference between the use of `mmap` syscall and `brk` syscall.

@@ -1,6 +1,6 @@
 # Memory Mapping
 
-Navigate to the `chapters/data/process-memory/drills/tasks/copy/` directory, run `make skels` and open the `support/src` directory.
+Navigate to the `copy/` directory from the lab archive (or `chapters/data/process-memory/drills/tasks/copy/` if you are working directly in the repository), run `make skels` and open the `support/src` directory.
 Here you will find these files:
 
 * `read_write_copy.c` in which you will implement copying with `read` / `write` syscalls

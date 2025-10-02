@@ -1,6 +1,6 @@
 # Modifying Memory Region Size
 
-Navigate to the `chapters/data/process-memory/drills/tasks/modify-areas/support` directory.
+Navigate to the `modify-areas/support/` directory in the lab archive (or `chapters/data/process-memory/drills/tasks/modify-areas/support` if you are working directly in the repository).
 
 1. Comment out different parts of the `hello.c` program to notice differences in only specific areas (text, data, bss, heap, stack).
 

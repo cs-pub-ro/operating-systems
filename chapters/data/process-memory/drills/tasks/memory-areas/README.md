@@ -1,6 +1,6 @@
 # Memory Regions
 
-Enter the `chapters/data/process-memory/drills/tasks/memory-areas/support` directory.
+Enter the `memory-areas/support/` directory in the lab archive (or `chapters/data/process-memory/drills/tasks/memory-areas/support` if you are working directly in the repository).
 We investigate other programs.
 
 1. The `hello.c` program prints out a message and then sleeps.

@@ -1,6 +1,6 @@
 # Operator overloading
 
-Navigate to the `chapters/data/process-memory/drills/tasks/reference-counting/support` directory.
+Navigate to the `reference-counting/support/` directory in the lab archive (or `chapters/data/process-memory/drills/tasks/reference-counting/support` if you are working directly in the repository).
 Analyze the `operators.d` file.
 A `struct` is defined that also implements 4 special functions: a constructor, a copy constructor, an assignment operator and a destructor.
 Each of these special functions may be called automatically by the compiler:
