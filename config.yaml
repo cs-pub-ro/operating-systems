@@ -70,6 +70,7 @@ lab_structure:
   - title: Lab 5 - Memory Security
     filename: lab5.md
     content:
+      - reading/lab5.md
       - tasks/pointer-arithmetic-leak.md
       - tasks/aslr.md
       - tasks/stack-protector.md

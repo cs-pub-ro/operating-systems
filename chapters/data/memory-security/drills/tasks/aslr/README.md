@@ -1,6 +1,6 @@
 # ASLR
 
-Navigate to `chapters/data/memory-security/drills/tasks/aslr` and run `make skels` to generate the `support/` folder.
+Navigate to the `aslr` directory in the lab archive (or `chapters/data/memory-security/drills/tasks/aslr` if you are working directly in the repository) and run `make skels` to generate the `support/` folder.
 Then navigate to `support/src`.
 
 Use the `Makefile.aslr` file to compile the `chapters/data/memory-security/drills/tasks/aslr/support/aslr.c` file:

@@ -1,11 +1,9 @@
 ## Shellcode Executor
 
-Navigate to `chapters/data/memory-security/drills/tasks/exec-shellcode` and run `make skels` to generate the `support/` folder.
+Navigate to the `exec-shellcode` directory in the lab archive (or `chapters/data/memory-security/drills/tasks/exec-shellcode` if you are working directly in the repository) and run `make skels` to generate the `support/` folder.
 Then navigate to `support/src`.
 
-Navigate to the `chapters/data/memory-security/drills/tasks/exec-shellcode/support/` directory.
-
-Your goal is to update the `src/exec-shellcode.s` source code file to be able to read and execute shellcodes from a given binary files.
+Your goal is to update the `exec-shellcode.s` source code file to be able to read and execute shellcodes from a given binary files.
 The program thus acts as a shellcode tester.
 
 A [shellcode](https://cocomelonc.github.io/tutorial/2021/10/09/linux-shellcoding-1.html) is a small program that is commonly used in memory-related security exploits as a form of arbitrary code execution.

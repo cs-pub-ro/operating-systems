@@ -1,9 +1,8 @@
 # Wild Pointer Arithmetic Info Leak
 
-Navigate to `chapters/data/memory-security/drills/tasks/pointer-arithmetic-leak` and run `make skels` to generate the `support/` folder.
+Navigate to the `pointer-arithmetic-leak/` in the lab archive (or `chapters/data/memory-security/drills/tasks/pointer-arithmetic-leak` if you are working directly in the repository) and run `make skels` to generate the `support/` folder.
 Then navigate to `support/src`.
 
-Navigate to the `chapters/data/memory-security/drills/tasks/pointer-arithmetic-leak/support/` directory.
 Open and analyze the `buff_leak.c` file.
 
 The pointer `p` points to the stack.
