@@ -1,6 +1,6 @@
 # High-Level Languages
 
-Enter the `chapters/software-stack/high-level-languages/drills/tasks/high-level-lang/` folder, run `make skels`, then enter `spport/`
+Enter the `high-level-lang/` directory from the lab archive (or `chapters/software-stack/high-level-languages/drills/tasks/high-level-lang/` if you are working directly in the repository), run `make skels`, then enter `spport/`
 Then go through the practice items below.
 
 1. Use `make` to create the `hello` executable from the `hello.go` file (a Go "Hello, World!"-printing program).

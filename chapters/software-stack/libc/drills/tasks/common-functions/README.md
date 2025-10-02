@@ -1,6 +1,6 @@
 # Common Functions
 
-Enter the `chapters/software-stack/libc/drills/tasks/common-functions/` folder, run `make skels`, then enter `support/`.
+Enter the `common-functions/` directory in the lab archive (or `chapters/software-stack/libc/drills/tasks/common-functions/` if you are working directly in the repository), run `make skels`, then enter `support/`.
 Go through the practice items below.
 
 1. Update `os_string.c` and `os_string.h` to make available the `os_strcat()` function that performs the same string concatenation as `strcat()` from `libc`.

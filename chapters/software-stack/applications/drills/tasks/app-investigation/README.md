@@ -1,6 +1,6 @@
 # App Investigation
 
-Enter the `chapters/software-stack/applications/drills/tasks/app-investigation/support/` folder and go through the practice items below.
+Enter the `app-investigation` directory from the lab archive (or `chapters/software-stack/applications/drills/tasks/app-investigation/` if you are working directly in the repository), run `make skels` and go through the practice items below.
 Select a binary executable application and a scripted application.
 
 1. Use `ldd` on the two applications.

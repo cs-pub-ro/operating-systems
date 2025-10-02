@@ -26,6 +26,7 @@ lab_structure:
   - title: Lab 2 - Library Perspective
     filename: lab2.md
     content:
+      - reading/lab2.md
       - tasks/common-functions.md
       - tasks/libc.md
       - tasks/high-level-lang.md

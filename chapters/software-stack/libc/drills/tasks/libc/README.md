@@ -1,6 +1,6 @@
 # Libraries and libc
 
-Enter the `chapters/software-stack/libc/libc/drills/tasks/` folder, run `make skels`, then enter `support/`.
+Enter the `libc/support/` directory from the lab archive (or `chapters/software-stack/libc/libc/drills/tasks/support/` if you are working directly in the repository).
 Now go through the practice items below.
 
 1. Use `malloc()` and `free()` functions in the `memory.c` program.
