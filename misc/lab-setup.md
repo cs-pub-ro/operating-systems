@@ -4,6 +4,12 @@
 
 You can work on any Linux setup (native install, `WSL`, `VM`), but we strongly recommend you use the [`operating-systems` class VMs](https://cs-pub-ro.github.io/operating-systems/resources#virtual-machine).
 
+## Laboratory archives
+
+All the laboratories have archives with the work items.
+**We recommend working with the provided archives instead of using the repository.**
+If, however, you want to use the repository directly, you can find instructions below.
+
 ## Cloning the repository
 
 If you haven't already cloned the repository, do so and you are ready to go:
