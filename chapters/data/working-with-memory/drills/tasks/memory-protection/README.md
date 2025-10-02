@@ -1,6 +1,6 @@
 # Memory Protection
 
-Let's navigate to the `chapters/data/working-with-memory/drills/tasks/memory-protection/`, run `make skels` and enter the `support/src/` directory.
+Let's navigate to the `memory-protection/` directory from the lab archive (or `chapters/data/working-with-memory/drills/tasks/memory-protection/` if you are working directly in the repository), run `make skels` and enter the `support/src/` directory.
 
 Inspect the `mem_prot.c` source file.
 The file uses different access types for the `data` variable and the `do_nothing` function.

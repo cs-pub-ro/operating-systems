@@ -1,6 +1,6 @@
 # Access Counter
 
-Navigate to the `chapters/data/working-with-memory/drills/tasks/access-counter/support` directory.
+Navigate to the `access-counter/` directory from the lab archive (or `chapters/data/working-with-memory/drills/tasks/access-counter/support` if you are working directly in the repository).
 
 Your goal is to update the `src/access_counter.c` source code file to capture memory access exceptions (i.e. the `SIGSEGV` signal) and to update page permissions in order for the access to eventually succeed.
 Use `mprotect` to update the protection of the pages in stages: read, write and then exec.

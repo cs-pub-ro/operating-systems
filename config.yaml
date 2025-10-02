@@ -39,6 +39,7 @@ lab_structure:
   - title: Lab 3 - Memory
     filename: lab3.md
     content:
+      - reading/lab3.md
       - tasks/memory-access.md
       - tasks/memory-corruption.md
       - tasks/memory-protection.md
