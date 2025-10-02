@@ -1,6 +1,6 @@
 # System Call Wrappers
 
-Enter the `chapters/software-stack/system-calls/syscall-wrapper/drills/tasks/support/` folder and go through the practice items below.
+Enter the `syscall-wrapper/` directory from the extracted archive (or `chapters/software-stack/system-calls/syscall-wrapper/drills/tasks/support/` if you are working directly in the repository) and run `make`, then go through the practice items below.
 
 1. Update the files in the `support/` folder to make `read` system call available as a wrapper.
    Make a call to the `read` system call to read data from standard input in a buffer.

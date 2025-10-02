@@ -15,6 +15,7 @@ lab_structure:
   - title: Lab 1 - Operating System Perspective
     filename: lab1.md
     content:
+      - reading/lab1.md
       - tasks/basic-syscall.md
       - tasks/syscall-wrapper.md
       - tasks/libcall-syscall.md

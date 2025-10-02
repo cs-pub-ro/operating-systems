@@ -1,7 +1,7 @@
 # System Calls
 
-Enter the `chapters/software-stack/system-calls/drills/tasks/basic-syscall/` folder.
-Run `make` and then enter `chapters/software-stack/system-calls/drills/tasks/basic-syscall/support/` folder and go through the practice items below.
+Enter the `basic-syscall/` directory of the extracted archive (or `chapters/software-stack/system-calls/drills/tasks/basic-syscall/` if you are working directly in the repository).
+Run `make` and then enter `support/` folder and go through the practice items below.
 
 For debugging, use `strace` to trace the system calls from your program and make sure the arguments are set right.
 
