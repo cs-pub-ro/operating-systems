@@ -10,6 +10,7 @@ List of resources:
 - [Rules and Grading](https://cs-pub-ro.github.io/operating-systems/rules-and-grading)
 - [Books / Reading Materials](http://elf.cs.pub.ro/so/res/doc/) (you will need to log in using your `UPB` account)
 - [OS Calendar](https://calendar.google.com/calendar/embed?src=9a0798c60c5a4a2dad36cde37ef6cbcfc001ccd2d4de2a74e6fa1861a679bbea%40group.calendar.google.com&ctz=Europe%2FBucharest)
+- [OS Lab Schedule](https://docs.google.com/spreadsheets/u/0/d/e/2PACX-1vRRoIBTj633KdDORz6uCeahu1CbEcbhUY0JBKvshkJ5l3hMrQg0Jp0lgou3-hF37I3UCjBw6vrHGUxx/pubhtml?gid=169478796&single=true&pli=1)
 - [OS Course Planning](https://docs.google.com/spreadsheets/d/e/2PACX-1vS33f7xCIyb61aR1MRjsgquc0Agg8wdaLUw6MrJua6PbX9ZM-MGavP0MkqiNveaAMeWhIWAuDBCEDeQ/pubhtml?gid=0&single=true)
 
 ## Documentation and Reading Materials
