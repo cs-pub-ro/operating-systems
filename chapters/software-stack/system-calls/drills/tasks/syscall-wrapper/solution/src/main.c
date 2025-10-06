@@ -7,7 +7,7 @@
 
 static void reverse_string(char *a, unsigned int len)
 {
-	/* TODO 9: reverse_string function */
+	/* TODO 8: reverse_string function */
 	unsigned int i, j;
 	char aux;
 
@@ -20,7 +20,7 @@ static void reverse_string(char *a, unsigned int len)
 
 static unsigned int os_itoa(int n, char *a)
 {
-	/* TODO 20: itoa function */
+	/* TODO 19: itoa function */
 	unsigned int num_digits = 0;
 	int digit;
 
