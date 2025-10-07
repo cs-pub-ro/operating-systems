@@ -14,7 +14,7 @@ After uploading the file, the clients close the connection.
    To test, run `./server` in one terminal and `./client` in another terminal.s
    If successful, the clients should print the upload progress.
 
-1. There is a problem with our current implementation.
+2. There is a problem with our current implementation.
    Try to start two clients at the same time - the first one will start uploading, and the second one will block at `connect()`.
    This happens because, even though we are multiplexing file descriptors on the server-side, it is busy with another client.
    To account for this, complete the TODOs in `handle_client()` to serve each client on a different process.
