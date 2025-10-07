@@ -56,7 +56,7 @@ int main(void)
 	connectfd = accept(listenfd, NULL, NULL);
 	DIE(connectfd < 0, "accept");
 
-	/* TODO 2: Read flag from socket. */
+	/* TODO 2: Read flag from the socket. */
 	rc = read(connectfd, buffer, BUFSIZ);
 	DIE(rc < 0, "read");
 

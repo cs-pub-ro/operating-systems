@@ -1,8 +1,9 @@
 # Multithreaded
 
-Enter the `chapters/compute/threads/drills/tasks/multithreaded/` folder, run `make skels`, and go through the practice items below in the `support/` directory.
+Enter the `multithreaded/` directory (or `chapters/compute/threads/drills/tasks/multithreaded/` if you are working directly in the repository).
+Run `make` and then enter `support/` folder and go through the practice items below.
 
-1. Use the Makefile to compile `multithread.c`, run it and follow the instructions.
+1. Use the Makefile to compile `multithreaded.c`, run it and follow the instructions.
 
     The aim of this task is to familiarize you with the `pthreads` library.
     In order to use it, you have to add `#include <pthread.h>` in `multithreaded.c` and `-lpthread` in the compiler options.
@@ -15,7 +16,7 @@ Enter the `chapters/compute/threads/drills/tasks/multithreaded/` folder, run `ma
 
     Create a new function `sleep_wrapper2()` identical to `sleep_wrapper()` to organize your work.
     So far, the `data` argument is unused (mind the `__unused` attribute), so that is your starting point.
-    You cannot change `sleep_wrapper2()` definition, since `pthreads_create()` expects a pointer to a function that receives a `void *` argument.
+    You must keep `sleep_wrapper2()`'s signature unchanged because `pthread_create()` requires a function of type `void *(*)(void *)`.
     What you can and should do is to pass a pointer to a `int` as argument, and then cast `data` to `int *` inside `sleep_wrapper2()`.
 
     **Note:** Do not simply pass `&i` as argument to the function.

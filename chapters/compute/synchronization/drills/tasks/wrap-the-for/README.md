@@ -1,6 +1,6 @@
 # Wrap the Whole `for` Statements in Critical Sections
 
-Navigate to the `chapters/compute/synchronization/drills/tasks/wrap-the-for/` directory, run `make skels` and open the `support/src` directory.
+Navigate to the `wrap-the-for/` directory of the extracted archive (or `chapters/compute/synchronization/drills/tasks/wrap-the-for/` if you are working directly in the repository), run `make skels`, and open the `support/src` directory.
 
 Here you will find two source files:
 

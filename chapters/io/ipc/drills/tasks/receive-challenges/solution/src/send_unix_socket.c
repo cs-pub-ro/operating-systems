@@ -20,11 +20,11 @@ int main(void)
 	int fd;
 	struct sockaddr_un addr;
 
-	/* UNIX socket must exist. It must be created by receiver. */
+	/* The UNIX socket must exist. It must be created by receiver. */
 	rc = access(socket_path, R_OK | W_OK);
 	DIE(rc < 0, "access");
 
-	/* Create socket. */
+	/* Create a socket. */
 	fd = socket(PF_UNIX, SOCK_STREAM, 0);
 	DIE(fd < 0, "open");
 
@@ -35,7 +35,7 @@ int main(void)
 	rc = connect(fd, (struct sockaddr *) &addr, sizeof(addr));
 	DIE(rc < 0, "connect");
 
-	/* Write flag to socket. */
+	/* Write flag to the socket. */
 	rc = write(fd, FLAG, sizeof(FLAG));
 	DIE(rc < 0, "write");
 

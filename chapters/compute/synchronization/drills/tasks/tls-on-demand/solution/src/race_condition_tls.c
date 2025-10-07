@@ -36,7 +36,7 @@ void *decrement_var(void *arg)
 		var--;
 
 	/**
-	 * Print the value of `var` after it's incremented. Also print
+	 * Print the value of `var` after it's decremented. Also print
 	 * the ID of the thread. Use `pthread_self()` to get it.
 	 */
 	/* TODO 1: */

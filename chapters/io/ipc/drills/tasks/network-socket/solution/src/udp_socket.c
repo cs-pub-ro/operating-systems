@@ -94,13 +94,13 @@ static void sender_loop(void)
 			break;
 	}
 
-	/* TODO 2: Close socket. */
+	/* TODO 2: Close the socket. */
 	rc = close(sockfd);
 	DIE(rc < 0, "close");
 }
 
 /**
- * Simulate a sender-receiver communication using a named pipe.
+ * Simulate a sender-receiver communication using network sockets.
  * Run the program as a receiver by default, or as a sender if the -s or --sender.
  */
 int main(int argc, char *argv[])

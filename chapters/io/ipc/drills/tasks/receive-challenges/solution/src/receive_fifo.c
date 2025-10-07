@@ -40,7 +40,7 @@ int main(void)
 	char buffer[BUFSIZ];
 
 	/**
-	 * Create FIFO if it doesn't exist or if it exists and has incorrect
+	 * Create the FIFO if it doesn't exist or if it exists and has incorrect
 	 * permissions.
 	 */
 	rc = access(fifo_path, R_OK | W_OK);
@@ -50,11 +50,11 @@ int main(void)
 		DIE(rc < 0, "mkfifo");
 	}
 
-	/* TODO 2: Open FIFO for reading. */
+	/* TODO 2: Open the FIFO for reading. */
 	fd = open(fifo_path, O_RDONLY);
 	DIE(fd < 0, "open");
 
-	/* TODO 2: Read flag from FIFO. */
+	/* TODO 2: Read flag from the FIFO. */
 	rc = rread(fd, buffer, BUFSIZ);
 	DIE(rc < 0, "rread");
 

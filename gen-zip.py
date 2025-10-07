@@ -54,7 +54,7 @@ def find_directories_by_name(dirname):
     matches = []
     for root, dirs, _ in os.walk("."):
         for d in dirs:
-            if d == dirname:
+            if d == dirname and "drills" in root:
                 matches.append(os.path.join(root, d))
     return matches
 

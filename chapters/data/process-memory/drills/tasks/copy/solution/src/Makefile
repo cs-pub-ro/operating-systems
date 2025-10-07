@@ -19,7 +19,7 @@ OBJS = $(SRCS:.c=.o)
 BINARIES = mmap_copy read_write_copy
 
 # Default rule: Build everything
-all: $(BINARIES)
+all: $(BINARIES) in.dat
 
 # Rule to compile the logger
 $(LOGGER_OBJ): $(LOGGER_DIR)/log.c
@@ -37,9 +37,13 @@ mmap_copy: mmap_copy.o $(LOGGER)
 read_write_copy: read_write_copy.o $(LOGGER)
 	$(CC) $(CFLAGS) read_write_copy.o $(LOGGER) -o read_write_copy $(LDFLAGS)
 
+# Rule to create the in.dat file with some contents
+in.dat:
+	echo "Hello, world!" > in.dat
+
 # Clean rule: Remove object files and binaries
 clean:
-	-rm -f $(OBJS) $(BINARIES)
+	-rm -f $(OBJS) $(BINARIES) in.dat
 	@make -C $(LOGGER_DIR) clean  # Clean the logger directory as well
 
 .PHONY: all clean

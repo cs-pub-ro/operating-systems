@@ -1,0 +1,18 @@
+// SPDX-License-Identifier: BSD-3-Clause
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/syscall.h>
+#include <unistd.h>
+
+int main(int argc, char **argv)
+{
+	printf("%d\n", argc);
+	for (int i = 1; i < argc; i++)
+		printf("%s\n", argv[i]);
+	fflush(stdout);
+
+	syscall(SYS_exit_group, 0);
+
+	return 0; // Should never be reached
+}

@@ -2,12 +2,13 @@
 
 ## Higher level - Python
 
-Enter the `chapters/compute/processes/drills/tasks/sleepy` directory, run `make skels`, open the `support/src` folder and go through the practice items below.
+Enter the `sleepy/` directory (or `chapters/compute/processes/drills/tasks/sleepy` if you are working directly in the repository).
+Run `make` and then enter `support/` folder and go through the practice items below.
 
 Use the `tests/checker.sh` script to check your solutions.
 
 ```bash
-./checker.sh
+./tests/checker.sh
 sleepy_creator ...................... passed ... 30
 sleepy_creator_wait ................. passed ... 30
 sleepy_creator_c .................... passed ... 40

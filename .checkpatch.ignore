@@ -1,3 +1,4 @@
 # Ignore directories containing third-party files
 chapters/compute/synchronization/drills/tasks/threadsafe-data-struct/support
 content/assignments/async-web-server/src/http-parser
+content/assignments/elf-loader/tests

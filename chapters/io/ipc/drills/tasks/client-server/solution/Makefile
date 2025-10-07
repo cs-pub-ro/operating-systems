@@ -34,4 +34,8 @@ clean:
 	-rm -f $(OBJS) $(BINARIES)
 	-rm -f $(LOGGER)
 
+check:
+	../tests/check_client.sh
+	../tests/check_server.sh
+
 .PHONY: all clean

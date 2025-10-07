@@ -82,6 +82,7 @@ lab_structure:
   - title: Lab 6 - Multiprocess and Multithread
     filename: lab6.md
     content:
+      - reading/lab6.md
       - tasks/sleepy.md
       - tasks/wait-for-me-processes.md
       - tasks/create-process.md
@@ -111,6 +112,7 @@ lab_structure:
   - title: Lab 8 - Synchronization
     filename: lab8.md
     content:
+      - reading/lab8.md
       - tasks/race-condition.md
       - tasks/wrap-the-for.md
       - tasks/race-condition-atomic.md
@@ -126,6 +128,7 @@ lab_structure:
   - title: Lab 9 - File Descriptors
     filename: lab9.md
     content:
+      - reading/lab9.md
       - tasks/my-cat.md
       - tasks/mmap_cp.md
       - tasks/anon-pipes.md
@@ -141,6 +144,7 @@ lab_structure:
   - title: Lab 10 - Inter-Process Communication
     filename: lab10.md
     content:
+      - reading/lab10.md
       - tasks/named-pipes.md
       - tasks/unix-socket.md
       - tasks/network-socket.md
@@ -387,6 +391,7 @@ docusaurus:
           subsections:
             - Mini Libc/: chapters/software-stack/libc/projects/mini-libc/
             - Memory Allocator/: content/assignments/memory-allocator/
+            - ELF Loader/: content/assignments/elf-loader/
             - Parallel Firewall/: content/assignments/parallel-firewall/
             - Mini Shell/: content/assignments/minishell/
             - Asynchronous Web Server/: content/assignments/async-web-server/

@@ -1,12 +1,13 @@
 # Named Pipes Communication
 
-Navigate to `chapters/io/ipc/drills/tasks/named-pipes` and run `make` to generate the `support` directory.
+Navigate to `named-pipes/` directory of the extracted archive (or `chapters/io/ipc/drills/tasks/named-pipes` if you are working directly in the repository).
+Run `make` and then enter `support/` folder and go through the practice items below.
 In this exercise, you'll implement client-server communication between two processes using a named pipe, also called **FIFO**.
 Both the sender and receiver are created from the same binary: run without arguments for a receiver, or with `-s` for a sender.
 
-1. Use the [`mkfifo()` syscall](https://man7.org/linux/man-pages/man3/mkfifo.3.html) to create a named pipe.
-   If the FIFO already exists, use [`access()`](https://man7.org/linux/man-pages/man2/access.2.html) to check its permissions.
-   If permissions are incorrect, or if it does not exist, recreate the FIFO.
+1. Use [`access()`](https://man7.org/linux/man-pages/man2/access.2.html) to check if the FIFO already exists and has the right permissions.
+   If it exists but has the wrong permissions, delete it using [`unlink()`](https://man7.org/linux/man-pages/man2/unlink.2.html).
+   If it doesn't exist create it using [`mkfifo()`](https://man7.org/linux/man-pages/man3/mkfifo.3.html).
 
 1. Complete the TODOs in `receiver_loop()` and `sender_loop()` to enable communication.
    Ensure the FIFO is open before reading from or writing to it.

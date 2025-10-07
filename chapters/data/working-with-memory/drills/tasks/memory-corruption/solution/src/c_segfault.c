@@ -7,7 +7,7 @@
 /* TODO 9: Fix the bug causing the Segmentation Fault */
 static void print_bit_array(unsigned int the_bits[SIZE_INT])
 {
-	int i = SIZE_INT-1;
+	int i = SIZE_INT - 1;
 
 	while (i >= 0) {
 		printf("%u\n", the_bits[i]);
@@ -16,15 +16,15 @@ static void print_bit_array(unsigned int the_bits[SIZE_INT])
 }
 
 /* REPLACE 9 */
-/* static void print_bit_array(unsigned int the_bits[SIZE_INT]) */
-/* { */
-/*	unsigned int i = SIZE_INT-1; */
-/* */
-/*	while (i >= 0) { */
-/*		printf("%u\n", the_bits[i]); */
-/*		i--; */
-/*	} */
-/* } */
+/* static void print_bit_array(unsigned int the_bits[SIZE_INT])
+{
+	unsigned int i = SIZE_INT - 1;
+
+	while (i >= 0) {
+		printf("%u\n", the_bits[i]);
+		i--;
+	}
+} */
 
 static void to_bits(unsigned int value, unsigned int in_bits[SIZE_INT])
 {
@@ -46,8 +46,8 @@ static unsigned int factorial(unsigned int num)
 	if (num == 0)
 		return 1;
 
-	fact = factorial(num-1);
-	return fact*num;
+	fact = factorial(num - 1);
+	return fact * num;
 }
 
 int main(void)

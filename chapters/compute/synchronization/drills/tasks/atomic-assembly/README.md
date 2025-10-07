@@ -11,14 +11,14 @@ It is not an instruction with its own separate opcode, but a prefix that slightl
 For example, we cannot place it before a `mov` instruction, as the action of a `mov` is simply `read` or `write`.
 Instead, we can place it in front of an `inc` instruction if its operand is memory.
 
-Go in `chapters/compute/synchronization/drills/tasks/atomic-assembly/` and run:
+Go in the `atomic-assembly/` directory of the extracted archive (or `chapters/compute/synchronization/drills/tasks/atomic-assembly/` if you are working directly in the repository) and run:
 
 ```bash
 make skels
 ```
 
-Look at the code in `chapters/compute/synchronization/drills/tasks/atomic-assembly/support/src/race_condition_lock.asm`.
-It's an Assembly equivalent of the code you've already seen many times so far (such as `chapters/compute/synchronization/drills/tasks/race-condition/support/c/race_condition.c`).
+Look at the code in `support/src/race_condition_lock.asm`.
+It's an Assembly equivalent of the code you've already seen many times so far (such as `race-condition/support/c/race_condition.c`).
 The 2 assembly functions (**increment_var** and **decrement_var**) are called by `race_condition_lock_checker.c`
 
 Now add the `lock` prefix before `dec`.

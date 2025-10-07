@@ -16,4 +16,4 @@ What is the approximate number of system call numbers in Linux?
 
 ## Feedback
 
-As show [here](https://x64.syscall.sh/), they're about 300 system calls in Linux.
+As shown [here](https://x64.syscall.sh/), there are about 300 system calls in Linux.

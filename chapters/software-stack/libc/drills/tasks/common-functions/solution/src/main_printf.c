@@ -11,7 +11,7 @@ static char dest[128];
 static char out_buffer[256];
 
 static char putchar_buffer[1024];
-static char putchar_buffer_len;
+static int putchar_buffer_len;
 
 /* REMOVE 5 */
 void flush(void)

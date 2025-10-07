@@ -8,6 +8,9 @@ static void exec_do_nothing(void)	/* stored in .text section (r-x) */
 {
 }
 
+/* TODO 1: Add a const variable called ro */
+const int ro = 42;
+
 static void do_write(const char *msg, void *address, int value)
 {
 	puts(msg);
@@ -33,9 +36,6 @@ static void do_exec(const char *msg, void *address)
 
 int main(void)
 {
-	/* TODO 1: Add a const variable called ro*/
-	const int ro = 42;
-
 	do_read("reading from .data section", &data[0]);
 	do_write("writing to .data section", &data[0], 77);
 

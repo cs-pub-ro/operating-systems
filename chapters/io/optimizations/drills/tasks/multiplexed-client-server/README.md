@@ -1,6 +1,6 @@
 # Multiplexed Client Server
 
-Navigate to `chapters/io/optimizations/drills/tasks/multiplexed-client-server` and run `make` to generate the `support` files.
+Navigate to `multiplexed-client-server` directory of the archive, (or `chapters/io/optimizations/drills/tasks/multiplexed-client-server` if you are working directly in the repository) and run `make` to generate the `support` files.
 
 This task builds on the previous implementation of a [client-server ordered communication](../../../../ipc/drills/tasks/client-server/README.md).
 Previously, the client and server followed a strict, sequential communication pattern: each peer had to send a message and wait for a reply before proceeding.
