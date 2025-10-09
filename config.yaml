@@ -111,6 +111,7 @@ lab_structure:
   - title: Lab 8 - Synchronization
     filename: lab8.md
     content:
+      - reading/lab8.md
       - tasks/race-condition.md
       - tasks/wrap-the-for.md
       - tasks/race-condition-atomic.md

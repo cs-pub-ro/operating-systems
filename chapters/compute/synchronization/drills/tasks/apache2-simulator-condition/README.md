@@ -22,8 +22,8 @@ There are a few rules though, such as:
 - The consumer must not retrieve data if the buffer is empty.
 - The producer and the consumer can't access the shared buffer at the same time.
 
-Now enter `chapters/compute/synchronization/drills/tasks/apache2-simulator-condition/` and run `make skels`.
-Look at the code in `chapters/compute/synchronization/drills/tasks/apache2-simulator/support/src/producer_consumer.py`.
+Now enter the `apache2-simulator-condition/` directory of the extracted archive (or `chapters/compute/synchronization/drills/tasks/apache2-simulator-condition/` if you are working directly in the repository) and run `make skels`.
+Look at the code in `support/src/producer_consumer.py`.
 We have one producer and one consumer for simplicity.
 Observe that the producer calls `notify()` once there is data available, and the consumer calls `notify()`, when data is read.
 Notice that this call is preceded by an `acquire()` call, and succeeded by a `release()` call.
@@ -58,7 +58,7 @@ Neat!
 So now we have both synchronization **and** signalling.
 This is what conditions are for, ultimately.
 
-Open `chapters/compute/synchronization/drills/tasks/apache2-simulator/support/src/apache2_simulator_condition.py` and follow the TODOs.
+Open the `apache2-simulator-condition/` directory of the extracted archive (or `chapters/compute/synchronization/drills/tasks/apache2-simulator-condition/` if you are working directly in the repository), then go to `support/src/apache2_simulator_condition.py` and follow the TODOs.
 The code is similar to `apache2_simulator_semaphore.py`, but this time we use condition variables as shown in `producer_consumer.py`.
 
 [Quiz](../../../drills/questions/notify-only-with-mutex.md)

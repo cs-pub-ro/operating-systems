@@ -1,6 +1,6 @@
 # C: Race Conditions
 
-Go to `chapters/compute/synchronization/drills/tasks/race-condition/support/c/race_condition_mutex.c` and notice the differences between this code and the buggy one.
+Go to the `race-condition/` directory of the extracted archive (or `chapters/compute/synchronization/drills/tasks/race-condition/` if you are working directly in the repository), then open `support/c/race_condition_mutex.c` and notice the differences between this code and the buggy one.
 We now use a `pthread_mutex_t` variable, which we `lock` at the beginning of a critical section, and we `unlock` at the end.
 Generally speaking, `lock`-ing a mutex makes a thread enter a critical section, while calling `pthread_mutex_unlock()` makes the thread leave said critical section.
 Therefore, as we said previously, the critical sections in our code are `var--` and `var++`.

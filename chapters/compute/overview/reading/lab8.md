@@ -1,0 +1,1 @@
+The contents of the lab are located in the [lab archive](https://github.com/cs-pub-ro/operating-systems/raw/refs/heads/lab-archives/Lab_8_Synchronization.zip) and in the [GitHub repository](https://github.com/cs-pub-ro/operating-systems).

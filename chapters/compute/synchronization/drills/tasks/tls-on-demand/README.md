@@ -4,7 +4,7 @@ The perspective of C towards TLS is the following: everything is shared by defau
 This makes multithreading easier and more lightweight to implement than in other languages, like D, because synchronization is left entirely up to the developer, at the cost of potential unsafety.
 
 Of course, we can specify that some data belongs to the TLS, by preceding the declaration of a variable with `__thread` keyword.
-Enter `chapters/compute/synchronization/drills/tasks/tls-on-demand/` and run `make skels`.
+Enter the `tls-on-demand/` directory of the extracted archive (or `chapters/compute/synchronization/drills/tasks/tls-on-demand/` if you are working directly in the repository) and run `make skels`.
 Now enter `support/src` and follow the TODOs.
 
 1. Create the declaration of `var` and add the `__thread` keyword to place the variable in the TLS of each thread.
