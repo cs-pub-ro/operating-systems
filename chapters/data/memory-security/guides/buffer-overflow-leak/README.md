@@ -26,7 +26,7 @@ student@os:~/.../guides/buffer-overflow-leak/support/$ ./string_leak | xxd
 
 In file `string_leak.c` replace the usage of `memcpy` with `strcpy`.
 Do not modify anything else (including the size of the buffer).
-As the name suggests, `strcpy()` is specialized for string copies, therefore we don need to specify how much we want to copy.
+As the name suggests, `strcpy()` is specialized for string copies, therefore we don't need to specify how much we want to copy.
 What is the result?
 Is the result correct?
 Explain the result.
