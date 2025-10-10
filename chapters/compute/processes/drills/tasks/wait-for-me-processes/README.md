@@ -1,6 +1,7 @@
 # Wait for Me
 
-Enter the `chapters/compute/processes/drills/tasks/wait-for-me-processes/` directory, run `make skels`, open the `support/src` folder and go through the practice items below.
+Enter the `wait-for-me/` directory (or `chapters/compute/processes/drills/tasks/wait-for-me/` if you are working directly in the repository).
+Run `make` and then enter `support/` folder and go through the practice items below.
 
 Use the `tests/checker.sh` script to check your solutions.
 
@@ -10,7 +11,7 @@ wait_for_me_processes ...................... passed ... 100
 ```
 
 1. Run the code in `wait_for_me_processes.py` (e.g: `python3 wait_for_me_processes.py`).
-    The parent process creates one child that writes and message to the given file.
+    The parent process creates one child that writes a message to the given file.
     Then the parent reads that message.
     Simple enough, right?
     But running the code raises a `FileNotFoundError`.

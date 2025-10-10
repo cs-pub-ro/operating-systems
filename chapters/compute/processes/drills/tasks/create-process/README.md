@@ -1,11 +1,12 @@
 # Create Process
 
-Enter the `chapters/compute/processes/drills/tasks/create-process/` directory, run `make skels`, open the `support/src` folder and go through the practice items below.
+Enter the `create-process/` directory (or `chapters/compute/processes/drills/tasks/create-process/` if you are working directly in the repository).
+Run `make` and then enter `support/` folder and go through the practice items below.
 
 Use the `tests/checker.sh` script to check your solutions.
 
 ```bash
-./checker.sh
+./tests/checker.sh
 exit_code22 ...................... passed ... 50
 second_fork ...................... passed ... 50
 100 / 100

@@ -6,13 +6,13 @@ For now, do not wait for it to finish;
 simply start it.
 
 Compile the code and run the resulting executable several times.
-See that the negative numbers appear from different indices.
-This is precisely the nondeterminism that we talked about [in the previous section](tasks/wait-for-me-processes.md).
+Note how the negative numbers appear at different indices on each run — this demonstrates the nondeterministic scheduling we discussed [in the previous section](tasks/wait-for-me-processes.md).
 
 Now wait for that thread to finish and see that all the printed numbers are consistently negative.
 
-As you can see, waiting is a very coarse form of synchronization.
-If we only use waiting, we can expect no speedup as a result of parallelism, because one thread must finish completely before another can continue.
+Waiting is a coarse form of synchronization.
+If you start a thread and then immediately wait for it to finish before starting the next, you serialize the work and will see no speedup.
+Finer-grained synchronization or letting threads run concurrently without sequential waits is needed to gain parallel speedup.
 We will discuss more fine-grained synchronization mechanisms [later in this lab](reading/synchronization.md).
 
 Also, at this point, you might be wondering why this exercise is written in D, while [the same exercise, but with processes](reading/processes.md) was written in Python.

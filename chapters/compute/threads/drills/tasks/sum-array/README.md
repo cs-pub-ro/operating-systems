@@ -1,6 +1,7 @@
 # Libraries for Parallel Processing
 
-In `chapters/compute/threads/drills/tasks/sum-array/support/c/sum_array_threads.c` we spawned threads "manually" by using the `pthread_create()` function.
+Enter the `sum-array/` directory (or `chapters/compute/threads/drills/tasks/sum-array/` if you are working directly in the repository).
+In `./support/c/sum_array_threads.c` we spawned threads "manually" by using the `pthread_create()` function.
 This is **not** a syscall, but a wrapper over the common syscall used by both `fork()` (which is also not a syscall) and `pthread_create()`.
 
 Still, `pthread_create()` is not yet a syscall.
@@ -10,15 +11,12 @@ Most programming languages provide a more advanced API for handling parallel com
 
 ## Array Sum in Python
 
-Let's first probe this by implementing two parallel versions of the code in `sum-array/support/python/sum_array_sequential.py`.
-One version should use threads and the other should use processes.
-Run each of them using 1, 2, 4, and 8 threads / processes respectively and compare the running times.
-Notice that the running times of the multithreaded implementation do not decrease.
-This is because the GIL makes it so that those threads that you create essentially run sequentially.
+First, let's navigate to the `sum-array/` directory (or `chapters/compute/threads/drills/tasks/sum-array/` if you are working directly in the repository).
+Let's explore this by implementing two parallel versions of the sequential script located at `./support/python/sum_array_sequential.py`.
+Create one version that uses threads and another that uses processes.
 
-The GIL also makes it so that individual Python instructions are atomic.
-Run the code in `chapters/compute/synchronization/drills/tasks/race-condition/support/python/race_condition.py`.
-Every time, `var` will be 0 because the GIL doesn't allow the two threads to run in parallel and reach the critical section at the same time.
-This means that the instructions `var += 1` and `var -= 1` become atomic.
+After implementing them, run each version using 1, 2, 4, and 8 workers for both threads and processes and compare their execution times.
 
-If you're having difficulties solving this exercise, go through [this](../../../guides/sum-array-threads.md) reading material.
+You will likely notice that the running time of the multi-threaded implementation does not decrease as you add more threads.
+This is due to CPython's Global Interpreter Lock (GIL), which prevents multiple native threads from executing Python bytecode at the same time.
+For this reason, CPU-bound tasks in Python do not typically see a performance increase from multi-threading.

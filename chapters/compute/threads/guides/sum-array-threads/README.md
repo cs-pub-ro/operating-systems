@@ -1,4 +1,4 @@
-# Sum array Threads
+# Sum Array Threads
 
 ## Spreading the Work Among Other Threads
 
@@ -12,14 +12,14 @@ Therefore, they are more lightweight than processes.
 
 ## `std.parallelism` in D
 
-D language's standard library exposes the [`std.parallelism`](https://dlang.org/phobos/std_parallelism.html), which provides a series of parallel processing functions.
+The D language's standard library exposes the [`std.parallelism`](https://dlang.org/phobos/std_parallelism.html), which provides a series of parallel processing functions.
 One such function is `reduce()`, which splits an array between a given number of threads and applies a given operation to these chunks.
 In our case, the operation simply adds the elements to an accumulator: `a + b`.
 Follow and run the code in `chapters/compute/threads/guides/sum-array-threads/support/d/sum_array_threads_reduce.d`.
 
 The number of threads is used within a [`TaskPool`](https://dlang.org/phobos/std_parallelism.html#.TaskPool).
-This structure is a thread manager (not scheduler).
-It silently creates the number of threads we request and then `reduce()` spreads its workload between these threads.
+This structure manages a pool of worker threads (not a scheduler).
+It creates the requested number of worker threads, `reduce()` then spreads the workload between them.
 
 Now that you've seen how parallelism works in D, go in `chapters/compute/threads/guides/sum-array-threads/support/java/SumArrayThreads.java` and follow the TODOs.
 The code is similar to the one written in D, and it uses `ThreadPoolExecutor`.
@@ -31,20 +31,20 @@ javac SumArrayThreads.java
 java SumArrayThreads 4
 ```
 
-4 is the number of threads used, but you can replace the value with a number less or equal than your available cores.
+4 is the number of threads used, but you can replace the value with a number less than or equal to your available cores.
 
 ## OpenMP for C
 
-Unlike D, C does not support parallel computation by design.
-It needs a library to do advanced things, like `reduce()` from D.
+Unlike D, C does not provide built-in high-level parallel constructs.
+Libraries such as OpenMP or pthreads provide parallelism.
 We have chosen to use the OpenMP library for this.
 Follow the code in `chapters/compute/threads/guides/sum-array-threads/support/c/sum_array_threads_openmp.c`.
 
 The `#pragma` used in the code instructs the compiler to enable the `omp` module, and to parallelise the code.
 In this case, we instruct the compiler to perform a reduce of the array, using the `+` operator, and to store the results in the `result` variable.
-This reduction uses threads to calculate the sum, similar to `summ_array_threads.c`, but in a much more optimised form.
+This reduction uses threads to calculate the sum, similar to `sum_array_threads.c`, but in a much more optimised form.
 
-One of the advantages of OpenMP is that is relatively easy to use.
+One of the advantages of OpenMP is that it is relatively easy to use.
 The syntax requires only a few additional lines of code and compiler options, thus converting sequential code into parallel code quickly.
 For example, using `#pragma omp parallel for`, a developer can parallelize a `for loop`, enabling iterations to run across multiple threads.
 
