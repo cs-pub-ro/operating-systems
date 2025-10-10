@@ -21,6 +21,9 @@ We'll checkout how effective buffering is in `libc` and then we'll do it ourselv
    Wrote 1048576 bytes to test-file.txt in 38 ms
    ```
 
+   If possible, try to manually test your implementation.
+   Use `./checker.sh` only when you are sure of your result.
+
    Buffering achieves dramatic performance gains, reducing read times by **98%** and write times by **99.8%** in this example!
    This demonstrates the power of buffering, even though it’s an extreme case.
 
