@@ -15,10 +15,14 @@ Our application protocol is defined as follows:
 
 Since we are blocking on `recv()`, the message order is fixed - the client **must** initiate communication.
 In real-world applications, this constraint can be avoided with [I/O multiplexing](../../../../io-multiplexing/reading/io-multiplexing.md).
+To use the checker, run `make check` from `support`, it will test
+the client and afterwards the server. You **must** implement the 
+client first in order to later test the server using the checker.
 
 1. Open `support/client.c` and complete the TODOs to enable message exchange with the server.
    Test your client by running `python server.py` in one terminal and then `./client` in another.
    If correctly implemented, you should be able to exchange messages as outlined above.
+   If the port is blocked, run `reset_connection.sh` from `tests`.
 
    **Bonus Question:** Why is it OK for the client to be implemented in C while the server is implemented in Python?
 
