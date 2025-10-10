@@ -128,6 +128,7 @@ lab_structure:
   - title: Lab 9 - File Descriptors
     filename: lab9.md
     content:
+      - reading/lab9.md
       - tasks/my-cat.md
       - tasks/mmap_cp.md
       - tasks/anon-pipes.md
