@@ -9,7 +9,7 @@ Inspect the `mem_access.c` source file.
 
     Check your changes by running the `checker.sh` script in `support/tests/`.
     Explain the behavior.
-    
+
     [Quiz](../../questions/memory-access.md)
 
 If you're having difficulties solving this exercise, go through [this](../../../reading/working-with-memory.md) reading material.
