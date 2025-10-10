@@ -18,6 +18,9 @@ Good job!
 ----------------------------------------
 ```
 
+If possible, try to manually test your implementation.
+Use `./checker.sh` only when you are sure of your result.
+
 1. Implement `rread()` wrapper over `read()`.
 
    `read()` system call does not guarantee that it will read the requested number of bytes in a single call.
