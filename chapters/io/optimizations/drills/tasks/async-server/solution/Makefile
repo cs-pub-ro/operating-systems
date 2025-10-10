@@ -42,5 +42,5 @@ check:
 	cd ../tests && \
 	chmod +x check_server.sh && \
 	./check_server.sh
-	
+
 .PHONY: all clean

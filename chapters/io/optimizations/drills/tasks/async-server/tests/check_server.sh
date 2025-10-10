@@ -1,4 +1,5 @@
 #!/bin/bash
+# SPDX-License-Identifier: BSD-3-Clause
 
 TEST_FILE="../support/test-file.txt"
 if [ ! -f "$TEST_FILE" ]; then
@@ -11,7 +12,6 @@ SOLUTION_DIR="../solution"
 PORT=5000
 
 SERVER_BIN="$SUPPORT_DIR/server"
-CLIENT_BIN="$SOLUTION_DIR/client"
 SERVER_LOG="$SUPPORT_DIR/server_output.log"
 CLIENT_LOG="$SUPPORT_DIR/client_output.log"
 REF_CONFIRMATION="Received 100MB file from"
@@ -25,7 +25,7 @@ rm -f "$SERVER_LOG" "$CLIENT_LOG"
 PID_LIST=$(lsof -ti tcp:$PORT)
 if [ -n "$PID_LIST" ]; then
     echo "Killing previous server processes on port $PORT: $PID_LIST"
-    kill -9 $PID_LIST
+    kill -9 "$PID_LIST"
     sleep 1
 fi
 

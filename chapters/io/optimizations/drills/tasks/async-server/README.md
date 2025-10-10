@@ -15,7 +15,7 @@ After uploading the file, the clients close the connection.
    If successful, the clients should print the upload progress.
 
    To run the checker, run `make check` from the `support` file. You may have to wait a little bit for the checker to be finish its execution.
-   In case of the checker failing, check out client and server output in the `client_output.log`, `server_output.log` in the  `support` file. 
+   In case of the checker failing, check out client and server output in the `client_output.log`, `server_output.log` in the `support` file.
 
 1. There is a problem with our current implementation.
    Try to start two clients at the same time - the first one will start uploading, and the second one will block at `connect()`.
