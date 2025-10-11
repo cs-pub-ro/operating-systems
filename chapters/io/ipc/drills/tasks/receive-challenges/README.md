@@ -1,6 +1,8 @@
 # Receive Challenges
 
-Navigate to `receive-challenges/` directory of the extracted archive (or `chapters/io/ipc/drills/tasks/receive-challenges` if you are working directly in the repository). Run `make` and then enter `support/` folder and go through the practice items below. In this task, we will review all the IPC methods we have explored, including [anonymous pipes](../../../reading/pipes.md), [named pipes (FIFOs)](../../../reading/pipes.md), [UNIX sockets](../../../reading/unix-sockets.md), and [network sockets](../../../reading/network-sockets.md).
+Navigate to `receive-challenges/` directory of the extracted archive (or `chapters/io/ipc/drills/tasks/receive-challenges` if you are working directly in the repository).
+Run `make` and then enter `support/` folder and go through the practice items below.
+In this task, we will review all the IPC methods we have explored, including [anonymous pipes](../../../reading/pipes.md), [named pipes (FIFOs)](../../../reading/pipes.md), [UNIX sockets](../../../reading/unix-sockets.md), and [network sockets](../../../reading/network-sockets.md).
 Each challenge involves building a communication channel using the specified IPC method.
 
 1. Complete the TODOs in `support/receive_pipe.c`, then compile and run the executable.

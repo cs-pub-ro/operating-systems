@@ -1,6 +1,8 @@
 # Network Socket Communication
 
-Navigate to `network-socket/` directory of the extracted archive (or `chapters/io/ipc/drills/tasks/network-socket` if you are working directly in the repository). Run `make` and then enter `support/` folder and go through the practice items below. In this exercise, you'll implement client-server communication between two processes using **network sockets**.
+Navigate to `network-socket/` directory of the extracted archive (or `chapters/io/ipc/drills/tasks/network-socket` if you are working directly in the repository).
+Run `make` and then enter `support/` folder and go through the practice items below.
+In this exercise, you'll implement client-server communication between two processes using **network sockets**.
 Both the sender and receiver are created from the same binary: run without arguments for a receiver, or with `-s` for a sender.
 
 1. Complete the TODOs in the `sender_loop()` from `tcp_socket.c`.

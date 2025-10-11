@@ -1,6 +1,8 @@
 # Named Pipes Communication
 
-Navigate to `named-pipes/` directory of the extracted archive (or `chapters/io/ipc/drills/tasks/named-pipes` if you are working directly in the repository). Run `make` and then enter `support/` folder and go through the practice items below. In this exercise, you'll implement client-server communication between two processes using a named pipe, also called **FIFO**.
+Navigate to `named-pipes/` directory of the extracted archive (or `chapters/io/ipc/drills/tasks/named-pipes` if you are working directly in the repository).
+Run `make` and then enter `support/` folder and go through the practice items below.
+In this exercise, you'll implement client-server communication between two processes using a named pipe, also called **FIFO**.
 Both the sender and receiver are created from the same binary: run without arguments for a receiver, or with `-s` for a sender.
 
 1. Use [`access()`](https://man7.org/linux/man-pages/man2/access.2.html) to check if the FIFO already exists and has the right permissions.
