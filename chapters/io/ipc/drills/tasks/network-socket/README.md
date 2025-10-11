@@ -18,7 +18,8 @@ Both the sender and receiver are created from the same binary: run without argum
 
 1. Now we’ll implement the same functionality using UDP datagrams (`SOCK_DGRAM`).
    Open `udp_socket.c` and complete the TODOs for `sender_loop()` and `receiver_loop()` functions.
-   The workflow is similar, but `listen()`, `accept()`, and `connect()` are not required for datagram sockets. Use `sendto()` and `receivefrom()` instead of `send()` and `receive()`.
+   The workflow is similar, but `listen()`, `accept()`, and `connect()` are not required for datagram sockets.
+   Use `sendto()` and `receivefrom()` instead of `send()` and `receive()`.
 
 1. Inside the `tests/` directory, you will need to run `checker.sh`.
    The output for a successful implementation should look like this:
