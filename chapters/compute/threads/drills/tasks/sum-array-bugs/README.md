@@ -1,7 +1,7 @@
 # Wait for It
 
 The process that spawns all the others and subsequently calls `waitpid` to wait for them to finish can also get their return codes.
-Update the code in `chapters/compute/threads/drills/tasks/sum-array-bugs/support/seg-fault/sum_array_processes.c` and modify the call to `waitpid` to obtain and investigate this return code.
+Update the code in `sum-array-bugs/support/seg-fault/sum_array_processes.c` (or `chapters/compute/threads/drills/tasks/sum-array-bugs/support/seg-fault/sum_array_processes.c` if you are working directly in the repository) and modify the call to `waitpid` to obtain and investigate this return code.
 Display an appropriate message if one of the child processes returns an error.
 
 Remember to use the appropriate [macros](https://linux.die.net/man/2/waitpid) for handling the `status` variable that is modified by `waitpid()`, as it is a bit-field.
@@ -19,7 +19,7 @@ Thus, an application that uses processes can be more robust to errors than if it
 ## Memory Corruption
 
 Because they share the same address space, threads run the risk of corrupting each other's data.
-Take a look at the code in `sum-array-bugs/support/memory-corruption/python/`.
+Take a look at the code in `sum-array-bugs/support/memory-corruption/python/` (or `chapters/compute/threads/drills/tasks/sum-array-bugs/support/memory-corruption/python/` if you are working directly in the repository).
 The two programs only differ in how they spread their workload.
 One uses threads while the other uses processes.
 

@@ -82,6 +82,7 @@ lab_structure:
   - title: Lab 6 - Multiprocess and Multithread
     filename: lab6.md
     content:
+      - reading/lab6.md
       - tasks/sleepy.md
       - tasks/wait-for-me-processes.md
       - tasks/create-process.md

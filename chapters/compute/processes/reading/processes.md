@@ -14,7 +14,7 @@ student@os:~$ file /usr/bin/ls
 ```
 
 When you run it, the `ls` binary stored **on the disk** at `/usr/bin/ls` is read by another application called the **loader**.
-The loader spawns a **process** by copying some of the contents `/usr/bin/ls` in memory (such as the `.text`, `.rodata` and `.data` sections).
+The loader spawns a **process** by copying some contents of `/usr/bin/ls` into memory (for example the `.text`, `.rodata` and `.data` sections).
 Using `strace`, we can see the [`execve`](https://man7.org/linux/man-pages/man2/execve.2.html) system call:
 
 ```console
