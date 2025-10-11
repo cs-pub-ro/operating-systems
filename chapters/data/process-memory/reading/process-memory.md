@@ -94,7 +94,7 @@ The operating system allocates memory in chunks of a predefined size (in our cas
 
 We want to see the difference in memory layout between the statically-linked and dynamically-linked executables.
 
-Enter the `chapters/data/process-memory/drills/tasks/static-dynamic/support` directory and build the statically-linked and dynamically-linked executables `hello-static` and `hello-dynamic`:
+Enter the `chapters/data/working-with-memory/guides/static-dynamic/support` directory and build the statically-linked and dynamically-linked executables `hello-static` and `hello-dynamic`:
 
 ```console
 student@os:~/.../drills/tasks/static-dynamic/support$ make
