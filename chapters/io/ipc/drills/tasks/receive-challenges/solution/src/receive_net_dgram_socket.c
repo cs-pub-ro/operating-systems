@@ -46,13 +46,13 @@ int main(void)
 	rc = bind(fd, (struct sockaddr *)&addr, sizeof(addr));
 	DIE(rc < 0, "bind");
 
-	/* TODO 2: Read flag from socket. */
+	/* TODO 2: Read flag from the socket. */
 	rc = recvfrom(fd, buffer, BUFSIZ, 0, NULL, NULL);
 	DIE(rc < 0, "recvfrom");
 
 	printf("Flag is: %s\n", buffer);
 
-	/* TODO 2: Close socket. */
+	/* TODO 2: Close the socket. */
 	rc = close(fd);
 	DIE(rc < 0, "close");
 

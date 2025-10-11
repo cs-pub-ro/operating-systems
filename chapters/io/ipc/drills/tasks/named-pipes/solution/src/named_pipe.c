@@ -33,7 +33,7 @@ static void receiver_loop(void)
 	char output[BUFSIZ];
 	int fd, rc;
 
-	/* TODO 4: Create FIFO if it does not exist, then open it for reading. */
+	/* TODO 4: Create the FIFO if it does not exist, then open it for reading. */
 	create_fifo_if_needed();
 
 	fd = open(fifo_path, O_RDONLY);
@@ -51,7 +51,7 @@ static void receiver_loop(void)
 		fflush(stdout);
 	}
 
-	/* TODO 2: Close FIFO. */
+	/* TODO 2: Close the FIFO. */
 	rc = close(fd);
 	DIE(rc < 0, "close");
 }
@@ -61,7 +61,7 @@ static void sender_loop(void)
 	char input[BUFSIZ];
 	int fd, rc;
 
-	/* TODO 4: Create FIFO if it does not exist, then open it for writing. */
+	/* TODO 4: Create the FIFO if it does not exist, then open it for writing. */
 	create_fifo_if_needed();
 
 	fd = open(fifo_path, O_WRONLY);
@@ -82,7 +82,7 @@ static void sender_loop(void)
 		DIE(rc < 0, "write");
 	}
 
-	/* TODO 2: Close FIFO. */
+	/* TODO 2: Close the FIFO. */
 	rc = close(fd);
 	DIE(rc < 0, "close");
 }

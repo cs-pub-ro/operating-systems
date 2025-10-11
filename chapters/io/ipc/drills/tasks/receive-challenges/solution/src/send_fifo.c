@@ -15,15 +15,15 @@ int main(void)
 	int rc;
 	int fd;
 
-	/* FIFO must exist. It must be created by receiver. */
+	/* The FIFO must exist. It must be created by receiver. */
 	rc = access(fifo_path, R_OK | W_OK);
 	DIE(rc < 0, "access");
 
-	/* Open FIFO. */
+	/* Open the FIFO. */
 	fd = open(fifo_path, O_RDWR);
 	DIE(fd < 0, "open");
 
-	/* Write flag to FIFO. */
+	/* Write flag to the FIFO. */
 	rc = write(fd, FLAG, sizeof(FLAG));
 	DIE(rc < 0, "write");
 

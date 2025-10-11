@@ -141,6 +141,7 @@ lab_structure:
   - title: Lab 10 - Inter-Process Communication
     filename: lab10.md
     content:
+      - reading/lab10.md
       - tasks/named-pipes.md
       - tasks/unix-socket.md
       - tasks/network-socket.md

@@ -19,7 +19,7 @@ int main(void)
 	int fd;
 	struct sockaddr_in raddr;
 
-	/* Create socket. */
+	/* Create a socket. */
 	fd = socket(PF_INET, SOCK_DGRAM, 0);
 	DIE(fd < 0, "socket");
 
@@ -29,7 +29,7 @@ int main(void)
 	raddr.sin_port = htons(remote_port);
 	raddr.sin_addr.s_addr = htonl(INADDR_ANY);
 
-	/* Write flag to socket. */
+	/* Write flag to the socket. */
 	rc = sendto(fd, FLAG, sizeof(FLAG), 0, (struct sockaddr *) &raddr, sizeof(raddr));
 	DIE(rc < 0, "sendto");
 

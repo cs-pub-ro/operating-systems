@@ -53,7 +53,7 @@ int main(void)
 
 	printf("Flag is: %s\n", buf);
 
-	/* Wait for child process. */
+	/* Wait for the child process. */
 	wait(NULL);
 
 	return 0;

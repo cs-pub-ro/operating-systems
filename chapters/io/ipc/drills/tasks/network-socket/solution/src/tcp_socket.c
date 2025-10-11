@@ -47,7 +47,7 @@ static void receiver_loop(void)
 	rc = bind(listenfd, (struct sockaddr *) &addr, sizeof(addr));
 	DIE(rc < 0, "bind");
 
-	/* TODO 2: Mark socket as passive socket using listen(). */
+	/* TODO 2: Mark the socket as passive using listen(). */
 	rc = listen(listenfd, 1);
 	DIE(rc < 0, "listen");
 
@@ -106,13 +106,13 @@ static void sender_loop(void)
 		DIE(rc < 0, "send");
 	}
 
-	/* TODO 2: Close socket. */
+	/* TODO 2: Close the socket. */
 	rc = close(sockfd);
 	DIE(rc < 0, "close");
 }
 
 /**
- * Simulate a sender-receiver communication using a named pipe.
+ * Simulate a sender-receiver communication using network sockets.
  * Run the program as a receiver by default, or as a sender if the -s or --sender.
  */
 int main(int argc, char *argv[])
