@@ -110,6 +110,9 @@ def main():
             if found_dirs:
                 dirs_to_zip.extend(found_dirs)
 
+
+        if 'Lab 2' in lab_title:
+            dirs_to_zip = [d for d in dirs_to_zip if '/libc/projects' not in d]
         if dirs_to_zip:
             create_zip_archive(lab_title, dirs_to_zip)
 
