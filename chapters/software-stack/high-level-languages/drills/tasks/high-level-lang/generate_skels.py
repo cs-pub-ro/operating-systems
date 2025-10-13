@@ -110,6 +110,7 @@ def main():
                 or re.match(r".*\.sh$", src)
                 or re.match(r".*\.[sS]$", src)
                 or re.match(r".*\.py$", src)
+                or re.match(r".*\.go$", src)
             ):
                 pattern = r"(^\s*#\s*TODO)( [0-9]*)(:.*)"
                 replace = r"(^\s*#\s*REPLACE)( [0-9]*)"
