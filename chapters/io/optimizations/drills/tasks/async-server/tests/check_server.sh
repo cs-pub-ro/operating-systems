@@ -3,7 +3,7 @@
 
 TEST_FILE="../support/test-file.txt"
 if [ ! -f "$TEST_FILE" ]; then
-    echo "run make test-file.txt to generate the test file"
+    echo "run make test-file.txt in the `support/` folder to generate the test file"
     exit 1
 fi
 
@@ -25,7 +25,7 @@ rm -f "$SERVER_LOG" "$CLIENT_LOG"
 PID_LIST=$(lsof -ti tcp:$PORT)
 if [ -n "$PID_LIST" ]; then
     echo "Killing previous server processes on port $PORT: $PID_LIST"
-    kill -9 "$PID_LIST"
+    lsof -ti tcp:$PORT | xargs kill -9
     sleep 1
 fi
 

@@ -1,13 +1,12 @@
 # Async Server
 
-Navigate to `chapters/io/optimizations/drills/tasks/async-server` and run `make` to generate the `support` files.
-Enter `support` and run `make test-file.txt` to generate the test file.
+Navigate to `async-server` directory of the extracted archive (or `chapters/io/optimizations/drills/tasks/async-server` if you are working directly in the repository) and run `make` to generate the `support` files. Enter `support` and run `make test-file.txt` to generate the test file.
 
 This task builds on the previous example of a [multiplexed client-server](../../tasks/multiplexed-client-server/README.md).
 The server accepts connections from clients and downloads a file of `100MB` from each.
 After uploading the file, the clients close the connection.
 
-1. Open `server.c` and complete the TODOs in the main function to setup IO multiplexing using [`epoll`](https://man7.org/linux/man-pages/man7/epoll.7.html).
+1. Look at the code in `support` and open `server.c` and complete the TODOs in the main function to setup IO multiplexing using [`epoll`](https://man7.org/linux/man-pages/man7/epoll.7.html).
    Use `epoll_create()`, `epoll_wait()`, and the wrappers defined in `w_epoll.h` to handle descriptors without blocking.
    **Remember** to remove the client sockets from the `epoll` instance before closing them.
 

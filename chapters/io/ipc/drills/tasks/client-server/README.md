@@ -1,6 +1,6 @@
 # Ordered Client-Server Communication
 
-Navigate to `chapters/io/ipc/drills/tasks/client-server/` and run `make` to generate the `support` directory.
+Navigate to `client-server` directory of the extracted archive (or `chapters/io/ipc/drills/tasks/client-server/` if you are working directly in the repository) and run `make` to generate the `support` directory.
 This exercise will guide you in creating a basic messaging protocol between a server and a client.
 Although in real-world applications a server typically handles multiple connections at once, here we focus on a single connection.
 Handling multiple connections is further explored in [I/O multiplexing](../../../../io-multiplexing/reading/io-multiplexing.md).
