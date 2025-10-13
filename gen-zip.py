@@ -112,7 +112,7 @@ def main():
 
 
         if 'Lab 2' in lab_title:
-            dirs_to_zip = [d for d in dirs_to_zip if '/libc/projects' not in d]
+            dirs_to_zip = [d for d in dirs_to_zip if d not in ['./chapters/software-stack/libc/drills/tasks/libc', './chapters/software-stack/libc'] and 'projects' not in d]
         if dirs_to_zip:
             create_zip_archive(lab_title, dirs_to_zip)
 
