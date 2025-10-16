@@ -37,6 +37,13 @@ jobs:
             exit 0
           fi
 
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          ls -A *.zip > zip-list
+          git add *.zip
+          git stash
+
           # Create or switch to lab-archives branch
           if git ls-remote --exit-code origin lab-archives; then
             git fetch origin lab-archives
@@ -46,15 +53,12 @@ jobs:
             git rm -rf .
           fi
 
-          # Copy new zips into branch root
-          git add *.zip
+          # Remove old archives
+          for f in $(cat zip-list); do rm "$f"; git rm "$f"; done
+          git commit -m "Remove outdated lab archives for commit $GITHUB_SHA"
 
-          # Only commit if there are changes
-          if ! git diff --cached --quiet; then
-            git config user.name "github-actions[bot]"
-            git config user.email "github-actions[bot]@users.noreply.github.com"
-            git commit -m "Update lab archives for commit $GITHUB_SHA"
-            git push origin lab-archives
-          else
-            echo "No changes to commit."
-          fi
+          # Copy new zips into branch root
+          git stash pop
+          git add *.zip
+          git commit -m "Update lab archives for commit $GITHUB_SHA"
+          git push origin lab-archives
