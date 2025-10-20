@@ -1,43 +1,25 @@
-# Get the relative path to the directory of the current makefile.
-MAKEFILE_DIR := $(dir $(lastword $(MAKEFILE_LIST)))
-INCLUDES_DIR := $(MAKEFILE_DIR)
-UTILS_DIR := $(MAKEFILE_DIR)/utils
-LOGGER_DIR := $(UTILS_DIR)/log
+SRC := hello.c
+OBJ := $(SRC:.c=.o)
 
-# Compiler and flags
-CPPFLAGS += -I$(INCLUDES_DIR)
-CFLAGS += -g -Wall -Wextra
-LDFLAGS += -z lazy
+STATIC_BINARY := hello-static
+DYNAMIC_BINARY := hello-dynamic
 
-# Logger object
-LOGGER_OBJ = log.o
-LOGGER = $(LOGGER_DIR)/$(LOGGER_OBJ)
+CC := gcc
+CFLAGS := -Wall -Wextra -g
+LDFLAGS_STATIC := -static
 
-# Source and object files for alloc_size
-SRC = hello.c
-OBJ = $(SRC:.c=.o)
+all: $(OBJ) $(STATIC_BINARY) $(DYNAMIC_BINARY)
 
-# Binary name for alloc_size
-BINARY = hello
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
-# Default rule: Build the binary
-all: $(BINARY)
+$(STATIC_BINARY): $(OBJ)
+	$(CC) $(CFLAGS) $(OBJ) -o $@ $(LDFLAGS_STATIC)
 
-# Rule to compile the logger
-$(LOGGER_OBJ): $(LOGGER_DIR)/log.c
-	$(MAKE) -C $(LOGGER_DIR) $(LOGGER_OBJ)
+$(DYNAMIC_BINARY): $(OBJ)
+	$(CC) $(CFLAGS) $(OBJ) -o $@
 
-# Rule to compile alloc_size object file
-$(OBJ): %.o: %.c
-	$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
-
-# Rule to create the alloc_size binary
-$(BINARY): $(OBJ) $(LOGGER)
-	$(CC) $(CFLAGS) $(OBJ) $(LOGGER) -o $(BINARY) $(LDFLAGS)
-
-# Clean rule: Remove object files and binaries
 clean:
-	-rm -f $(OBJ) $(BINARY)
-	@make -C $(LOGGER_DIR) clean  # Clean the logger directory as well
+	-rm -f $(OBJ) $(STATIC_BINARY) $(DYNAMIC_BINARY)
 
 .PHONY: all clean
