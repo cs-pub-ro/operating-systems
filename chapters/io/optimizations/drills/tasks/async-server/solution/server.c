@@ -36,10 +36,10 @@ struct sockaddr_in get_sockaddr(const char *ip, const int port)
 }
 
 /**
- * Get a 1GB file over the network.
+ * Get a 100MB file over the network.
  * No need to store the data, just receive it to simulate a real-world scenario.
  */
-static void receive_1GB_file(int sockfd)
+static void receive_100MB_file(int sockfd)
 {
 	char buf[SMALL_BUF];
 	int rc;
@@ -52,7 +52,7 @@ static void receive_1GB_file(int sockfd)
 			break;
 	}
 
-	printf("Received 1GB file from [Client %d]\n", sockfd);
+	printf("Received 100MB file from [Client %d]\n", sockfd);
 }
 
 /**
@@ -69,13 +69,13 @@ void handle_client(int epollfd, int sockfd)
 	/* TODO 5: Print the child process id and handle the client */
 	printf("<< Process %d created to handle client %d >>\n", pid, sockfd);
 	if (pid == 0) {  /* Child process */
-		receive_1GB_file(sockfd);
+		receive_100MB_file(sockfd);
 		exit(EXIT_SUCCESS);
 	}
 
 	/* REPLACE 2*/
 	/* // Remove this after implementing the child process */
-	/* receive_1GB_file(sockfd); */
+	/* receive_100MB_file(sockfd); */
 
 	/* TODO 2: Remove the client from epoll */
 	rc = w_epoll_del_fd(epollfd, sockfd);
