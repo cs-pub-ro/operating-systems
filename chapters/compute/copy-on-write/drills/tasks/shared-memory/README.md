@@ -1,6 +1,6 @@
 # Shared Memory
 
-Navigate to the `chapters/compute/copy-on-write/drills/tasks/shared-memory/` directory, run `make skels` to generate the `support/` folder, enter the `support/src/` folder, open `shared_memory.c` and go through the practice items below.
+Enter the `shared-memory/` directory in the lab archive (or `chapters/compute/copy-on-write/drills/tasks/shared-memory/` if you are working directly in the repository), run `make skels`, then enter `support/src`, open `shared_memory.c` and go through the practice items below.
 
 Use the `support/tests/checker.sh` script to check your solution.
 

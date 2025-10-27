@@ -1,6 +1,7 @@
 # Investigate `apache2` Using `strace`
 
-Enter the `chapters/compute/processes-threads-apache2/drills/tasks/apache2/support/` folder and go through the practice items below.
+Enter the `apache2/` directory in the lab archive (or `chapters/compute/processes-threads-apache2/drills/tasks/apache2/` if you are working directly in the repository), run `make skels`, then enter `support/`.
+Go through the practice items below.
 
 1. Use `make run` to start the container.
    Use `strace` inside the container to discover the server document root.
