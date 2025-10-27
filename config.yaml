@@ -101,6 +101,7 @@ lab_structure:
   - title: Lab 7 - Copy-on-Write
     filename: lab7.md
     content:
+      - reading/lab7.md
       - tasks/page-faults.md
       - tasks/mini-shell.md
       - tasks/apache2.md
