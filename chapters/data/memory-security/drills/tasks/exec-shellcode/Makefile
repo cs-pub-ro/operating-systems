@@ -2,9 +2,8 @@ PYTHON = python3
 SCRIPT = generate_skels.py
 
 skels:
-	mkdir -p support/src
-	$(PYTHON) $(SCRIPT) --input ./solution/src --output ./support/src
-	$(PYTHON) $(SCRIPT) --input ./solution/tests --output ./support/tests
+	mkdir -p support
+	$(PYTHON) $(SCRIPT) --input ./solution --output ./support
 
 clean:
 	rm -rf support/
