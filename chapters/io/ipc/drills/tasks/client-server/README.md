@@ -1,6 +1,6 @@
 # Ordered Client-Server Communication
 
-Navigate to `chapters/io/ipc/drills/tasks/client-server/` and run `make` to generate the `support` directory.
+Navigate to `client-server` directory of the extracted archive (or `chapters/io/ipc/drills/tasks/client-server/` if you are working directly in the repository) and run `make` to generate the `support` directory.
 This exercise will guide you in creating a basic messaging protocol between a server and a client.
 Although in real-world applications a server typically handles multiple connections at once, here we focus on a single connection.
 Handling multiple connections is further explored in [I/O multiplexing](../../../../io-multiplexing/reading/io-multiplexing.md).
@@ -15,10 +15,13 @@ Our application protocol is defined as follows:
 
 Since we are blocking on `recv()`, the message order is fixed - the client **must** initiate communication.
 In real-world applications, this constraint can be avoided with [I/O multiplexing](../../../../io-multiplexing/reading/io-multiplexing.md).
+To use the checker, run `make check` from `support`, it will test the client and afterwards the server.
+You **must** implement the client first to later test the server using the checker.
 
 1. Open `support/client.c` and complete the TODOs to enable message exchange with the server.
    Test your client by running `python server.py` in one terminal and then `./client` in another.
    If correctly implemented, you should be able to exchange messages as outlined above.
+   If the port is blocked, run `reset_connection.sh` from `tests`.
 
    **Bonus Question:** Why is it OK for the client to be implemented in C while the server is implemented in Python?
 

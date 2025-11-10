@@ -1,5 +1,7 @@
 # I/O
 
+The contents of the lab are located in the [lab archive](https://github.com/cs-pub-ro/operating-systems/raw/refs/heads/lab-archives/Lab_11_IO_Optimizations.zip) and in the [GitHub repository](https://github.com/cs-pub-ro/operating-systems).
+
 We know that a compute system is a collection of hardware and software that modifies data.
 This data has to come from _somewhere_.
 This _somewhere_ is always outside the compute system: files, network packets, radio signals, sensor data.
