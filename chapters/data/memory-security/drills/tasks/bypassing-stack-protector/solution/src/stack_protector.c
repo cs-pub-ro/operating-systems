@@ -22,7 +22,7 @@ void fun1(char *p)
 	/* TODO 1: Add code that overwrites the canary.
 	 * Note: You should get a stack smashing detected error.
 	 * Remove the overwrite after getting the error in order to proceed to the next step.
-	*/
+	 */
 	addr[1] = 0;
 
 	printf("overwrite return address:\n");
