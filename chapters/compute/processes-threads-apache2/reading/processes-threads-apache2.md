@@ -1,26 +1,26 @@
 # Usage of Processes and Threads in `apache2`
 
 We'll take a look at how a real-world application - the `apache2` HTTP server - makes use of processes and threads.
-Since the server must be able to handle multiple clients at the same time, it must therefore use some form of concurrency.
+Since the server must handle multiple clients simultaneously, it therefore needs to use some form of concurrency.
 When a new client arrives, the server offloads the work of interacting with that client to another process or thread.
 
-The choice of whether to use multiple processes or threads is not baked into the code.
+The choice of using multiple processes or threads is not baked into the code.
 Instead, `apache2` provides a couple of modules called MPMs (Multi-Processing Modules).
 Each module implements a different concurrency model, and the users can pick whatever module best fits their needs by editing the server configuration files.
 
 The most common MPMs are
 
-- `prefork`: there are multiple worker processes, each process is single-threaded and handles one client request at a time
-- `worker`: there are multiple worker processes, each process is multi-threaded, and each thread handles one client request at a time
-- `event`: same as `worker` but designed to better handle some particular use cases
+- `prefork`: multiple worker processes, each single-threaded and handling one client request at a time.
+- `worker`: multiple worker processes, each multi-threaded, with each thread handling one client request at a time.
+- `event`: similar to `worker`, but designed to handle certain use cases more efficiently.
 
-In principle, `prefork` provides more stability and backwards compatibility, but it has a bigger overhead.
+In principle, `prefork` provides more stability and backward compatibility, but it has a bigger overhead.
 On the other hand, `worker` and `event` are more scalable, and thus able to handle more simultaneous connections, due to the usage of threads.
 On modern systems, `event` is almost always the default.
 
 ## Conclusion
 
-So far, you've probably seen that spawning a process can "use" a different program (hence the path in the args of `system` or `Popen`), but some languages such as Python allow you to spawn a process that executes a function from the same script.
+So far, you've probably seen that spawning a process can "use" a different program (hence the path in the args of `system` or `Popen`), but some languages, such as Python, allow you to spawn a process that executes a function from the same script.
 A thread, however, can only start from a certain entry point **within the current address space**, as it is bound to the same process.
 Concretely, a process is but a group of threads.
 For this reason, when we talk about scheduling or synchronization, we talk about threads.

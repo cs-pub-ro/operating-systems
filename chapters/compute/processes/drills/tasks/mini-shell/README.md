@@ -3,7 +3,8 @@
 As you might remember, to create a new process you need to use `fork` (or `clone`) and `exec` system calls.
 If you don't, take a look at [what happens under the hood when you use `system`](../../../guides/system-dissected.md).
 
-Enter the `chapters/compute/processes/drills/tasks/mini-shell` directory, run `make skels`, open the `support/src` folder and go through the practice items below.
+Enter the `mini-shell/` directory in the lab archive (or `chapters/compute/processes/drills/tasks/mini-shell` if you are working directly in the repository), run `make skels`, then enter `support/src`.
+Go through the practice items below.
 
 Use the `tests/checker.sh` script to check your solutions.
 
