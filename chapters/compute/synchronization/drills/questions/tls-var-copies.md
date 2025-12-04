@@ -2,7 +2,7 @@
 
 ## Question Text
 
-How many copies of the `var` variable from `support/race-condition/c/race_condition_tls.c` are there after each thread has modified it at leas once?
+How many copies of the `var` variable from `support/race-condition/c/race_condition_tls.c` are there after each thread has modified it at least once?
 
 ## Question Answers
 
