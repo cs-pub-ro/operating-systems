@@ -5,8 +5,8 @@
 To pass this course you need to obtain  **5 points** from a total of **11 points**:
 
 - 5 points for the [exam](#exam-5-points)
-- 3.5 points for [assignments](#assignments-3.5-points)
-- 0.5 point for [laboratory sessions](#laboratory-sessions-0.5-points)
+- 3.5 points for [assignments](#assignments-35-points)
+- 0.5 point for [laboratory sessions](#laboratory-sessions-05-points)
 - 1 point for [lecture quizzes](#lecture-quizzes-1-point)
 - 1 point for course - each teacher decides how they distribute the bonus points.
 
@@ -93,12 +93,12 @@ There are 3 assignments, followed by 2 bonus ones, graded as follows:
 
 The score from the bonus assignments can make up for any points lost on the other assignments.
 
-
 **Each assignment has a single deadline.**
 **Once the deadline passes, the assignment can no longer be submitted.**
 
 Each assignment solution submission gets a maximum of **100 assignment points**.
 These are comprised of:
+
 - **90 points** for the correct implementation of the assignment
 - **10 points** for coding style
 
@@ -106,9 +106,12 @@ Both components are verified and graded automatically by the assignment checker 
 The assignment checker system presents the final grade for the submission (the final grade for the assignment is described below).
 Coding style points are only provided if the assignment solution submission gets at least **60 points** for the correct implementation.
 
-**Each assignment will be followed by an interview during the laboratory. The interview will contain questions regarding the theoretical aspects that were covered by the assignment. The grade you obtain during the interview will be used to scale the final grade for the assignment.**
+**Each assignment will be followed by an interview during the laboratory.
+The interview will contain questions regarding the theoretical aspects that were covered by the assignment.
+The grade you obtain during the interview will be used to scale the final grade for the assignment.**
 
-The final grade of the homework is computed using the following formula: homework_interview_grade / 10 * assignment_grade. That means that if you obtain 5/10 points during the interview and 80/100 for the submitted solution, your final grade for the assignment will be 40/100 points.
+The final grade of the homework is computed using the following formula: homework_interview_grade / 10 * assignment_grade.
+That means that if you obtain 5/10 points during the interview and 80/100 for the submitted solution, your final grade for the assignment will be 40/100 points.
 
 However, **there may be exceptional cases in which this grading scheme is not followed**, for example, if the assignment is implemented only to pass the tests and does not meet the assignment requirements.
 Exceptional cases may include instances of deadlock, incorrect synchronizations between processes/threads, races (whether they are manifested or not), and other unspecified but deemed inappropriate situations.
@@ -140,7 +143,6 @@ The high-level steps are:
 1. Do a final push.
    See the automatic checking on the Jobs entry on GitLab for your fork.
 1. Configure Moodle to retrieve the submissions for GitLab, or do a Moodle archive submission of your assignment solution.
-
 
 ### [Laboratory Sessions](https://cs-pub-ro.github.io/operating-systems/Lab/) (0.5 points)
 
@@ -225,7 +227,6 @@ To reinforce knowledge, there will be 2 written lecture quizzes:
     - Series CB: 17.12.2025
     - Series CC: 16.12.2025
     - Series CD: 16.12.2025
-
 
 Lecture quizzes are closed-book.
 They take place in person at the beginning of the corresponding lectures.
@@ -341,7 +342,7 @@ If, after the resit/improvement session in the fall, you still do not obtain a p
 By default, the grades for the previous academic year (2024-2025) are reset on September 29, 2025.
 If you did not graduate from the course in the 2024-2025 academic year, you will need to retake it in the current academic year (2025-2026), with the possibility of retaining some components, as detailed below:
 
-- If you wish, you can retain the grades for the laboratory. You **cannot** retain the grades for the assignments. You **cannot** retain the grades for lecture components (lecture tests and exam).
+- If you wish, you can retain the grades for the laboratory; you **cannot** retain the grades for the assignments; You **cannot** retain the grades for lecture components (lecture tests and exam).
 - Students interested in preserving their grades should respond on [the designated Moodle thread](https://curs.upb.ro/) by **October 12, 2025, 23:55**.
 - The rules and grading system for students retaking the course are the same as for students in the current year (lecture tests + exam, assignments, etc.).
 - Students retaking the course can participate in any lab session as long as there are available slots.
