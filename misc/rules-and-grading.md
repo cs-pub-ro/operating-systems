@@ -166,7 +166,6 @@ If you miss a lab or do not receive the maximum score on other labs, the lab bon
 
 The hackathon involves solving an exercise proposed by the Operating Systems team, focusing on material covered in the OS course and labs.
 The exercise is to be solved by a team of 2 students enrolled in the Operating Systems course.
-The top 3 best implementations will receive awards.
 During the hackathon, teams will receive assistance from OS teaching assistants.
 
 #### Objectives
@@ -177,22 +176,13 @@ During the hackathon, teams will receive assistance from OS teaching assistants.
 
 #### Date
 
-Saturday, TBD, within the interval 10:00-18:00.
-
-#### Location
-
-The hackathon takes place physically in rooms:
-- TBD
+Saturday, January 17th, within the interval 10:00-18:00.
 
 #### Prerequisites
 
-1. Students enrolled in the OS course in the academic year 2024-2025 can participate.
+1. Students enrolled in the OS course in the current academic year can participate.
 1. Participants will form teams of two.
 1. Participants will work on their own systems.
-
-#### Registration
-
-Registration is closed.
 
 #### Regulations
 
@@ -206,29 +196,17 @@ Follow [these steps](https://docs.github.com/en/account-and-profile/setting-up-a
 
 Submissions will be uploaded on [Moodle](https://curs.upb.ro/).
 
-- A submission consists of a `.zip` archive containing the directory `operating-systems/content/assignments/lambda-function-loader/` (with directories `tests` and `src`).
+- A submission consists of a `.zip` archive containing the directories `tests` and `src`.
 - The archive is uploaded by one team member only.
-- In `operating-systems/content/assignments/lambda-function-loader/`, there must be a `README.md` file containing:
+- In the root of the archive, there must be a `README.md` file containing:
   - team composition
   - GitHub link
   - implementation details;
   each extra functionality requires a description, approach, and testing method.
 
-#### Awards
-
-Each member of the winning teams will receive a prize based on their ranking:
-
-1. First place: TBD
-1. Second place: TBD
-1. Third place: TBD
-
 #### Equivalence
 
-All participating teams are **eligible** for up to TBD points equivalence in the OS subject (depending on **implementation complexity and project stage developed during the hackathon**).
-
-#### Winners Announcement
-
-Winning teams will be announced by TBD.
+All participating teams are **eligible** for equivalence in the OS subject (depending on **implementation complexity and project stage developed during the hackathon**).
 
 ### Lecture Quizzes (1 point)
 
