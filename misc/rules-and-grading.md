@@ -82,7 +82,6 @@ In exceptional circumstances, when there is doubt on the correctness of getting 
 ### [Assignments](https://cs-pub-ro.github.io/operating-systems/Assignments/) (3.5 points)
 
 Assignments are worth **3.5 points** of the final grade.
-However, you can get as much as **6 points** in total.
 There are 3 assignments, followed by 2 bonus ones, graded as follows:
 
 1. Assignment 1: 1 point
@@ -92,6 +91,8 @@ There are 3 assignments, followed by 2 bonus ones, graded as follows:
 1. Bonus Assignment 2: 1.25 points
 
 The score from the bonus assignments can make up for any points lost on the other assignments.
+If the sum of the assignment points is above **3.5 points**, it will be truncated to **3.5 points**.
+However, as per [the rules](#no-exam-for-assignment-heroes) state, obtaining 5/6 total points on the assignments can get you full marks on the interview part of the exam.
 
 **Each assignment has a single deadline.**
 **Once the deadline passes, the assignment can no longer be submitted.**
