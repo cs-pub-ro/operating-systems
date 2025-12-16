@@ -233,6 +233,7 @@ Lecture quizzes are closed-book.
 They take place in person at the beginning of the corresponding lectures.
 The quizzes last **20 minutes**.
 The quizzes consist of 11 True/False questions that require explanations, following the [written exam format](#exam-structure).
+Questions points will be granted for correct explanations, even though the True/False answer is wrong.
 Each quiz is worth **0.55 points of the final grade**.
 The lecture quiz grade is truncated at **1 point**.
 
