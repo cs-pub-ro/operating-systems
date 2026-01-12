@@ -31,9 +31,9 @@ struct sockaddr_in get_sockaddr(const char *ip, const int port)
 }
 
 /**
- * Read 1GB file and send it to the server.
+ * Read 100MB file and send it to the server.
  */
-static void send_1GB_file(int sockfd, const char *filename)
+static void send_100MB_file(int sockfd, const char *filename)
 {
 	char buf[BUFSIZ];
 	FILE *file;
@@ -60,7 +60,7 @@ static void send_1GB_file(int sockfd, const char *filename)
 			printf("Sent %lu MB\n", total / (1024 * 1024));
 	}
 
-	printf("Sent 1GB file to server\n");
+	printf("Sent 100MB file to server\n");
 
 	rc = fclose(file);
 	DIE(rc < 0, "fclose");
@@ -81,7 +81,7 @@ int main(void)
 	rc = connect(sockfd, (struct sockaddr *) &addr, sizeof(addr));
 	DIE(rc < 0, "connect");
 
-	send_1GB_file(sockfd, "test-file.txt");
+	send_100MB_file(sockfd, "test-file.txt");
 
 	rc = close(sockfd);
 	DIE(rc < 0, "close");

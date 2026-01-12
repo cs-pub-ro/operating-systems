@@ -35,6 +35,11 @@ clean:
 	-rm -f $(LOGGER)
 
 test-file.txt:
-	dd if=/dev/urandom of=test-file.txt bs=1024 count=1M
+	dd if=/dev/urandom of=test-file.txt bs=1M count=100
+	cp test-file.txt ../solution/test-file.txt
+
+check:
+	cd ../tests && \
+	./check_server.sh
 
 .PHONY: all clean
