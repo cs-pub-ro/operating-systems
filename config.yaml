@@ -157,6 +157,7 @@ lab_structure:
   - title: Lab 11 - IO Optimizations
     filename: lab11.md
     content:
+      - reading/lab11.md
       - tasks/client-server.md
       - tasks/multiplexed-client-server.md
       - tasks/async-server.md
