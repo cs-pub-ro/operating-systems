@@ -450,6 +450,7 @@ docusaurus:
           path: content/assignments
           subsections:
             - Lambda Function Loader/: lambda-function-loader/
+            - Local Procedure Call/: local-procedure-call/
       - Rules and Grading: misc/rules-and-grading.md
       - Resources: misc/resources.md
     static_assets:
