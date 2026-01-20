@@ -337,6 +337,7 @@ docusaurus:
                   - Semaphore Equivalent: semaphore-equivalent.md
                   - Coarse vs Granular Critical Section: coarse-vs-granular-critical-section.md
                   - Not Race Condition: not-race-condition.md
+                  - Huge Page Allocation: huge-page-allocation.md
             - Lab 6 - Multiprocess and Multithread: lab6.md
             - Lab 7 - Copy-on-Write: lab7.md
             - Lab 8 - Synchronization: lab8.md

@@ -21,6 +21,11 @@ The first one still corresponds to the parent.
 
 [Quiz 2](../tasks/questions/child-faults-after-write.md)
 
+As a bonus, try changing `NUM_PAGES` to a bigger number, such as 1024.
+Compile the program, run it again and see the effects.
+
+[Quiz 3](../tasks/questions/huge-page-allocation.md)
+
 Now it should be clear how demand paging differs from copy-on-write.
 Shared memory is a similar concept.
 It's a way of marking certain allocated pages so that copy-on-write is disabled.
