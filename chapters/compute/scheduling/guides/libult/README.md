@@ -24,3 +24,6 @@ When the scheduler wants to run a new thread, it retrieves it from the READY que
 When a thread ends its execution, it is added to the COMPLETED queue, together with its return value.
 
 [Quiz](../../drills/questions/why-use-completed-queue.md)
+
+You may read more about user-level threads schedulers in practice in this [article](https://rickkoch.github.io/posts/go-scheduler/).
+It explores Goroutines, the Go programming language implementation of fibers, and Go's scheduler.
