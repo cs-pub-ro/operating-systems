@@ -6,8 +6,7 @@ Why does the scheduler need a COMPLETED queue and not simply terminate one threa
 
 ## Question Answers
 
-- The COMPLETED queue is an implementation preference.
-The scheduler can expose the same functions without it
+- The COMPLETED queue is an implementation preference. The scheduler can expose the same functions without it
 
 - Because the OS's scheduler may kill the main kernel-level thread unless we keep the user-level thread in a queue
 
@@ -17,5 +16,4 @@ The scheduler can expose the same functions without it
 
 Take a look at the `handle_thread_start()` function.
 It is used by `threads_create()` to start executing the given function.
-This is a wrapper that calls the function associated with the thread (`this->start_routine`), saves its result and then calls `threads_exit()`
-to store this result in the COMPLETED queue.
+This is a wrapper that calls the function associated with the thread (`this->start_routine`), saves its result and then calls `threads_exit()` to store this result in the COMPLETED queue.
