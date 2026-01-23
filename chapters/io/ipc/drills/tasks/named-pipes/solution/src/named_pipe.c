@@ -14,7 +14,7 @@ static const char fifo_path[] = "my-fifo";
 
 void create_fifo_if_needed(void)
 {
-	/* TODO 9: Use access() to check if the FIFO exists and has the right permissions.
+	/* TODO 8: Use access() to check if the FIFO exists and has the right permissions.
 	 * If it exists but has the wrong permissions, delete it using unlink().
 	 * If it doesn't exist create it using mkfifo().
 	 */
