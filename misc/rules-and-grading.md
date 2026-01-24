@@ -46,7 +46,7 @@ The total points are truncated to **5 points**.
 
 #### Exam Simulation
 
-An oral exam simulation will be organized on **TBA**, online, on Microsoft Teams, and it will be recorded.
+An oral exam simulation will be organized on **Saturday, January 24, 2026, 16:30-18:30**, online, [on Microsoft Teams](https://teams.microsoft.com/meet/33614785421348?p=PXud1kRAZhZwcc2DWr), and it will be recorded.
 It will last for **2 hours** and will involve **8 students** that volunteer (first-come, first-served) to take part in the exam simulation.
 All students and members of the team can participate, but only 8 students will be examined, while the others will observe.
 The exam simulation will be recorded.
