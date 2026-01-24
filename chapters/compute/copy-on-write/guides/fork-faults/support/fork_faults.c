@@ -9,7 +9,7 @@
 
 #include "utils/utils.h"
 
-#define NUM_PAGES	1024
+#define NUM_PAGES	256
 
 static void wait_for_input(const char *msg)
 {
