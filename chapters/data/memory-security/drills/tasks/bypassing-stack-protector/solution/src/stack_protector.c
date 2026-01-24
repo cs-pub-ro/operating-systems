@@ -19,12 +19,15 @@ void fun1(char *p)
 	}
 
 	printf("overwrite canary:\n");
-	/* TODO 1: Add code that overwrites the canary. */
-	addr[6] = 0;
+	/* TODO 1: Add code that overwrites the canary.
+	 * Note: You should get a stack smashing detected error.
+	 * Remove the overwrite after getting the error in order to proceed to the next step.
+	 */
+	addr[1] = 0;
 
 	printf("overwrite return address:\n");
 	/* TODO 2: Add code that overwrites the return address with the address of pawned. */
-	addr[7] = &pawned;
+	addr[3] = &pawned;
 
 	(void) p;
 }
