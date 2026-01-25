@@ -3,7 +3,7 @@
 Navigate to `client-server` directory of the extracted archive (or `chapters/io/ipc/drills/tasks/client-server/` if you are working directly in the repository) and run `make` to generate the `support` directory.
 This exercise will guide you in creating a basic messaging protocol between a server and a client.
 Although in real-world applications a server typically handles multiple connections at once, here we focus on a single connection.
-Handling multiple connections is further explored in [I/O multiplexing](../../../../io-multiplexing/reading/io-multiplexing.md).
+Handling multiple connections is further explored in [I/O multiplexing](../../../../optimizations/reading/io-multiplexing.md).
 
 Our application protocol is defined as follows:
 
@@ -14,7 +14,7 @@ Our application protocol is defined as follows:
 - The communication ends when either the **client** or the **server** sends the message `exit`.
 
 Since we are blocking on `recv()`, the message order is fixed - the client **must** initiate communication.
-In real-world applications, this constraint can be avoided with [I/O multiplexing](../../../../io-multiplexing/reading/io-multiplexing.md).
+In real-world applications, this constraint can be avoided with [I/O multiplexing](../../../../optimizations/reading/io-multiplexing.md).
 To use the checker, run `make check` from `support`, it will test the client and afterwards the server.
 You **must** implement the client first to later test the server using the checker.
 
