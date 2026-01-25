@@ -163,7 +163,7 @@ def solve_links(filename: str, fileToLab: dict) -> str:
         # Get the first line of the file to extract the chapter in hyphenated format
         try:
             with open(filepath) as f:
-                title = f.readline().strip("#").replace("`", "").replace(":", "")
+                title = f.readline().strip("#").replace("`", "").replace(":", "").replace("/", "")
                 subchapter = prefix + hyphenate(title)
         except:
             print(f"Error: Could not solve link to {filepath} for {filename}")
