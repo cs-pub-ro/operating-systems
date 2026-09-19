@@ -5,23 +5,20 @@ Per-task notes are in `INSTRUCTOR.md` inside each challenge directory.
 
 ## Read this first: do not ship the flags
 
-This session is the one place in the repository where secret material lives inside a task tree: every `*/flag` and every `*/solve/exploit.py` sits under `05-memory-security-full-contents/`.
+This session is the one place in the repository where secret material lives inside a task tree: every `*/flag` and every `*/solve/exploit.py` sits under `05-memory-security-full/`.
 
-Two safeguards that protect the other sessions do **not** cover this directory:
+Two things in `scripts/` keep it out of what ships:
 
-* `scripts/gen_zip.py` skips directories literally named `solutions`. There is no such directory here any more — the reference material was lifted into `*-full-contents/`, which is not on the skip list.
-* Both the archive builder and the website only look at directories matching `^session-\d+` (`SESSION_PATTERN` in `scripts/sessions.py`). Neither `05-memory-security-work/` nor `05-memory-security-full-contents/` matches, so as things stand the generators ignore session 05 entirely.
+* `archive_sessions()` in `scripts/sessions.py` yields only the `-live` half of the sessions under `content/labs/`, so `05-memory-security-full/` is never offered to the archive builder in the first place.
+* `is_reference()` in the same module is the second line of defence: `gen_zip.py` calls it on every file it is about to write, and aborts the whole run if a path below a `*-full/` directory ever reaches it.
 
-The moment `sessions.py` is updated to recognise the renamed layout (which every session now needs), it **must** in the same change:
+Neither safeguard is a reason to skip the check. Run `unzip -l archives/05-memory-security.zip` and read the listing before any archive leaves your machine.
 
-* pack student archives from `*-work/` only, and
-* exclude every `*-full-contents/` directory.
-
-Until that is done, do not run `gen_zip.py` and hand the result to anyone: a naive fix that simply broadens `SESSION_PATTERN` would ship the flags. This is worth verifying with `unzip -l` before any archive leaves your machine.
+The website is the other way out of this repository, and it publishes both halves, including this one. That is deliberate — the write-ups are what students read after the session — and it is safe because the site is built from `README.md` files only: the `*/flag` files and the `*/solve/exploit.py` scripts have no page, and the links to them point back at the (private) repository.
 
 ## What the students get
 
-For each challenge, players receive only the public files in `05-memory-security-work/<task>/`: the source `chall.c`, the compiled `chall`, and the task `README.md`.
+For each challenge, players receive only the public files in `05-memory-security-live/<task>/`: the source `chall.c`, the compiled `chall`, and the task `README.md`.
 The flag is never in the binary — `chall` does `fopen("flag.txt", ...)` at runtime — so shipping the binary is safe. The flag exists only on the deployed service and in this directory.
 
 ## Shape of the session

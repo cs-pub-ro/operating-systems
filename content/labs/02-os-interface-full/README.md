@@ -3,7 +3,7 @@
 This directory holds the complete version of session 02: reference solutions, full explanations, and the reference output of every command the exercises ask for.
 
 Use it after the live session for a full view of the solutions and the reasoning behind them.
-The corresponding directory used during the session, with skeletons and task descriptions, is [`02-os-interface-work/`](../02-os-interface-work).
+The corresponding directory used during the session, with skeletons and task descriptions, is [`02-os-interface-live/`](../02-os-interface-live).
 
 ## Learning objectives
 
@@ -54,5 +54,5 @@ That last inversion is the payoff, and it is the same shape of argument as sessi
 ## A note on the vendored library
 
 `bonus-printf` uses [mpaland/printf](https://github.com/mpaland/printf), MIT licensed.
-A single copy lives in [`../02-os-interface-work/bonus-printf/utils/printf/`](../02-os-interface-work/bonus-printf/utils/printf) and this directory's `Makefile` points at it, rather than duplicating 600 kB of third-party code.
+A single copy lives in [`../02-os-interface-live/bonus-printf/utils/printf/`](../02-os-interface-live/bonus-printf/utils/printf) and this directory's `Makefile` points at it, rather than duplicating 600 kB of third-party code.
 The upstream `test/` directory has been removed, as nothing here builds it.

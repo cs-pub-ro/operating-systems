@@ -11,7 +11,7 @@ The program is the growable in-memory database from session 03, and the point of
 
 The program reads `<id> <name>` pairs from standard input into a heap array that grows in chunks, prints the records, prints them again sorted by id, and finally reports which record was added first.
 
-The version in [`04-memory-debugging-work/demo-in-memory-database`](../../04-memory-debugging-work/demo-in-memory-database) has three bugs in it, chosen so that no two fail the same way:
+The version in [`04-memory-debugging-live/demo-in-memory-database`](../../04-memory-debugging-live/demo-in-memory-database) has three bugs in it, chosen so that no two fail the same way:
 
 | Bug | Where | Symptom | Tool that finds it |
 | --- | --- | --- | --- |

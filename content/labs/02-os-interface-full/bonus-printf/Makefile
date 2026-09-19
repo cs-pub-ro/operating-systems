@@ -3,7 +3,7 @@ CFLAGS  = -Wall -Wextra -g
 
 # The vendored mpaland/printf library is kept in a single place, in the work
 # directory, rather than duplicated here.
-PRINTF_DIR = ../../02-os-interface-work/bonus-printf/utils/printf
+PRINTF_DIR = ../../02-os-interface-live/bonus-printf/utils/printf
 
 .PHONY: all clean
 

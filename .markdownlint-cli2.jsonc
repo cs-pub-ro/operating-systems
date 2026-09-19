@@ -1,4 +1,4 @@
-// Markdown style for this repository, as written down in content-rules.md.
+// Markdown style for this repository, as written down in dev/content-rules.md.
 // Run it as `markdownlint-cli2 "**/*.md"`, and add `--fix` to repair what can
 // be repaired automatically.  Files to check are named on the command line, on
 // purpose: a `globs` key here would be added to whatever is named, so `--fix`
@@ -6,7 +6,7 @@
 {
   "ignores": [
     // Third-party README, imported as it is.
-    "02-os-interface-work/bonus-printf/utils/printf/README.md",
+    "content/labs/02-os-interface-live/bonus-printf/utils/printf/README.md",
     "_site/**",
     "node_modules/**",
     ".venv/**",
@@ -15,14 +15,14 @@
   "config": {
     "default": true,
 
-    // content-rules.md: `*` for unordered lists, `1.` for every ordered item,
+    // dev/content-rules.md: `*` for unordered lists, `1.` for every ordered item,
     // one space after the marker.
     "MD004": { "style": "asterisk" },
     "MD029": { "style": "one" },
     "MD030": { "ul_single": 1, "ol_single": 1, "ul_multi": 1, "ol_multi": 1 },
     "MD007": { "indent": 2 },
 
-    // content-rules.md: one sentence per line, however long the sentence is,
+    // dev/content-rules.md: one sentence per line, however long the sentence is,
     // so the limit is not a wrapping width -- it is a guard against a runaway
     // line, such as a whole paragraph written as one line.  Code blocks and
     // tables are as wide as the output they quote.

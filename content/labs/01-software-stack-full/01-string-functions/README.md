@@ -4,7 +4,7 @@
 
 ## Goal
 
-Reference solution and explanation for the string-functions exercise in [`01-string-functions`](../../01-software-stack-work/01-string-functions).
+Reference solution and explanation for the string-functions exercise in [`01-string-functions`](../../01-software-stack-live/01-string-functions).
 The point of the exercise is not the four functions themselves — they are a few lines each — but what the benchmark then shows about `strcat()`.
 
 Only `mystring.c` differs from the work directory.

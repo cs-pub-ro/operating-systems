@@ -13,7 +13,7 @@ Create a directory called 01-xor-encrypt/ with 4 files:
 - `input.txt`: a random strings file to be used as input
 - `README.md`: presents the aim of the exercise and instructions on how to build, run and test the implementation
 
-The structure and contents are replicated in the `../03-memory-ops-work/01-xor-encrypt/` directory.
+The structure and contents are replicated in the `../03-memory-ops-live/01-xor-encrypt/` directory.
 Differences are:
 - the `01-xor-encrypt/` directory contains missing items with comments where the students must add their implementation (marked clearly as TODO comments)
 - the `README.md` presents instructions on solving the exercise

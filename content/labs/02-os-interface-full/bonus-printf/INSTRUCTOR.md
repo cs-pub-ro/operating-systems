@@ -19,7 +19,7 @@ void _putchar(char character)
 ## Where the vendored library lives
 
 `printf/` (mpaland/printf, MIT licensed) is kept in **one** place — the work directory — rather than duplicated.
-The `Makefile` here points at `../../02-os-interface-work/bonus-printf/utils/printf`.
+The `Makefile` here points at `../../02-os-interface-live/bonus-printf/utils/printf`.
 The upstream `test/` directory was removed: it is a 517 kB C++ Catch harness that nothing in this session builds.
 
 If you re-vendor the library from upstream, keep `LICENSE`.

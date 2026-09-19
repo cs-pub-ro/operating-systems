@@ -1,20 +1,39 @@
 #!/usr/bin/env python3
-"""Generate the MkDocs pages for the Operating Systems sessions.
+"""Generate the MkDocs pages for the Operating Systems class.
 
 The plugin `mkdocs-gen-files` runs this script on every `mkdocs build` and on
 every reload of `mkdocs serve`.  Pages are written into the virtual docs tree,
 so nothing appears on disk and the repository stays as it is.
 
-The site mirrors the repository layout, in three levels:
+The site is two views of `content/`, not one tree.  A session is written in two
+halves -- `NN-<name>-live/`, used while the session runs, and `NN-<name>-full/`,
+written to be read afterwards -- and each half is published in the view it
+belongs to, so the two are never listed side by side:
 
-    index.md                                 front page, lists every session
-    learner.md                               the top-level LEARNER.md guide
-    01-software-stack-work/index.md          that session's README.md
-    01-software-stack-work/01-.../index.md   that task's README.md
+    index.md                                    front page
+    learner.md                                  the top-level LEARNER.md guide
+    live/index.md                               what the live view is
+    live/labs/index.md                          content/labs/README.md
+    live/labs/01-software-stack/index.md        content/labs/01-software-stack-live/
+    live/labs/01-software-stack/01-string-functions/index.md
+    live/lectures/01-software-stack/index.md    the plan of that lecture
+    full/labs/01-software-stack/index.md        content/labs/01-software-stack-full/
+    full/lectures/01-software-stack/index.md    the full lecture, with its own subpages
+    assignments/index.md                        a section with no halves
 
-READMEs are used exactly as they are stored in the repository: no front
-matter, no extra metadata files.  Everything the site needs is derived from
-the directory tree at build time.
+The view is the first path component, so the variant suffix a directory carries
+is not repeated in its URL.  `navigation.tabs` in `mkdocs.yml` is what makes a
+view a view: each is a tab of its own, and the sidebar of a page shows only the
+tab it is in.
+
+A lecture and a lab are the same thing to this script: a section holds sessions,
+and a session holds whatever tasks have been written for it.  A `-live` lecture
+that is only a one-page plan is simply a session with no tasks below it, and
+gains its subdirectories, rendered like a lab's, as soon as they are added.
+
+READMEs are used exactly as they are stored in the repository: no front matter,
+no extra metadata files.  Everything the site needs is derived from the
+directory tree at build time.
 """
 
 import re
@@ -29,20 +48,24 @@ from mkdocs.structure.files import InclusionLevel
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from sessions import (  # noqa: E402  (the path has to be set up first)
-    EXCLUDED_DIRS,
+    CONTENT_ROOT,
     REPO_ROOT,
-    SESSION_PATTERN,
-    find_sessions,
     read_title,
+    site_tree,
+    walk_tasks,
 )
 
 SITE_TITLE = "Operating Systems"
-SITE_TAGLINE = "Session materials for the Operating Systems class"
+SITE_TAGLINE = "Lecture and lab materials for the Operating Systems class"
 
-# The guide to the lab itself -- how a session is put together, and how to work
-# through one -- which belongs to no session.  It is published at the root of
-# the site, so that the links it makes to the session directories are the same
-# links the front page makes.
+# What the front page is called in the navigation.  The tab bar already carries
+# the name of the site, so the entry that leads back to it says `Home` instead.
+HOME_LABEL = "Home"
+
+# The guide to the class itself -- how a session is put together, and how to
+# work through one -- which belongs to no view. It is published at the root of
+# the site, so that the links it makes into `content/` are the same links the
+# front page makes.
 GUIDE_SOURCE = REPO_ROOT / "LEARNER.md"
 GUIDE_PAGE = "learner.md"
 
@@ -66,32 +89,71 @@ FENCE_PATTERN = re.compile(r"(^```[\s\S]*?^```[^\n]*$)", re.MULTILINE)
 # A URL scheme, a page anchor, or a site-absolute path: left alone.
 EXTERNAL_PATTERN = re.compile(r"^(?:[a-z][a-z0-9+.-]*:|#|/|<)", re.IGNORECASE)
 
+# A level-two heading, which is what tells a README that has been written from
+# one that is still only a title.  A section or a session whose README has no
+# such heading gets a generated list of what is below it appended, so that the
+# page is never a dead end; one that has been written is left alone, because
+# whoever wrote it listed its contents the way they wanted them listed.
+HEADING_PATTERN = re.compile(r"^##\s+\S", re.MULTILINE)
 
-def is_page(path):
-    """Whether a directory of the repository is published as a task page."""
-    if not path.is_dir() or not (path / "README.md").is_file():
-        return False
-    try:
-        relative = path.relative_to(REPO_ROOT)
-    except ValueError:
-        return False
-    parts = relative.parts
-    return bool(parts) and SESSION_PATTERN.match(parts[0]) and not (
-        set(parts) & EXCLUDED_DIRS
-    )
+# Where every published directory of `content/` ends up on the site, as
+# `{directory: {view: url}}`.  A session or a task belongs to exactly one view,
+# so it has one entry; a section README is published once per view it has
+# sessions in, so it has one per view.  Filled in by `locate_pages()`.
+PAGE_URLS = {}
 
 
-def rewrite_target(target, readme_dir, root_prefix=""):
+def locate_pages(views, plain_sections):
+    """Record the URL of every page, so that links can be pointed at them."""
+
+    def add(node, view):
+        PAGE_URLS.setdefault(node["path"].resolve(), {})[view] = node["url"]
+
+    for view in views:
+        for section in view["sections"]:
+            add(section, view["slug"])
+            for session in section["sessions"]:
+                add(session, view["slug"])
+                for task in walk_tasks(session["tasks"]):
+                    add(task, view["slug"])
+    for section in plain_sections:
+        add(section, None)
+        for session in section["sessions"]:
+            add(session, None)
+            for task in walk_tasks(session["tasks"]):
+                add(task, None)
+
+
+def page_url(path, view=None):
+    """The URL of the page a directory of `content/` is published as, or None.
+
+    A section is published in every view it has sessions in, so which of those
+    URLs is meant depends on where the link is being made: a link on a page of
+    the live view stays in the live view.  Anything else has a single URL, and
+    `view` makes no difference to it.
+    """
+    urls = PAGE_URLS.get(path.resolve())
+    if not urls:
+        return None
+    if view in urls:
+        return urls[view]
+    return next(iter(urls.values()))
+
+
+def rewrite_target(target, readme_dir, root_prefix="", view=None):
     """Point one Markdown link at the page, or the file, it means.
 
     Links between READMEs are written the way the directory tree looks, such as
-    `../demo-puts-write`.  On the site those directories are pages, generated as
-    `index.md`, so the link has to name the file MkDocs knows about.  Links to
-    anything else in the repository -- a `.c` file, a Makefile -- have no page,
-    and are sent to GitHub instead.
+    `../demo-puts-write`.  The site is not shaped like that tree -- a session
+    loses its variant suffix and gains the view it is in -- so a link to a page
+    is rewritten from the root of the site down: `root_prefix` is the way back
+    up to that root from the page being written, and the rest is the URL of the
+    target.  This is what lets a `-full` README keep pointing at its `-live`
+    half with a plain `../NN-<name>-live` even though the two now live in
+    different views.
 
-    `root_prefix` is the way back to the root of the site from the page being
-    written, for the one page that lives there rather than inside a session.
+    Links to anything else in the repository -- a `.c` file, a Makefile -- have
+    no page, and are sent to GitHub instead.
     """
     if EXTERNAL_PATTERN.match(target):
         return target
@@ -104,11 +166,11 @@ def rewrite_target(target, readme_dir, root_prefix=""):
     if REPO_ROOT not in resolved.parents:
         return target
 
-    if is_page(resolved):
-        return f"{path_part.rstrip('/')}/index.md{separator}{fragment}"
-
-    if resolved.name == "README.md" and is_page(resolved.parent):
-        return f"{path_part[: -len('README.md')]}index.md{separator}{fragment}"
+    url = page_url(resolved, view)
+    if url is None and resolved.name == "README.md":
+        url = page_url(resolved.parent, view)
+    if url is not None:
+        return f"{root_prefix}{url}/index.md{separator}{fragment}"
 
     if resolved == GUIDE_SOURCE:
         return f"{root_prefix}{GUIDE_PAGE}{separator}{fragment}"
@@ -118,8 +180,8 @@ def rewrite_target(target, readme_dir, root_prefix=""):
         return f"{REPO_BLOB_URL}/{relative}{separator}{fragment}"
 
     # A directory in the repository that is not a page -- excluded support code
-    # such as `bonus-printf/utils/printf` -- has nowhere on the site to point
-    # to, so it is sent to GitHub like a file is.
+    # such as `bonus-printf/utils/printf`, or `content/` itself -- has nowhere
+    # on the site to point to, so it is sent to GitHub like a file is.
     if resolved.is_dir():
         relative = resolved.relative_to(REPO_ROOT).as_posix()
         return f"{REPO_TREE_URL}/{relative}{separator}{fragment}"
@@ -127,12 +189,12 @@ def rewrite_target(target, readme_dir, root_prefix=""):
     return target
 
 
-def rewrite_links(text, readme_dir, root_prefix=""):
+def rewrite_links(text, readme_dir, root_prefix="", view=None):
     """Rewrite every Markdown link of a README, outside of code blocks."""
     parts = FENCE_PATTERN.split(text)
 
     def rewrite(match):
-        return rewrite_target(match.group(0), readme_dir, root_prefix)
+        return rewrite_target(match.group(0), readme_dir, root_prefix, view)
 
     return "".join(
         part if part.startswith("```") else LINK_PATTERN.sub(rewrite, part)
@@ -145,7 +207,38 @@ def write(path, text):
         page.write(text)
 
 
-def build_front_page(sessions):
+def root_prefix(url):
+    """The way back to the root of the site from the page at `url`."""
+    return "../" * len(Path(url).parts)
+
+
+def render(node, view=None, extra=""):
+    """A node's page: its README, with the links rewritten, plus `extra`.
+
+    A README without a heading of its own still needs one on the page, so the
+    title the node is known by is added when the file does not open with one.
+    """
+    prefix = root_prefix(node["url"])
+    if node["readme"] is None:
+        body = f"# {node['title']}\n"
+    else:
+        text = node["readme"].read_text(encoding="utf-8")
+        body = rewrite_links(text, node["readme"].parent, prefix, view)
+        if not re.search(r"^#\s+\S", text, re.MULTILINE):
+            body = f"# {node['title']}\n\n{body}"
+    if extra:
+        body = f"{body.rstrip()}\n\n{extra.strip()}\n"
+    write(f"{node['url']}/index.md", body)
+
+
+def is_written(node):
+    """Whether a README says more than its title, and so needs no generated list."""
+    if node["readme"] is None:
+        return False
+    return bool(HEADING_PATTERN.search(node["readme"].read_text(encoding="utf-8")))
+
+
+def build_front_page(views, plain_sections):
     # The lead of the repository README -- everything before its first `##`
     # section -- doubles as the introduction of the front page.
     intro = ""
@@ -156,55 +249,63 @@ def build_front_page(sessions):
         text = re.split(r"^##\s", text, maxsplit=1, flags=re.MULTILINE)[0]
         intro = rewrite_links(text.strip(), REPO_ROOT)
 
-    lines = [f"# {SITE_TITLE}", "", SITE_TAGLINE, "", intro, "", "## Sessions", ""]
-    for session in sessions:
-        lines.append(
-            f"* [{session['label']}]({session['slug']}/index.md)"
-        )
+    lines = [f"# {SITE_TITLE}", "", SITE_TAGLINE, "", intro, "", "## Contents", ""]
+    for view in views:
+        first = view["description"].splitlines()[0] if view["description"] else ""
+        lines.append(f"* [{view['title']}]({view['url']}/index.md) — {first}".rstrip(" —"))
+    for section in plain_sections:
+        lines.append(f"* [{section['title']}]({section['url']}/index.md)")
     write("index.md", "\n".join(lines) + "\n")
 
 
-def build_session_page(session):
-    # The session page is the session's own README: what the session is about,
-    # the learning outcomes, how to download the archive, the setup check, and
-    # the task table -- which is the on-page list of tasks.  A session without
-    # a README falls back to a bare, generated list of its tasks.
-    readme = session["path"] / "README.md"
-    if readme.is_file():
-        text = readme.read_text(encoding="utf-8")
-        body = rewrite_links(text, readme.parent)
-        if not re.search(r"^#\s+\S", text, re.MULTILINE):
-            body = f"# {session['label']}\n\n{body}"
-        write(f"{session['slug']}/index.md", body)
-        return
-
-    lines = [
-        f"# `{session['name']}`",
-        "",
-        session["label"],
-        "",
-        "## Tasks",
-        "",
-    ]
-    for task in session["tasks"]:
-        lines.append(f"* [`{task['slug']}`]({task['slug']}/index.md) — {task['title']}")
-    write(f"{session['slug']}/index.md", "\n".join(lines) + "\n")
+def build_view_page(view):
+    """The page a view opens on: what it holds, and the sections in it."""
+    lines = [f"# {view['title']}", ""]
+    if view["description"]:
+        lines += [view["description"], ""]
+    lines += ["## Contents", ""]
+    for section in view["sections"]:
+        lines.append(f"* [{section['title']}]({section['path'].name}/index.md)")
+    write(f"{view['url']}/index.md", "\n".join(lines) + "\n")
 
 
-def build_task_page(session, task):
-    text = task["readme"].read_text(encoding="utf-8")
-    # The page sits one directory below the session, plus one per level of a
-    # nested task such as `demo-copy-file/malloc`.
-    depth = task["slug"].count("/") + 2
-    body = rewrite_links(text, task["readme"].parent, "../" * depth)
-    # A README without a heading of its own still needs one on the page.
-    if not re.search(r"^#\s+\S", text, re.MULTILINE):
-        body = f"# {task['title']}\n\n{body}"
-    write(f"{session['slug']}/{task['slug']}/index.md", body)
+def build_section_page(section, view=None):
+    """A section's page: its README, and a list of the sessions in this view.
+
+    The list is generated only for a README that is still just a title, so that
+    a section whose page has been written keeps the contents list its author
+    gave it.  Only the sessions of the view being built are listed: the live
+    view never mentions a full session, and the other way round.
+    """
+    extra = ""
+    if not is_written(section) and section["sessions"]:
+        lines = ["## Sessions", ""]
+        for session in section["sessions"]:
+            name = Path(session["url"]).name
+            lines.append(f"* [{session['heading']}]({name}/index.md)")
+        extra = "\n".join(lines)
+    render(section, view, extra)
+
+
+def build_session_page(session, view=None):
+    """A session's page: its README, and a list of its tasks.
+
+    A lab session README carries its own task table, so nothing is added to it.
+    A session whose README is still only a title -- a lecture that has just been
+    given its subdirectories, say -- gets the list generated instead.
+    """
+    extra = ""
+    if not is_written(session) and session["tasks"]:
+        lines = ["## Tasks", ""]
+        for task in walk_tasks(session["tasks"]):
+            relative = Path(task["url"]).relative_to(session["url"]).as_posix()
+            lines.append(f"* [`{relative}`]({relative}/index.md) — {task['title']}")
+        extra = "\n".join(lines)
+    render(session, view, extra)
 
 
 def build_guide():
-    """Publish the guide to the lab, and return its title for the navigation."""
+    """Publish the guide to the class, and return its title for the navigation."""
     if not GUIDE_SOURCE.is_file():
         return None
     text = GUIDE_SOURCE.read_text(encoding="utf-8")
@@ -212,21 +313,40 @@ def build_guide():
     return read_title(GUIDE_SOURCE, "How the Lab Works")
 
 
-def build_nav(sessions, guide_title=None):
+def nav_tasks(tasks, indent):
+    lines = []
+    for task in tasks:
+        lines.append(f"{indent}* [{task['title']}]({task['url']}/index.md)")
+        lines.extend(nav_tasks(task["tasks"], indent + "    "))
+    return lines
+
+
+def nav_sections(sections, indent):
+    lines = []
+    for section in sections:
+        lines.append(f"{indent}* [{section['title']}]({section['url']}/index.md)")
+        for session in section["sessions"]:
+            lines.append(
+                f"{indent}    * [{session['heading']}]({session['url']}/index.md)"
+            )
+            lines.extend(nav_tasks(session["tasks"], f"{indent}        "))
+    return lines
+
+
+def build_nav(views, plain_sections, guide_title=None):
     """The navigation tree, read back by the mkdocs-literate-nav plugin.
 
-    A session is listed under the title of its README, led by its index --
-    `01: The Software Stack` -- and not under the directory it lives in.
+    Each view is a top-level entry, which `navigation.tabs` turns into a tab of
+    its own: the sidebar of a page inside a view therefore shows that view and
+    nothing else, which is the point of splitting the site in two.
     """
-    lines = [f"* [{SITE_TITLE}](index.md)"]
+    lines = [f"* [{HOME_LABEL}](index.md)"]
     if guide_title:
         lines.append(f"* [{guide_title}]({GUIDE_PAGE})")
-    for session in sessions:
-        lines.append(f"* [{session['heading']}]({session['slug']}/index.md)")
-        for task in session["tasks"]:
-            lines.append(
-                f"    * [{task['slug']}]({session['slug']}/{task['slug']}/index.md)"
-            )
+    for view in views:
+        lines.append(f"* [{view['title']}]({view['url']}/index.md)")
+        lines.extend(nav_sections(view["sections"], "    "))
+    lines.extend(nav_sections(plain_sections, ""))
     write(NAV_FILE, "\n".join(lines) + "\n")
 
     # The navigation is read from this file, it is not a page of the site.
@@ -235,17 +355,29 @@ def build_nav(sessions, guide_title=None):
 
 
 def main():
-    sessions = find_sessions()
-    if not sessions:
-        raise SystemExit("no session directories found")
+    views, plain_sections = site_tree()
+    if not views and not plain_sections:
+        raise SystemExit(f"no content sections found under {CONTENT_ROOT}")
 
-    build_front_page(sessions)
+    locate_pages(views, plain_sections)
+
+    build_front_page(views, plain_sections)
     guide_title = build_guide()
-    for session in sessions:
-        build_session_page(session)
-        for task in session["tasks"]:
-            build_task_page(session, task)
-    build_nav(sessions, guide_title)
+    for view in views:
+        build_view_page(view)
+        for section in view["sections"]:
+            build_section_page(section, view["slug"])
+            for session in section["sessions"]:
+                build_session_page(session, view["slug"])
+                for task in walk_tasks(session["tasks"]):
+                    render(task, view["slug"])
+    for section in plain_sections:
+        build_section_page(section)
+        for session in section["sessions"]:
+            build_session_page(session)
+            for task in walk_tasks(session["tasks"]):
+                render(task)
+    build_nav(views, plain_sections, guide_title)
 
 
 main()

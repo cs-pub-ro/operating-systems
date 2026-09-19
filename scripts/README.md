@@ -5,47 +5,111 @@ Two things are generated from the repository tree, and both live here:
 * `gen_pages.py` builds the [website](#website)
 * `gen_zip.py` builds the [lab archives](#lab-archives) handed to students
 
-Both ask `sessions.py` what a session is and what an exercise is, so the site and the archives can never disagree about it.
+Both ask `sessions.py` what a section, a session and an exercise are, so the site and the archives can never disagree about it.
 
 A third script, `check-prerequisites.sh`, generates nothing: it checks that the [tools a session needs](#prerequisites-check) are installed.
+
+## The content tree
+
+Everything published lives under `content/`, and the tree there is the whole specification:
+
+```text
+content/
+├── lectures/
+│   ├── 01-software-stack-live/      the plan of the lecture, as one page
+│   └── 01-software-stack-full/      the full lecture, with a directory per part
+├── labs/
+│   ├── 01-software-stack-live/      what students work on during the lab
+│   │   ├── demo-printf-vs-write/
+│   │   └── 01-string-functions/
+│   └── 01-software-stack-full/      the reference solutions and tutorials
+├── assignments/
+└── extra/
+```
+
+* A **section** is a directory directly below `content/`: `lectures`, `labs`, `assignments`, `extra`.
+  Each becomes a path of the website, and a new one appears simply by creating the directory and writing its `README.md`.
+  `SECTION_ORDER` in `sessions.py` says which order they are shown in; a section not named there comes after those, by name.
+* A **session** is a directory directly below a section, and comes in two halves: `NN-<name>-live/` and `NN-<name>-full/`.
+  `-live` is what is used while the session runs — for a lab the skeletons and task descriptions, for a lecture the one-page plan of what it covers.
+  `-full` is the version written to be read afterwards.
+  The halves are published in separate [views](#views), so which one a page belongs to is decided by this suffix.
+  A directory below a section with neither suffix, such as one under `assignments/`, is a session of its own with no halves, and belongs to neither view.
+* An **exercise** is any directory below a session that contains a `README.md`, nested ones included.
+  A lecture's `-full` half holds exercises exactly the way a lab's does, and is rendered exactly the same way; a `-live` lecture that is only a one-pager is simply a session with nothing below it, and gains its subdirectories as soon as they are written.
 
 ## Website
 
 The repository is published as a static website through GitHub Pages.
 The site is built with [MkDocs](https://www.mkdocs.org/) and the [Material](https://squidfunk.github.io/mkdocs-material/) theme, and deployed by the `.github/workflows/pages.yml` workflow on every push to `master`.
 
+### Views
+
+The site is not one tree but two.
+A session is written in two halves, and each half is published in a view of its own, so the two are never listed side by side: the live view lists only live material, and the full view only full material.
+The view is the first part of the URL, which is why the variant suffix a directory carries is not repeated in it.
+
+| Directory | Page |
+| --- | --- |
+| `content/labs/01-software-stack-live/` | `/live/labs/01-software-stack/` |
+| `content/labs/01-software-stack-live/01-string-functions/` | `/live/labs/01-software-stack/01-string-functions/` |
+| `content/labs/01-software-stack-full/` | `/full/labs/01-software-stack/` |
+| `content/lectures/03-memory-live/` | `/live/lectures/03-memory/` |
+| `content/lectures/03-memory-full/` | `/full/lectures/03-memory/` |
+| `content/assignments/` | `/assignments/` |
+
+`navigation.tabs` in `mkdocs.yml` is what makes a view a view: each is a top-level entry of the navigation, so each becomes a tab, and the sidebar of a page shows only the tab it is in.
+The tab bar is the one place both views appear, because it is how you switch between them.
+
+A section with no halves — `assignments/`, `extra/` — is part of neither view and stays at the top level, as its own tab.
+A view appears only once something is written for it, so a repository with no `-full/` session anywhere would have no full view rather than an empty one.
+`site_tree()` in `sessions.py` is what does the splitting.
+
+A README may still link across the views on purpose: each `-full/` session README points at its `-live/` half in prose, and that link is rewritten to the other view.
+What the split governs is the navigation and the generated contents lists, not a deliberate cross-reference.
+
 ### Structure
 
-The site mirrors the repository layout, in three levels:
+```text
+/                                        the front page, from the repository README
+/learner/                                the guide for students, from LEARNER.md
+/live/                                   what the live view holds
+/live/labs/                              content/labs/README.md
+/live/labs/01-software-stack/            content/labs/01-software-stack-live/README.md
+/live/labs/01-software-stack/01-string-functions/
+/live/lectures/01-software-stack/        the plan of that lecture
+/full/labs/01-software-stack/            content/labs/01-software-stack-full/README.md
+/full/lectures/01-software-stack/        the full lecture, with its own subpages
+/assignments/                            a section with no halves
+```
 
-1. the front page lists every session, such as `01-software-stack`
-1. a session page renders that session's `README.md`: what the session is about, the learning outcomes, how to get the archive, the setup check, and the exercise table that lists its exercises
-1. an exercise page renders that exercise's `README.md`
+A section `README.md` is published once per view it has sessions in, so `content/labs/README.md` is the page behind both `/live/labs/` and `/full/labs/`; the list of sessions generated below it differs, because it names only the sessions of that view.
 
 ### Contents
 
 There are no pages stored in this repository.
-`gen_pages.py` discovers everything at build time, by walking the directory tree, and hands the pages to MkDocs through the `mkdocs-gen-files` plugin.
+`gen_pages.py` discovers everything at build time, by walking `content/`, and hands the pages to MkDocs through the `mkdocs-gen-files` plugin.
 The navigation sidebar is generated the same way, as a `SUMMARY.md` read back by the `mkdocs-literate-nav` plugin.
 
-* A session is a top-level `NN-<name>-work/` directory: the student-facing side of the lab.
-  Its `NN-<name>-full-contents/` sibling holds the reference material — solutions, and for session 05 the challenge flags and exploits — and is deliberately not a session, so it is never published on the site and never packed into an archive. This is the successor to the old `solutions/` convention. The rule is `SESSION_PATTERN` in `sessions.py` (the legacy `session-NN-*` form is still recognised).
-* An exercise is any directory below a session that contains a `README.md` file.
-  Nested exercises, such as `demo-copy-file/malloc`, are listed with their path relative to the session.
-* Directories named `solutions` are skipped, together with `.git`, `.github`, `docs`, `scripts` and `site`.
+* Directories named `solutions` are skipped, together with `.git`, `.github`, `docs`, `scripts` and `site`, and so is anything whose name starts with a dot.
   The list is the `EXCLUDED_DIRS` set in `sessions.py`.
-* The title shown next to an exercise is the first level-one heading of its `README.md`.
+  `utils` is on it as well: support code vendored inside an exercise, such as the `bonus-printf/utils/printf/` tree, is packed with its exercise but is not an exercise itself, so it gets no page and no navigation entry.
+* The title shown for a page is the first level-one heading of its `README.md`.
   If the file has no heading, the directory name is used instead, and the heading is added to the page.
-* A session is shown under its index and the title of its `README.md`, not under its directory name: `01-software-stack-work/`, whose README opens with `# Session 01: The Software Stack`, is listed as `01-software-stack`.
-  The index keeps the sessions in the order they are taken in, and the `-work` suffix is plumbing students never need to see.
-  A session without a README, or with one that has no heading, falls back to its directory name.
-  The rule is `session_name()` in `sessions.py`; the URL of a page is still the directory name.
+* A session is listed under its index and the title of its `README.md`, not under its directory name: `01-software-stack-live/`, whose README opens with `# Session 01: The Software Stack`, is listed as `01: The Software Stack`.
+  The index keeps the sessions in the order they are taken in.
+  A trailing `— Full Contents` in a README title is dropped, because the view a page is in already says which half it is.
+  The rules are `session_heading()` and `session_title()` in `sessions.py`.
+* A section or session `README.md` that is still only a title — no level-two heading anywhere in it — gets a generated list of what is below it appended, so the page is never a dead end.
+  One that has been written is left exactly as it is, because whoever wrote it listed its contents the way they wanted them listed; this is why the lab session pages show their own exercise table rather than a generated list.
 * Links between READMEs, such as `../demo-puts-write`, are rewritten to point at the generated pages.
+  The site is not shaped like the directory tree, so this is done by looking the target up in the map of published pages rather than by keeping the link as written; a link that crosses into the other view is rewritten to that view.
   Links to files that have no page of their own, such as `copy_file.c`, are sent to the file on GitHub.
 
-Adding a new session or a new exercise requires no change to these scripts: create the directory, write its `README.md` and push.
+Adding a section, a session or an exercise requires no change to these scripts: create the directory, write its `README.md` and push.
+Which view it lands in follows from the `-live` / `-full` suffix of the session it is under.
 The `README.md` files need no front matter and no other metadata.
-A new exercise appears in the navigation sidebar automatically; to list it on the session page as well, add a row to that session's exercise table, which is the on-page list of exercises.
+A new exercise appears in the navigation sidebar automatically; to list it on a written session page as well, add a row to that session's exercise table.
 
 The `docs/` directory only exists because MkDocs insists on one; every page is generated.
 
@@ -54,7 +118,7 @@ The `docs/` directory only exists because MkDocs insists on one; every page is g
 Install the dependencies, then build the site into `_site/`:
 
 ```console
-pip install -r requirements.txt
+pip install -r dev/requirements.txt
 mkdocs build
 ```
 
@@ -63,6 +127,8 @@ Better, while writing: serve the site at <http://localhost:8000> and rebuild on 
 ```console
 mkdocs serve
 ```
+
+Add `--strict` to `mkdocs build` to turn warnings, such as a link that points nowhere, into a failed build.
 
 ### Enabling GitHub Pages
 
@@ -92,14 +158,15 @@ When a session's prerequisites change, the list to update is the `check_session_
 
 ## Lab archives
 
-Every session's `-work/` directory is packed into one zip archive of its exercises, published on the `lab-archives` branch, which holds nothing else.
-The archives are what students download, so they contain the exercises and nothing more: the `NN-<name>-full-contents/` reference material — solutions, and the session 05 flags and exploits — is never packed.
+Every lab session's `-live/` half is packed into one zip archive of its exercises, published on the `lab-archives` branch, which holds nothing else.
+The archives are what students download, so they contain the exercises and nothing more: the `NN-<name>-full/` reference material — solutions, and the session 05 flags and exploits — is never packed, and neither is anything outside `content/labs/`.
+`ARCHIVE_SECTION` and `ARCHIVE_VARIANT` in `sessions.py` are what say so.
 
-The `.github/workflows/lab-archive.yml` workflow rebuilds and republishes them on every push to `master` that touches a session, and can also be run by hand from the *Actions* tab.
+The `.github/workflows/lab-archive.yml` workflow rebuilds and republishes them on every push to `master` that touches a lab session, and can also be run by hand from the *Actions* tab.
 
 ### Contents
 
-An archive is named after the session with the `-work` suffix stripped, and unpacks into a single directory of that name:
+An archive is named after the session with the `-live` suffix stripped, and unpacks into a single directory of that name:
 
 ```text
 03-memory-ops.zip
@@ -109,13 +176,13 @@ An archive is named after the session with the `-work` suffix stripped, and unpa
     └── demo-copy-file/{global-buffer,malloc,mmap}/
 ```
 
-* An exercise is the same thing the website calls an exercise, decided by `sessions.py`: any directory below a session's `-work/` tree that has a `README.md`.
-  Support code vendored inside an exercise, such as the `bonus-printf/utils/printf/` tree, is packed with its exercise but is not itself an exercise, so it gets no page and no navigation entry (`utils` is in `EXCLUDED_DIRS`).
+* An exercise is the same thing the website calls an exercise, decided by `sessions.py`: any directory below a session's `-live/` tree that has a `README.md`.
+  Support code vendored inside an exercise, such as the `bonus-printf/utils/printf/` tree, is packed with its exercise even though it gets no page.
 * Only files tracked by git are packed, so an object file or a compiled binary left in the working tree is never shipped by accident.
   The archives are the same whether they are built from a clean checkout or from the tree you have been working in.
 * Files named `prompt.txt`, the notes the exercises were written from, are left out; several of them describe the solution.
   The list is the `EXCLUDED_FILES` tuple in `gen_zip.py`.
-* As a last line of defence, packing aborts outright if any file from a `-full-contents/` tree ever reaches an archive; `gen_zip.py`'s `is_reference()` is the guard.
+* As a last line of defence, packing aborts outright if any file from a `-full/` tree, or from a directory named `solutions`, ever reaches an archive; `is_reference()` in `sessions.py` is the guard, and `gen_zip.py` calls it on every file it is about to write.
 * Archives are byte-for-byte reproducible: entries are sorted and timestamps are fixed.
   Editing one exercise therefore changes that one archive, and the workflow commits nothing at all when no content has changed.
 

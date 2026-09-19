@@ -3,7 +3,7 @@
 This directory holds the complete version of session 04: reference solutions, full explanations, and the reference output of every command the exercises ask for.
 
 Use it after the live session for a full view of the solutions and the reasoning behind them.
-The corresponding directory used during the session, with the buggy programs and the task descriptions, is [`04-memory-debugging-work/`](../04-memory-debugging-work).
+The corresponding directory used during the session, with the buggy programs and the task descriptions, is [`04-memory-debugging-live/`](../04-memory-debugging-live).
 
 ## Learning objectives
 

@@ -3,13 +3,13 @@
 This directory holds the complete version of session 05: reference write-ups, the bug and exploit for every challenge, and the full build/publish/deploy/solve infrastructure used to host each one.
 
 Use it after the live session for a full view of the solutions and the reasoning behind them.
-The corresponding directory used during the session, with the public challenge files, is [`05-memory-security-work/`](../05-memory-security-work).
+The corresponding directory used during the session, with the public challenge files, is [`05-memory-security-live/`](../05-memory-security-live).
 
 > [!WARNING]
 > This directory contains the **flags** (`*/flag`) and the **reference exploits** (`*/solve/exploit.py`).
 > It must never be handed to students.
-> The lab-archive tool (`scripts/gen_zip.py`) only excludes directories literally named `solutions`, and only packs directories matching `session-*`; a `*-full-contents/` directory matches neither rule.
-> Before session 05 is ever published as a student archive, `scripts/sessions.py` has to be taught to pack from `*-work/` and to skip `*-full-contents/`.
+> The lab-archive tool (`scripts/gen_zip.py`) packs the `*-live/` half of a lab session and nothing else, and aborts outright if a file from a `*-full/` tree ever reaches an archive.
+> Check any archive with `unzip -l` before it leaves your machine all the same.
 > See the session `INSTRUCTOR.md` for details.
 
 ## Learning objectives

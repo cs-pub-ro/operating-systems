@@ -5,12 +5,10 @@ on:
     branches:
       - master
     paths:
-      # Any change to a session, and any change to how archives are built.
-      # A session is a `NN-<name>-work/` directory; its `-full-contents/`
-      # sibling never ships, so changes there do not trigger a rebuild. The
-      # legacy `session-*` form is kept in case such a directory reappears.
-      - '*-work/**'
-      - 'session-*/**'
+      # Any change to a lab session, and any change to how archives are built.
+      # What is packed is `content/labs/NN-<name>-live/`; its `-full/` sibling
+      # never ships, so changes there do not trigger a rebuild.
+      - 'content/labs/*-live/**'
       - 'scripts/gen_zip.py'
       - 'scripts/sessions.py'
       - '.github/workflows/lab-archive.yml'

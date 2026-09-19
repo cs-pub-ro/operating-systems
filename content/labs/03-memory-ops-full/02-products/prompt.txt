@@ -16,7 +16,7 @@ Create a directory called 02-products/ with 4 files:
 - `products.txt`: the list of 32 products, 64 lines
 - `README.md`: presents the aim of the exercise and instructions on how to build, run and test the implementation
 
-The structure and contents are replicated in the `../03-memory-ops-work/02-products/` directory.
+The structure and contents are replicated in the `../03-memory-ops-live/02-products/` directory.
 Differences are:
 - the `02-products/` directory contains missing items with comments where the students must add their implementation (marked clearly as TODO comments)
 - the `README.md` presents instructions on solving the exercise

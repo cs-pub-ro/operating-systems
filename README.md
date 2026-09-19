@@ -1,24 +1,36 @@
 # Operating Systems
 
 Temporary repository to store contents for the Operating Systems class.
-Each session has its own directory, comprising items both for lectures and for labs.
+Everything lives under `content/`, one directory per part of the class: `lectures/`, `labs/`, `assignments/` and `extra/`.
+Every session is written in two halves — `NN-<name>-live/`, used while the session runs, and `NN-<name>-full/`, written to be read afterwards — and the website publishes them as two separate views, so the two are never listed side by side.
 
 [`LEARNER.md`](LEARNER.md) is the guide for students: how a session is put together, how to work through a task, and what is expected of them.
 
 ## Website
 
-The contents of this repository are published as a website, built with MkDocs from the `README.md` files stored here.
+The contents of this repository are published as a website, built with MkDocs from the `README.md` files under `content/`.
+The site is two views of that tree, one per half of a session, and the view is the first part of the URL:
+
+| Directory | Page |
+| --- | --- |
+| `content/labs/01-software-stack-live/` | `/live/labs/01-software-stack/` |
+| `content/labs/01-software-stack-full/` | `/full/labs/01-software-stack/` |
+| `content/lectures/03-memory-live/` | `/live/lectures/03-memory/` |
+| `content/assignments/` | `/assignments/` |
+
+Each view is a tab of its own, so a page in the live view lists only live material, and a page in the full view only full material.
+A section with no halves, such as `assignments/`, belongs to neither view and stays at the top level.
 The generator lives in the `scripts/` directory, see [`scripts/README.md`](scripts/README.md) for details.
 
 ### Building the website locally
 
-The site needs Python 3 and the packages listed in [`requirements.txt`](requirements.txt).
+The site needs Python 3 and the packages listed in [`dev/requirements.txt`](dev/requirements.txt).
 Install them into a virtual environment, so nothing lands in the system Python:
 
 ```console
 python3 -m venv .venv
 source .venv/bin/activate
-pip install -r requirements.txt
+pip install -r dev/requirements.txt
 ```
 
 On Debian and Ubuntu, `python3 -m venv` needs the `python3-venv` package.
@@ -30,7 +42,7 @@ mkdocs serve
 ```
 
 Every page is generated from the `README.md` files at build time, so editing one and saving it rebuilds the page and reloads the browser.
-Adding a session or a task means creating the directory and writing its `README.md`; nothing has to be registered anywhere.
+Adding a section, a session or a task means creating the directory under `content/` and writing its `README.md`; nothing has to be registered anywhere.
 
 To build the site instead of serving it, into the git-ignored `_site/` directory:
 
@@ -56,15 +68,15 @@ See the *Prerequisites check* section of [`scripts/README.md`](scripts/README.md
 
 ## Lab archives
 
-Each session is packed into a zip archive of its exercises, without the reference solutions, and published on the `lab-archives` branch.
-The `.github/workflows/lab-archive.yml` workflow rebuilds them on every push to `master` that touches a session.
+Each lab session's `-live/` half is packed into a zip archive of its exercises, without the reference solutions, and published on the `lab-archives` branch.
+The `.github/workflows/lab-archive.yml` workflow rebuilds them on every push to `master` that touches a lab session.
 Build them locally with `python3 scripts/gen_zip.py`; see [`scripts/README.md`](scripts/README.md) for what goes in and how to create the branch the first time.
 
 ## Linting
 
 The `.github/workflows/lint.yml` workflow checks style on every push and every pull request.
 
-* Markdown is checked with [markdownlint](https://github.com/DavidAnson/markdownlint-cli2), configured in `.markdownlint-cli2.jsonc` to follow [`content-rules.md`](content-rules.md).
+* Markdown is checked with [markdownlint](https://github.com/DavidAnson/markdownlint-cli2), configured in `.markdownlint-cli2.jsonc` to follow [`dev/content-rules.md`](dev/content-rules.md).
 * Shell scripts are checked with [ShellCheck](https://www.shellcheck.net/).
 * C sources are checked with the Linux kernel's `checkpatch.pl`.
   Only the lines a push or a pull request changes have to be clean.

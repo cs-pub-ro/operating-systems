@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
-"""Pack the tasks of every session into one archive per session.
+"""Pack the tasks of every lab session into one archive per session.
 
 These are the archives handed to students, so they hold the tasks and nothing
-else.  A session is a `NN-<name>-work/` directory (see `sessions.py`, the same
-rule the website uses, so the two can never disagree); its `NN-<name>-full-contents/`
-sibling -- the reference solutions, and for session 05 the challenge flags and
-exploits -- is never a session and so is never packed.  The archive is named
-after the session with the `-work` suffix stripped, so students unzip a clean
-`NN-<name>/` directory.  As a last line of defence, packing aborts outright if
-any file from a `-full-contents/` tree ever reaches an archive.
+else.  What is packed is `content/labs/NN-<name>-live/`, the half of a lab
+session students work on during it (see `sessions.py`, the same rule the
+website uses, so the two can never disagree).  Its `NN-<name>-full/` sibling --
+the reference solutions, and for session 05 the challenge flags and exploits --
+is never packed, and neither is anything outside `content/labs/`.  The archive
+is named after the session with the `-live` suffix stripped, so students unzip
+a clean `NN-<name>/` directory.  As a last line of defence, packing aborts
+outright if any file from a `-full/` tree ever reaches an archive.
 
 Only files tracked by git are packed.  A build artefact left in the working
 tree -- an object file, a compiled binary, a core dump -- is therefore never
@@ -33,7 +34,13 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from sessions import REPO_ROOT, find_sessions  # noqa: E402
+from sessions import (  # noqa: E402
+    ARCHIVE_VARIANT,
+    REPO_ROOT,
+    archive_sessions,
+    is_reference,
+    walk_tasks,
+)
 
 DEFAULT_OUTPUT = REPO_ROOT / "archives"
 
@@ -64,17 +71,6 @@ def is_internal(path):
     return any(path.match(pattern) for pattern in EXCLUDED_FILES)
 
 
-def is_reference(path):
-    """Whether a file belongs to a `-full-contents/` reference tree.
-
-    Such files -- reference solutions, and the session 05 flags and exploits --
-    must never appear in a student archive.  This is a safety net, not the main
-    filter: `find_sessions()` only ever yields `-work` directories, so a
-    reference file reaching here means a discovery bug, which we refuse to ship.
-    """
-    return any(part.endswith("-full-contents") for part in path.parts)
-
-
 def files_of_task(task, tracked, repo_root):
     """The tracked files of one task directory, in a stable order."""
     prefix = task["path"].relative_to(repo_root)
@@ -97,20 +93,19 @@ def add_file(archive, source, arcname):
 
 
 def archive_name(session):
-    """The student-facing name of a session's archive, without `-work`.
+    """The student-facing name of a session's archive, without `-live`.
 
     Students download `NN-<name>.zip` and unzip a clean `NN-<name>/` directory;
-    the `-work` suffix is internal plumbing they never need to see.
+    the `-live` suffix is internal plumbing they never need to see.
     """
-    slug = session["slug"]
-    return slug[: -len("-work")] if slug.endswith("-work") else slug
+    return session["directory"]
 
 
 def build_archive(session, tracked, output_dir, repo_root):
     """Write one session's archive, and return its path and file count.
 
     Everything is packed under a single top-level directory named after the
-    session (minus `-work`), so that unpacking an archive creates one directory
+    session (minus `-live`), so that unpacking an archive creates one directory
     instead of scattering task directories into the current one.
     """
     name = archive_name(session)
@@ -119,12 +114,13 @@ def build_archive(session, tracked, output_dir, repo_root):
     # support code inside the `bonus-printf` task rather than a task of its own,
     # so it is packed with `bonus-printf` even though it gets no page.
     entries = {}
-    for task in session["tasks"]:
+    session_prefix = session["path"].relative_to(repo_root)
+    for task in walk_tasks(session["tasks"]):
         for path in files_of_task(task, tracked, repo_root):
             # Never, under any circumstances, ship reference material.
             if is_reference(path):
                 sys.exit(f"refusing to pack reference file into an archive: {path}")
-            arcname = f"{name}/{path.relative_to(session['slug'])}"
+            arcname = f"{name}/{path.relative_to(session_prefix)}"
             entries[arcname] = repo_root / path
 
     if not entries:
@@ -162,9 +158,9 @@ def main():
         stale.unlink()
 
     tracked = tracked_files(REPO_ROOT)
-    sessions = find_sessions()
+    sessions = archive_sessions()
     if not sessions:
-        sys.exit("no session directories found")
+        sys.exit(f"no `-{ARCHIVE_VARIANT}` lab session directories found")
 
     built = 0
     for session in sessions:
@@ -175,7 +171,8 @@ def main():
             continue
         built += 1
         if not args.quiet:
-            print(f"{target.name}: {count} files from {len(session['tasks'])} tasks")
+            tasks = len(list(walk_tasks(session["tasks"])))
+            print(f"{target.name}: {count} files from {tasks} tasks")
 
     if not built:
         sys.exit("no archives were built")

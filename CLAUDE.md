@@ -11,12 +11,22 @@ There is no application to build — the deliverables are exercise directories (
 AI use is discouraged *for students during the lab*; the point is that they write and build the programs by hand.
 Content written here has to leave them something to do.
 
-## Session layout
+## Content layout
 
-Each session lives in two sibling top-level directories:
+Everything published lives under `content/`, one directory per part of the class:
 
-* `NN-<session-name>-work/` — what students get during the live session: skeletons with `TODO` markers, task descriptions, hints. Never a complete solution.
-* `NN-<session-name>-full-contents/` — reference solutions, full explanations, reference command output, and the `prompt.txt` notes the exercises were generated from. Used by students after the session and by assistants before it.
+* `content/lectures/` — the lectures.
+* `content/labs/` — the labs.
+* `content/assignments/` — the assignments.
+* `content/extra/` — additional material.
+
+Inside a section, each session lives in two sibling directories:
+
+* `NN-<session-name>-live/` — what is used while the session runs. For a lab: skeletons with `TODO` markers, task descriptions, hints; never a complete solution. For a lecture: a one-pager with the plan of the lecture and the points to capture.
+* `NN-<session-name>-full/` — reference solutions, full explanations, reference command output, and the `prompt.txt` notes the exercises were generated from. Used by students after the session and by assistants before it. A lecture's `-full/` half holds subdirectories exactly the way a lab's does, and the site renders them the same way.
+
+The website publishes the two halves as two separate views, and the view is the first part of the URL, so `content/labs/01-software-stack-live/` is served at `/live/labs/01-software-stack/` and its `-full/` sibling at `/full/labs/01-software-stack/`.
+A section with no halves stays at the top level: `content/assignments/` is `/assignments/`.
 
 Inside a session, the directory-name prefix is the task type, and it is load-bearing (the site and the archives key off it, and so do the README conventions below):
 
@@ -29,7 +39,7 @@ Per-exercise `.gitignore` lists only the binaries that task builds — object fi
 
 Per task, up to four Markdown files, with a strict division of labour:
 
-| File | `-work/` | `-full-contents/` |
+| File | `-live/` | `-full/` |
 | --- | --- | --- |
 | `README.md` | the task | the tutorial |
 | `FURTHER.md` | optional extensions, questions, discussion points | same, with answers |
@@ -40,7 +50,7 @@ Per task, up to four Markdown files, with a strict division of labour:
 
 Session-level `README.md` (both directories): learning objectives, prerequisites and required tools, and a task-order table (order, task, type, objective).
 
-Exercise `README.md` in `-work/`:
+Exercise `README.md` in `-live/`:
 
 ```text
 # <Exercise|Bonus>: <Title>
@@ -54,23 +64,23 @@ Exercise `README.md` in `-work/`:
 ## Check Your Work
 ```
 
-Demo `README.md` in `-work/` is deliberately minimal: a short paragraph on the aim, and a note that the work is done together with the teaching assistant on the files in the directory.
+Demo `README.md` in `-live/` is deliberately minimal: a short paragraph on the aim, and a note that the work is done together with the teaching assistant on the files in the directory.
 
-Exercise `README.md` in `-full-contents/` is a tutorial: Goal, Background, Build & Run, Results and Explanations, Going Further, References.
+Exercise `README.md` in `-full/` is a tutorial: Goal, Background, Build & Run, Results and Explanations, Going Further, References.
 Sections may be dropped where they do not apply.
 
 Rules that are easy to violate, all of them deliberate:
 
-* Keep a `-work/` exercise README under ~80 lines. Reading time is time not spent working. Go over only when it earns it.
+* Keep a `-live/` exercise README under ~80 lines. Reading time is time not spent working. Go over only when it earns it.
 * **No expected output** in *Check Your Work*. Describe what the output should look like and what to reason about, so students interpret it and take it to the teaching assistant instead of pattern-matching.
-* **No *Going Further* section** in a `-work/` README — that content belongs in `FURTHER.md`.
-* **Do not link to `FURTHER.md`** from a `-work/` README either; students should not feel obliged to open it.
+* **No *Going Further* section** in a `-live/` README — that content belongs in `FURTHER.md`.
+* **Do not link to `FURTHER.md`** from a `-live/` README either; students should not feel obliged to open it.
 * **No time budgets** anywhere in student-facing files, and no "After the session" section. Groups and assistants move at different paces. Time estimates and pacing advice go in `INSTRUCTOR.md`.
 * Anything addressed to the teaching assistant — pacing, which demo to pick, what students get wrong — goes in `INSTRUCTOR.md`, not in a `README.md`.
 
 ## Markdown style
 
-`content-rules.md` is the source of truth and `.markdownlint-cli2.jsonc` enforces most of it. The two that a linter cannot catch and that matter most:
+`dev/content-rules.md` is the source of truth and `.markdownlint-cli2.jsonc` enforces most of it. The two that a linter cannot catch and that matter most:
 
 * **One sentence per line.** A four-sentence paragraph is four lines, each starting at column zero (indented to match, inside a list item). This keeps diffs readable.
 * Shell commands use ```` ```console ````, not ```` ```bash ````; `bash` is only for actual shell scripts. Every fenced block gets a language; use `text` when nothing fits.
@@ -91,7 +101,7 @@ Building an exercise is `make` inside its directory; most also have `make test`,
 Site and archives:
 
 ```console
-pip install -r requirements.txt
+pip install -r dev/requirements.txt
 mkdocs serve                      # http://localhost:8000, rebuilds on change
 mkdocs build                      # into _site/
 python3 scripts/gen_zip.py        # student archives into archives/ (git-ignored)
@@ -101,30 +111,35 @@ C style is the Linux kernel's `checkpatch.pl`, fetched by `.github/workflows/lin
 
 ## Generation pipeline
 
-`scripts/sessions.py` defines what a session is and what a task is; `gen_pages.py` (website, via `mkdocs-gen-files` + `mkdocs-literate-nav`) and `gen_zip.py` (student archives, published to the `lab-archives` branch) both ask it, so the two can never disagree.
-Nothing is stored: pages and navigation are discovered by walking the tree at build time, so adding a session or task means creating the directory and writing its `README.md`, nothing else.
-`gen_zip.py` packs only git-tracked files and drops `prompt.txt` / `*-prompt.txt`, so a stray `.o` or a solution note never reaches students.
+`scripts/sessions.py` defines what a section, a session and a task are; `gen_pages.py` (website, via `mkdocs-gen-files` + `mkdocs-literate-nav`) and `gen_zip.py` (student archives, published to the `lab-archives` branch) both ask it, so the two can never disagree.
+Nothing is stored: pages and navigation are discovered by walking `content/` at build time, so adding a section, a session or a task means creating the directory and writing its `README.md`, nothing else.
+
+* The website is two views of `content/`, not one tree: `/live/<section>/<session>/…` and `/full/<section>/<session>/…`, with the variant suffix dropped from the URL because the view already says which half it is.
+  Both halves are published — `-full/` is what students read after the session — but never listed side by side: `navigation.tabs` makes each view a tab, so a page's sidebar and generated lists hold only its own view.
+  The tab bar is the one place both appear, and a deliberate cross-reference in prose (each `-full/` README points at its `-live/` half) still links across.
+  `site_tree()` in `sessions.py` does the splitting; `gen_pages.py` keeps a map of every published directory to its URL, which is what link rewriting goes through.
+* Lectures and labs are the same thing to the generator. A `-live/` lecture that is only a one-pager is a session with nothing below it; the moment subdirectories are added to a `-full/` lecture they render exactly like a lab's exercises.
+* A section or session `README.md` that is still only a title gets a generated list of what is below it — only of the view being built — and one with a level-two heading anywhere in it is left alone, which is why the lab session pages keep their own task table.
+  A section README is rendered once per view it has sessions in.
+* `gen_zip.py` packs `content/labs/*-live/` and nothing else (`ARCHIVE_SECTION`, `ARCHIVE_VARIANT` in `sessions.py`), only git-tracked files, and drops `prompt.txt` / `*-prompt.txt`, so a stray `.o` or a solution note never reaches students.
+  `is_reference()` is the second line of defence: packing aborts outright if a path below a `*-full/` directory, or a `solutions/` one, ever reaches an archive.
+  This is what keeps session 05's flags and exploits out of what ships; run `unzip -l` on an archive before handing it to anyone regardless.
+
 See `scripts/README.md` for the details.
 
-## State of the migration
+## State of the content
 
-The repository is mid-restructure, from the old `session-NN-<name>/` + `solutions/` layout to the `-work/` + `-full-contents/` pair described above.
-`restructure-sessions.txt`, `restructure-sessions-2.txt` and `extra-prompt-restructure.md` are the specifications for it, and they are the authority when this file is ambiguous.
+Sessions 01–05 of the labs are written; labs 06–12 and every lecture are skeleton directories holding nothing but a `README.md` with a title.
+`dev/restructure-sessions.txt`, `dev/restructure-sessions-2.txt` and `dev/extra-prompt-restructure.txt` are the specifications of the layout, and they are the authority when this file is ambiguous.
+Use `content/labs/01-software-stack-*` as the model for everything.
 
-* Sessions 01, 02, 03 — migrated; use `01-software-stack-*` as the model for everything.
-* Session 04 (`04-memory-debugging-*`) — migrated; `-full-contents/` has full `FURTHER.md`/`INSTRUCTOR.md`, the session README has no time column, and `prompt.txt` files live in their task dirs.
-* Session 05 (`05-memory-security-*`) — migrated. This is a CTF session: `-work/` holds the public challenge files (`chall.c`, `chall`, task README), and `-full-contents/<task>/` holds the write-up plus the whole `build`/`publish`/`deploy`/`solve` Docker pipeline, the `flag`, and the reference `exploit.py`.
-
-Two consequences worth knowing before touching the tooling — the first is now a safety issue, not just cosmetics:
-
-* `SESSION_PATTERN` in `scripts/sessions.py` is `^session-\d+`, so the renamed directories are invisible to it — the website and the lab archives now see *no* session at all, since the last `session-*` directory (session 05) has been renamed away.
-  When you fix this, student archives must pack from `*-work/` only and exclude every `*-full-contents/`.
-  This is now a safety issue: `05-memory-security-full-contents/` contains session 05's **flags and exploits**, and `gen_zip.py` only name-excludes directories literally called `solutions`, which no longer exist anywhere in the tree.
-  A naive `SESSION_PATTERN` widening would ship the flags to students — see `05-memory-security-full-contents/INSTRUCTOR.md`.
-* The vendored printf lives at `02-os-interface-work/bonus-printf/utils/printf`, and the `VENDORED` path in `.github/workflows/lint.yml` points there so checkpatch skips it.
+* Session 05 (`content/labs/05-memory-security-*`) is a CTF session: `-live/` holds the public challenge files (`chall.c`, `chall`, task README), and `-full/<task>/` holds the write-up plus the whole `build`/`publish`/`deploy`/`solve` Docker pipeline, the `flag`, and the reference `exploit.py`.
+  The flags and exploits are the one piece of secret material inside a task tree — see `content/labs/05-memory-security-full/INSTRUCTOR.md` before touching the archive tooling.
+  They are safe on the website because only `README.md` files become pages, so a `flag` file has no page of its own.
+* The vendored printf lives at `content/labs/02-os-interface-live/bonus-printf/utils/printf`, and the `VENDORED` path in `.github/workflows/lint.yml` points there so checkpatch skips it.
   It sits under a `utils/` directory, which is in `EXCLUDED_DIRS` (`scripts/sessions.py`), so it is packed into the `bonus-printf` archive as support code but gets no website page and no navigation entry of its own.
 
 ## Third-party content
 
-`02-os-interface-work/bonus-printf/utils/printf/` is imported as-is and is not ours to reformat; it is excluded from markdownlint and from checkpatch.
-The rule, from `questions.md`: small files students are expected to read and modify get reformatted to our style; large files they only use, and anything tracking an upstream that is periodically re-synced, stay as they are.
+`content/labs/02-os-interface-live/bonus-printf/utils/printf/` is imported as-is and is not ours to reformat; it is excluded from markdownlint and from checkpatch.
+The rule, from `dev/questions.md`: small files students are expected to read and modify get reformatted to our style; large files they only use, and anything tracking an upstream that is periodically re-synced, stay as they are.

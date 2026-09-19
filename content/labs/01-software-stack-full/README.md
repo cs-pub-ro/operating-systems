@@ -3,7 +3,7 @@
 This directory holds the complete version of session 01: reference solutions, full explanations, and the reference output of every command the exercises ask for.
 
 Use it after the live session for a full view of the solutions and the reasoning behind them.
-The corresponding directory used during the session, with skeletons and task descriptions, is [`01-software-stack-work/`](../01-software-stack-work).
+The corresponding directory used during the session, with skeletons and task descriptions, is [`01-software-stack-live/`](../01-software-stack-live).
 
 ## Learning objectives
 

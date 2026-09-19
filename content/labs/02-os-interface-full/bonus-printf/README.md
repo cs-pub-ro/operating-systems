@@ -28,7 +28,7 @@ printf() / sprintf() / ...
       kernel
 ```
 
-The library lives in `../../02-os-interface-work/bonus-printf/utils/printf/`; a single copy is kept in the work directory rather than duplicated here, and this directory's `Makefile` points at it.
+The library lives in `../../02-os-interface-live/bonus-printf/utils/printf/`; a single copy is kept in the work directory rather than duplicated here, and this directory's `Makefile` points at it.
 
 ## Build & Run
 
