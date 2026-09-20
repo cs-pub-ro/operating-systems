@@ -31,6 +31,12 @@ and a session holds whatever tasks have been written for it.  A `-live` lecture
 that is only a one-page plan is simply a session with no tasks below it, and
 gains its subdirectories, rendered like a lab's, as soon as they are added.
 
+A session brings its figures and its slides with it.  Everything below it whose
+suffix says it is an asset -- the diagrams under `media/`, the revealjs decks
+rendered from `slides/*.qmd` -- is copied into the site at the same path it has
+below the session, so the relative links a README makes to them keep working
+without being rewritten.
+
 READMEs are used exactly as they are stored in the repository: no front matter,
 no extra metadata files.  Everything the site needs is derived from the
 directory tree at build time.
@@ -48,8 +54,10 @@ from mkdocs.structure.files import InclusionLevel
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from sessions import (  # noqa: E402  (the path has to be set up first)
+    ASSET_SUFFIXES,
     CONTENT_ROOT,
     REPO_ROOT,
+    find_assets,
     read_title,
     site_tree,
     walk_tasks,
@@ -175,6 +183,15 @@ def rewrite_target(target, readme_dir, root_prefix="", view=None):
     if resolved == GUIDE_SOURCE:
         return f"{root_prefix}{GUIDE_PAGE}{separator}{fragment}"
 
+    # A diagram, or a rendered deck of slides, is copied into the site at the
+    # path it has below its session, which is the path the link already uses:
+    # `media/03-kernel/os-syscall.svg` from the lecture page, `../../media/...`
+    # from a demo page below it.  The same holds for a deck that has not been
+    # rendered into the working tree yet, which is why this is decided by the
+    # suffix rather than by whether the file happens to exist.
+    if CONTENT_ROOT in resolved.parents and resolved.suffix.lower() in ASSET_SUFFIXES:
+        return target
+
     if resolved.is_file():
         relative = resolved.relative_to(REPO_ROOT).as_posix()
         return f"{REPO_BLOB_URL}/{relative}{separator}{fragment}"
@@ -205,6 +222,21 @@ def rewrite_links(text, readme_dir, root_prefix="", view=None):
 def write(path, text):
     with mkdocs_gen_files.open(path, "w") as page:
         page.write(text)
+
+
+def publish_assets(session):
+    """Copy the diagrams and the rendered slides of a session into the site.
+
+    The tree below a session is mirrored as it is, so `media/` and `slides/`
+    land next to the pages that use them and every relative link between a
+    README and a figure survives untouched.  Only the suffixes in
+    `ASSET_SUFFIXES` are copied: a C source or a compiled binary is not part of
+    the site, and is linked to on GitHub instead.
+    """
+    for relative in find_assets(session["path"]):
+        source = session["path"] / relative
+        with mkdocs_gen_files.open(f"{session['url']}/{relative.as_posix()}", "wb") as out:
+            out.write(source.read_bytes())
 
 
 def root_prefix(url):
@@ -371,12 +403,14 @@ def main():
                 build_session_page(session, view["slug"])
                 for task in walk_tasks(session["tasks"]):
                     render(task, view["slug"])
+                publish_assets(session)
     for section in plain_sections:
         build_section_page(section)
         for session in section["sessions"]:
             build_session_page(session)
             for task in walk_tasks(session["tasks"]):
                 render(task)
+            publish_assets(session)
     build_nav(views, plain_sections, guide_title)
 
 

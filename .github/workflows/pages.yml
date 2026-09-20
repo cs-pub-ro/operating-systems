@@ -29,8 +29,34 @@ jobs:
       - name: Install dependencies
         run: pip install -r dev/requirements.txt
 
+      - uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          version: '1.6.43'
+
+      # Every `content/**/slides/*.qmd` renders to one self-contained `.html`
+      # next to it.  This runs before the site is built, because
+      # scripts/gen_pages.py copies the rendered decks into the site the same
+      # way it copies the diagrams: whatever is on disk when it walks
+      # `content/` is what gets published.
+      - name: Render the lecture slides
+        run: ./scripts/render_slides.sh
+
       - name: Build site
         run: mkdocs build
+
+      - name: Summary
+        if: always()
+        run: |
+          {
+            echo '## Slides'
+            echo
+            echo '| deck | size |'
+            echo '| --- | ---: |'
+            for deck in content/*/*/slides/*.html; do
+              [ -e "$deck" ] || continue
+              printf '| `%s` | %s |\n' "$deck" "$(du -h "$deck" | cut -f1)"
+            done
+          } >> "$GITHUB_STEP_SUMMARY"
 
       - uses: actions/upload-pages-artifact@v3
         with:

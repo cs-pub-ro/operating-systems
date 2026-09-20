@@ -5,8 +5,13 @@
 // on one file would rewrite the whole repository.
 {
   "ignores": [
-    // Third-party README, imported as it is.
+    // Third-party READMEs, imported as they are.
     "content/labs/02-os-interface-live/bonus-printf/utils/printf/README.md",
+    "content/lectures/01-software-stack-full/demos/06-software-interaction/docker-wordpress-nginx/README.md",
+    // The previous version of a session's material, kept while it is being
+    // rewritten and harvested from.  It is not published -- `old` is in
+    // EXCLUDED_DIRS in scripts/sessions.py -- so it is not held to the style.
+    "content/**/old/**",
     "_site/**",
     "node_modules/**",
     ".venv/**",

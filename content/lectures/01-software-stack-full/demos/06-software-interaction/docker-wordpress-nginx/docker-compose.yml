@@ -1,0 +1,50 @@
+services:
+  nginx:
+    container_name: nginx
+    build: ./nginx/
+    ports:
+      - "8080:80"
+    volumes_from:
+      - php
+    volumes:
+      - ./nginx/log:/var/log/nginx
+    links:
+      - php
+
+  php:
+    container_name: php
+    build: ./php/
+    volumes:
+      - ./www:/www
+    links:
+      - mariadb
+
+  mariadb:
+    container_name: mariadb
+    image: mariadb
+    restart: always
+    volumes:
+      - ./mariadb:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_USER: username
+      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: wordpress
+    expose:
+      - "3306"
+    ports:
+      - "3306:3306"
+
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    links:
+      - mariadb
+    ports:
+      - 8183:80
+    environment:
+      MYSQL_USERNAME: root
+      MYSQL_ROOT_PASSWORD: password
+      PMA_HOST: 127.0.0.1
+      PMA_ARBITRARY: 1

@@ -25,3 +25,10 @@ __pycache__/
 
 # Local virtual environment for the website build
 .venv/
+
+# Slides rendered from content/**/slides/*.qmd by scripts/render_slides.sh, or
+# by `make` inside a slides directory.  The website builds them in CI.
+/content/**/slides/*.html
+/content/**/slides/*.pdf
+/content/**/slides/*_files/
+/content/**/slides/.quarto/

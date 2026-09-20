@@ -1,0 +1,33 @@
+We are preparing contents for a class on Operating Systems, part of a 4-years bachelor study program in a technical university.
+The class is part of the 2nd year, 1s semester.
+
+We are preparing the materials for the lecture-01 (the first lecture): Software Stack
+The materials will be of two types:
+- Materials to be used / delivered live, under `content/lectures/01-software-stack-live/`
+- Materials to be used before and after lecture, with full information, details and explanations, under content/lectures/01-software-stack-full/`
+
+The live / full split follows the similar split used for the labs (the practical part of the class), as in `content/labs/01-software-stack-live/` and `contents/labs/1-software-stack-full/`.
+
+The live delivery of the lecture will take 100 minutes (50 minutes, 10 minutes break, another 50 minutes). In actuality we can expect the delivery to be 40 minutes + 10 minutes break + 40 minutes, because of starting delays and concluding remarks.
+
+Lecture materials, both live and full, are of three types:
+
+- `README.md`: this is the reading material, serving as lesson plan for live and as extensive information for full
+- `media/`: stores images and potentially, video, audio or other files as visual support
+- `demos/`: practical demonstrations of a concept in action; they are to be demoed live in the live part (only minimal information) and followed individually by students in the full/ part
+- `slides/`: the lectures slides:
+   - for live: minimalistic, only with diagrams, references to demos and very relevant (yet minimal) information, shouldn't be more than 15 slides per lecture, following the plan in the `README.md`
+   - for full: rich, with details, references / inclusion of diagrams, references for further reading, following the contents of the `README.md`
+
+Considering the content already available in the `contents/lectures/01-software-stack-full/`, do the following:
+
+1. Expand the content in `README.md` in `content/lectures/01-software-stack-full/`.
+   Make the content really readable, expand ideas and references to make it a readable content, with complete sentences, paragraphs, inclusion of images, referencing of demos, other references, takeaways, rationale for given concepts.
+2. For each demo in `content/lectures/01-software-stack-full/demos/` have a `README.md` file (if not already there) or update `README.md` file (if there, and if update needed) to present information about the demo.
+3. Create slides in `content/lectures/01-software-stack-full/slides/`.
+   Use Quarto for slides (https://quarto.org/docs/presentations/).
+4. Use Quarto to render slides as HTML (via revealjs) to be rendered on the website and as PDF to be built.
+   Update GitHub workflows to publish HTML slides on the website.
+   PDF will be published elsewhere, provide the instructions / Makefile to build them.
+5. Create the corresponding contents in `content/lectures/01-software-stack-live/` directory: `README.md`, `media/`, `demos/`, slides, considering the request for minimalism and a format approrpriate for a 100 minute lecture delivery.
+   Also update GitHub workflows to render slides as HTML and publish them on the webssite.

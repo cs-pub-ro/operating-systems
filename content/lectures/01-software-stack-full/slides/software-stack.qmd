@@ -1,0 +1,554 @@
+---
+title: "The Software Stack"
+subtitle: "Operating Systems --- Lecture 01"
+format:
+  revealjs:
+    theme: default
+    slide-number: c/t
+    code-line-numbers: false
+    slide-level: 2
+    incremental: false
+    width: 1280
+    height: 720
+    embed-resources: true
+    link-external-newwindow: true
+  beamer:
+    aspectratio: 169
+    slide-level: 2
+---
+
+# 00. Pitch
+
+## Four small programs
+
+Each is short enough to read in half a minute.
+
+Each does something its source code does not explain.
+
+1. Two ways to build the same string
+1. One character of difference, and a crash
+1. The same command, three times, fifteen times faster
+1. An assignment that does nothing, and changes the complexity
+
+## Two ways to build the same string
+
+```c
+/* copy-string.c */              /* copy-string-improved.c */
+big[0] = '\0';                   strcpy(big, "John, ");
+strcat(big, "John, ");           strcpy(big + 6,  "Paul, ");
+strcat(big, "Paul, ");           strcpy(big + 12, "George, ");
+strcat(big, "George, ");         strcpy(big + 20, "Joel");
+strcat(big, "Joel");
+```
+
+```text
+result: 'John, Paul, George, Joel'    309604 microseconds
+result: 'John, Paul, George, Joel'     10475 microseconds
+```
+
+**30x**, same output, same library.
+
+::: {.notes}
+glibc `strcat` is hand-tuned vectorised assembly.
+It loses anyway, because it has to find the end of the destination first.
+The cost is in the interface, not the implementation.
+:::
+
+## One character of difference
+
+```c
+char *str = "*Hello!";      /* str[0] = ... crashes  */
+char str[] = "*Hello!";     /* str[0] = ... works    */
+```
+
+```text
+$ ./char-array-init
+str is '*Hello!', str+1 is 'Hello!'
+str+1 is 'Hello!'
+
+$ ./char-ptr-init
+str is '*Hello!', str+1 is 'Hello!'
+Segmentation fault (core dumped)
+```
+
+Compiler → linker → kernel → hardware, all agreeing about what is writable.
+
+## The same command, three times
+
+```console
+$ \time -v find /usr/share > /dev/null    # 2.66 s
+$ \time -v find /usr/share > /dev/null    # 0.18 s
+$ \time -v find /usr/share > /dev/null    # 0.15 s
+```
+
+Same command, same filesystem, same system calls.
+
+The kernel kept what it read: the **page cache**.
+
+*A program's running time is not a property of the program.*
+
+## An assignment that does nothing
+
+```python
+s = ""
+for _ in range(n):
+    keep = s          # never read again
+    s = s + "a"
+```
+
+| N | without `keep` | with `keep` |
+| ---: | ---: | ---: |
+| 40 000 | 0.0011 s | 0.0084 s |
+| 80 000 | 0.0021 s | 0.0380 s |
+| 160 000 | 0.0043 s | 0.1662 s |
+
+O(N) becomes O(N²). The optimisation was never part of the language.
+
+## What the four have in common
+
+None of them is a question about C or about Python.
+
+Each is a question about the **layer below**:
+
+* the standard C library
+* the linker and the loader
+* the kernel's page cache
+* the interpreter's memory management
+
+The source says what the program asks for.
+It says nothing about what it costs.
+
+## Why that matters
+
+A layer is useful *because* you can use it without knowing how it works.
+
+But:
+
+> "You do not need to know how it works"
+
+and
+
+> "You do not need to know it is there"
+
+are different claims, and only the first one is true.
+
+## {background-color="#f0f0f0"}
+
+::: {style="font-size: 1.4em; text-align: center; margin-top: 2em;"}
+You do not need to know everything that is under you.
+
+You need to know **that** something is under you,
+roughly what it does,
+and where to look when the numbers stop making sense.
+:::
+
+# 01. Lecture Map
+
+## Five questions
+
+1. **What are the layers?**
+   What sits on what, and what each one adds.
+1. **What is the operating system?**
+   What it manages, and how you ask it for things.
+1. **What does a layer cost?**
+   Five trade-offs that decide where to write something.
+1. **What kinds of component are there?**
+   Applications and libraries.
+1. **How do components interact?**
+   UIs, APIs and protocols.
+
+# 02. The Software Stack
+
+## Hardware does little; users want a lot
+
+Hardware: move a word, add two, compare, branch, read a block, send a frame.
+
+Users: a video call, a document that autosaves, a game, a shop.
+
+Everything in between is software.
+
+## From hardware to features
+
+![](../media/02-software-stack/hardware-to-software.svg){fig-align="center" width="85%"}
+
+## Hardware and software
+
+| Hardware | Software |
+| --- | --- |
+| does one thing, does it well | flexible, general |
+| fast and efficient | featureful |
+| fixed once manufactured | installable, updatable, configurable |
+| physical, one at a time | virtual, copied for free |
+| monolithic | composable, replaceable |
+
+## The stack
+
+![](../media/02-software-stack/software-stack.svg){fig-align="center" width="62%"}
+
+## The layers, bottom to top
+
+* **Hardware** --- exposes an **ISA**: x86-64, ARM64, RISC-V
+* **Operating system** --- shares one machine between many programs; exposes the **system call API**
+* **libc** --- wraps system calls, adds buffering, formatting, `malloc()`; exposes the **C API** (ANSI/ISO, POSIX)
+* **Language runtimes and libraries** --- CPython, JVM, Go runtime, libstdc++
+* **Frameworks** --- Flask, Django, Spring, Qt
+* **Applications** --- where the features live
+* **The user** --- sees a **UI** and nothing else
+
+## The layers, with names
+
+![](../media/02-software-stack/software-layers.svg){fig-align="center" width="72%"}
+
+## Every line is an interface
+
+An **interface** is a promise: what can be asked for, and what will happen.
+
+It is valuable in proportion to how little it says about the implementation.
+
+* `fopen()` --- SSD, USB stick, or a network filesystem three buildings away
+* `write()` --- a file, a pipe, a socket, a terminal
+
+That is what lets the kernel add a filesystem without anyone recompiling.
+
+## Interface and implementation
+
+![](../media/05-apps-libs/interface-implementation.svg){fig-align="center" width="52%"}
+
+## Demo: the same message, five heights
+
+```text
+$ make strace
+./hello-nolibc         2 system calls
+./hello-asm            30 system calls
+./hello-c              35 system calls
+./hello-cpp            65 system calls
+python3 hello.py       6155 system calls
+```
+
+`demos/02-software-stack/`
+
+::: {.notes}
+Run `strace ./hello-nolibc` live: the whole trace is three lines.
+Then `strace ./hello-c` and scroll: everything before the write is the loader.
+:::
+
+## What each layer costs
+
+| Version | Size | Shared libs | Start-to-exit |
+| --- | ---: | ---: | ---: |
+| assembly, no libc | 8 888 B | 0 | ≈ 0.25 ms |
+| assembly, via libc | 15 712 B | 1 | ≈ 0.35 ms |
+| C, `puts()` | 16 032 B | 1 | ≈ 0.35 ms |
+| C++, `std::cout` | 16 568 B | 4 | ≈ 0.70 ms |
+| Python, `print()` | --- | --- | ≈ 32 ms |
+
+## And yet nobody writes the 2-syscall version
+
+What the 8 888-byte version does not have:
+
+* no buffering --- every write is a system call
+* no formatting, no locale, no `%d`
+* no error handling
+* no portability beyond x86-64 Linux
+* nothing to build on, the first time it needs to read a file
+
+33 extra system calls, paid once at start-up, buy all of it.
+
+## Where do you build?
+
+You can write an application at any level.
+
+* **Higher**: faster to write, more choices, more given to you
+* **Lower**: more control, better performance, more of the work is yours
+
+Rule of thumb: start as high as you can, move down where a *measurement* says to.
+
+Most programs never move. The ones that do move in one place, not everywhere.
+
+# 03. The Operating System
+
+## What it is for
+
+* **Management** --- who gets the CPU, which memory, what is on the disk where
+* **Arbitration** --- many programs, one machine; keep them out of each other's way
+* **System services** --- create a process, open a file, send a packet, allocate memory
+
+## The OS and the system call API
+
+![](../media/03-kernel/os-syscall.svg){fig-align="center" width="88%"}
+
+## Families of system call
+
+| Family | Examples | Lecture |
+| --- | --- | --- |
+| processes and threads | `fork()`, `execve()`, `clone()` | 06--08 |
+| memory | `brk()`, `mmap()`, `munmap()` | 03--05 |
+| file I/O | `open()`, `read()`, `write()` | 09--10 |
+| network I/O | `socket()`, `connect()`, `send()` | 11 |
+| IPC | pipes, signals, shared memory | 10, 12 |
+
+A few hundred in Linux: `man 2 syscalls`.
+
+## Almost nothing calls them directly
+
+![](../media/03-kernel/libc.svg){fig-align="center" width="52%"}
+
+Programs call `fopen()`, `printf()`, `malloc()`.
+libc turns those into `openat()`, `write()`, `mmap()` --- when it has to.
+
+## Three API standards
+
+* **ANSI / ISO C** --- the portable core: `printf()`, `fopen()`, `malloc()`, `strlen()`
+* **POSIX** --- the UNIX interface: `open()`, `fork()`, `pthread_create()`, `socket()`
+* **Windows API** --- the same job, differently: `CreateFile()`, `CreateProcess()`
+
+## A system call is not a function call
+
+![](../media/03-kernel/syscall-explained.svg){fig-align="center" width="42%"}
+
+## Two modes
+
+**User mode** --- application code; cannot touch device registers, page tables, or another process's memory.
+
+**Kernel mode** --- can do all of it.
+
+One controlled way across: the `syscall` instruction, to one address the kernel chose at boot.
+
+*The kernel cannot be reached anywhere it is not expecting you.*
+That is the whole security architecture.
+
+## Library calls and system calls
+
+| Library call | System call |
+| --- | --- |
+| provided by a library | provided by the kernel |
+| flexible, diverse, many | specific, standard, few |
+| an ordinary function call | a mode switch |
+| standard C calling convention | its own convention |
+| generally portable | specific to the OS |
+
+Hundreds of nanoseconds instead of a few. That is the price of the check.
+
+## The kernel is a library, not a process
+
+It does not take turns with your program. It runs **when called**:
+
+1. a process makes a system call --- the kernel runs *on behalf of that process*
+1. a device raises an interrupt
+
+Between those, it is not running at all.
+
+`ps` shows no process for it, because there is no process to show.
+
+# 04. Trade-offs
+
+## Moving up, moving down
+
+![](../media/04-versus/software-software-versus.svg){fig-align="center" width="78%"}
+
+## Portability against performance
+
+![](../media/04-versus/portability-performance.svg){fig-align="center" width="85%"}
+
+Fibonacci in C against Fibonacci in Python: one to two orders of magnitude.
+
+The usual resolution is to layer: portable by default, specific where it pays.
+
+## Portability
+
+![](../media/04-versus/portability.svg){fig-align="center" width="58%"}
+
+## Resource efficiency against performance
+
+Copy a file:
+
+* 1-byte buffer --- one system call per byte
+* 64 KB buffer --- one per 65 536 bytes, thousands of times faster, 64 KB spent
+* 1 GB buffer --- a gigabyte spent to save nothing
+
+There is always a point past which more memory buys no more speed.
+
+Finding it is measurement, not reasoning.
+
+## Demo: security against performance
+
+```text
+simple hash (djb2)    0.032593 s for 1000000 iterations
+secure hash (SHA-256) 0.697281 s for 1000000 iterations
+
+SHA-256 costs 21.4x as much per hash.
+```
+
+The slowness **is** the security property: 64 rounds of mixing are what makes it hard to run backwards.
+
+`demos/04-versus/`
+
+## ... and for stored passwords, both are wrong
+
+SHA-256 is far too **fast**.
+
+A stolen database plus a GPU is billions of candidates per second.
+
+bcrypt, scrypt, Argon2 are *deliberately* slowed to ≈ 100 ms per hash.
+
+There, slowness is not a cost. It is the product.
+
+## Security against usability
+
+Every control a user meets is a control they can find annoying enough to disable.
+
+A control that is too costly to use gets routed around --- and a routed-around control protects nothing, while still appearing on the checklist.
+
+90-day password rotation: standard advice for twenty years,
+withdrawn because it reliably produced `Summer2024!` then `Autumn2024!`.
+
+## Maintainability against comprehensibility
+
+Code that is easy to change is not always code that is easy to read.
+
+```c
+file->f_op->read_iter(...)
+```
+
+Three characters of indirection let a hundred filesystems share one code path.
+
+They also mean you cannot tell what runs next without knowing which filesystem you are on.
+
+The indirection is right. It is still a cost.
+
+## {background-color="#f0f0f0"}
+
+::: {style="font-size: 1.3em; text-align: center; margin-top: 2.5em;"}
+"Which is better?" has no answer.
+
+"Which cost am I choosing to pay, and who pays it?" always does.
+:::
+
+# 05. Applications and Libraries
+
+## Two kinds of component
+
+![](../media/05-apps-libs/libraries-and-apps.svg){fig-align="center" width="78%"}
+
+## Applications
+
+![](../media/05-apps-libs/applications.svg){fig-align="center" width="62%"}
+
+An **entry point** --- `main`, `_start`, `__main__` --- and something outside that starts it.
+
+## Libraries
+
+![](../media/05-apps-libs/libraries.svg){fig-align="center" width="62%"}
+
+No entry point. An **interface**, and something that calls into it.
+
+## What they have in common
+
+Both are machine code.
+Both have `.text`, `.rodata`, `.data`, `.bss`.
+Both are ELF files. Both are files in the filesystem.
+
+`libc.so.6` is a shared library --- and running it prints its version banner.
+
+| Application | Library |
+| --- | --- |
+| entry point | exposed interface (API) |
+| usable | reusable |
+| bound at load time | bound at link time or load time |
+| started by a user or the system | called by another program |
+
+## Frameworks
+
+A framework is a library with opinions about the shape of your program.
+
+* **Library**: your code calls it. You own the control flow.
+* **Framework**: it calls your code. It owns the control flow.
+
+Swap one JSON library for another in an afternoon.
+
+You cannot swap Django for Rails at all.
+
+# 06. Interaction between Components
+
+## Everything exposes an interface
+
+![](../media/06-software-interaction/software-interaction.svg){fig-align="center" width="82%"}
+
+## Three kinds of interface
+
+* **UI** --- the other side is a person (CLI, TUI, GUI, web)
+* **API** --- the other side is code in the same process
+* **Protocol** --- the other side is a *different process*, possibly on a different machine, in a different language, released on a different schedule
+
+The implementation of a protocol between applications is **IPC**.
+
+## Why a protocol is the hard case
+
+A function call cannot half-happen.
+
+A message can be truncated, duplicated, delayed for a minute, or arrive after the sender has exited.
+
+Everything awkward about distributed systems is already in that difference.
+
+## A web application, end to end
+
+![](../media/06-software-interaction/web-apps.svg){fig-align="center" width="78%"}
+
+## Demo: four containers, three protocols
+
+```console
+$ docker compose up -d
+```
+
+| Container | What | Interface |
+| --- | --- | --- |
+| nginx | web server | HTTP |
+| php | WordPress | FastCGI |
+| mariadb | database | MySQL wire protocol |
+| phpmyadmin | admin UI | HTTP |
+
+Every box is itself a stack. `demos/06-software-interaction/`
+
+## The payoff is replaceability
+
+phpMyAdmin works against MariaDB because it speaks the protocol.
+
+nginx ↔ Apache. MariaDB ↔ MySQL. glibc ↔ musl.
+
+Each depends on an **interface**, not on an implementation.
+
+# 07. Conclusion
+
+## What we covered
+
+* the software stack, and what each layer provides
+* the operating system, and the system call API
+* the trade-offs that decide how high to write something
+* applications and libraries
+* interaction: UIs, APIs and protocols
+
+## The four programs, again
+
+* `strcat()` --- an interface that cannot carry a length
+* the segmentation fault --- compiler, linker and kernel agreeing about what is writable
+* the fast second `find` --- a kernel that remembers
+* the quadratic Python loop --- an optimisation that is not part of the contract
+
+Correct source code, useless as a cost model. The explanation was one layer down.
+
+## {background-color="#f0f0f0"}
+
+::: {style="font-size: 1.3em; text-align: center; margin-top: 2em;"}
+Software is built in layers,
+and every layer is an interface that hides an implementation.
+
+Understanding the layer below yours is what turns
+a surprising measurement into a decision you can defend.
+:::
+
+## Next
+
+* **Lecture 02** --- the operating system taken apart: kinds of kernel, and the interface each offers
+* **Lab 01** --- libc string functions, buffered against unbuffered output, static against dynamic linking
+
+Full write-up, demos and references: the session `README.md`.

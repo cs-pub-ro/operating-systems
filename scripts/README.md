@@ -7,7 +7,12 @@ Two things are generated from the repository tree, and both live here:
 
 Both ask `sessions.py` what a section, a session and an exercise are, so the site and the archives can never disagree about it.
 
-A third script, `check-prerequisites.sh`, generates nothing: it checks that the [tools a session needs](#prerequisites-check) are installed.
+Two more generate things a session needs before the site can be built, and are run from the Pages workflow:
+
+* `render_slides.sh` renders the [Quarto decks](#slides) under `content/**/slides/`
+* `gen_media.sh` converts the [diagram exports](#diagrams) under `content/**/media/`
+
+A fifth script, `check-prerequisites.sh`, generates nothing: it checks that the [tools a session needs](#prerequisites-check) are installed.
 
 ## The content tree
 
@@ -135,6 +140,56 @@ Add `--strict` to `mkdocs build` to turn warnings, such as a link that points no
 The workflow deploys the site, but the repository has to allow it first.
 In the repository settings, under *Pages*, set *Source* to *GitHub Actions*.
 The site is then published at `https://<owner>.github.io/<repository>/`.
+
+## Assets
+
+A session brings more than its READMEs: the figures a page shows, and the slides a lecture is delivered from.
+`gen_pages.py` mirrors the tree below a session into the site, copying every file whose suffix is in `ASSET_SUFFIXES` (`sessions.py`) and leaving everything else alone.
+
+Because the mirror keeps the paths, a relative link in a README already points at the right place and is not rewritten:
+
+| In the repository | On the site |
+| --- | --- |
+| `content/lectures/01-software-stack-full/media/03-kernel/libc.svg` | `/full/lectures/01-software-stack/media/03-kernel/libc.svg` |
+| `content/lectures/01-software-stack-full/slides/software-stack.html` | `/full/lectures/01-software-stack/slides/software-stack.html` |
+
+A C source, a Makefile or a compiled binary is not an asset: it has no page, so a link to it is sent to GitHub as before.
+Directories the tree walk skips — `old/`, `utils/`, anything beginning with a dot — keep their files off the site as well.
+
+The diagrams are line drawings on a transparent ground, so `docs/stylesheets/extra.css` gives them a white plate in the dark colour scheme.
+That file is the only hand-written thing under `docs/`.
+
+### Diagrams
+
+A session's figures live in `media/`, one directory per part of the session.
+Drawings made in [Excalidraw](https://excalidraw.com/) are exported as PDF, which is what is committed; a browser will not show a PDF through an `![...]()`, so `gen_media.sh` converts each one to an SVG of the same name in lower case, and it is the SVG the READMEs and the slides point at.
+
+```console
+./scripts/gen_media.sh          # needs pdftocairo, from poppler-utils
+```
+
+The SVGs are committed next to the PDFs, so building the site needs no conversion tools.
+Re-run the script after re-exporting a drawing; it skips whatever is already newer than its source.
+Diagrams made in [draw.io](https://www.drawio.com/) keep their `.drawio` source in the same directory, and are exported to SVG from the editor.
+
+### Slides
+
+A lecture's deck lives in `slides/`, written in [Quarto](https://quarto.org/docs/presentations/) and rendered to [reveal.js](https://revealjs.com/).
+Each deck sets `embed-resources: true`, so one `.qmd` becomes one self-contained `.html` with the diagrams and reveal.js inlined — which is what makes a deck publishable as a single asset.
+
+```console
+./scripts/render_slides.sh                                  # every deck
+./scripts/render_slides.sh content/lectures/01-software-stack-live   # just these
+make -C content/lectures/01-software-stack-live/slides       # while writing one
+```
+
+The Pages workflow runs `render_slides.sh` before `mkdocs build`, so whatever is on disk when `gen_pages.py` walks `content/` is what gets published.
+Rendered decks are generated and are not committed; `.gitignore` covers them.
+
+`make pdf` inside a `slides/` directory renders the same deck through beamer, for the PDF that is published elsewhere.
+That needs LaTeX (`quarto install tinytex` is the least painful) and `rsvg-convert`, from `librsvg2-bin`, which is what turns the SVG figures into something LaTeX can include.
+
+Nothing is registered anywhere: a new deck is rendered and published because it is in a `slides/` directory, the same way a new exercise appears because it has a `README.md`.
 
 ## Prerequisites check
 

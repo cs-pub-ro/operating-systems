@@ -28,11 +28,25 @@ Inside a section, each session lives in two sibling directories:
 The website publishes the two halves as two separate views, and the view is the first part of the URL, so `content/labs/01-software-stack-live/` is served at `/live/labs/01-software-stack/` and its `-full/` sibling at `/full/labs/01-software-stack/`.
 A section with no halves stays at the top level: `content/assignments/` is `/assignments/`.
 
-Inside a session, the directory-name prefix is the task type, and it is load-bearing (the site and the archives key off it, and so do the README conventions below):
+Inside a **lab** session, the directory-name prefix is the task type, and it is load-bearing (the site and the archives key off it, and so do the README conventions below):
 
 * `demo-<name>/` — solved together with the teaching assistant at the start of the session.
 * `NN-<name>/` — core exercise, solved individually or in teams, in numeric order.
 * `bonus-<name>/` — optional; for students who finish early, or as homework.
+
+A **lecture** session is laid out by kind rather than by task type, and both halves use the same three directories:
+
+* `media/` — the figures the READMEs and the slides show, one subdirectory per part of the lecture (`02-software-stack/`, `03-kernel/`, …).
+  Excalidraw drawings are committed as the PDF the tool exports plus an SVG converted from it by `scripts/gen_media.sh`; draw.io drawings keep their `.drawio` source beside the SVG.
+  The SVG is what a README points at, because a browser will not show a PDF through an `![...]()`.
+* `demos/` — the programs demonstrated during the lecture, numbered to match the parts.
+  The sources live in the `-full/` half and there is exactly one copy of each; the `-live/` half holds only the command sheet for each demo — what to type, and the question to put to the room.
+* `slides/` — one Quarto deck (`*.qmd`), rendered to reveal.js by `scripts/render_slides.sh` and published with the website.
+  The `-live/` deck is minimal (at most 15 slides: diagrams, demo results, questions); the `-full/` deck follows the session `README.md` with the detail filled in.
+  `make` in a `slides/` directory renders the HTML, `make pdf` renders the same deck through beamer.
+  Rendered decks are generated and are not committed.
+
+Pacing, which demos to run live and what to cut go in the lecture's `-full/INSTRUCTOR.md`, never in a `-live/` README.
 
 Every task directory is freestanding: no symlinks, no shared Makefile fragments, so it survives being unzipped on its own.
 Per-exercise `.gitignore` lists only the binaries that task builds — object files and the like are already covered by the top-level `.gitignore`.
@@ -102,10 +116,15 @@ Site and archives:
 
 ```console
 pip install -r dev/requirements.txt
+./scripts/render_slides.sh        # content/**/slides/*.qmd -> self-contained HTML
+./scripts/gen_media.sh            # content/**/media/*.pdf -> SVG, committed
 mkdocs serve                      # http://localhost:8000, rebuilds on change
 mkdocs build                      # into _site/
 python3 scripts/gen_zip.py        # student archives into archives/ (git-ignored)
 ```
+
+`render_slides.sh` needs Quarto and has to run before the site is built, because `gen_pages.py` publishes whatever decks are on disk when it walks `content/`; the Pages workflow does both in that order.
+`gen_media.sh` needs `pdftocairo`, and its output is committed, so building the site needs neither tool.
 
 C style is the Linux kernel's `checkpatch.pl`, fetched by `.github/workflows/lint.yml`; only lines a push or PR changes must be clean, the rest of the tree is reported in the run summary.
 
@@ -119,6 +138,9 @@ Nothing is stored: pages and navigation are discovered by walking `content/` at 
   The tab bar is the one place both appear, and a deliberate cross-reference in prose (each `-full/` README points at its `-live/` half) still links across.
   `site_tree()` in `sessions.py` does the splitting; `gen_pages.py` keeps a map of every published directory to its URL, which is what link rewriting goes through.
 * Lectures and labs are the same thing to the generator. A `-live/` lecture that is only a one-pager is a session with nothing below it; the moment subdirectories are added to a `-full/` lecture they render exactly like a lab's exercises.
+* A session brings its assets with it. Everything below it whose suffix is in `ASSET_SUFFIXES` (`sessions.py`) — the SVGs under `media/`, the decks rendered into `slides/` — is copied into the site at the path it has below the session, so a relative link from a README to a figure is left exactly as written rather than rewritten.
+  Anything else (a `.c` file, a `Makefile`) has no page and is linked to on GitHub, as before.
+  `old/` is in `EXCLUDED_DIRS`: it is the staging area a session keeps while it is being rewritten, and it is published no more than it is linted.
 * A section or session `README.md` that is still only a title gets a generated list of what is below it — only of the view being built — and one with a level-two heading anywhere in it is left alone, which is why the lab session pages keep their own task table.
   A section README is rendered once per view it has sessions in.
 * `gen_zip.py` packs `content/labs/*-live/` and nothing else (`ARCHIVE_SECTION`, `ARCHIVE_VARIANT` in `sessions.py`), only git-tracked files, and drops `prompt.txt` / `*-prompt.txt`, so a stray `.o` or a solution note never reaches students.
@@ -129,17 +151,23 @@ See `scripts/README.md` for the details.
 
 ## State of the content
 
-Sessions 01–05 of the labs are written; labs 06–12 and every lecture are skeleton directories holding nothing but a `README.md` with a title.
+Sessions 01–05 of the labs are written, and lecture 01 is written; labs 06–12 and lectures 02–12 are skeleton directories holding nothing but a `README.md` with a title.
 `dev/restructure-sessions.txt`, `dev/restructure-sessions-2.txt` and `dev/extra-prompt-restructure.txt` are the specifications of the layout, and they are the authority when this file is ambiguous.
 Use `content/labs/01-software-stack-*` as the model for everything.
 
 * Session 05 (`content/labs/05-memory-security-*`) is a CTF session: `-live/` holds the public challenge files (`chall.c`, `chall`, task README), and `-full/<task>/` holds the write-up plus the whole `build`/`publish`/`deploy`/`solve` Docker pipeline, the `flag`, and the reference `exploit.py`.
   The flags and exploits are the one piece of secret material inside a task tree — see `content/labs/05-memory-security-full/INSTRUCTOR.md` before touching the archive tooling.
-  They are safe on the website because only `README.md` files become pages, so a `flag` file has no page of its own.
+  They are safe on the website because only `README.md` files become pages and only the suffixes in `ASSET_SUFFIXES` are copied alongside them, so a `flag` file is neither.
+* Lecture 01 (`content/lectures/01-software-stack-*`) is the model for a lecture, the way lab 01 is the model for a lab: seven parts, seven demos, fifteen figures, and a deck in each half.
+  Its `-full/old/` directory is the previous version of the material, kept while the rewrite is harvested from it; it is excluded from the site and from markdownlint, and is meant to be deleted once nothing more is wanted out of it.
 * The vendored printf lives at `content/labs/02-os-interface-live/bonus-printf/utils/printf`, and the `VENDORED` path in `.github/workflows/lint.yml` points there so checkpatch skips it.
   It sits under a `utils/` directory, which is in `EXCLUDED_DIRS` (`scripts/sessions.py`), so it is packed into the `bonus-printf` archive as support code but gets no website page and no navigation entry of its own.
 
 ## Third-party content
 
-`content/labs/02-os-interface-live/bonus-printf/utils/printf/` is imported as-is and is not ours to reformat; it is excluded from markdownlint and from checkpatch.
+Two trees are imported as-is and are not ours to reformat, and both are excluded from markdownlint (and the first from checkpatch):
+
+* `content/labs/02-os-interface-live/bonus-printf/utils/printf/`, the mpaland printf implementation
+* `content/lectures/01-software-stack-full/demos/06-software-interaction/docker-wordpress-nginx/`, the WordPress Compose setup the interaction demo runs
+
 The rule, from `dev/questions.md`: small files students are expected to read and modify get reformatted to our style; large files they only use, and anything tracking an upstream that is periodically re-synced, stay as they are.

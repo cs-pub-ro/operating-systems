@@ -44,7 +44,9 @@ CONTENT_ROOT = REPO_ROOT / "content"
 # of its own, so it gets no page and no navigation entry.  `solutions` is the
 # name the reference material used to live under, before it moved into the
 # `-full/` sessions; it is kept on the list so that such a directory reappearing
-# is skipped rather than published.
+# is skipped rather than published.  `old` is the staging area a session keeps
+# while it is being rewritten -- the previous version of its material, harvested
+# from and then dropped -- and is never part of the published tree.
 EXCLUDED_DIRS = {
     ".git",
     ".github",
@@ -54,11 +56,46 @@ EXCLUDED_DIRS = {
     "archives",
     "docs",
     "node_modules",
+    "old",
     "scripts",
     "site",
     "solutions",
     "utils",
 }
+
+# The same, by suffix rather than by name.  `<deck>_files/` is what Quarto
+# leaves beside a deck when it renders it to a format that is not the
+# self-contained HTML the website publishes; it is a build byproduct, and it is
+# no more part of the content than an object file is.
+EXCLUDED_DIR_SUFFIXES = ("_files",)
+
+# Files that are not pages but belong to one: the diagrams a README shows, and
+# the slides rendered from a lecture's `slides/*.qmd`.  They are copied into the
+# website next to the page that uses them, at the same path they have below the
+# session, so a relative link in a README already points at the right place and
+# needs no rewriting.  Everything else below a session -- C sources, Makefiles,
+# compiled binaries -- has no place on the site and is linked to on GitHub.
+ASSET_SUFFIXES = frozenset(
+    {
+        ".css",
+        ".gif",
+        ".html",
+        ".jpeg",
+        ".jpg",
+        ".js",
+        ".json",
+        ".mp4",
+        ".otf",
+        ".pdf",
+        ".png",
+        ".svg",
+        ".ttf",
+        ".webm",
+        ".webp",
+        ".woff",
+        ".woff2",
+    }
+)
 
 # The order the sections are shown in, which is the order of the class rather
 # than the alphabet.  A section not named here is shown after these, by name.
@@ -155,6 +192,7 @@ def child_dirs(path):
         if entry.is_dir()
         and entry.name not in EXCLUDED_DIRS
         and not entry.name.startswith(".")
+        and not entry.name.endswith(EXCLUDED_DIR_SUFFIXES)
     )
 
 
@@ -197,6 +235,26 @@ def find_tasks(parent):
         else:
             tasks.extend(children)
     return tasks
+
+
+def find_assets(parent, base=None):
+    """Every asset below a directory, as paths relative to it.
+
+    Walked exactly the way the tasks are, so a directory the walk never
+    descends into -- `old/`, `utils/`, anything whose name starts with a dot --
+    keeps its files off the website too.  A `media/` directory holds no README
+    and so is not a page, but the diagrams in it are still published: what makes
+    a file an asset is its suffix, not the directory it sits in.
+    """
+    base = base if base is not None else parent
+    assets = [
+        entry.relative_to(base)
+        for entry in sorted(parent.iterdir())
+        if entry.is_file() and entry.suffix.lower() in ASSET_SUFFIXES
+    ]
+    for entry in child_dirs(parent):
+        assets.extend(find_assets(entry, base))
+    return assets
 
 
 def walk_tasks(tasks):
