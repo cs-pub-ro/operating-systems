@@ -1,11 +1,10 @@
-# Exercise: Implement `strlen`, `strcpy`, `strcat`, `memcpy`
+# Exercise: Implement `strlen()`, `strcpy()`, `strcat()`, `memcpy()`
 
 **Tools:** GCC, Make
 
 ## Goal
 
-Implement four of the C library's string functions yourself, from scratch, and then measure them.
-Afterwards you will be able to explain why appending to a C string in a loop is quadratic, and why no amount of hand-tuned assembly can fix that.
+Implement four of the C library's string functions yourself, from scratch: `strlen()`, `strcpy()`, `strcat()`, `memcpy()`.
 
 ## Background
 
@@ -15,48 +14,69 @@ Every function that needs the length must therefore go and find it, byte by byte
 
 `memcpy()` is different: it is told how many bytes to copy, knows nothing about `'\0'`, and takes `void *` rather than `char *`.
 
-## Your Task
+## Directory Contents
 
-Open `mystring.c` and fill in the four TODOs.
-That is the only file you change.
-
-| Function | What it must do |
-| --- | --- |
-| `my_strlen` | Length up to, not including, the `'\0'` |
-| `my_strcpy` | Copy a string, `'\0'` included; return `dest` |
-| `my_strcat` | Append to the string already in `dest`; return `dest` |
-| `my_memcpy` | Copy exactly `n` bytes; knows nothing about `'\0'`; return `dest` |
-
-1. **Do not call anything from `<string.h>`** — that is the whole point.
-   The header is deliberately not included.
-1. `my_strcpy` must copy the `'\0'` as well, otherwise `dest` is not a string.
-1. `my_memcpy` receives `void *`, which you can neither dereference nor advance.
-   Assign it to an `unsigned char *` first.
-1. Check the return values against the man pages: `strlen(3)`, `strcpy(3)`, `strcat(3)`, `memcpy(3)`.
-   They are easy to get wrong and the test suite checks them.
+- `my_string.c`: where to implement the four string functions.
+- `my_string.h`: header file with the declaration of the functions in `my_string.c`, included in `main.c`.
+- `main.c`: contains the `main()` function where to implement calls (and tests) to the four string functions.
+- `Makefile`: build the program.
+- `README.md`: this file.
+- `FURTHER.md`: optional further exercises and instructions, to be worked on either at home or, if time allows it, after the lab session.
 
 ## Build & Run
 
-Write a couple of tests of your own first, then run the provided suite:
+Build with:
 
 ```console
-make test
+make
 ```
 
-Once every check passes, measure:
+Run with:
 
 ```console
-make bench
+./main
 ```
 
-Both benchmarked columns append the same 16-byte chunk N times, one using `my_strcat`, the other using `my_memcpy` with an offset the caller tracks itself.
+Initially, the program will do nothing, as no functions are implemented.
+
+## Your Tasks
+
+Open `mystring.c` and `main.c` and fill in the four TODOs in each file.
+
+Implement and test one function at a time.
+Implement the function in `mystring.c`, implement the call and test in `main.c`.
+
+1. Implement `my_strlen()` in the `TODO 1` section in `my_string.c`.
+   It counts the number of characters up to, not including, the `NUL`-terminator (`\0`).
+
+   Call `my_strlen()` (and `strlen()`) in the `TODO 1` section in `main.c`.
+   Build and run the `
+   Check to see if the result is the same.
+
+1. Implement `my_strcpy()` in the `TODO 2` section in `my_string.c`.
+   It copies the `src` string to the `dest` string, with the `NUL`-terminator included.
+   It returns `dest`.
+
+   Call `my_strcpy()` (and `strcpy()`) in the `TODO 2` section in `main.c`.
+   Check to see if the result is the same.
+
+1. Implement `my_strcat()` in the `TODO 3` section in `my_string.c`.
+   It appends the `src` string to the `dest` string, with the `NUL`-terminator included.
+   It returns `dest`.
+
+   Call `my_strcat()` (and `strcat()`) in the `TODO 3` section in `main.c`.
+   Check to see if the result is the same.
+
+1. Implement `my_memcpy()` in the `TODO 4` section in `my_string.c`.
+   It coppies exactly `n` bytes from `src` to `dest`.
+   It returns `dest`.
+   `my_memcpy` receives `void *`, which you can neither dereference nor advance.
+   Assign it to an `unsigned char *` first.
+
+   Call `my_memcpy()` (and `memcpy()`) in the `TODO 4` section in `main.c`.
+   Check to see if the result is the same.
 
 ## Check Your Work
 
-`make test` reports a count of passed checks and refuses to be quiet about failures.
-All of them must pass before the benchmark means anything: timing a wrong answer is not a measurement.
-
-In `make bench`, look at the *shape* of each column as N doubles, not at the absolute numbers.
-One of the two columns should grow much faster than the other.
-Work out from the measurement, on your own, what the growth factor per doubling is for each, then decide which complexity class each one belongs to.
-Discuss your reading of the table with the teaching assistant — the numbers themselves differ from machine to machine, the conclusion does not.
+At the end, all TODOs are filled (both in `my_string.c` and in `main.c`).
+And all tests in the `main()` function in `main.c` pass.
