@@ -1,23 +1,34 @@
 /*
- * printf_demo.c - print the same line a million times, using printf.
+ * printf_demo.c - print the same line NUM_ROUNDS times, using printf().
  *
- *     gcc -O0 -Wall -Wextra -o printf_demo printf_demo.c
- *     time ./printf_demo > /dev/null
+ * Build and run:
+ *     make
+ *     ./printf_demo > /dev/null
  */
 
 #include <stdio.h>
+#include <time.h>
 
-#define N 1000000
+#define diff_us(ta, tb)		\
+	(((ta).tv_sec - (tb).tv_sec) * 1000 * 1000 + \
+	 ((ta).tv_nsec - (tb).tv_nsec) / 1000)
 
-const char *line = "hello from the operating systems lab\n";
+#define NUM_ROUNDS 1000000
+
+static const char line[] = "Hello, World!\n";
 
 int main(void)
 {
-	/* Switches stdout's buffer OFF. Comment it out to switch it back on. */
+	struct timespec time_before, time_after;
+
+	/* Turn stdout buffering OFF. Comment it out to turn it back on. */
 	setvbuf(stdout, NULL, _IONBF, 0);
 
-	for (long i = 0; i < N; i++)
+	clock_gettime(CLOCK_REALTIME, &time_before);
+	for (unsigned int i = 0; i < NUM_ROUNDS; i++)
 		printf("%s", line);
+	clock_gettime(CLOCK_REALTIME, &time_after);
+	fprintf(stderr, "time passed %ld microseconds\n", diff_us(time_after, time_before));
 
 	return 0;
 }

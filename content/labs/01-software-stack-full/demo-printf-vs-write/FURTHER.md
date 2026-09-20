@@ -53,12 +53,6 @@
 
   It makes 9034 system calls instead of 1 000 000; the call is the expense, not the formatting.
 
-* Unbuffered `printf` and `write_demo` have the same `sys` time but very different `user` time.
-  Why each?
-
-  Same `sys`: both make exactly one `write()` per line, and `sys` time is the call count.
-  Different `user`: `printf` additionally parses `"%s"`, runs `vfprintf`'s general-purpose engine, and locks the `FILE` object a million times.
-
 * Your program writes a log line every few seconds and crashes on the bug you are hunting.
   Which version do you want, and why is it the *slowest* one?
 
@@ -88,5 +82,5 @@
 
 * `man 3 printf`, `man 3 setvbuf`, `man 3 fflush`
 * `man 2 write`, `man 2 fsync`
-* `man 1 strace`, `man 1 time`
+* `man 1 strace`
 * [The GNU C Library manual — Stream Buffering](https://www.gnu.org/software/libc/manual/html_node/Stream-Buffering.html)

@@ -1,27 +1,35 @@
 /*
- * printf_demo.c - print the same line N times, using printf().
+ * printf_demo.c - print the same line NUM_ROUNDS times, using printf().
  *
  * Build and run:
  *     make
- *     time ./printf_demo > /dev/null
+ *     ./printf_demo > /dev/null
  */
 
 #include <stdio.h>
+#include <time.h>
 
-#define N 1000000
+#define diff_us(ta, tb)		\
+	(((ta).tv_sec - (tb).tv_sec) * 1000 * 1000 + \
+	 ((ta).tv_nsec - (tb).tv_nsec) / 1000)
 
-const char *line = "hello from the operating systems lab\n";
+#define NUM_ROUNDS 1000000
+
+static const char line[] = "Hello, World!\n";
 
 int main(void)
 {
-	/*
-	 * TODO 1: switch stdout's buffering OFF, using setvbuf().
-	 * Later in the demo you will comment this line out and measure again.
-	 */
+	struct timespec time_before, time_after;
 
+	/* Turn stdout buffering OFF. Comment it out to turn it back on. */
+	setvbuf(stdout, NULL, _IONBF, 0);
+
+	clock_gettime(CLOCK_REALTIME, &time_before);
 	/*
-	 * TODO 2: print `line` N times, using printf() with a "%s" format.
+	 * TODO 2: print `line` NUM_ROUND times, using printf() with a "%s" format.
 	 */
+	clock_gettime(CLOCK_REALTIME, &time_after);
+	fprintf(stderr, "time passed %ld microseconds\n", diff_us(time_after, time_before));
 
 	return 0;
 }

@@ -1,8 +1,13 @@
+/*
+ * copy-string-improved.c - copy string NUM_ROUNDS times using strcpy().
+ *
+ * Build and run:
+ *     make
+ *     ./copy-string-improved
+ */
+
 #include <stdio.h>
 #include <string.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sched.h>
 #include <time.h>
 
 #define diff_us(ta, tb)		\
@@ -11,7 +16,7 @@
 
 #define NUM_ROUNDS 100000000
 
-static char bigString[1000];
+static char big_string[1000];
 
 int main(void)
 {

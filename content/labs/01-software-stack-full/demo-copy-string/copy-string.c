@@ -1,8 +1,5 @@
 #include <stdio.h>
 #include <string.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sched.h>
 #include <time.h>
 
 #define diff_us(ta, tb)		\
@@ -11,7 +8,7 @@
 
 #define NUM_ROUNDS 100000000
 
-static char bigString[1000];
+static char big_string[1000];
 
 int main(void)
 {
@@ -19,11 +16,11 @@ int main(void)
 
 	clock_gettime(CLOCK_REALTIME, &time_before);
 	for (unsigned int i = 0; i < NUM_ROUNDS; i++) {
-		bigString[0] = '\0';
-		strcat(bigString,"John, ");
-		strcat(bigString,"Paul, ");
-		strcat(bigString,"George, ");
-		strcat(bigString,"Joel ");
+		big_string[0] = '\0';
+		strcat(big_string, "John, ");
+		strcat(big_string, "Paul, ");
+		strcat(big_string, "George, ");
+		strcat(big_string, "Joel ");
 	}
 	clock_gettime(CLOCK_REALTIME, &time_after);
 	printf("time passed %ld microseconds\n", diff_us(time_after, time_before));

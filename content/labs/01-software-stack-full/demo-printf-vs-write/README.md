@@ -1,6 +1,6 @@
 # Demo: `printf` vs `write`
 
-**Tools:** GCC, `time`, `strace`
+**Tools:** GCC, `strace`
 
 ## Goal
 
@@ -10,7 +10,7 @@ By the end of the tutorial you can explain, and demonstrate with `strace`, why a
 ## Background
 
 `printf()` sits at the **top** of the C library's output stack.
-Underneath it there is a whole machine: it parses the format string, it manages a `FILE` object, it keeps a buffer — and at the very **bottom**, it calls `write()`.
+Underneath it there is a whole machine: it parses the format string, it manages a `FILE` object, it keeps a buffer - and at the very **bottom**, it calls `write()`.
 
 `write()` is the other end of the stack: a thin, low-level output function.
 No formatting, no buffering.
@@ -19,76 +19,38 @@ Every call hands the bytes straight out of the program to the operating system.
 So `printf()` does strictly *more* work than `write()`.
 Write down a guess before reading on.
 
-Two facts the tutorial establishes by measurement:
+This is presented in figure TODO.
 
-* A `write()` call costs roughly the same whether it carries 37 bytes or 4096.
-  The expense is in *making the call at all*, not in the amount of data.
-* The `sys` time reported by `time` is, for these programs, a direct proxy for the number of `write()` calls performed.
-
+> [!NOTE]
 > All numbers below are from Ubuntu 24.04 / gcc 13.3 / x86-64.
 > Yours will differ, and they wobble by 10–20% between runs on the same machine.
 > **The ratios are the point, not the digits.**
 
 ## Build & Run
 
-`printf_demo.c` prints the same line a million times through `printf()`, with stdout's buffering switched off:
-
-```C
-#include <stdio.h>
-
-#define N 1000000
-
-const char *line = "hello from the operating systems lab\n";
-
-int main(void)
-{
-	/* Switches stdout's buffer OFF. Comment it out to switch it back on. */
-	setvbuf(stdout, NULL, _IONBF, 0);
-
-	for (long i = 0; i < N; i++)
-		printf("%s", line);
-
-	return 0;
-}
-```
-
-`write_demo.c` does the same thing with no C library on top:
-
-```C
-#include <string.h>
-#include <unistd.h>
-
-#define N 1000000
-
-const char *line = "hello from the operating systems lab\n";
-
-int main(void)
-{
-	size_t len = strlen(line);
-
-	for (long i = 0; i < N; i++)
-		write(1, line, len); /* 1 is stdout */
-
-	return 0;
-}
-```
+`printf_demo.c` prints the same line a million times through `printf()`, with stdout's buffering switched off.
+`write_demo.c` does the same thing with no C library on top.
 
 Build both and time them:
 
 ```console
 make
-time ./printf_demo > /dev/null
-time ./write_demo > /dev/null
+./printf_demo > /dev/null
+./write_demo > /dev/null
 ```
 
 **Always redirect to `/dev/null`.**
 Otherwise you are timing the terminal drawing a million lines, not the program.
+Moreover, it affects how printf does buffering:
+
+- line buffering when printing to the terminal
+- full buffering when printing to a file (including `/dev/null`)
 
 Then comment out the `setvbuf()` line in `printf_demo.c`, change nothing else, rebuild and time it again:
 
 ```console
 make clean && make
-time ./printf_demo > /dev/null
+./printf_demo > /dev/null
 ```
 
 ## Results and Explanations

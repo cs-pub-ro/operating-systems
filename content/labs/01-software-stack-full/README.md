@@ -1,4 +1,4 @@
-# Session 01: The Software Stack — Full Contents
+# Session 01: The Software Stack - Full Contents
 
 This directory holds the complete version of session 01: reference solutions, full explanations, and the reference output of every command the exercises ask for.
 
@@ -9,21 +9,21 @@ The corresponding directory used during the session, with skeletons and task des
 
 By the end of this session you should be able to:
 
-* Explain the layers between a C program and the kernel: application code, C library, and system calls.
-* Implement basic string-handling functions (`strlen`, `strcpy`, `strcat`, `memcpy`) and reason about their algorithmic cost.
-* Compare buffered (`printf`) and unbuffered (`write`) output, and explain the buffering trade-off from measured data.
+* Explain the software layers between a C program and the kernel: application, the standard C library (libc), and system calls.
+* Implement basic string-handling functions typically part of libc (`strlen()`, `strcpy()`, `strcat()`, `memcpy()`) and reason about their algorithmic cost.
+* Compare buffered (`printf()`) and unbuffered (`write()`) output functions, and explain the buffering trade-off from measured data.
 * Build a C program as a dynamically-linked executable, a statically-linked executable, and against a shared or a static library.
-* Explain the difference between static linking (`.a`, `ar`) and dynamic linking (`.so`), including symbol resolution via the PLT and the GOT.
+* Explain the difference between static linking (`.a`, `ar`) and dynamic linking (`.so`).
 
 ## Prerequisites and required tools
 
 * Prior knowledge of C syntax: pointers, arrays, functions, basic `<string.h>` usage.
-* A Linux environment with `gcc`, `make`, `ar`, `ldd`, `nm`, `objdump`, `size`, `strace` and `/usr/bin/time` installed.
+* A Linux environment with `gcc`, `make`, `ar`, `ldd`, `nm`, `objdump`, `strace` and `time` installed.
 * Comfort with the command line: running commands, redirecting output, reading `man` pages.
 
 ## Contents
 
-| Task | Type | Objective |
+| Exercise | Type | Objective |
 | --- | --- | --- |
 | [`demo-printf-vs-write`](demo-printf-vs-write) | Demo | Buffering decides whether the library beats the system call. |
 | [`demo-copy-string`](demo-copy-string) | Demo | Repeated `strcat` rescans; `strcpy` at known offsets does not. |
@@ -32,7 +32,7 @@ By the end of this session you should be able to:
 | [`bonus-static-vs-dynamic`](bonus-static-vs-dynamic) | Bonus | Measured call cost and start-up cost, and why dynamic linking still wins. |
 | [`bonus-per-stream-cipher-exec`](bonus-per-stream-cipher-exec) | Bonus | One executable per cipher; `.a` versus `.so` extraction semantics. |
 
-Each task directory contains:
+Each exercise directory contains:
 
 * `README.md` — the tutorial: goal, background, how to build and run, and what the results mean.
 * `FURTHER.md` — optional extensions and discussion points, with answers.
