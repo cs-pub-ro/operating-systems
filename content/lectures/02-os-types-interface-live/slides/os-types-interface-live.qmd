@@ -1,0 +1,175 @@
+---
+title: "OS Types and the OS Interface"
+subtitle: "Operating Systems --- Lecture 02"
+format:
+  revealjs:
+    theme: default
+    slide-number: c/t
+    code-line-numbers: false
+    slide-level: 2
+    width: 1280
+    height: 720
+    embed-resources: true
+    link-external-newwindow: true
+  beamer:
+    aspectratio: 169
+    slide-level: 2
+---
+
+## Why is there an operating system? {background-color="#f7f7f7"}
+
+```text
+./hello           (prints one line)     ~1,015,131 instructions
+./hello_nostd     (write + exit)          ~108,573 instructions
+```
+
+The program wrote a dozen instructions.
+The machine ran a hundred thousand to a million.
+
+The rest is the operating system.
+
+::: {.notes}
+Run both with `sudo perf stat -e instructions` live. perf needs sudo.
+:::
+
+## {background-color="#f7f7f7"}
+
+::: {style="font-size: 1.3em; text-align: center; margin-top: 1.5em;"}
+The operating system is a **provider of services** ---
+so it has an interface.
+
+It is an **enforcer of isolation** ---
+so that interface is a boundary, not a function call.
+:::
+
+## Today
+
+1. What is the OS **made of**?
+1. How do you **talk to** it? (the system call interface)
+1. What makes the boundary a **boundary**? (hardware modes)
+1. The boundary is **expensive** --- how do you pay less?
+1. Where should the **code live**? (OS types, virtualization)
+
+## An OS you cannot link, cannot trust
+
+A library --- but not linked into your program, and shared by every program at once.
+
+A normal library trusts its caller. The kernel must not: its callers are every program on the machine, and some are hostile.
+
+**Unikernel: the smallest an OS can be**
+
+```text
+c-hello_qemu-x86_64      241K       855 symbols
+```
+
+240 KB to print one line. "Run a program on a machine" is a big job.
+
+## OS types
+
+![](../media/01-make-os/os-types.svg){fig-align="center" width="72%"}
+
+Monolithic (all in the kernel) · microkernel (drivers are processes) · unikernel (no boundary)
+
+## The system call is the interface
+
+```text
+$ strace ./read_write_syscall
+write(1, "Gimme message: ", 15)   = 15
+read(0, "hello there\n", 64)      = 12
+write(1, "hello there\n", 12)     = 12
+exit_group(0)                     = ?
+```
+
+Call number in `rax`, args in registers, `syscall`, result in `rax`.
+
+The trace **is** the program. Nothing sits between it and the kernel.
+
+::: {.notes}
+Run it, type a line, then strace it. Best demo of the first half.
+:::
+
+## libc calls are not system calls
+
+Programs call `printf()`, `malloc()`. libc turns those into system calls --- when it has to.
+
+* `getpid()` --- one system call
+* `strlen()` --- none, ever
+* `printf()` --- a `write()`, or nothing, depending on the buffer
+
+libc **decides** when to cross. That is what optimisation exploits.
+
+## The boundary is in silicon
+
+```text
+$ ./cli
+first
+Segmentation fault (core dumped)
+```
+
+`cli` disables interrupts --- ring 0 only.
+
+There is no check for it in the kernel. The **CPU** faults on it at ring 3.
+
+A software check can have a bug. This cannot.
+
+::: {.notes}
+Then run `sudo ./cli` and show it crashes identically -- next slide, live.
+:::
+
+## Mode is not identity
+
+![](../media/03-privileged-domain/domains-vs-privilege.svg){fig-align="center" width="60%"}
+
+kernel/user = a hardware mode · root/non-root = a software identity
+
+Root still runs in user mode. Root still faults on `cli`.
+
+## What the boundary costs
+
+```text
+./make_syscalls    (write to /dev/null)   703224 us
+./make_libcalls    (a function call)        9360 us
+```
+
+~70x. `/dev/null` does nothing --- almost all of it is the crossing.
+
+**So: cross it less.**
+
+## Two ways to cross less
+
+```text
+fwrite_buffered      65846 us          sendfile server    ~1800 us
+fwrite_unbuffered  1508197 us          write server       ~5900 us
+```
+
+**Down** --- buffer in user space, batch the crossings.
+
+**Up** --- push the whole job into the kernel, remove them.
+
+One idea, two ends.
+
+## Where should the code live?
+
+* **Microkernel** --- drivers are processes. Safe, but every filesystem call is now a crossing.
+* **Monolithic** --- everything privileged, one address space. Fast, but a driver bug is a kernel bug.
+* **Unikernel** --- no boundary; isolation from outside.
+
+No correct answer. Linux is monolithic; seL4 flies aircraft.
+
+## Virtualization
+
+![](../media/06-virtualization/virtualization.svg){fig-align="center" width="58%"}
+
+A **hypervisor** is to operating systems what an OS is to applications.
+
+More privileged than the kernel. Each guest OS believes it owns the machine.
+
+## {background-color="#f7f7f7"}
+
+::: {style="font-size: 1.25em; text-align: center; margin-top: 1.5em;"}
+Dual role: provider of services, enforcer of isolation.
+
+Isolation needs a boundary.
+The boundary is entered through system calls, it costs,
+and OS types and virtualization are where you put it.
+:::

@@ -1,0 +1,289 @@
+---
+title: "OS Types and the OS Interface"
+subtitle: "Operating Systems --- Lecture 02"
+format:
+  revealjs:
+    theme: default
+    slide-number: c/t
+    code-line-numbers: false
+    slide-level: 2
+    incremental: false
+    width: 1280
+    height: 720
+    embed-resources: true
+    link-external-newwindow: true
+  beamer:
+    aspectratio: 169
+    slide-level: 2
+---
+
+# 00. Pitch
+
+## Why is there an operating system at all?
+
+A C program that prints one line:
+
+```text
+$ sudo perf stat -e instructions ./hello
+Hello World!
+         1,015,131      instructions
+```
+
+A freestanding assembly program that writes 14 bytes and exits:
+
+```text
+$ sudo perf stat -e instructions ./hello_nostd
+Hello, World!
+           108,573      instructions
+```
+
+The program wrote a dozen instructions. The machine ran a hundred thousand.
+
+::: {.notes}
+Run this live; it is one command each. `perf` needs sudo.
+The rest is the OS: start the process, map memory, service the write, tear it down.
+:::
+
+## Two reasons, one dual role
+
+**Common features.**
+Every program starts, gets memory, reads files, talks to the network.
+Written once, below every application, reached through one interface.
+
+**Isolation.**
+Many programs, one machine, none entitled to trust the others.
+Something has to keep them apart --- and can, because the hardware gives it a privilege they lack.
+
+## {background-color="#f0f0f0"}
+
+::: {style="font-size: 1.3em; text-align: center; margin-top: 2em;"}
+The operating system is a **provider of services** ---
+which is why it has an interface.
+
+It is an **enforcer of isolation** ---
+which is why that interface is a boundary, not a function call.
+:::
+
+# 01. What Makes an Operating System
+
+## A library that is not linked in
+
+![](../media/01-make-os/os-components-libc.svg){fig-align="center" width="55%"}
+
+Like a library --- but not linked into your program, and shared by every program at once.
+
+## You do not call it; you cross to it
+
+![](../media/01-make-os/os-call-trigger.svg){fig-align="center" width="60%"}
+
+A normal library trusts its caller. The kernel must not: its callers are *every program on the machine*.
+
+## There is more OS than you think
+
+A **unikernel** is an OS compiled down to one application --- the smallest an OS can be.
+
+```text
+$ ls -lh c-hello_qemu-x86_64
+-rwxr-xr-x  241K  c-hello_qemu-x86_64
+
+$ nm c-hello_qemu-x86_64.dbg | wc -l
+855
+```
+
+240 KB and 800 symbols, to print one line. "Run a program on a machine" is a big job.
+
+## Where the code lives: OS types
+
+![](../media/01-make-os/os-types.svg){fig-align="center" width="80%"}
+
+* **Monolithic** --- scheduler, memory, drivers, filesystems, network all in the kernel (Linux)
+* **Microkernel** --- only the core is privileged; drivers and filesystems are processes (seL4, QNX)
+* **Unikernel / SASOS** --- one application, no internal boundary (Unikraft)
+
+# 02. The Operating System Interface
+
+## The system call is the interface
+
+Load `rax` with the call number, arguments in `rdi, rsi, rdx, r10, r8, r9`, execute `syscall`. Result in `rax`.
+
+```text
+$ strace ./read_write_syscall
+write(1, "Gimme message: ", 15)   = 15
+read(0, "hello there\n", 64)      = 12
+write(1, "hello there\n", 12)     = 12
+exit_group(0)                     = ?
+```
+
+The trace *is* the program. Nothing sits between it and the kernel.
+
+::: {.notes}
+Run it, type a line, then strace it. Highest-value demo of the first half.
+:::
+
+## Families of system call
+
+| Family | Examples | Lecture |
+| --- | --- | --- |
+| processes and threads | `fork()`, `execve()`, `clone()` | 06--08 |
+| memory | `brk()`, `mmap()`, `munmap()` | 03--05 |
+| file I/O | `open()`, `read()`, `write()` | 09--10 |
+| network I/O | `socket()`, `connect()`, `send()` | 11 |
+| IPC | pipes, signals, shared memory | 10, 12 |
+
+A few hundred in Linux: `man 2 syscalls`.
+
+## libc calls are not system calls
+
+Programs call `printf()`, `fopen()`, `malloc()`. libc turns those into system calls --- when it has to.
+
+* **thin wrapper**: `getpid()` --- one system call
+* **none, or sometimes**: `strlen()` never; `malloc()` only when it runs out
+* **many, or none**: `printf()` --- a `write()`, or nothing, depending on the buffer
+
+libc *decides* when to cross. That is what part 04 exploits.
+
+# 03. Privileged and Unprivileged Domains
+
+## Two modes, enforced by the hardware
+
+![](../media/03-privileged-domain/multi-app-isolation.svg){fig-align="center" width="60%"}
+
+**User mode**: cannot touch device registers, page tables, interrupts.
+**Kernel mode**: can.
+
+## The boundary is in silicon
+
+```text
+$ ./cli
+first
+Segmentation fault (core dumped)
+```
+
+`cli` disables interrupts; `mov rax, cr3` reads the page-table base. Both are ring-0 only.
+
+There is no check for `cli` in the kernel. The **CPU** faults on it at ring 3.
+
+*A software check can have a bug. This cannot.*
+
+::: {.notes}
+Then run ./cli under sudo and show it crashes identically. That is the next slide's point, live.
+:::
+
+## Mode is not identity
+
+![](../media/03-privileged-domain/domains-vs-privilege.svg){fig-align="center" width="62%"}
+
+**kernel/user** = a hardware mode: which instructions run now.
+**root/non-root** = a software identity: what the kernel will agree to do.
+
+Root still runs in user mode. Root still faults on `cli`. The axes are orthogonal.
+
+# 04. Optimizing the OS Interface
+
+## The boundary has a price
+
+Ten million one-byte writes to `/dev/null` (kernel work: nil), against the same loop as a function call:
+
+```text
+$ ./make_syscalls
+time passed 703224 microseconds
+
+$ ./make_libcalls
+time passed   9360 microseconds
+```
+
+~70x. `/dev/null` does nothing --- almost all of it is the crossing itself.
+
+That is not waste. It is the price of the check from part 03.
+
+## Down: buffer in user space
+
+```text
+$ ./fwrite_buffered
+time passed   65846 microseconds
+
+$ ./fwrite_unbuffered
+time passed 1508197 microseconds
+```
+
+Buffer on: one `write` per few thousand bytes. Buffer off: one per byte.
+
+A few kilobytes of memory, a twenty-fold speedup, identical output. This is why libc buffers.
+
+## Up: push work into the kernel
+
+`sendfile()` moves a file to a socket without the bytes entering user space:
+
+```text
+$ ./server_sendfile     ~1800 us
+$ ./server_write        ~5900 us
+```
+
+`server_write`: read + send per chunk, two copies. `sendfile`: one call, no bounce through user space.
+
+One idea, two ends: batch the crossings, or remove them.
+
+# 05. Optimizing vs Security: OS Types
+
+## How much code lives inside the boundary?
+
+![](../media/05-os-types/os-types-tradeoff.svg){fig-align="center" width="72%"}
+
+## The same trade-off, made structurally
+
+* **Microkernel** --- drivers and filesystems are *processes*.
+  A crashing driver is a crashing process. But every filesystem call is now IPC --- the crossing part 04 fought to avoid.
+* **Monolithic** --- everything privileged, in one address space.
+  Filesystem use is a function call. But a driver bug is a bug in the most privileged code on the machine.
+* **Unikernel** --- no boundary at all; isolation supplied from outside.
+
+No correct answer. Linux is monolithic; seL4 is a microkernel and flies aircraft.
+
+# 06. Virtualization
+
+## What runs the operating system?
+
+![](../media/06-virtualization/virtualization.svg){fig-align="center" width="70%"}
+
+* What if the OS itself is compromised? Nothing above it can contain it.
+* What if one machine serves many distrusting tenants?
+* What if you want several different OSes at once?
+
+## The hypervisor
+
+A **hypervisor** does for operating systems what an OS does for applications.
+
+More privileged than the kernel. Multiplexes the hardware. Isolates its guests. Each guest kernel believes it owns the machine.
+
+> OS : processes :: hypervisor : operating systems
+
+The software stack from lecture 01, extended one layer down.
+
+# 07. Conclusion
+
+## What we covered
+
+* why the OS exists --- common features, and isolation
+* what it is made of; OS types by how much runs privileged
+* the system call interface, its families, and libc on top
+* the user/kernel boundary, in hardware, vs root/non-root
+* the cost of the boundary, and the two ways to pay less
+* OS types and virtualization: the same protection-vs-performance trade-off
+
+## {background-color="#f0f0f0"}
+
+::: {style="font-size: 1.3em; text-align: center; margin-top: 2em;"}
+The operating system has a dual role:
+provider of services, enforcer of isolation.
+
+Isolation needs a boundary.
+The boundary is entered through system calls, it costs,
+and OS types and virtualization are where you put it.
+:::
+
+## Next
+
+* **Lecture 03** --- inside the memory family: how the kernel gives each process its own view of memory
+* **Lab 02** --- raw syscall wrappers over `my_syscall()`, libc-style helpers on top, `strace` to check
+
+Full write-up, demos and references: the session `README.md`.
