@@ -77,7 +77,7 @@ What the split governs is the navigation and the generated contents lists, not a
 
 ```text
 /                                        the front page, from the repository README
-/learner/                                the guide for students, from LEARNER.md
+/info/how-the-lab-works/                 the guide for students
 /live/                                   what the live view holds
 /live/labs/                              content/labs/README.md
 /live/labs/01-software-stack/            content/labs/01-software-stack-live/README.md

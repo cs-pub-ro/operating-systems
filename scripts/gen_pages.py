@@ -11,7 +11,6 @@ written to be read afterwards -- and each half is published in the view it
 belongs to, so the two are never listed side by side:
 
     index.md                                    front page
-    learner.md                                  the top-level LEARNER.md guide
     live/index.md                               what the live view is
     live/labs/index.md                          content/labs/README.md
     live/labs/01-software-stack/index.md        content/labs/01-software-stack-live/
@@ -58,7 +57,6 @@ from sessions import (  # noqa: E402  (the path has to be set up first)
     CONTENT_ROOT,
     REPO_ROOT,
     find_assets,
-    read_title,
     site_tree,
     walk_tasks,
 )
@@ -69,13 +67,6 @@ SITE_TAGLINE = "Lecture and lab materials for the Operating Systems class"
 # What the front page is called in the navigation.  The tab bar already carries
 # the name of the site, so the entry that leads back to it says `Home` instead.
 HOME_LABEL = "Home"
-
-# The guide to the class itself -- how a session is put together, and how to
-# work through one -- which belongs to no view. It is published at the root of
-# the site, so that the links it makes into `content/` are the same links the
-# front page makes.
-GUIDE_SOURCE = REPO_ROOT / "LEARNER.md"
-GUIDE_PAGE = "learner.md"
 
 # The navigation tree, as the `nav_file` of the mkdocs-literate-nav plugin.
 NAV_FILE = "SUMMARY.md"
@@ -180,9 +171,6 @@ def rewrite_target(target, readme_dir, root_prefix="", view=None):
     if url is not None:
         return f"{root_prefix}{url}/index.md{separator}{fragment}"
 
-    if resolved == GUIDE_SOURCE:
-        return f"{root_prefix}{GUIDE_PAGE}{separator}{fragment}"
-
     # A diagram, or a rendered deck of slides, is copied into the site at the
     # path it has below its session, which is the path the link already uses:
     # `media/03-kernel/os-syscall.svg` from the lecture page, `../../media/...`
@@ -286,7 +274,10 @@ def build_front_page(views, plain_sections):
         first = view["description"].splitlines()[0] if view["description"] else ""
         lines.append(f"* [{view['title']}]({view['url']}/index.md) — {first}".rstrip(" —"))
     for section in plain_sections:
-        lines.append(f"* [{section['title']}]({section['url']}/index.md)")
+        first = section["description"].splitlines()[0] if section.get("description") else ""
+        lines.append(
+            f"* [{section['title']}]({section['url']}/index.md) — {first}".rstrip(" —")
+        )
     write("index.md", "\n".join(lines) + "\n")
 
 
@@ -336,15 +327,6 @@ def build_session_page(session, view=None):
     render(session, view, extra)
 
 
-def build_guide():
-    """Publish the guide to the class, and return its title for the navigation."""
-    if not GUIDE_SOURCE.is_file():
-        return None
-    text = GUIDE_SOURCE.read_text(encoding="utf-8")
-    write(GUIDE_PAGE, rewrite_links(text, REPO_ROOT))
-    return read_title(GUIDE_SOURCE, "How the Lab Works")
-
-
 def nav_tasks(tasks, indent):
     lines = []
     for task in tasks:
@@ -365,7 +347,7 @@ def nav_sections(sections, indent):
     return lines
 
 
-def build_nav(views, plain_sections, guide_title=None):
+def build_nav(views, plain_sections):
     """The navigation tree, read back by the mkdocs-literate-nav plugin.
 
     Each view is a top-level entry, which `navigation.tabs` turns into a tab of
@@ -373,8 +355,6 @@ def build_nav(views, plain_sections, guide_title=None):
     nothing else, which is the point of splitting the site in two.
     """
     lines = [f"* [{HOME_LABEL}](index.md)"]
-    if guide_title:
-        lines.append(f"* [{guide_title}]({GUIDE_PAGE})")
     for view in views:
         lines.append(f"* [{view['title']}]({view['url']}/index.md)")
         lines.extend(nav_sections(view["sections"], "    "))
@@ -394,7 +374,6 @@ def main():
     locate_pages(views, plain_sections)
 
     build_front_page(views, plain_sections)
-    guide_title = build_guide()
     for view in views:
         build_view_page(view)
         for section in view["sections"]:
@@ -411,7 +390,7 @@ def main():
             for task in walk_tasks(session["tasks"]):
                 render(task)
             publish_assets(session)
-    build_nav(views, plain_sections, guide_title)
+    build_nav(views, plain_sections)
 
 
 main()

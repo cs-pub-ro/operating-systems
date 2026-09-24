@@ -60,6 +60,7 @@ EXCLUDED_DIRS = {
     "scripts",
     "site",
     "solutions",
+    "util",
     "utils",
 }
 
@@ -99,7 +100,7 @@ ASSET_SUFFIXES = frozenset(
 
 # The order the sections are shown in, which is the order of the class rather
 # than the alphabet.  A section not named here is shown after these, by name.
-SECTION_ORDER = ("lectures", "labs", "assignments", "extra")
+SECTION_ORDER = ("info", "lectures", "labs", "assignments", "extra")
 
 # The two halves of a session.  `-live` is what is used while the session runs:
 # for a lab, the skeletons and task descriptions students work on; for a
@@ -122,6 +123,18 @@ VARIANT_DESCRIPTIONS = {
     "full": (
         "The full version of each session, written to be read afterwards.\n"
         "Reference solutions, worked explanations and the output to expect."
+    ),
+}
+
+# What each section that is not split into two views is, for the entry that
+# leads to it on the front page.  Keyed by the section's directory name; a
+# section with no entry here simply shows no description.
+SECTION_DESCRIPTIONS = {
+    "info": "General details about the class; rules, grading, etc.",
+    "assignments": "Take-home assignments",
+    "extra": (
+        "Extra fun stuff, not included in the class, labs, assignments or exam."
+        " Just for the curious and worthy."
     ),
 }
 
@@ -345,7 +358,12 @@ def find_sections(content_root=CONTENT_ROOT):
     sections = []
     for entry in sorted(child_dirs(content_root), key=section_sort_key):
         sections.append(
-            node(entry, "section", sessions=find_sessions(entry))
+            node(
+                entry,
+                "section",
+                sessions=find_sessions(entry),
+                description=SECTION_DESCRIPTIONS.get(entry.name, ""),
+            )
         )
     return sections
 
