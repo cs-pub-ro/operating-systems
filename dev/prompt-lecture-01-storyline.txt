@@ -1,0 +1,21 @@
+We are preparing contents for a class on Operating Systems, part of a 4-years bachelor study program in a technical university.
+The class is part of the 2nd year, 1s semester.
+
+We are updating the materials for the lecture-01 (the first lecture): Software Stack.
+The materials are of two types:
+- Materials to be used / delivered live, under `content/lectures/01-software-stack-live/`
+- Materials to be used before and after lecture, with full information, details and explanations, under content/lectures/01-software-stack-full/`
+
+We want to create a storyline / narrative for the lecture for the live delivery.
+For this we created a `Storyline / Narrative` section in the `content/lectures/01-software-stack-live/README.md`.
+
+Do the following:
+1. Improve the storyline considering the contents used for live delivery.
+2. Improve wording each entry in the list a simple, easy-to-understand phrase.
+   You can use more than one phrase for the takeaway / conclusion.
+3. As much as possible use engaging wording, a narative build-up and words that are easy to understand.
+4. Create a visual diagram of the storyline in Excalidraw format, and convert it to an SVG file.
+   The storyline image must be a storyline, not a map.
+   Make it a flow-like diagram, that walks you through the steps in the storyline.
+   Obviously, use mainly visual elements, not just writing.
+   Have the reader / student be able to "walk" through the diagram, and get information step-by-step in a narrative way.

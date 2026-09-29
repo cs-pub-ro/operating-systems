@@ -23,13 +23,39 @@ The full version -- the same argument in prose, with the diagrams, the reference
 | Part | Question | Demo | Figure |
 | --- | --- | --- | --- |
 | 00. Pitch | Why should a programmer care what is underneath? | [`00-pitch/`](demos/00-pitch) | -- |
-| 01. Lecture map | What are we doing today? | -- | -- |
+| 01. Lecture map | What are we doing today? | -- | [the storyline](media/01-lecture-map/storyline.svg) |
 | 02. The software stack | What are the layers, and what does each give you? | [`02-software-stack/`](demos/02-software-stack) | [the stack](media/02-software-stack/software-stack.svg) |
 | 03. The operating system | What is the kernel, and how do you talk to it? | [`02-software-stack/`](demos/02-software-stack) | [OS and syscall API](media/03-kernel/os-syscall.svg) |
 | 04. Trade-offs | What do you give up by moving up or down? | [`04-versus/`](demos/04-versus) | [up and down](media/04-versus/software-software-versus.svg) |
 | 05. Applications and libraries | What kinds of component are there? | -- | [apps and libs](media/05-apps-libs/libraries-and-apps.svg) |
 | 06. Interaction | How do separate components talk? | [`06-software-interaction/`](demos/06-software-interaction) | [interaction](media/06-software-interaction/software-interaction.svg) |
 | 07. Conclusion | What should survive the week? | -- | -- |
+
+## Storyline / Narrative
+
+The lecture argues one thing at a time, and the figure below walks through it, step by step: [the storyline](media/01-lecture-map/storyline.svg).
+
+1. **The pitch:** four tiny programs, thirty times apart, one character apart, fifteen times faster, doing nothing at all.
+   Each is proof that what happens beneath your code changes what your code does.
+1. **Software is useful, and software is overhead.**
+   It gives you an interface and it solves your problem, and every bit of that convenience is paid for somewhere underneath.
+1. **Software comes in layers**, each one built on top of the last.
+1. **Going up buys flexibility, usability, portability; going down buys performance, control, efficiency.**
+   Every piece of software sits at the height its designer chose.
+1. **Every layer is an interface, and every interface can be skipped.**
+   An API is a promise about *what*, not *how*, and nothing stops a program from going around it.
+1. **At the bottom of every stack sits the same floor: the operating system, reached through the system call API.**
+1. **Almost every path a program takes runs through that floor, and there is no shortcut around it.**
+1. **The OS earns its place with two things: primitives and isolation.**
+   Primitives are the resources you actually operate on: CPU as processes and threads, memory as virtual memory, I/O as file descriptors, sockets and buffers.
+   Isolation gives each program its own protected domain, and how is next lecture's story.
+1. **The OS itself is nothing exotic: a library, only one that runs in a privileged domain.**
+1. **Software comes in exactly two shapes: applications, which start, and libraries, which are called.**
+   An application can expose an API of its own, and the moment it does it starts looking like a library to whoever calls it.
+1. **Follow that far enough and software stacks on software:** a person drives an app, that app calls libraries and other apps, and the chain repeats.
+1. **What should survive the week:** layering buys flexibility, but never for free.
+   The OS is the one layer every path answers to.
+   And, overhead aside, this stuff is genuinely exciting to work with.
 
 ## Points to capture
 
