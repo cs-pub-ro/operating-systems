@@ -1,0 +1,21 @@
+# Serve the website from a container at http://localhost:3000.
+#
+#     docker compose up --build
+#
+# The repository is mounted, not copied, so saving a README rebuilds the page.
+# See the "Building the website with Docker" section of README.md.
+
+services:
+  site:
+    build: .
+    image: operating-systems-site
+    # `PORT=3001 docker compose up` to use a custom port
+    ports:
+      - "127.0.0.1:${PORT:-3000}:8000"
+    volumes:
+      - .:/site
+    # Run as the host user, so the decks render_slides.sh writes into
+    # content/**/slides/ and the _site/ of a `mkdocs build` are not owned by
+    # root. 1000 is the first user on most Linux machines; anyone else runs
+    # `export UID GID=$(id -g)` first, since the shell does not export them.
+    user: "${UID:-1000}:${GID:-1000}"
