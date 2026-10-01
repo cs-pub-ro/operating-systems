@@ -385,9 +385,9 @@ main() {
 	if [[ " ${missing[*]} " == *" pwntools "* ]] ||
 		[[ " ${missing_optional[*]-} " == *" pwntools "* ]]; then
 		echo ""
-		echo "pwntools is a Python library, and is installed with pip:"
+		echo "pwntools is a Python library, and can be install with pipx:"
 		echo ""
-		echo "    python3 -m pip install --user pwntools"
+		echo "    pipx install pwntools"
 	fi
 
 	if [[ " ${missing[*]} " == *" x86-64 machine "* ]]; then
