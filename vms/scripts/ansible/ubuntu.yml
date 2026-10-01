@@ -1,0 +1,93 @@
+- name: Provision image
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Check if cloud-init is installed
+      package_facts:
+    - name: Clean cloud-init artifacts
+      command: cloud-init clean
+      when: "'cloud-init' in ansible_facts.packages"
+
+    - name: Purge unnecessary packages
+      apt:
+        name:
+          - snapd
+          - unattended-upgrades
+          - gnome-initial-setup
+          - linux-firmware
+          - linux-headers*
+          - cloud-init*
+        state: absent
+        purge: yes
+        autoremove: yes
+
+    - name: Prevent snap reinstallation
+      dpkg_selections:
+        name: snapd
+        selection: hold
+
+    - name: Update grub configuration
+      command: update-grub2
+
+    - import_tasks: _install_packages.yml
+    - import_tasks: _install_vbox_guest_additions.yml
+
+    - name: Update root password
+      user:
+        name: root
+        update_password: always
+        # python -c 'import crypt; print(crypt.crypt("root", "$1$NaCl$"))'
+        password: $1$NaCl$Mb6A.7Qvm5pyF/2OFUCum0
+
+    - name: Configure git for root and student
+      become: yes
+      shell: |
+        git config --global color.ui auto
+        git config --global user.name '{{ item.git_name }}'
+        git config --global user.email '{{ item.git_email }}'
+      loop:
+        - { user: student, git_name: 'Student VM User', git_email: 'student@stud.acs.upb.ro' }
+        - { user: root, git_name: 'Root VM User', git_email: 'root@stud.acs.upb.ro' }
+      loop_control:
+        loop_var: item
+      become_user: "{{ item.user }}"
+
+    - name: Make vim as default editor
+      command:
+        cmd: update-alternatives --set editor /usr/bin/vim.basic
+
+    - name: Ensure vim backup directories exist
+      file:
+        path: "{{ item }}"
+        state: directory
+        mode: '0755'
+      loop:
+        - /home/student/.vim/backup
+        - /root/.vim/backup
+
+    - name: Set collation to show capitalized names first
+      command:
+        cmd: update-locale LC_COLLATE=C
+
+    - name: Trim Bash prompt when too large
+      command:
+        cmd: echo -e '\nexport PROMPT_DIRTRIM=3' >> /etc/bash.bashrc
+
+    - name: Fetch git repository for student
+      git:
+        repo: https://github.com/cs-pub-ro/operating-systems.git
+        dest: /home/student/operating-systems
+
+    - name: Clean command history for student and root
+      shell: |
+        history -c
+        unset HISTFILE
+        rm -f {{ user_home }}/bash_history
+      become: yes
+      become_user: "{{ item.user }}"
+      vars:
+        user_home: "{{ item.home }}"
+      loop:
+        - { user: 'student', home: '/home/student' }
+        - { user: 'root', home: '/root' }

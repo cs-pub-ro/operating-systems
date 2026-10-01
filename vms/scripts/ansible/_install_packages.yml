@@ -1,0 +1,135 @@
+- name: Download latest Firefox
+  get_url:
+    url: "https://download.mozilla.org/?product=firefox-latest-ssl&os={{ 'linux64-aarch64' if ansible_architecture == 'aarch64' else 'linux64' }}&lang=en-GB"
+    dest: /tmp/firefox.tar.bz2
+    mode: '0644'
+
+- name: Extract Firefox archive
+  unarchive:
+    src: /tmp/firefox.tar.bz2
+    dest: /opt/
+    remote_src: true
+    creates: /opt/firefox/firefox
+
+- name: Ensure applications directory exists
+  file:
+    path: /usr/local/share/applications
+    state: directory
+    mode: '0755'
+
+- name: Ensure symlink for Firefox binary exists
+  file:
+    src: /opt/firefox/firefox
+    dest: /usr/local/bin/firefox
+    state: link
+    force: true
+
+- name: Install Firefox desktop entry
+  get_url:
+    url: https://raw.githubusercontent.com/mozilla/sumo-kb/main/install-firefox-linux/firefox.desktop
+    dest: /usr/local/share/applications/firefox.desktop
+    mode: '0644'
+
+- name: Upgrade all packages
+  apt:
+    upgrade: full
+
+# Sublime Text is not packaged by Ubuntu, so it comes from its own repository.
+- name: Ensure apt keyrings directory exists
+  file:
+    path: /etc/apt/keyrings
+    state: directory
+    mode: '0755'
+
+- name: Add Sublime Text signing key
+  get_url:
+    url: https://download.sublimetext.com/sublimehq-pub.gpg
+    dest: /etc/apt/keyrings/sublimehq-pub.asc
+    mode: '0644'
+
+- name: Add Sublime Text repository
+  apt_repository:
+    repo: "deb [signed-by=/etc/apt/keyrings/sublimehq-pub.asc] https://download.sublimetext.com/ apt/stable/"
+    filename: sublime-text
+    state: present
+
+- name: Install additional packages
+  apt:
+    pkg:
+      # Toolchain: gcc, g++, make, binutils (ar, nm, objdump, size, readelf),
+      # and the static C library that `gcc -static` links against.
+      - build-essential
+      - pkg-config
+      - gcc
+      - make
+      - cmake
+      - binutils
+      - libc6-dev
+      - nasm
+      - libssl-dev
+      - perl
+      - gawk
+      # Debugging, tracing and inspecting programs.
+      - gdb
+      - valgrind
+      - strace
+      - ltrace
+      - time
+      - linux-tools-generic
+      - file
+      - xxd
+      - cscope
+      - universal-ctags
+      # Python, for scripts and for pwntools, which the exploits of session 05
+      # import from the system python3.
+      - python3
+      - python3-pip
+      - python3-dev
+      - python3-venv
+      - python3-pwntools
+      - pipx
+      - netcat-openbsd
+      # Documentation: the man pages of the system calls and the C library.
+      - man-db
+      - manpages-dev
+      - manpages-posix
+      - manpages-posix-dev
+      - glibc-doc
+      - glibc-doc-reference
+      - make-doc
+      # Looking at a running system.
+      - htop
+      - lsof
+      - psmisc
+      - sysstat
+      - iotop
+      - pciutils
+      - usbutils
+      # Editors.
+      - nano
+      - vim
+      - emacs
+      - gedit
+      - sublime-text
+      # Shell, version control and archives.
+      - git
+      - curl
+      - less
+      - tree
+      - tmux
+      - bash-completion
+      - apt-file
+      - tar
+      - zip
+      - unzip
+      - bzip2
+      - xz-utils
+    state: latest
+    update_cache: true
+
+# Only amd64 has a 32-bit counterpart to build for (the heap-havoc challenge).
+- name: Install the 32-bit toolchain
+  apt:
+    pkg: gcc-multilib
+    state: latest
+  when: ansible_architecture == 'x86_64'
