@@ -1,0 +1,45 @@
+- name: Get kernel version from uname
+  command: uname -r
+  register: kernel_version
+  changed_when: false
+
+- name: Install prerequisites for VirtualBox Guest Additions
+  apt:
+    name:
+      - build-essential
+      - dkms
+      - linux-headers-{{ kernel_version.stdout }}
+    state: present
+    update_cache: yes
+
+- name: Ensure mount point exists
+  file:
+    path: /mnt/vbox
+    state: directory
+
+- name: Mount VBoxGuestAdditions.iso
+  mount:
+    path: /mnt/vbox
+    src: "/home/student/VBoxGuestAdditions.iso"
+    fstype: iso9660
+    opts: loop
+    state: mounted
+
+- name: Run Guest Additions installer
+  command: sh /mnt/vbox/VBoxLinuxAdditions{{ '-arm64' if ansible_architecture == 'aarch64' else '' }}.run --nox11
+  args:
+    chdir: /mnt/vbox
+  ignore_errors: yes
+
+- name: Verify VirtualBox Guest Additions are installed
+  command: VBoxControl --version
+
+- name: Unmount Guest Additions ISO
+  mount:
+    path: /mnt/vbox
+    state: absent
+
+- name: Remove uploaded ISO to save space
+  file:
+    path: "/home/student/VBoxGuestAdditions.iso"
+    state: absent
