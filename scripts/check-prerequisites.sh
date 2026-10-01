@@ -198,7 +198,7 @@ check_pwntools() {
 		return
 	fi
 
-	if version=$(python3 -c 'import pwn; print(pwn.__version__)' 2>/dev/null); then
+	if version=$(python3 -c 'import pwnlib; print(pwnlib.__version__)' 2>/dev/null); then
 		report ok "pwntools" "$version"
 	else
 		report missing "pwntools" "not installed for this python3"
