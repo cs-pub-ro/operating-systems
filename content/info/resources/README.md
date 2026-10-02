@@ -8,8 +8,8 @@ List of resources:
 - [Moodle Class](https://curs.upb.ro/2026/course/view.php?id=1898) (used for homework submissions, quizzes, announcements, etc.)
 - [Rules and Grading](../rules-and-grading/)
 - [Books / Reading Materials](https://elf.cs.pub.ro/so/res/doc/)
-- [OS Calendar](TBA)
-- [OS Lab Schedule](TBA)
+- [OS Calendar](https://calendar.google.com/calendar/embed?src=6c59106f86b728ac4991ab289247cf890a1352ea5f1b37b96e04b8385bd80be8%40group.calendar.google.com&ctz=Europe%2FBucharest)
+- [OS Lab Schedule](https://docs.google.com/spreadsheets/d/e/2PACX-1vSSb0C7S-d57hEpCVEYF4dPvI_4JzP8VAPne7AM-7gvFy4MbrPTLZoBMFTs_FHPgePb0WGrseqOYnwJ/pubhtml?gid=2068102211&single=true)
 - [OS Course Planning](https://docs.google.com/spreadsheets/d/12htCk2jMCnC2o19hEv_Cm00N4uu19_ASkQFCx9f-eA0/edit)
 
 ## Reading Materials
