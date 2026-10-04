@@ -1,6 +1,5 @@
 # Operating Systems
 
-Temporary repository to store contents for the Operating Systems class.
 Everything lives under `content/`, one directory per part of the class: `lectures/`, `labs/`, `assignments/` and `extra/`.
 Every session is written in two halves — `NN-<name>-live/`, used while the session runs, and `NN-<name>-full/`, written to be read afterwards — and the website publishes them as two separate views, so the two are never listed side by side.
 

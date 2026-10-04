@@ -155,6 +155,19 @@ ACRONYMS = {
     "cylab": "CyLab",
 }
 
+# The section whose sessions are laid out by task type, `demo-<name>/`,
+# `NN-<name>/` and `bonus-<name>/`.  Its tasks are listed in the order they are
+# taken in -- demos, then the exercises by number, then the bonus ones -- rather
+# than by the alphabet, which would put the demos last.
+LAB_SECTION = "labs"
+
+# The task type of a lab task, from the prefix of its directory name.
+LAB_TASK_PATTERN = re.compile(r"^(?:(?P<demo>demo)|(?P<index>\d+)|(?P<bonus>bonus))[-_]")
+
+# The `Exercise:` lead-in of a lab exercise title, which the navigation label
+# replaces with the number of the exercise.
+EXERCISE_TITLE_PREFIX = re.compile(r"^exercise\s*:\s*", re.IGNORECASE)
+
 # The `Session NN:` lead-in of a session README title, which the heading built
 # from that title carries as its index instead.
 SESSION_TITLE_PREFIX = re.compile(r"^session\s*\d+\s*[:.-]?\s*", re.IGNORECASE)
@@ -307,6 +320,52 @@ def session_heading(session_dir):
     return f"{index.group(0)}: {title}" if index else title
 
 
+def lab_task_type(task, session_dir):
+    """The type and the number of a lab task, from the directory it sits in.
+
+    The directory directly below the session is the one that names the task
+    type, so the three variants lifted out of `demo-copy-file/` -- which has no
+    README of its own -- are still demos.
+    """
+    top = task["path"].relative_to(session_dir).parts[0]
+    match = LAB_TASK_PATTERN.match(top)
+    if not match:
+        return 3, 0
+    if match.group("demo"):
+        return 0, 0
+    if match.group("index"):
+        return 1, int(match.group("index"))
+    return 2, 0
+
+
+def lab_nav_title(task, session_dir):
+    """The label of a lab task in the navigation.
+
+    An exercise is led by its number, `01: Implement strlen()`, so the order it
+    is solved in shows in the sidebar; a demo or a bonus task keeps the title of
+    its README, `Demo: ...` or `Bonus: ...`, with no number.
+    """
+    kind, index = lab_task_type(task, session_dir)
+    if kind != 1:
+        return task["title"]
+    title = EXERCISE_TITLE_PREFIX.sub("", task["title"])
+    return f"{index:02d}: {title}"
+
+
+def order_lab_tasks(tasks, session_dir):
+    """The top-level tasks of a lab session, in order and with their labels."""
+    return [
+        dict(task, nav_title=lab_nav_title(task, session_dir))
+        for task in sorted(
+            tasks,
+            key=lambda task: (
+                lab_task_type(task, session_dir),
+                task["path"].relative_to(session_dir).as_posix(),
+            ),
+        )
+    ]
+
+
 def find_sessions(section_dir):
     """Every session of a section, in the order they are taken in.
 
@@ -318,6 +377,9 @@ def find_sessions(section_dir):
     sessions = []
     for entry in child_dirs(section_dir):
         directory, variant = split_variant(entry.name)
+        tasks = find_tasks(entry)
+        if section_dir.name == LAB_SECTION:
+            tasks = order_lab_tasks(tasks, entry)
         sessions.append(
             node(
                 entry,
@@ -326,7 +388,7 @@ def find_sessions(section_dir):
                 variant=variant,
                 label=session_title(entry),
                 heading=session_heading(entry),
-                tasks=find_tasks(entry),
+                tasks=tasks,
             )
         )
     # Sorted by the directory the pair shares, so that the halves of one session

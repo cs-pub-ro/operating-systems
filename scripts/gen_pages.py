@@ -330,7 +330,8 @@ def build_session_page(session, view=None):
 def nav_tasks(tasks, indent):
     lines = []
     for task in tasks:
-        lines.append(f"{indent}* [{task['title']}]({task['url']}/index.md)")
+        title = task.get("nav_title", task["title"])
+        lines.append(f"{indent}* [{title}]({task['url']}/index.md)")
         lines.extend(nav_tasks(task["tasks"], indent + "    "))
     return lines
 
