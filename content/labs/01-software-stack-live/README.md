@@ -19,10 +19,10 @@ By the end of this session you should be able to:
 * A Linux environment with `gcc`, `make`, `ar`, `file`, `ldd`, `nm`, `objdump`, `strace` and `time` installed.
 * Comfort with the command line: running commands, redirecting output, reading `man` pages.
 
-Check that your system has all it needs for the lab, by downloading and running the [`check-prerequisites.sh` script](https://github.com/cs-pub-ro/operating-systems-sessions/blob/master/scripts/check-prerequisites.sh):
+Check that your system has all it needs for the lab, by downloading and running the [`check-prerequisites.sh` script](https://github.com/cs-pub-ro/operating-systems/blob/master/scripts/check-prerequisites.sh):
 
 ```console
-wget -O check-prerequisites.sh http://raw.githubusercontent.com/cs-pub-ro/operating-systems-sessions/refs/heads/master/scripts/check-prerequisites.sh
+wget -O check-prerequisites.sh http://raw.githubusercontent.com/cs-pub-ro/operating-systems/refs/heads/master/scripts/check-prerequisites.sh
 chmod a+x check-prerequisites.sh
 ./check-prerequisites.sh
 ```
@@ -34,10 +34,10 @@ If something is missing, be sure to install and configure it.
 
 ## Getting the lab archive
 
-Download [`01-software-stack.zip`](https://github.com/cs-pub-ro/operating-systems-sessions/raw/lab-archives/01-software-stack.zip), then unzip it and change into the directory it creates:
+Download [`01-software-stack.zip`](https://github.com/cs-pub-ro/operating-systems/raw/lab-archives/01-software-stack.zip), then unzip it and change into the directory it creates:
 
 ```console
-wget -O 01-software-stack.zip https://github.com/cs-pub-ro/operating-systems-sessions/raw/lab-archives/01-software-stack.zip
+wget -O 01-software-stack.zip https://github.com/cs-pub-ro/operating-systems/raw/lab-archives/01-software-stack.zip
 unzip 01-software-stack.zip
 cd 01-software-stack/
 ```

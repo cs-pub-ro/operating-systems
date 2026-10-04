@@ -3,7 +3,7 @@ name: Archive Labs on Commit
 on:
   push:
     branches:
-      - master
+      - main
     paths:
       # Any change to a lab session, and any change to how archives are built.
       # What is packed is `content/labs/NN-<name>-live/`; its `-full/` sibling

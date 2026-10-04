@@ -14,10 +14,10 @@ Whenever you are stuck, unsure what an exercise wants, or lost in an explanation
 
 ## Check setup
 
-Check that your system has all it needs for the lab, by downloading and running the [`check-prerequisites.sh` script](https://github.com/cs-pub-ro/operating-systems-sessions/blob/master/scripts/check-prerequisites.sh):
+Check that your system has all it needs for the lab, by downloading and running the [`check-prerequisites.sh` script](https://github.com/cs-pub-ro/operating-systems/blob/master/scripts/check-prerequisites.sh):
 
 ```console
-wget http://raw.githubusercontent.com/cs-pub-ro/operating-systems-sessions/refs/heads/master/scripts/check-prerequisites.sh
+wget http://raw.githubusercontent.com/cs-pub-ro/operating-systems/refs/heads/master/scripts/check-prerequisites.sh
 chmod a+x check-prerequisites.sh
 ./check-prerequisites.sh
 ```

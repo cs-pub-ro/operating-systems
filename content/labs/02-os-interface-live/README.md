@@ -27,10 +27,10 @@ By the end of this session you should be able to:
 * No prior assembly experience is required.
   The inline assembly is given to you and explained; you never have to write any.
 
-Check that your system has all it needs for the lab, by downloading and running the [`check-prerequisites.sh` script](https://github.com/cs-pub-ro/operating-systems-sessions/blob/master/scripts/check-prerequisites.sh):
+Check that your system has all it needs for the lab, by downloading and running the [`check-prerequisites.sh` script](https://github.com/cs-pub-ro/operating-systems/blob/master/scripts/check-prerequisites.sh):
 
 ```console
-wget http://raw.githubusercontent.com/cs-pub-ro/operating-systems-sessions/refs/heads/master/scripts/check-prerequisites.sh
+wget http://raw.githubusercontent.com/cs-pub-ro/operating-systems/refs/heads/master/scripts/check-prerequisites.sh
 chmod a+x check-prerequisites.sh
 ./check-prerequisites.sh
 ```
@@ -42,10 +42,10 @@ If something is missing, be sure to install and configure it.
 
 ## Getting the lab archive
 
-Download [`02-os-interface.zip`](https://github.com/cs-pub-ro/operating-systems-sessions/raw/lab-archives/02-os-interface.zip), then unzip it and change into the directory it creates:
+Download [`02-os-interface.zip`](https://github.com/cs-pub-ro/operating-systems/raw/lab-archives/02-os-interface.zip), then unzip it and change into the directory it creates:
 
 ```console
-wget https://github.com/cs-pub-ro/operating-systems-sessions/raw/lab-archives/02-os-interface.zip
+wget https://github.com/cs-pub-ro/operating-systems/raw/lab-archives/02-os-interface.zip
 unzip 02-os-interface.zip
 cd 02-os-interface/
 ```

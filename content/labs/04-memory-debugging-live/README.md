@@ -22,10 +22,10 @@ By the end of this session you should be able to:
 * A Linux environment with `gcc`, `make`, `gdb` and `valgrind` installed.
 * For the binary-only bonus exercise: `objdump`, `nm`, `readelf` and Python 3.
 
-Check that your system has all it needs for the lab, by downloading and running the [`check-prerequisites.sh` script](https://github.com/cs-pub-ro/operating-systems-sessions/blob/master/scripts/check-prerequisites.sh):
+Check that your system has all it needs for the lab, by downloading and running the [`check-prerequisites.sh` script](https://github.com/cs-pub-ro/operating-systems/blob/master/scripts/check-prerequisites.sh):
 
 ```console
-wget http://raw.githubusercontent.com/cs-pub-ro/operating-systems-sessions/refs/heads/master/scripts/check-prerequisites.sh
+wget http://raw.githubusercontent.com/cs-pub-ro/operating-systems/refs/heads/master/scripts/check-prerequisites.sh
 chmod a+x check-prerequisites.sh
 ./check-prerequisites.sh
 ```
@@ -37,10 +37,10 @@ If something is missing, be sure to install and configure it.
 
 ## Getting the lab archive
 
-Download [`04-memory-debugging.zip`](https://github.com/cs-pub-ro/operating-systems-sessions/raw/lab-archives/04-memory-debugging.zip), then unzip it and change into the directory it creates:
+Download [`04-memory-debugging.zip`](https://github.com/cs-pub-ro/operating-systems/raw/lab-archives/04-memory-debugging.zip), then unzip it and change into the directory it creates:
 
 ```console
-wget https://github.com/cs-pub-ro/operating-systems-sessions/raw/lab-archives/04-memory-debugging.zip
+wget https://github.com/cs-pub-ro/operating-systems/raw/lab-archives/04-memory-debugging.zip
 unzip 04-memory-debugging.zip
 cd 04-memory-debugging/
 ```

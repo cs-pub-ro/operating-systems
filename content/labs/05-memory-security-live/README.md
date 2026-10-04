@@ -22,10 +22,10 @@ By the end of this session you should be able to:
 * `nc` for talking to a deployed challenge over the network.
 * Basic familiarity with two's complement, endianness, and reading disassembly.
 
-Check that your system has all it needs for the lab, by downloading and running the [`check-prerequisites.sh` script](https://github.com/cs-pub-ro/operating-systems-sessions/blob/master/scripts/check-prerequisites.sh):
+Check that your system has all it needs for the lab, by downloading and running the [`check-prerequisites.sh` script](https://github.com/cs-pub-ro/operating-systems/blob/master/scripts/check-prerequisites.sh):
 
 ```console
-wget http://raw.githubusercontent.com/cs-pub-ro/operating-systems-sessions/refs/heads/master/scripts/check-prerequisites.sh
+wget http://raw.githubusercontent.com/cs-pub-ro/operating-systems/refs/heads/master/scripts/check-prerequisites.sh
 chmod a+x check-prerequisites.sh
 ./check-prerequisites.sh
 ```
@@ -44,10 +44,10 @@ The real flag lives only on the remote service your teaching assistant deploys â
 
 ## Getting the lab archive
 
-Download [`05-memory-security.zip`](https://github.com/cs-pub-ro/operating-systems-sessions/raw/lab-archives/05-memory-security.zip), then unzip it and change into the directory it creates:
+Download [`05-memory-security.zip`](https://github.com/cs-pub-ro/operating-systems/raw/lab-archives/05-memory-security.zip), then unzip it and change into the directory it creates:
 
 ```console
-wget https://github.com/cs-pub-ro/operating-systems-sessions/raw/lab-archives/05-memory-security.zip
+wget https://github.com/cs-pub-ro/operating-systems/raw/lab-archives/05-memory-security.zip
 unzip 05-memory-security.zip
 cd 05-memory-security/
 ```
