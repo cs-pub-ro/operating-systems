@@ -85,6 +85,13 @@ LINK_PATTERN = re.compile(r"(?<=\]\()([^)\s]+)(?=(?:\s+\"[^\"]*\")?\))")
 # A fenced code block, kept out of the link rewriting below.
 FENCE_PATTERN = re.compile(r"(^```[\s\S]*?^```[^\n]*$)", re.MULTILINE)
 
+# The start of a list item: its indentation, then its marker and the spaces
+# after it, which together say where the content of the item begins.
+LIST_ITEM_PATTERN = re.compile(r"^( *)([*+-]|\d{1,9}[.)])( +)(?=\S)")
+
+# The opening or closing line of a fenced code block, at any indentation.
+FENCE_LINE_PATTERN = re.compile(r"^ *(```+|~~~+)")
+
 # A URL scheme, a page anchor, or a site-absolute path: left alone.
 EXTERNAL_PATTERN = re.compile(r"^(?:[a-z][a-z0-9+.-]*:|#|/|<)", re.IGNORECASE)
 
@@ -207,6 +214,89 @@ def rewrite_links(text, readme_dir, root_prefix="", view=None):
     )
 
 
+def shift_line(line, shift):
+    """Move `line` right by `shift` spaces, or left, taking only spaces away."""
+    if shift >= 0 or not line.strip():
+        return " " * shift + line if line.strip() else line
+    indent = len(line) - len(line.lstrip(" "))
+    return line[min(-shift, indent):]
+
+
+def normalize_lists(text):
+    """Re-indent the content of every list item by four spaces.
+
+    The READMEs are written for GitHub, which follows CommonMark: what belongs
+    to a list item is indented to where the item's text starts, two spaces for
+    `* ` and three for `1. `.  Python-Markdown, which MkDocs uses, wants four
+    spaces per level instead, and without them a code block or a nested list in
+    an item ends the list -- so every item after it restarts the numbering at
+    one, and nested items show up as literal asterisks.
+
+    Rather than writing the sources for the one renderer at the cost of the
+    other, the pages are converted here: each item's content is moved to four
+    spaces past its marker, and a fenced block inside an item is moved by the
+    same amount as its opening line, so the code in it keeps its own layout.
+    CommonMark also lets an item follow an item's paragraph or code block with
+    no blank line in between; Python-Markdown reads such an item as more text
+    of the one before, so a blank line is put in front of it.
+
+    Lines outside any list are left exactly as they are.
+    """
+    out = []
+    # Whether the run of non-blank lines the current line is in began with a
+    # list item; None at the start of a run.
+    run_starts_with_item = None
+    # The items the current line may belong to, innermost last: where their
+    # content starts in the source, and where it is moved to.
+    items = []
+    fence = None  # (marker, shift) while inside a fenced code block
+
+    for line in text.split("\n"):
+        if fence is not None:
+            marker, shift = fence
+            out.append(shift_line(line, shift))
+            if line.strip().startswith(marker) and not line.strip().strip(marker[0]):
+                fence = None
+            continue
+
+        if not line.strip():
+            out.append(line)
+            run_starts_with_item = None
+            continue
+
+        indent = len(line) - len(line.lstrip(" "))
+        item = LIST_ITEM_PATTERN.match(line)
+
+        # A line indented less than an item's content is not part of it,
+        # except a new item at that item's own level, which closes it too.
+        while items and indent < items[-1][0]:
+            items.pop()
+
+        target = items[-1][1] + indent - items[-1][0] if items else indent
+
+        if run_starts_with_item is None:
+            run_starts_with_item = bool(item)
+        elif item and not run_starts_with_item:
+            out.append("")
+            run_starts_with_item = True
+
+        if item:
+            content = indent + len(item.group(2)) + len(item.group(3))
+            if items:
+                # A nested item sits exactly where its parent's content goes.
+                target = items[-1][1]
+            out.append(" " * target + line.lstrip(" "))
+            items.append((content, target + 4))
+        else:
+            out.append(" " * target + line.lstrip(" "))
+
+        opening = FENCE_LINE_PATTERN.match(line)
+        if opening:
+            fence = (opening.group(1), target - indent)
+
+    return "\n".join(out)
+
+
 def write(path, text):
     with mkdocs_gen_files.open(path, "w") as page:
         page.write(text)
@@ -243,7 +333,7 @@ def render(node, view=None, extra=""):
         body = f"# {node['title']}\n"
     else:
         text = node["readme"].read_text(encoding="utf-8")
-        body = rewrite_links(text, node["readme"].parent, prefix, view)
+        body = rewrite_links(normalize_lists(text), node["readme"].parent, prefix, view)
         if not re.search(r"^#\s+\S", text, re.MULTILINE):
             body = f"# {node['title']}\n\n{body}"
     if extra:
@@ -267,7 +357,7 @@ def build_front_page(views, plain_sections):
         text = root_readme.read_text(encoding="utf-8")
         text = re.sub(r"^#\s+.*\n", "", text, count=1)
         text = re.split(r"^##\s", text, maxsplit=1, flags=re.MULTILINE)[0]
-        intro = rewrite_links(text.strip(), REPO_ROOT)
+        intro = rewrite_links(normalize_lists(text.strip()), REPO_ROOT)
 
     lines = [f"# {SITE_TITLE}", "", SITE_TAGLINE, "", intro, "", "## Contents", ""]
     for view in views:

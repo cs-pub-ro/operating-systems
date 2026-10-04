@@ -156,6 +156,8 @@ Nothing is stored: pages and navigation are discovered by walking `content/` at 
   `util/` and `utils/` are too, which is why `content/assignments/minishell/util/` (the parser) gets no page.
 * A section or session `README.md` that is still only a title gets a generated list of what is below it — only of the view being built — and one with a level-two heading anywhere in it is left alone, which is why the lab session pages keep their own task table.
   A section README is rendered once per view it has sessions in.
+* READMEs are written in CommonMark list indentation (2 spaces under `*`, 3 under `1.`), which GitHub and markdownlint expect; `normalize_lists()` in `gen_pages.py` re-indents them to the 4 spaces Python-Markdown needs.
+  Do not "fix" a list that renders wrong on the site by re-indenting the source; fix the converter.
 * `gen_zip.py` packs `content/labs/*-live/` and nothing else (`ARCHIVE_SECTION`, `ARCHIVE_VARIANT` in `sessions.py`), only git-tracked files, and drops `prompt.txt` / `*-prompt.txt`, so a stray `.o` or a solution note never reaches students.
   `is_reference()` is the second line of defence: packing aborts outright if a path below a `*-full/` directory, or a `solutions/` one, ever reaches an archive.
   This is what keeps session 05's flags and exploits out of what ships; run `unzip -l` on an archive before handing it to anyone regardless.

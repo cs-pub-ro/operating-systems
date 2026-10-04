@@ -110,6 +110,11 @@ The navigation sidebar is generated the same way, as a `SUMMARY.md` read back by
 * Links between READMEs, such as `../demo-puts-write`, are rewritten to point at the generated pages.
   The site is not shaped like the directory tree, so this is done by looking the target up in the map of published pages rather than by keeping the link as written; a link that crosses into the other view is rewritten to that view.
   Links to files that have no page of their own, such as `copy_file.c`, are sent to the file on GitHub.
+* Lists are re-indented, by `normalize_lists()`.
+  The READMEs follow CommonMark, as GitHub renders it: what belongs to a list item is indented to where its text starts, two spaces under `*` and three under `1.`.
+  Python-Markdown, which MkDocs uses, needs four, and without them a code block or a nested list inside an item ends the list — the numbering restarts at 1 after every code block, and nested items show up as literal `*`.
+  The page is therefore written with each item's content moved to four spaces past its marker (fenced blocks moved with it), and with a blank line before an item that directly follows a paragraph or a code block.
+  The sources stay as they are; keep writing them for GitHub and markdownlint.
 
 Adding a section, a session or an exercise requires no change to these scripts: create the directory, write its `README.md` and push.
 Which view it lands in follows from the `-live` / `-full` suffix of the session it is under.
