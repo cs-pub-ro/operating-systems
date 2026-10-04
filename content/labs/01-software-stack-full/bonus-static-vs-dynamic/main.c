@@ -4,8 +4,8 @@
  * This exact source is linked twice, against the same functions, built from
  * the same mystring.c:
  *
- *   main_static   - libmystring.a  linked into the executable
- *   main_dynamic  - libmystring.so loaded at run time
+ *   main_static   - libmystringstatic.a linked into the executable
+ *   main_dynamic  - libmystringdyn.so   loaded at run time
  *
  * The C code is identical. The machine code around each call is not.
  *

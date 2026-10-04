@@ -3,7 +3,7 @@ CFLAGS := -O2 -Wall -Wextra -std=c11 -fno-builtin
 ITERS  ?= 20000000
 RUNS   ?= 200
 
-# Your mystring.c / mystring.h from exercise 2 must be copied in here first:
+# Your mystring.c / mystring.h from 01-string-functions must be copied in here first:
 #     cp ../01-string-functions/mystring.c ../01-string-functions/mystring.h .
 SRC := mystring.c mystring.h
 
@@ -14,7 +14,7 @@ all: check-src main_static main_dynamic main_fullstatic
 check-src:
 	@test -f mystring.c -a -f mystring.h || { \
 		echo "ERROR: mystring.c / mystring.h not found in this directory."; \
-		echo "Copy your solution from exercise 2 first:"; \
+		echo "Copy your solution from 01-string-functions first:"; \
 		echo "    cp ../01-string-functions/mystring.c ../01-string-functions/mystring.h ."; \
 		exit 1; }
 
@@ -25,7 +25,7 @@ check-src:
 mystring.o: mystring.c mystring.h
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-libmystring.a: mystring.o
+libmystringstatic.a: mystring.o
 	ar rcs $@ $^
 
 # Shared: needs -fPIC (position-independent code), because the .so can be
@@ -33,26 +33,24 @@ libmystring.a: mystring.o
 mystring_pic.o: mystring.c mystring.h
 	$(CC) $(CFLAGS) -fPIC -c -o $@ $<
 
-libmystring.so: mystring_pic.o
+libmystringdyn.so: mystring_pic.o
 	$(CC) -shared -o $@ $^
 
 # ---- the two (three) executables ---------------------------------------
 
-# -Wl,-Bstatic ... -Wl,-Bdynamic tells the linker "for the libraries named
-# between these two flags, take the .a". Without it the linker prefers the .so
-# whenever both are in -L. Remember to switch back to -Bdynamic, or it will try
-# to link libc statically too and complain.
-main_static: main.c libmystring.a
-	$(CC) $(CFLAGS) -o $@ main.c -L. -Wl,-Bstatic -lmystring -Wl,-Bdynamic
+# The two libraries have different names, so -lmystringstatic can only mean the
+# .a: the my_* functions are copied in, and libc is still linked dynamically.
+main_static: main.c libmystringstatic.a
+	$(CC) $(CFLAGS) -o $@ main.c -L. -lmystringstatic
 
 # The .so is NOT found at run time on purpose -- see the README. Use `make
 # run-dynamic`, which sets LD_LIBRARY_PATH.
-main_dynamic: main.c libmystring.so
-	$(CC) $(CFLAGS) -o $@ main.c -L. -lmystring
+main_dynamic: main.c libmystringdyn.so
+	$(CC) $(CFLAGS) -o $@ main.c -L. -lmystringdyn
 
 # No dynamic linking at all: libc is baked in too.
-main_fullstatic: main.c libmystring.a
-	$(CC) $(CFLAGS) -static -o $@ main.c -L. -lmystring
+main_fullstatic: main.c libmystringstatic.a
+	$(CC) $(CFLAGS) -static -o $@ main.c -L. -lmystringstatic
 
 # ---- measuring ----------------------------------------------------------
 
@@ -102,4 +100,5 @@ inspect: all
 	@printf 'main_dynamic  : '; objdump -d main_dynamic | grep -m1 'call.*my_strlen' || true
 
 clean:
-	$(RM) main_static main_dynamic main_fullstatic libmystring.a libmystring.so *.o
+	$(RM) main_static main_dynamic main_fullstatic
+	$(RM) libmystringstatic.a libmystringdyn.so *.o

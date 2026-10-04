@@ -3,11 +3,11 @@
 ## Things to try
 
 1. **Delete the library and re-run.**
-   `rm libmystring.a && ./main_static` — still fine, the code was copied in at link time.
-   `rm libmystring.so && LD_LIBRARY_PATH=. ./main_dynamic` — dead, the `.so` is a separate file needed at every start-up.
+   `rm libmystringstatic.a && ./main_static` — still fine, the code was copied in at link time.
+   `rm libmystringdyn.so && LD_LIBRARY_PATH=. ./main_dynamic` — dead, the `.so` is a separate file needed at every start-up.
 
 1. **Change the library without recompiling the program.**
-   Edit `mystring.c` so `my_strlen` always returns 42, rebuild *only* `libmystring.so`, and re-run the **unchanged** `main_dynamic`.
+   Edit `mystring.c` so `my_strlen` always returns 42, rebuild *only* `libmystringdyn.so`, and re-run the **unchanged** `main_dynamic`.
    The behaviour changes.
    Do the same with `main_static` and nothing happens until it is relinked.
    This is exactly what a security update looks like, and it is the strongest single argument for dynamic linking.
@@ -22,7 +22,7 @@
    Likely contributors: `main_static` is a PIE and `main_fullstatic` is not (`file` confirms), and code layout and alignment differ.
    A good excuse for `perf` if `perf_event_paranoid` can be lowered.
 
-1. **`-fno-plt`**: `gcc -O2 -fno-plt -o main_noplt main.c -L. -lmystring`.
+1. **`-fno-plt`**: `gcc -O2 -fno-plt -o main_noplt main.c -L. -lmystringdyn`.
    The call becomes an indirect call through the GOT directly, with no PLT stub.
    It removes one jump but forces eager binding for those symbols.
    Measure rather than assume.

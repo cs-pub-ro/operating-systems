@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this repository is
 
-Teaching material for an Operating Systems class (2nd year, 1st semester, 4-year technical bachelor programme), 12 lab sessions of 100 minutes each; the first 5 are here.
+Teaching material for an Operating Systems class (2nd year, 1st semester, 4-year technical bachelor programme), 12 lectures and 12 lab sessions of 100 minutes each, plus take-home assignments.
 The practical part is C on Linux, aimed at the lower layers of the software stack: the C library, system calls, memory, linking, debugging.
 There is no application to build — the deliverables are exercise directories (source + `Makefile` + `README.md`) and the website and lab archives generated from them.
 
@@ -13,11 +13,12 @@ Content written here has to leave them something to do.
 
 ## Content layout
 
-Everything published lives under `content/`, one directory per part of the class:
+Everything published lives under `content/`, one directory per part of the class, shown in the order of `SECTION_ORDER` (`scripts/sessions.py`):
 
+* `content/info/` — how the class is run: rules and grading, how the lab works (the student-facing guide), and resources (VM setup with QEMU and UTM).
 * `content/lectures/` — the lectures.
 * `content/labs/` — the labs.
-* `content/assignments/` — the assignments.
+* `content/assignments/` — the take-home assignments (`elf-loader/`, `mini-libc/`, `minishell/`), each a C project with `src/` to fill in and `tests/` that grade it.
 * `content/extra/` — additional material.
 
 Inside a section, each session lives in two sibling directories:
@@ -26,7 +27,7 @@ Inside a section, each session lives in two sibling directories:
 * `NN-<session-name>-full/` — reference solutions, full explanations, reference command output, and the `prompt.txt` notes the exercises were generated from. Used by students after the session and by assistants before it. A lecture's `-full/` half holds subdirectories exactly the way a lab's does, and the site renders them the same way.
 
 The website publishes the two halves as two separate views, and the view is the first part of the URL, so `content/labs/01-software-stack-live/` is served at `/live/labs/01-software-stack/` and its `-full/` sibling at `/full/labs/01-software-stack/`.
-A section with no halves stays at the top level: `content/assignments/` is `/assignments/`.
+A section with no halves (`info/`, `assignments/`, `extra/`) stays at the top level: `content/assignments/` is `/assignments/`.
 
 Inside a **lab** session, the directory-name prefix is the task type, and it is load-bearing (the site and the archives key off it, and so do the README conventions below):
 
@@ -126,6 +127,17 @@ python3 scripts/gen_zip.py        # student archives into archives/ (git-ignored
 `render_slides.sh` needs Quarto and has to run before the site is built, because `gen_pages.py` publishes whatever decks are on disk when it walks `content/`; the Pages workflow does both in that order.
 `gen_media.sh` needs `pdftocairo`, and its output is committed, so building the site needs neither tool.
 
+Outside `content/`:
+
+* `INSTRUCTOR.md` (top level) is the checklist for whoever runs a session, before, during and after it; per-session and per-task `INSTRUCTOR.md` files hold the specifics.
+* `scripts/check-prerequisites.sh` checks a machine against the tools each lab session lists, one `check_session_NN()` function per session, called from a list near the end of the script; a session added, or a tool added to a session README's prerequisites, needs a matching change there.
+  Lab READMEs tell students to download and run it.
+  (`LAST_SESSION` in it is unused, which shellcheck flags.)
+* `vms/` builds the student VM (Ubuntu 26.04, VirtualBox) with Packer and Ansible: `make` in `vms/` builds for the host architecture.
+* `dev/` holds the authoring notes: the style rules, the layout specifications, and the `*prompt*.txt` instructions that past edits were made from.
+
+The default branch is `main` (it used to be `master`, and links in some READMEs, such as the `check-prerequisites.sh` URLs in labs 02 and 04, still say `master`).
+
 C style is the Linux kernel's `checkpatch.pl`, fetched by `.github/workflows/lint.yml`; only lines a push or PR changes must be clean, the rest of the tree is reported in the run summary.
 
 ## Generation pipeline
@@ -141,6 +153,7 @@ Nothing is stored: pages and navigation are discovered by walking `content/` at 
 * A session brings its assets with it. Everything below it whose suffix is in `ASSET_SUFFIXES` (`sessions.py`) — the SVGs under `media/`, the decks rendered into `slides/` — is copied into the site at the path it has below the session, so a relative link from a README to a figure is left exactly as written rather than rewritten.
   Anything else (a `.c` file, a `Makefile`) has no page and is linked to on GitHub, as before.
   `old/` is in `EXCLUDED_DIRS`: it is the staging area a session keeps while it is being rewritten, and it is published no more than it is linted.
+  `util/` and `utils/` are too, which is why `content/assignments/minishell/util/` (the parser) gets no page.
 * A section or session `README.md` that is still only a title gets a generated list of what is below it — only of the view being built — and one with a level-two heading anywhere in it is left alone, which is why the lab session pages keep their own task table.
   A section README is rendered once per view it has sessions in.
 * `gen_zip.py` packs `content/labs/*-live/` and nothing else (`ARCHIVE_SECTION`, `ARCHIVE_VARIANT` in `sessions.py`), only git-tracked files, and drops `prompt.txt` / `*-prompt.txt`, so a stray `.o` or a solution note never reaches students.
@@ -151,7 +164,8 @@ See `scripts/README.md` for the details.
 
 ## State of the content
 
-Sessions 01–05 of the labs are written, and lecture 01 is written; labs 06–12 and lectures 02–12 are skeleton directories holding nothing but a `README.md` with a title.
+Labs 01–05 and lectures 01–02 are written; labs 06–12 and lectures 03–12 are skeleton directories holding nothing but a `README.md` with a title.
+The three assignments and the `info/` pages are written; `extra/` is only a title.
 `dev/restructure-sessions.txt`, `dev/restructure-sessions-2.txt` and `dev/extra-prompt-restructure.txt` are the specifications of the layout, and they are the authority when this file is ambiguous.
 Use `content/labs/01-software-stack-*` as the model for everything.
 
@@ -159,7 +173,8 @@ Use `content/labs/01-software-stack-*` as the model for everything.
   The flags and exploits are the one piece of secret material inside a task tree — see `content/labs/05-memory-security-full/INSTRUCTOR.md` before touching the archive tooling.
   They are safe on the website because only `README.md` files become pages and only the suffixes in `ASSET_SUFFIXES` are copied alongside them, so a `flag` file is neither.
 * Lecture 01 (`content/lectures/01-software-stack-*`) is the model for a lecture, the way lab 01 is the model for a lab: seven parts, seven demos, fifteen figures, and a deck in each half.
-  Its `-full/old/` directory is the previous version of the material, kept while the rewrite is harvested from it; it is excluded from the site and from markdownlint, and is meant to be deleted once nothing more is wanted out of it.
+  Its `-full/old/` staging directory has been harvested and deleted.
+* Lecture 02 (`content/lectures/02-os-types-interface-*`) follows the same layout; its demos are grouped into subdirectories per part (`02-os-interface/syscalls/`, `04-optimize-os-interface/sendfile/`, …), and the `-live/` half mirrors them with a command-sheet `README.md` each.
 * The vendored printf lives at `content/labs/02-os-interface-live/bonus-printf/utils/printf`, and the `VENDORED` path in `.github/workflows/lint.yml` points there so checkpatch skips it.
   It sits under a `utils/` directory, which is in `EXCLUDED_DIRS` (`scripts/sessions.py`), so it is packed into the `bonus-printf` archive as support code but gets no website page and no navigation entry of its own.
 

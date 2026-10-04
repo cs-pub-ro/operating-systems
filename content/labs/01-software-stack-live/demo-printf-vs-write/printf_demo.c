@@ -26,7 +26,7 @@ int main(void)
 
 	clock_gettime(CLOCK_REALTIME, &time_before);
 	/*
-	 * TODO 2: print `line` NUM_ROUND times, using printf() with a "%s" format.
+	 * TODO: Print `line` NUM_ROUNDS times, using printf() with a "%s" format.
 	 */
 	clock_gettime(CLOCK_REALTIME, &time_after);
 	fprintf(stderr, "time passed %ld microseconds\n", diff_us(time_after, time_before));

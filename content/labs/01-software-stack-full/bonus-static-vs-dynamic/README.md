@@ -4,7 +4,7 @@
 
 ## Goal
 
-Build `libmystring` from the string functions written in `01-string-functions`, ship it as both a `.a` and a `.so`, link the same program against each, and measure what dynamic linking actually costs — per call and per process start-up.
+Build a library from the string functions written in `01-string-functions`, ship it as both a `.a` (`libmystringstatic.a`) and a `.so` (`libmystringdyn.so`), link the same program against each, and measure what dynamic linking actually costs — per call and per process start-up.
 The intended conclusion is *not* "static is faster"; it is that both measurements favour static linking and that dynamic linking is still the right default, which forces the question of what is actually being optimised for.
 
 This directory is the exercise with the reference `mystring.c` / `mystring.h` already in place, so everything builds out of the box:
@@ -39,48 +39,49 @@ make clean
 
 ### What gets built
 
-| Target | How `libmystring` is linked | How libc is linked |
+| Target | How the `my_*` functions are linked | How libc is linked |
 | --- | --- | --- |
-| `main_static` | `.a`, copied into the binary | dynamically |
-| `main_dynamic` | `.so`, resolved at run time | dynamically |
-| `main_fullstatic` | `.a` | statically — everything baked in |
+| `main_static` | `libmystringstatic.a`, copied into the binary | dynamically |
+| `main_dynamic` | `libmystringdyn.so`, resolved at run time | dynamically |
+| `main_fullstatic` | `libmystringstatic.a` | statically — everything baked in |
 
 ### Part A — the static library (`.a`)
 
 ```console
-gcc -O2 -c mystring.c -o mystring.o    # 1. compile to an object file
-ar rcs libmystring.a mystring.o        # 2. bundle object files into an archive
+gcc -O2 -c mystring.c -o mystring.o          # 1. compile to an object file
+ar rcs libmystringstatic.a mystring.o        # 2. bundle object files into an archive
 ```
 
 `ar` is an *archiver*, not a linker.
 A `.a` file is little more than a bag of `.o` files with an index — closer to a `.tar` than to a program:
 
 ```console
-ar t libmystring.a      # list members
-ar x libmystring.a      # extract them back out
+ar t libmystringstatic.a      # list members
+ar x libmystringstatic.a      # extract them back out
 ```
 
 ```console
-gcc -O2 -o main_static main.c -L. -Wl,-Bstatic -lmystring -Wl,-Bdynamic
+gcc -O2 -o main_static main.c -L. -lmystringstatic
 ```
 
 * `-L.` — look for libraries in this directory.
-* `-lmystring` — link a library named `mystring`: look for `libmystring.so` first, then `libmystring.a`.
-  The `lib` prefix and the extension are added *by the linker*, which is why the file must be named `libmystring.a` and not `mystring.a`.
-* `-Wl,-Bstatic` — for libraries named after this flag, prefer the `.a`.
-  **Needed here**, because both files exist and the linker would otherwise pick the `.so`.
-* `-Wl,-Bdynamic` — switch back, so that **libc** is still linked dynamically.
-  Forget this and the linker will try to link libc statically as well.
+* `-lmystringstatic` — link a library named `mystringstatic`: look for `libmystringstatic.so` first, then `libmystringstatic.a`.
+  The `lib` prefix and the extension are added *by the linker*, which is why the file must be named `libmystringstatic.a` and not `mystringstatic.a`.
+* It comes after `main.c`, because the linker takes from a library only what the files before it need.
+
+The static and the shared library have different names on purpose.
+Had both been called `libmystring`, `-lmystring` would pick the `.so` whenever both files exist, and `main_static` would quietly depend on the `.so` at run time, like `main_dynamic`.
+With separate names, each `-l` can only mean one file, and libc is still linked dynamically as usual.
 
 At link time the linker copies the machine code of the functions actually used **into the executable**.
-After that, `libmystring.a` is irrelevant — delete it and `main_static` still runs.
+After that, `libmystringstatic.a` is irrelevant — delete it and `main_static` still runs.
 
 ### Part B — the shared library (`.so`)
 
 ```console
-gcc -O2 -fPIC -c mystring.c -o mystring_pic.o   # 1. position-independent code
-gcc -shared -o libmystring.so mystring_pic.o    # 2. link into a shared object
-gcc -O2 -o main_dynamic main.c -L. -lmystring   # 3. link the program
+gcc -O2 -fPIC -c mystring.c -o mystring_pic.o      # 1. position-independent code
+gcc -shared -o libmystringdyn.so mystring_pic.o    # 2. link into a shared object
+gcc -O2 -o main_dynamic main.c -L. -lmystringdyn   # 3. link the program
 ```
 
 **Why `-fPIC`?** Position-Independent Code.
@@ -95,15 +96,14 @@ Running it fails, on purpose:
 ```
 
 ```text
-./main_dynamic: error while loading shared libraries: libmystring.so:
-cannot open shared object file: No such file or directory
+./main_dynamic: error while loading shared libraries: libmystringdyn.so: cannot open shared object file: No such file or directory
 ```
 
 **This is supposed to happen**, and it is the single most common linking error there is.
 `-L.` told the **linker**, at build time, where to find the library.
 It said nothing to the **loader**, at run time.
 `ld.so` does not know or care about `-L`; it searches `/lib`, `/usr/lib` and a few configured places.
-`.` is not among them — and for good reason: running whatever `libmystring.so` happens to sit in the current directory would be a fine way to get a program hijacked.
+`.` is not among them — and for good reason: running whatever `libmystringdyn.so` happens to sit in the current directory would be a fine way to get a program hijacked.
 
 ```console
 # 1. Tell the loader where to look, for this run only.
@@ -111,11 +111,11 @@ LD_LIBRARY_PATH=. ./main_dynamic 1000        # this is what `make run-dynamic` d
 
 # 2. Bake the search path into the executable at link time ($ORIGIN = "the
 #    directory the executable is in"). This is what real projects usually do.
-gcc -O2 -o main_rpath main.c -L. -lmystring -Wl,-rpath,'$ORIGIN'
+gcc -O2 -o main_rpath main.c -L. -lmystringdyn -Wl,-rpath,'$ORIGIN'
 ./main_rpath 1000                             # just works
 
 # 3. Install it system-wide (needs root).
-sudo cp libmystring.so /usr/local/lib/ && sudo ldconfig
+sudo cp libmystringdyn.so /usr/local/lib/ && sudo ldconfig
 ```
 
 ## Results and Explanations
@@ -137,7 +137,7 @@ sudo cp libmystring.so /usr/local/lib/ && sudo ldconfig
 	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6
 	/lib64/ld-linux-x86-64.so.2
 === ldd main_dynamic ===
-	libmystring.so => ./libmystring.so
+	libmystringdyn.so => ./libmystringdyn.so
 	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6
 	/lib64/ld-linux-x86-64.so.2
 === ldd main_fullstatic ===
@@ -158,7 +158,7 @@ main_dynamic  :     11cb:	e8 00 ff ff ff       	call   10d0 <my_strlen@plt>
 ```
 
 This is the whole difference, in one line each.
-`main_dynamic` cannot contain the address of `my_strlen`: nobody knows it until `libmystring.so` is mapped.
+`main_dynamic` cannot contain the address of `my_strlen`: nobody knows it until `libmystringdyn.so` is mapped.
 So the compiler emits a call to a local **stub**, and the stub jumps to whatever address the loader eventually writes down:
 
 ```text

@@ -2,19 +2,18 @@
 
 ## Things to try
 
-1. Build `caesar-static-lib` while `libcaesar.so` also exists.
-   Does `-static` still do what you expect?
-   What if you drop it?
+1. Compare `ls -l caesar caesar-static-lib caesar-dyn`.
+   Which two are the same size, and why?
 
-   `-static` disables shared-library resolution entirely, so the archive is picked regardless.
-   Drop it and the linker prefers `libcaesar.so`, producing a binary that will not start without `LD_LIBRARY_PATH`.
-   This is a compact demonstration of why `-Wl,-Bstatic` / `-Wl,-Bdynamic` exists.
+   `caesar` and `caesar-static-lib`, 16 432 bytes each.
+   Both contain the same `caesar.o` code and both take libc from `libc.so.6`; whether `caesar.o` was named on the command line or extracted from `libcaesarstatic.a` leaves no trace in the result.
+   `caesar-dyn` is 80 bytes smaller: it holds a reference to `caesar`, not its code.
 
 1. Put both objects in one archive and link only the Caesar program against it:
 
    ```console
-   ar rcs libboth.a caesar.o vigenere.o
-   gcc -Wall -o caesar-both caesar_main.c -L. -lboth
+   ar rcs libbothstatic.a caesar.o vigenere.o
+   gcc -o caesar-both caesar_main.o -L. -lbothstatic
    nm caesar-both | grep -E 'caesar|vigenere'
    ```
 
@@ -24,8 +23,9 @@
    Now the same with a shared object:
 
    ```console
-   gcc -Wall -fPIC -shared -o libboth.so caesar.c vigenere.c
-   nm -D libboth.so | grep -E 'caesar|vigenere'
+   gcc -shared -o libbothdyn.so caesar_pic.o vigenere_pic.o
+   gcc -o caesar-both-dyn caesar_main.o -L. -lbothdyn
+   nm -D libbothdyn.so | grep -E 'caesar|vigenere'
    ```
 
    Both symbols are present and the whole library is mapped at run time whether or not it is called.
@@ -34,12 +34,15 @@
 
 1. Write a `Makefile` for all eight executables and both pairs of libraries.
 
-   Harder than it looks: the object for the shared build must be compiled `-fPIC` and the one for the archive need not, so they cannot be the same file.
-   Two distinct object files per cipher, with distinct names, is the clean answer.
+   The `Makefile` of `03-stream-ciphers` is the template: one `_pic.o` and one plain `.o` per cipher, since the shared build needs `-fPIC` and the archive does not, and one rule per library and per executable.
+   Each library rule depends on exactly one object file, which is the point of this exercise made explicit.
 
 1. Add a third cipher and count how much of the build description you touch.
 
 1. Compare `readelf -d caesar-dyn` with `readelf -d caesar-both-dyn` and look at the `NEEDED` entries.
+
+   `caesar-dyn` needs `libcaesardyn.so`, `caesar-both-dyn` needs `libbothdyn.so`, and both need `libc.so.6`.
+   The executable records the whole library by name, never the individual functions it uses from it: at run time `caesar-both-dyn` maps all of `libbothdyn.so`, Vigenere included.
 
 ## Discussion points
 

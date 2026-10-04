@@ -4,8 +4,7 @@
  * The four functions below are written the way the exercise asks for them:
  * plain C, byte at a time, nothing from <string.h>.
  *
- * Check them with:   make test
- * Then measure with: make bench
+ * Check them with: make && ./main
  */
 
 #include "mystring.h"
@@ -48,8 +47,8 @@ char *my_strcat(char *dest, const char *src)
 	 * Find the end of dest, then copy src there. Note what this costs:
 	 * my_strlen() rescans the whole of dest on *every* call, because a C
 	 * string does not carry its length. Appending in a loop is therefore
-	 * quadratic in the length of the result -- which is exactly what the
-	 * benchmark in this directory demonstrates.
+	 * quadratic in the length of the result -- the same rescanning that
+	 * demo-copy-string measures.
 	 */
 	my_strcpy(dest + my_strlen(dest), src);
 

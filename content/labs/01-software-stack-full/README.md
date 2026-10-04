@@ -12,13 +12,14 @@ By the end of this session you should be able to:
 * Explain the software layers between a C program and the kernel: application, the standard C library (libc), and system calls.
 * Implement basic string-handling functions typically part of libc (`strlen()`, `strcpy()`, `strcat()`, `memcpy()`) and reason about their algorithmic cost.
 * Compare buffered (`printf()`) and unbuffered (`write()`) output functions, and explain the buffering trade-off from measured data.
-* Build a C program as a dynamically-linked executable, a statically-linked executable, and against a shared or a static library.
+* Build a static library and a shared library, and link a C program against each, as well as into a dynamically-linked and a statically-linked executable.
+* Use `file`, `ldd` and `nm` to tell where a symbol is resolved: at link time or at load time.
 * Explain the difference between static linking (`.a`, `ar`) and dynamic linking (`.so`).
 
 ## Prerequisites and required tools
 
 * Prior knowledge of C syntax: pointers, arrays, functions, basic `<string.h>` usage.
-* A Linux environment with `gcc`, `make`, `ar`, `ldd`, `nm`, `objdump`, `strace` and `time` installed.
+* A Linux environment with `gcc`, `make`, `ar`, `file`, `ldd`, `nm`, `objdump`, `strace` and `time` installed.
 * Comfort with the command line: running commands, redirecting output, reading `man` pages.
 
 ## Contents
@@ -27,8 +28,9 @@ By the end of this session you should be able to:
 | --- | --- | --- |
 | [`demo-printf-vs-write`](demo-printf-vs-write) | Demo | Buffering decides whether the library beats the system call. |
 | [`demo-copy-string`](demo-copy-string) | Demo | Repeated `strcat` rescans; `strcpy` at known offsets does not. |
-| [`01-string-functions`](01-string-functions) | Core | Reference implementation of the four functions, plus the O(N²) explanation. |
-| [`02-stream-ciphers`](02-stream-ciphers) | Core | All four link formats, with the commands and the `ldd`/`nm` output they produce. |
+| [`01-string-functions`](01-string-functions) | Core | Reference implementation of the four functions and their tests, and what `strcat()` costs. |
+| [`02-xor-encryption`](02-xor-encryption) | Core | The guided library build, with the `file`/`ldd`/`nm` output of every step. |
+| [`03-stream-ciphers`](03-stream-ciphers) | Core | All four link formats and their `Makefile` rules, with the `ldd`/`nm` output they produce. |
 | [`bonus-static-vs-dynamic`](bonus-static-vs-dynamic) | Bonus | Measured call cost and start-up cost, and why dynamic linking still wins. |
 | [`bonus-per-stream-cipher-exec`](bonus-per-stream-cipher-exec) | Bonus | One executable per cipher; `.a` versus `.so` extraction semantics. |
 
@@ -40,16 +42,17 @@ Each exercise directory contains:
 
 ## The through-line of the session
 
-Three of the six tasks make the same argument with different material:
+Three of the seven tasks make the same argument with different material:
 
 1. **`demo-printf-vs-write`** — the buffered library beats the raw system call, because it avoids the expensive operation rather than doing it faster.
-1. **`demo-copy-string`** and **`01-string-functions`** — no amount of hand-tuned SIMD in glibc's `strcat` can beat keeping track of a length, because the missing length is a property of the *interface*, not the implementation.
+1. **`demo-copy-string`** and **`01-string-functions`** — no amount of hand-tuned SIMD in glibc's `strcat` can beat keeping track of a length, because the missing length is a property of the *interface*, not the implementation; implementing `my_strcat()` shows where the rescanning happens.
 1. **`bonus-static-vs-dynamic`** — static linking wins both benchmarks and is still the wrong default, because the cost that matters is not the one being timed.
 
 In each case the naive question ("which is faster?") has no answer, and the useful question is "which cost am I choosing to pay?".
 
 ## A note on the numbers
 
-Every set of measurements in these files was taken on Ubuntu 24.04 / gcc 13.3 / x86-64.
+The timing measurements in these files were taken on Ubuntu 24.04 / gcc 13.3 / x86-64.
+The command output of `02-xor-encryption` and `03-stream-ciphers` comes from Ubuntu 25.04 / gcc 14.2 / x86-64; addresses, build IDs and sizes will differ slightly on other systems.
 Your numbers will differ, sometimes by a lot.
 What should reproduce is the *ratio* between columns and the *shape* of a column as the input size doubles.

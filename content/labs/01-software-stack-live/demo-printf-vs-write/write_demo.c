@@ -30,7 +30,7 @@ int main(void)
 
 	clock_gettime(CLOCK_REALTIME, &time_before);
 	/*
-	 * TODO: write() `line` to file descriptor 1 (stdout), NUM_ROUND times.
+	 * TODO: write() `line` to file descriptor 1 (stdout), NUM_ROUNDS times.
 	 * There is no formatting and no buffering.
 	 */
 	clock_gettime(CLOCK_REALTIME, &time_after);

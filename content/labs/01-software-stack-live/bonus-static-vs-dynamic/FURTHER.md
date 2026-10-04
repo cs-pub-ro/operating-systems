@@ -6,11 +6,11 @@ Work through these once `make bench` and `make startup` have given you numbers y
 ## Things to try
 
 1. **Delete the library and re-run.**
-   `rm libmystring.a && ./main_static` — still fine.
-   `rm libmystring.so && LD_LIBRARY_PATH=. ./main_dynamic` — dead.
+   `rm libmystringstatic.a && ./main_static` — still fine.
+   `rm libmystringdyn.so && LD_LIBRARY_PATH=. ./main_dynamic` — dead.
    Explain both in one sentence each.
 1. **Change the library without recompiling the program.**
-   Edit `mystring.c` so `my_strlen` always returns 42, rebuild *only* `libmystring.so` (`make libmystring.so`), and re-run the **unchanged** `main_dynamic`.
+   Edit `mystring.c` so `my_strlen` always returns 42, rebuild *only* `libmystringdyn.so` (`make libmystringdyn.so`), and re-run the **unchanged** `main_dynamic`.
    Then try the same with `main_static`.
    This is what a security update looks like.
 1. **`LD_BIND_NOW=1 ./main_dynamic 20000000`** forces eager symbol resolution.
@@ -21,7 +21,7 @@ Work through these once `make bench` and `make startup` have given you numbers y
    Hints: is one of them a PIE and the other not (`file main_static`)?
    Does code alignment change (`objdump -d`)?
    This one is genuinely open — a good excuse to use `perf` if you can lower `perf_event_paranoid`.
-1. **`-fno-plt`**: try `gcc -O2 -fno-plt -o main_noplt main.c -L. -lmystring`.
+1. **`-fno-plt`**: try `gcc -O2 -fno-plt -o main_noplt main.c -L. -lmystringdyn`.
    What does the call site look like now (`objdump -d`)?
    Does it help?
 1. **`LD_DEBUG=all ./main_dynamic 0 2>&1 | head -50`** — watch the loader work.

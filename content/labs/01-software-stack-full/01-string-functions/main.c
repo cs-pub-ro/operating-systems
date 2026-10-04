@@ -1,7 +1,7 @@
 /*
- * main.c - test string functions in mystring.c.
+ * main.c - test string functions in mystring.c (reference solution).
  *
- * TODOs in this file correlate with TODOs in mystring.c.
+ * Each TODO is filled with the call that the check after it expects.
  *
  * Build and run:
  *     make
@@ -24,6 +24,7 @@ static void test_my_strlen(void)
 	 * TODO 1a: Call my_strlen() on an empty string: "".
 	 * Store result in len.
 	 */
+	len = my_strlen("");
 	if (len == 0)
 		puts(" [PASSED] strlen: empty string");
 	else
@@ -33,6 +34,7 @@ static void test_my_strlen(void)
 	 * TODO 1b: Call my_strlen() on string "hello".
 	 * Store result in len.
 	 */
+	len = my_strlen("hello");
 	if (len == 5)
 		puts(" [PASSED] strlen: hello string");
 	else
@@ -49,6 +51,7 @@ static void test_my_strcpy(void)
 	 * TODO 2a: Call my_strcpy() to buf of an empty string: "".
 	 * Store result in ret.
 	 */
+	ret = my_strcpy(buf, "");
 	if (strcmp(buf, "") == 0 && ret == buf)
 		puts(" [PASSED] strcpy: empty string");
 	else
@@ -58,6 +61,7 @@ static void test_my_strcpy(void)
 	 * TODO 2b: Call my_strcpy() to buf of string "hello".
 	 * Store result in ret.
 	 */
+	ret = my_strcpy(buf, "hello");
 	if (strcmp(buf, "hello") == 0 && ret == buf)
 		puts(" [PASSED] strcpy: hello string");
 	else
@@ -74,6 +78,7 @@ static void test_my_strcat(void)
 	 * TODO 3a: Call my_strcat() to buf of an empty string: "".
 	 * Store result in ret.
 	 */
+	ret = my_strcat(buf, "");
 	if (strcmp(buf, "abcde") == 0 && ret == buf)
 		puts(" [PASSED] strcat: empty string");
 	else
@@ -83,6 +88,7 @@ static void test_my_strcat(void)
 	 * TODO 3b: Call my_strcat() to buf of string "hello".
 	 * Store result in ret.
 	 */
+	ret = my_strcat(buf, "hello");
 	if (strcmp(buf, "abcdehello") == 0 && ret == buf)
 		puts(" [PASSED] strcat: hello string");
 	else
@@ -99,6 +105,7 @@ static void test_my_memcpy(void)
 	 * TODO 4a: Call my_memcpy() to buf of string "def" using 3 bytes.
 	 * Store result in ret.
 	 */
+	ret = my_memcpy(buf, "def", 3);
 	if (memcmp(buf, "def", 3) == 0 && ret == buf)
 		puts(" [PASSED] memcpy: def byte array");
 	else
@@ -108,6 +115,7 @@ static void test_my_memcpy(void)
 	 * TODO 4b: Call my_memcpy() to buf of string "def" using 4 bytes.
 	 * Store result in ret.
 	 */
+	ret = my_memcpy(buf, "def", 4);
 	if (memcmp(buf, "def", 4) == 0 && ret == buf)
 		puts(" [PASSED] memcpy: def string");
 	else
@@ -117,6 +125,7 @@ static void test_my_memcpy(void)
 	 * TODO 4c: Call my_memcpy() to buf of string "defghij" using 7 bytes.
 	 * Store result in ret.
 	 */
+	ret = my_memcpy(buf, "defghij", 7);
 	if (memcmp(buf, "defghij", 8) == 0 && ret == buf)
 		puts(" [PASSED] memcpy: defghij string");
 	else

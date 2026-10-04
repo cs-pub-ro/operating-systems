@@ -10,8 +10,8 @@
  *   - Plain C, no compiler builtins, no inline assembly. A simple, correct
  *     byte-at-a-time loop is exactly what we want here.
  *
- * Check your work with:   make test
- * Then measure it with:   make bench
+ * Each TODO here has a matching TODO in main.c, where you call the function
+ * and check its result. Build and run with:   make && ./main
  */
 
 #include "mystring.h"
@@ -19,7 +19,7 @@
 size_t my_strlen(const char *s)
 {
 	/*
-	 * TODO
+	 * TODO 1:
 	 * Walk forward from s until you hit '\0'. Return how many bytes you
 	 * walked past (not counting the '\0' itself).
 	 */
@@ -30,7 +30,7 @@ size_t my_strlen(const char *s)
 char *my_strcpy(char *dest, const char *src)
 {
 	/*
-	 * TODO
+	 * TODO 2:
 	 * Copy bytes from src to dest until you have copied the '\0'.
 	 * Careful: the '\0' must be copied too, or dest is not a string.
 	 * Remember what the function must return -- check the header.
@@ -42,16 +42,15 @@ char *my_strcpy(char *dest, const char *src)
 char *my_strcat(char *dest, const char *src)
 {
 	/*
-	 * TODO
+	 * TODO 3:
 	 * Two steps:
 	 *   1. Find the '\0' that currently ends dest.
 	 *   2. Copy src (and its '\0') starting at that position.
 	 *
 	 * You may reuse my_strlen/my_strcpy here.
 	 *
-	 * Pay attention to step 1 -- it is the reason for the whole benchmark
-	 * in this exercise. Ask yourself: how much work is step 1, and does it
-	 * depend on the length of dest or the length of src?
+	 * Ask yourself: how much work is step 1, and does it depend on the
+	 * length of dest or the length of src?
 	 */
 
 	return dest;
@@ -60,7 +59,7 @@ char *my_strcat(char *dest, const char *src)
 void *my_memcpy(void *dest, const void *src, size_t n)
 {
 	/*
-	 * TODO
+	 * TODO 4:
 	 * Copy exactly n bytes. There is no '\0' involved: n is the only thing
 	 * that stops you.
 	 *

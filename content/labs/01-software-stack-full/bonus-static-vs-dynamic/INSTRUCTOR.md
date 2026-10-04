@@ -45,7 +45,7 @@ Insist on ratios.
 
 `./main_dynamic` refuses to start until `LD_LIBRARY_PATH` is set.
 Let students hit it and read the message.
-Same lesson as in `02-stream-ciphers`: `-L.` spoke to the linker at build time and said nothing to the loader at run time.
+Same lesson as in `02-xor-encryption` and `03-stream-ciphers`: `-L.` spoke to the linker at build time and said nothing to the loader at run time.
 
 ## Points worth drawing out from `make inspect`
 
@@ -54,7 +54,9 @@ Same lesson as in `02-stream-ciphers`: `-L.` spoke to the linker at build time a
 * `nm -u` shows `my_strlen` undefined in the dynamic build only.
 * The `size` output shows `main_fullstatic` at ~220× the text of the others.
   Ask what the extra bytes are before telling them.
-* `-Wl,-Bstatic` without a matching `-Wl,-Bdynamic` makes the linker attempt to link libc statically too, and it will complain.
+* The static and shared libraries are deliberately named differently, `libmystringstatic.a` and `libmystringdyn.so`.
+  If a student asks why: with one shared name, `-lmystring` would always take the `.so`, and `main_static` would not be static at all.
+  `ldd main_static` is the quick check that it is not.
 
 ## Practical notes
 
@@ -68,4 +70,4 @@ Same lesson as in `02-stream-ciphers`: `-L.` spoke to the linker at build time a
 ## Prerequisites
 
 Requires a working `01-string-functions` solution.
-A student whose `my_strcat` is wrong will still get plausible-looking timings here, since `main.c` does not check correctness — check `make test` passed in the other directory first.
+A student whose `my_strcat` is wrong will still get plausible-looking timings here, since `main.c` does not check correctness — check that `./main` reports every check as `[PASSED]` in the other directory first.

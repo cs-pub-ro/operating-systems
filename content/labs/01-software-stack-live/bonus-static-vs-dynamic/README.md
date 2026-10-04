@@ -4,7 +4,7 @@
 
 ## Goal
 
-Turn the string functions you wrote earlier into a real library, `libmystring`, ship it in both a static and a shared flavour, link the same program against each, and measure what the difference actually costs.
+Turn the string functions you wrote earlier into a real library, ship it in both a static and a shared flavour (`libmystringstatic.a` and `libmystringdyn.so`), link the same program against each, and measure what the difference actually costs.
 At the end you will have built by hand the two things `-lc` has been silently giving you since your first `printf()`.
 
 ## Background
@@ -29,14 +29,14 @@ Which one costs more depends entirely on what you measure.
    `main.c` and the `Makefile` are already here and need no changes.
    `main.c` calls your functions in a tight loop and times them; `./main_x 0` does no work at all, which measures start-up only.
 
-1. Build `libmystring.a` by hand: compile `mystring.c` to an object file, then `ar rcs` it into an archive.
+1. Build `libmystringstatic.a` by hand: compile `mystring.c` to an object file, then `ar rcs` it into an archive.
    Inspect the archive with `ar t` and `ar x`.
 
-1. Build `libmystring.so` by hand: compile with `-fPIC`, then link with `-shared`.
+1. Build `libmystringdyn.so` by hand: compile with `-fPIC`, then link with `-shared`.
 
 1. Link `main.c` three times: against the `.a`, against the `.so`, and fully statically (`-static`, libc included).
    `make` does all of this; do it manually first, then read the `Makefile` to compare.
-   Note the `-Wl,-Bstatic ... -Wl,-Bdynamic` pair — work out why it is needed when both `libmystring.a` and `libmystring.so` are present.
+   The two libraries have different names, so `-lmystringstatic` and `-lmystringdyn` each pick exactly one file.
 
 1. Run the dynamically linked build directly, *without* setting anything.
    It will fail.

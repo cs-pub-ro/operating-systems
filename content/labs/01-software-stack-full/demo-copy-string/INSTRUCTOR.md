@@ -27,7 +27,7 @@ $ diff -u copy-string.c copy-string-improved.c
 ```
 
 Ask students what `strcpy()` and what `strcat()` functions do.
-Show them the diagram or, better, build the diagram with Excalidraw.
+Show them the diagram or, better, build the diagram with [Excalidraw](https://app.excalidraw.com/).
 Point to make is that `strcat()` "walks" the destination string to locate the string terminator (`NUL` byte - `\0`), and then does a copy, whereas `strcpy()` only does a copy.
 That has effect on time taken to run the functions.
 
@@ -103,7 +103,7 @@ $ objdump -d -M intel copy-string
 [...]
 ```
 
-The `jbe` instruction above (line `11c9`) loops the incremending of a local variable and comparing it with `0x5f5e0ff` (`100,000,000`).
+The `jbe` instruction above (line `11c9`) loops the incrementing of a local variable and comparing it with `0x5f5e0ff` (`100,000,000`).
 
 Fill in contents of the `for` loop in the `copy-string.c` (using `strcat()`) and in the `copy-string-improved.c` file (using `strcpy()`).
 You would end with the same contents of the `copy-string.c` and `copy-string-improved.c` files in the current directory.
@@ -138,4 +138,5 @@ As note for the future, insist that, for performance or efficiency reasons, you 
 
 ## Where this leads
 
-This demo is the appetiser for the `01-string-functions` exercise, which turns the same observation into a measured O(N²)-versus-O(N) table.
+This demo is the appetiser for the `01-string-functions` exercise, where students implement `my_strcat()` themselves and meet the rescanning from the inside.
+The exercise no longer has a benchmark of its own, so the numbers measured here are the ones to point back at when explaining why appending in a loop is O(N²).

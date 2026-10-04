@@ -215,6 +215,7 @@ check_common() {
 check_session_01() {
 	heading "Session 01 -- The Software Stack"
 	check_command ar
+	check_command file
 	check_command nm
 	check_command objdump
 	check_command size

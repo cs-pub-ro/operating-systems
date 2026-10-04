@@ -1,0 +1,19 @@
+We are updating the materials for the lab 01 session.
+
+Do the following:
+1. Update the contents of the full variant of the 01-string-functions/ exercise to be compatible with the instructions in the live version.
+2. The exercise 02-stream-ciphers/ is too complex.
+   Simplify it by providing a Makefile that already has the rules to build the shared / dynamic and static libraries.
+   Have students build by hand, and then also update the Makefile, the executable files.
+   Be sure the instructions / hints and the commands work.
+   Have libraries be called different to avoid confusion at link time, such as `libcipherdyn.so` and `libcipherstatic.so`.
+3. Move 02-stream-cipher/ into 03-stream-chiper/.
+   Add 02-xor-encryption/ exercise as a complete tutorial (no code or Makefiles to be filled) that builds a static library and a dynamic library, and then corresponding executables doing a xor-based encryption.
+   This serves as a training ground for the exercise 03-stream-cipher/.
+   Insist on the use of `-L.` and the placement of `-l<libname>` at the end of the linking command.
+   Explain why `LD_LIBRARY_PATH` is used and what it does.
+   Add instructions on using `file` and `ldd` on libraries and executables of different types.
+   Show using `nm` when a symbol is undefined and that linking (at link time or at load time) resolves the symbol.
+4. For exercises `bonus-per-stream-cipher-exec/` and `bonus-static-vs-dynamic/` also be sure that the dynamic and static library files are called different to avoid confusion.
+5. Remove references to -Wl,-Bstatic ... -Wl,-Bdynamic (in bonus-static-vs-dynamic/), they're too complicated.
+   We use separate library names for static and dynamic libraries and that solves it.

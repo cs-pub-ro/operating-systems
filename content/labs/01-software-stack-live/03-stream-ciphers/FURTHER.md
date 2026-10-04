@@ -5,16 +5,17 @@ Work through these once all four executables build and run correctly.
 
 ## Things to try
 
-1. Delete `libcipher.a` and rerun `cipher-static-lib`.
-   Then delete `libcipher.so` and rerun `cipher-dyn`.
+1. Delete `libcipherstatic.a` and rerun `cipher-static-lib`.
+   Then delete `libcipherdyn.so` and rerun `cipher-dyn`.
    Explain both outcomes in one sentence each.
-1. Link with `-Wl,-rpath,'$ORIGIN'` instead of setting `LD_LIBRARY_PATH`.
+1. Link with `-Wl,-rpath,'$ORIGIN'` instead of setting `LD_LIBRARY_PATH`, into an executable named `cipher-rpath`.
    What changed inside the executable?
    Look with `readelf -d`.
-1. Both `libcipher.a` and `libcipher.so` exist in the directory and you pass `-lcipher`.
-   Which one does the linker pick, and how do you force the other?
-1. Rebuild `libcipher.so` *without* `-fPIC` on x86-64 and read the linker error.
-   What is it actually complaining about?
+1. Link `cipher-static-lib` with `-static` as well, and compare the result with `cipher-static`.
+   Is there any difference left between "all sources compiled together" and "linked against a static library", once libc is static too?
+1. Remove `-fPIC` from the two `_pic.o` rules in the `Makefile` and rebuild `libcipherdyn.so`.
+   Does it still build and work?
+   Find out why with `gcc -v 2>&1 | grep -o -- --enable-default-pie`.
 1. Run `strace -e trace=openat ./cipher-dyn caesar 3 hi` and watch the loader search for the library.
    How many places does it look before it finds it — or gives up?
 

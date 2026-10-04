@@ -16,12 +16,12 @@ Every function that needs the length must therefore go and find it, byte by byte
 
 ## Directory Contents
 
-- `my_string.c`: where to implement the four string functions.
-- `my_string.h`: header file with the declaration of the functions in `my_string.c`, included in `main.c`.
-- `main.c`: contains the `main()` function where to implement calls (and tests) to the four string functions.
-- `Makefile`: build the program.
-- `README.md`: this file.
-- `FURTHER.md`: optional further exercises and instructions, to be worked on either at home or, if time allows it, after the lab session.
+* `mystring.c`: where to implement the four string functions.
+* `mystring.h`: header file with the declaration of the functions in `mystring.c`, included in `main.c`.
+* `main.c`: contains the `main()` function where to implement calls (and tests) to the four string functions.
+* `Makefile`: build the program.
+* `README.md`: this file.
+* `FURTHER.md`: optional further exercises and instructions, to be worked on either at home or, if time allows it, after the lab session.
 
 ## Build & Run
 
@@ -37,7 +37,7 @@ Run with:
 ./main
 ```
 
-Initially, the program will do nothing, as no functions are implemented.
+Initially, every check fails, as no functions are implemented and no calls are made.
 
 ## Your Tasks
 
@@ -46,29 +46,29 @@ Open `mystring.c` and `main.c` and fill in the four TODOs in each file.
 Implement and test one function at a time.
 Implement the function in `mystring.c`, implement the call and test in `main.c`.
 
-1. Implement `my_strlen()` in the `TODO 1` section in `my_string.c`.
+1. Implement `my_strlen()` in the `TODO 1` section in `mystring.c`.
    It counts the number of characters up to, not including, the `NUL`-terminator (`\0`).
 
    Call `my_strlen()` (and `strlen()`) in the `TODO 1` section in `main.c`.
-   Build and run the `
+   Build and run the program.
    Check to see if the result is the same.
 
-1. Implement `my_strcpy()` in the `TODO 2` section in `my_string.c`.
+1. Implement `my_strcpy()` in the `TODO 2` section in `mystring.c`.
    It copies the `src` string to the `dest` string, with the `NUL`-terminator included.
    It returns `dest`.
 
    Call `my_strcpy()` (and `strcpy()`) in the `TODO 2` section in `main.c`.
    Check to see if the result is the same.
 
-1. Implement `my_strcat()` in the `TODO 3` section in `my_string.c`.
+1. Implement `my_strcat()` in the `TODO 3` section in `mystring.c`.
    It appends the `src` string to the `dest` string, with the `NUL`-terminator included.
    It returns `dest`.
 
    Call `my_strcat()` (and `strcat()`) in the `TODO 3` section in `main.c`.
    Check to see if the result is the same.
 
-1. Implement `my_memcpy()` in the `TODO 4` section in `my_string.c`.
-   It coppies exactly `n` bytes from `src` to `dest`.
+1. Implement `my_memcpy()` in the `TODO 4` section in `mystring.c`.
+   It copies exactly `n` bytes from `src` to `dest`.
    It returns `dest`.
    `my_memcpy` receives `void *`, which you can neither dereference nor advance.
    Assign it to an `unsigned char *` first.
@@ -78,5 +78,5 @@ Implement the function in `mystring.c`, implement the call and test in `main.c`.
 
 ## Check Your Work
 
-At the end, all TODOs are filled (both in `my_string.c` and in `main.c`).
+At the end, all TODOs are filled (both in `mystring.c` and in `main.c`).
 And all tests in the `main()` function in `main.c` pass.
