@@ -27,10 +27,10 @@ By the end of this session you should be able to:
 * No prior assembly experience is required.
   The inline assembly is given to you and explained; you never have to write any.
 
-Check that your system has all it needs for the lab, by downloading and running the [`check-prerequisites.sh` script](https://github.com/cs-pub-ro/operating-systems/blob/master/scripts/check-prerequisites.sh):
+Check that your system has all it needs for the lab, by downloading and running the [`check-prerequisites.sh` script](https://github.com/cs-pub-ro/operating-systems/blob/main/scripts/check-prerequisites.sh):
 
 ```console
-wget http://raw.githubusercontent.com/cs-pub-ro/operating-systems/refs/heads/master/scripts/check-prerequisites.sh
+wget http://raw.githubusercontent.com/cs-pub-ro/operating-systems/refs/heads/main/scripts/check-prerequisites.sh
 chmod a+x check-prerequisites.sh
 ./check-prerequisites.sh
 ```

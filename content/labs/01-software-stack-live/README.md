@@ -19,10 +19,10 @@ By the end of this session you should be able to:
 * A Linux environment with `gcc`, `make`, `ar`, `file`, `ldd`, `nm`, `objdump`, `strace` and `time` installed.
 * Comfort with the command line: running commands, redirecting output, reading `man` pages.
 
-Check that your system has all it needs for the lab, by downloading and running the [`check-prerequisites.sh` script](https://github.com/cs-pub-ro/operating-systems/blob/master/scripts/check-prerequisites.sh):
+Check that your system has all it needs for the lab, by downloading and running the [`check-prerequisites.sh` script](https://github.com/cs-pub-ro/operating-systems/blob/main/scripts/check-prerequisites.sh):
 
 ```console
-wget -O check-prerequisites.sh http://raw.githubusercontent.com/cs-pub-ro/operating-systems/refs/heads/master/scripts/check-prerequisites.sh
+wget -O check-prerequisites.sh http://raw.githubusercontent.com/cs-pub-ro/operating-systems/refs/heads/main/scripts/check-prerequisites.sh
 chmod a+x check-prerequisites.sh
 ./check-prerequisites.sh
 ```
