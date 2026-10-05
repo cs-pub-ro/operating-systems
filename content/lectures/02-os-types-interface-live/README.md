@@ -25,7 +25,7 @@ This lecture opens that layer: what it is made of, the interface it offers, the 
 
 | Part | Question | Demo | Figure |
 | --- | --- | --- | --- |
-| 00. Pitch | Why is there an operating system at all? | [`00-pitch/`](demos/00-pitch) | -- |
+| 00. Pitch | Why is there an operating system at all? | [`00-pitch/`](demos/00-pitch) | [the storyline](media/00-pitch/storyline.svg) |
 | 01. What makes an OS | What is an operating system made of? | [`01-make-os/`](demos/01-make-os) | [OS types](media/01-make-os/os-types.svg) |
 | 02. The OS interface | How does a program ask the kernel for something? | [`02-os-interface/`](demos/02-os-interface) | -- |
 | 03. Privileged domains | What makes the boundary a boundary? | [`03-privileged-domain/`](demos/03-privileged-domain) | [mode vs identity](media/03-privileged-domain/domains-vs-privilege.svg) |
@@ -33,6 +33,52 @@ This lecture opens that layer: what it is made of, the interface it offers, the 
 | 05. OS types | Where should the code live? | -- | -- |
 | 06. Virtualization | What runs the operating system? | -- | [virtualization](media/06-virtualization/virtualization.svg) |
 | 07. Conclusion | What should survive the week? | -- | -- |
+
+## Storyline / Narrative
+
+The lecture follows one thread from start to finish, and the figure below walks through it, step by step: [the storyline](media/00-pitch/storyline.svg).
+
+1. **The pitch:** you write a dozen instructions to print one line, and the machine runs a million.
+   Almost none of them are yours: they belong to the operating system, which is busy even when you never call it by name.
+1. **A program needs hardware, and hardware is hard to talk to.**
+   The CPU runs the instructions, memory holds them, devices bring data in and out, and none of them offers anything as friendly as "open a file".
+1. **The operating system has two jobs: it is a provider, and it is a guard.**
+   As a provider, it offers what every program needs: memory, files, processes, networking, devices.
+   As a guard, it keeps programs from breaking each other, because many run at once and some are hostile.
+1. **The OS is a library, but a strange one.**
+   You never link it, every program on the machine shares it, and it cannot trust a single one of its callers.
+   Even the smallest OS that can run one program weighs 240 KB.
+1. **There is one way in: the system call.**
+   Put a number in a register, the arguments in other registers, run one `syscall` instruction, and read the answer back.
+   `strace` shows a program's whole conversation with the kernel, one call per line.
+1. **libc calls are not system calls.**
+   A program asks the OS only for what it cannot do itself, because it needs privilege, or does not want to write, because the code is already there.
+   `strlen()` never asks; `getpid()` asks every time; `printf()` asks when its buffer says so.
+1. **A guard is useless if it can be pushed aside, so the CPU itself builds the fence.**
+   Applications run in user mode, the kernel runs in kernel mode, and the hardware enforces the line between them.
+   Run a privileged instruction in user mode and the CPU stops the program on the spot, with no software involved.
+1. **The fence is about mode, not about who you are.**
+   Root is a user, not a mode: root's programs run in user mode too, and crash on the same instruction.
+   The kernel works on behalf of whoever called it, and checks their user ID to decide what they may do.
+1. **Everything rests on the kernel holding.**
+   The system call is a function call and a gate at the same time, and the gate is the only way through.
+   A bug in the kernel is a bug in the whole system, and a compromised kernel is a compromised machine.
+1. **Every trip through the gate has a toll.**
+   A system call costs about seventy times as much as a function call, even when it does nothing at all.
+   So the goal is simple: cross less.
+1. **There are two ways to cross less, at the two ends of the boundary.**
+   Stay in user space and batch the work, the way a buffer turns thousands of tiny writes into a few large ones.
+   Or hand the whole job to the kernel and skip the trips, the way `sendfile()` moves a file without ever bringing it up to the program.
+1. **Where should the code live? Every answer trades speed for safety.**
+   A monolithic kernel puts everything inside the fence: fast, but one bad driver can bring it all down.
+   A microkernel moves drivers out as ordinary programs: safer, but every file operation now crosses the fence.
+   A unikernel drops the fence altogether and gets its protection from outside.
+1. **Outside means one floor lower: virtualization.**
+   A hypervisor is to operating systems what an operating system is to applications: more privileged, it shares one machine among them and keeps them apart.
+   If a kernel fails, only its own virtual machine goes down.
+1. **What should survive the week:** the OS is a provider and a guard.
+   Its interface is the system call, a door with a fence around it, built into the CPU.
+   Every crossing costs, so good software crosses less, and every OS design is a choice of where to put the fence.
 
 ## Points to capture
 
