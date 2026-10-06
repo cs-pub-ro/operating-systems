@@ -1,11 +1,8 @@
 site_name: Operating Systems
 site_description: Lecture and lab materials for the Operating Systems class
-# The repository is private, so Pages serves it from this generated domain.
-# Making the repository public moves the site to
-# https://cs-pub-ro.github.io/operating-systems-sessions/ -- change this then.
-site_url: https://didactic-winner-kmm5z9n.pages.github.io/
-repo_url: https://github.com/cs-pub-ro/operating-systems-sessions
-repo_name: cs-pub-ro/operating-systems-sessions
+site_url: https://cs-pub-ro.github.io/operating-systems/
+repo_url: https://github.com/cs-pub-ro/operating-systems
+repo_name: cs-pub-ro/operating-systems
 # The pages are generated from the READMEs, so there is nothing to edit here.
 edit_uri: ""
 
