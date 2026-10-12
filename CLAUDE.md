@@ -41,7 +41,11 @@ A **lecture** session is laid out by kind rather than by task type, and both hal
   Excalidraw drawings are committed as the PDF the tool exports plus an SVG converted from it by `scripts/gen_media.sh`; draw.io drawings keep their `.drawio` source beside the SVG.
   The SVG is what a README points at, because a browser will not show a PDF through an `![...]()`.
 * `demos/` — the programs demonstrated during the lecture, numbered to match the parts.
-  The sources live in the `-full/` half and there is exactly one copy of each; the `-live/` half holds only the command sheet for each demo — what to type, and the question to put to the room.
+  In lectures 01 and 02 the sources live in the `-full/` half and there is exactly one copy of each; the `-live/` half holds only the command sheet for each demo — what to type, and the question to put to the room.
+  From lecture 03 on, the `-live/` half carries its own copy of the sources too, next to the command sheet, so that nothing used in the room points at the other half (`dev/expand-lecture-03-content-prompt.txt`: easy access over no duplication).
+  Edit a demo in `-full/` and copy it over; the two copies are meant to be identical.
+* `STORYLINE.md` (`-full/` only, from lecture 03 on) — the planned narrative of the live delivery, numbered, with the storyline figure.
+  The same list is repeated in the `-live/` README under *Storyline / Narrative*, which is what the website shows, since only `README.md` files become pages.
 * `slides/` — one Quarto deck (`*.qmd`), rendered to reveal.js by `scripts/render_slides.sh` and published with the website.
   The `-live/` deck is minimal (at most 15 slides: diagrams, demo results, questions); the `-full/` deck follows the session `README.md` with the detail filled in.
   `make` in a `slides/` directory renders the HTML, `make pdf` renders the same deck through beamer.
