@@ -17,14 +17,15 @@ UTM cannot import `.ova` files, so download the virtual machine as a disk image 
 You will need to log in using your `UPB` account.
 The image is large, so the download may take a while.
 
+
 ## Creating the VM
 
 UTM has no "import a disk image" button, so you first create an empty virtual machine and then attach the image to it as its disk.
 
 1. Open UTM and click **Create a New Virtual Machine**.
-1. Select **Emulate**, not **Virtualize**: virtualization only runs ARM systems.
+1. Select **Emulate**, not **Virtualize**. Virtualization only runs ARM VMs.
 1. Select **Other** as the operating system.
-1. On the hardware page, check that **Machine** is `x86_64`, and give the machine at least 2 GB of RAM (4 GB is recommended) and at least 2 CPU cores.
+1. On the hardware page, check that **Machine** is `x86_64`, and give the machine 4 GB of RAM and 4 CPU cores.
 1. Check **None** for the boot device: there is no installer to boot, since the image already holds an installed system. Disable **UEFI Boot**; this image boots the traditional BIOS way, it does not start with UEFI enabled.
 1. Set the storage size to at least 20 GB.
    This creates an empty disk that serves as persistent storage for our VM. It will not occupy any space in the beginning, as it is a dynamic disk.
@@ -32,9 +33,10 @@ UTM has no "import a disk image" button, so you first create an empty virtual ma
 1. Give the virtual machine a name, such as `VM-SO`, check **Open VM Settings** and save it.
 
 The virtual machine exists now, but it has nothing to boot from.
-Edit it to attach the image:
+Edit it to attach the image you downloaded - `VM-SO.qcow2`- as its first drive.:
 
 1. Go to **Drives**, select **New...**, click **Import** and choose the `VM-SO.qcow2` file you downloaded.
+1. In the **Drives** change the interface from *IDE* to *VirtIO*.
 1. Right-click the newly added drive and select **Move Up**, until it is the first drive in the list.
    The machine boots from the first drive, and the empty disk from the wizard would otherwise come first.
 1. Click **Save**.
@@ -50,7 +52,7 @@ Everything set in the wizard can be changed later, from **Edit**, while the virt
 
 **Memory and cores.**
 Change them under **System**.
-Use at least 2 GB and 2 cores, and leave at least as much for macOS itself.
+Use at least 4 GB and 4 cores, and leave at least as much for macOS itself.
 More cores help less than you might expect: emulation is slow mostly because of the instruction translation, not for lack of cores.
 
 **The empty disk.**
@@ -58,4 +60,23 @@ The disk created by the wizard is never used.
 Once the virtual machine boots from the image, you can delete it under **Drives** to get its space back.
 
 **It does not boot.**
-If the virtual machine shows a UEFI shell or reports that there is no bootable device, check the two settings that matter: **UEFI Boot** is unchecked under **QEMU**, and the imported `VM-SO.qcow2` drive is the first one under **Drives**.
+If the virtual machine shows a UEFI shell or reports that there is no bootable device, check the following:
+- **UEFI Boot** is unchecked under **QEMU**
+- the imported `VM-SO.qcow2` drive is the first one under **Drives**.
+- the interface of the `VM-SO.qcow2` drive under **Drives** is *VirtIO*
+
+**GUI enabled/disabled**
+
+The virtual machine runs faster with the graphical interface disabled.
+Under emulation every frame the desktop draws costs translated instructions, so the GUI is sluggish and takes CPU time away from your actual work.
+
+To disable the GUI, log in and run, then restart the VM:
+
+```console
+sudo systemctl set-default multi-user.target
+```
+
+To enable the GUI again, run, then restart the VM:
+```console
+    sudo systemctl set-default graphical.target
+```
