@@ -42,7 +42,7 @@
 * **The four variants trade the same two things:** who decides the size, and who gives the memory back.
   Compile time and nobody (global, local); run time and you (`malloc`, `mmap`).
 * **The two managed variants are mostly cleanup.**
-  Count the `free()` or `munmap()` calls against the lines that do actual work.
+  Count the lines at the end of `main()` that exist only to give things back, against the lines that do actual work.
   This is the everyday cost of manual memory management, and it is why every later language has something to automate it.
 * **`malloc()` is a policy on top of `brk()` and `mmap()`.**
   For small blocks it carves the heap, for large ones it maps; calling `mmap()` directly means making that decision yourself -- which is sometimes the point, as in `04-reverse-lines` and `bonus-malloc-tuning`.

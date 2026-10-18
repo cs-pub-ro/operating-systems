@@ -26,7 +26,7 @@ What differs is the one line that brings `buffer` into existence, and what that 
 A buffer declared at file scope:
 
 ```C
-static char buffer[BUFFER_SIZE];
+static unsigned char buffer[BUFFER_SIZE];
 ```
 
 is placed by the compiler in the **BSS segment** if it is zero-initialised, or the **data segment** if given an explicit initialiser.
@@ -50,7 +50,7 @@ make clean
 ### Step 1 -- the global buffer
 
 ```C
-static char buffer[BUFFER_SIZE];
+static unsigned char buffer[BUFFER_SIZE];
 ```
 
 `static` at file scope means "not visible outside this translation unit", not "allocated differently" -- a plain global would live in the same place.
@@ -59,10 +59,10 @@ Being zero-initialised, it lands in BSS, and `size` shows it:
 ```text
 $ size copy_file
    text    data     bss     dec     hex filename
-   2761     656 1048608 1052025  100d79 copy_file
+   2770     664 1048608 1052042  100d8a copy_file
 ```
 
-A megabyte of BSS, and `ls -l copy_file` is still about 16 KB: the buffer takes space in the running process, not in the file.
+A megabyte of BSS, and `ls -l copy_file` is still about 20 KB, most of it the debug information `-g` adds: the buffer takes space in the running process, not in the file.
 
 ### Step 2 -- writing, and the short-write check
 
@@ -71,17 +71,27 @@ size_t bytes_written = fwrite(buffer, 1, bytes_read, dst);
 
 if (bytes_written != bytes_read) {
 	fprintf(stderr, "fwrite: short write\n");
-	fclose(src);
-	fclose(dst);
-	return EXIT_FAILURE;
+	goto fail_dst;
 }
 ```
 
 `fwrite` returns the number of *items* written, which is why the item size is 1 and the count is `bytes_read`.
 Checking the result matters: a full disk reports itself here and nowhere else.
 
-The two `fclose()` calls have to be repeated on this error path.
-There is nothing else to release in this variant, so that is the whole cleanup -- which is precisely the contrast the `malloc` and `mmap` variants are about to draw.
+The error path does not clean up by itself: it jumps to a label at the end of `main()`.
+
+```C
+fail_dst:
+	fclose(dst);
+fail_src:
+	fclose(src);
+fail:
+	return -1;
+```
+
+The labels are in the reverse order of the acquisitions, so jumping to the one that matches what is open and falling through the rest undoes exactly that.
+Each failure in `main()` goes to the label of the last resource it holds, and the cleanup is written once.
+There is nothing but two files to release in this variant -- which is precisely the contrast the `malloc` and `mmap` variants are about to draw.
 
 ## References
 

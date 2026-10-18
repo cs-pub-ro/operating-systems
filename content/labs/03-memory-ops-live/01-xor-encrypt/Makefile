@@ -1,7 +1,7 @@
 CC     := gcc
-CFLAGS := -O2 -Wall -Wextra -std=c11
+CFLAGS := -Wall -Wextra -g
 
-.PHONY: all test clean
+.PHONY: all clean
 
 all: xor_encrypt
 

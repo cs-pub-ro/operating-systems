@@ -72,48 +72,52 @@ int main(int argc, char *argv[])
 
 	if (argc != 2) {
 		fprintf(stderr, "Usage: %s <file>\n", argv[0]);
-		return EXIT_FAILURE;
+		exit(EXIT_FAILURE);
 	}
 
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 0) {
 		perror("open");
-		return EXIT_FAILURE;
+		goto fail;
 	}
 
-	/* The buffer has to be as large as the file.
+	/*
+	 * The buffer has to be as large as the file.
 	 * The file size is saved in the "size" variable.
 	 */
 	if (fstat(fd, &st) < 0) {
 		perror("fstat");
-		close(fd);
-		return EXIT_FAILURE;
+		goto fail_fd;
 	}
 	size = (size_t)st.st_size;
 
 	if (size == 0) {
 		close(fd);
-		return EXIT_SUCCESS;
+		return 0;
 	}
 
 	/*
-	 * TODO 1: obtain the buffer from the kernel using mmap: `size` bytes, as an
-	 * anonymous mapping that this program can read and write.
+	 * TODO 1: obtain the buffer from the kernel using mmap: `size` bytes,
+	 * as an anonymous mapping that this program can read and write.
 	 *
-	 * Think about what happens here when the file is empty, and about the
-	 * value mmap() returns when it fails.
+	 * Think about the value mmap() returns when it fails, and about where
+	 * a failing run leaves from.
 	 */
 
-	if (read_all(fd, buf, size) < 0) {
-		/* Leave nothing behind on this path either. */
-		close(fd);
-		return EXIT_FAILURE;
-	}
+	if (read_all(fd, buf, size) < 0)
+		goto fail_buf;
 	close(fd);
 
 	print_reversed(buf, size);
 
 	/* TODO 2: the buffer has done its job. */
 
-	return EXIT_SUCCESS;
+	return 0;
+
+fail_buf:
+	/* TODO 2: the buffer is still there on this path too. */
+fail_fd:
+	close(fd);
+fail:
+	return -1;
 }

@@ -45,7 +45,7 @@ strace -c -e trace=brk,mmap,munmap ./frames
 
 ## Results and Explanations
 
-Measured on Ubuntu 25.04, glibc 2.41, x86-64; the ratios are what matter, the absolute times are the machine's.
+Measured on Ubuntu 25.04, glibc 2.41, x86-64, with the Makefile's `-g` and no optimisation; the ratios are what matter, the absolute times are the machine's.
 
 ### Step 1 -- the default
 
@@ -54,8 +54,8 @@ The skeleton, as shipped:
 ```text
 $ ./frames
 100 frames of 63 MiB
-  time:            1.643 s
-  minor faults:    3239985
+  time:            1.748 s
+  minor faults:    3240015
   max RSS:         64 MiB
   corrupt pixels:  0
 ```
@@ -64,15 +64,15 @@ $ ./frames
 $ strace -c -e trace=brk,mmap,munmap ./frames
 % time     seconds  usecs/call     calls    errors syscall
 ------ ----------- ----------- --------- --------- ----------------
- 99.62    0.174212        1724       101           munmap
-  0.37    0.000648           6       108           mmap
-  0.01    0.000010           3         3           brk
+ 99.64    0.188997        1871       101           munmap
+  0.36    0.000680           6       108           mmap
+  0.00    0.000007           2         3           brk
 ```
 
 One `mmap()` and one `munmap()` per frame: 63 MiB is far above the threshold, so every `malloc()` is a fresh anonymous mapping and every `free()` returns it.
 A fresh mapping has no pages; the renderer touches all 16,200 of them, and each costs a page fault in which the kernel finds a page and zeroes it.
 There are two faults per page, 3.24 million in all, because `render_frame()` reads a pixel before writing it: the read maps the shared zero page, the write faults again for a private copy.
-The kernel's zeroing and the fault handling are where the 1.6 s goes; the `munmap()` line in the summary is only the part `strace` can see.
+The kernel's zeroing and the fault handling are where the 1.7 s goes; the `munmap()` line in the summary is only the part `strace` can see.
 
 ### Step 2 -- tuning from outside
 
@@ -81,8 +81,8 @@ Keeping requests off `mmap()`:
 
 ```text
 $ GLIBC_TUNABLES=glibc.malloc.mmap_max=0 ./frames
-  time:            1.690 s
-  minor faults:    3233693
+  time:            1.747 s
+  minor faults:    3233679
 ```
 
 No better.
@@ -93,8 +93,8 @@ The second knob:
 ```text
 $ GLIBC_TUNABLES=glibc.malloc.mmap_max=0:glibc.malloc.trim_threshold=4294967295 ./frames
 100 frames of 63 MiB
-  time:            0.332 s
-  minor faults:    32487
+  time:            0.354 s
+  minor faults:    32512
   max RSS:         64 MiB
   corrupt pixels:  102440700
 ```
@@ -135,8 +135,8 @@ The bug was there before the tuning.
 
 ```text
 $ GLIBC_TUNABLES=glibc.malloc.perturb=170 ./frames
-  time:            1.433 s
-  minor faults:    1620188
+  time:            1.452 s
+  minor faults:    1620213
   corrupt pixels:  103680000
 ```
 
@@ -150,13 +150,18 @@ The reference uses `calloc()`:
 
 | Tuned run | time | faults | corrupt |
 | --- | --- | --- | --- |
-| `malloc()` (skeleton) | 0.327 s | 32,486 | 102,440,700 |
-| `malloc()` + `memset()` | 0.500 s | 32,452 | 0 |
-| `calloc()` | 0.513 s | 32,452 | 0 |
+| `malloc()` (skeleton) | 0.354 s | 32,512 | 102,440,700 |
+| `malloc()` + `memset()` | 0.53 s | 16,313 | 0 |
+| `calloc()` | 0.525 s | 32,478 | 0 |
 
-Clearing 63 MiB a hundred times is 0.2 s, and the tuned program is still three times faster than the default.
-In the *default* run `calloc()` costs nothing extra (1.6 s either way): glibc knows a block that has just come from `mmap()` is zero and skips the clearing.
+Clearing 63 MiB a hundred times is about 0.2 s, and the tuned program is still three times faster than the default.
+In the *default* run `calloc()` costs nothing extra (1.75 s either way): glibc knows a block that has just come from `mmap()` is zero and skips the clearing.
 That is the case for `calloc()` over `memset()`: it clears only when it has to.
+
+The fault counts differ for a reason of their own.
+`memset()` writes every page of the first frame before the renderer touches it, so each page faults once.
+`calloc()` leaves the first frame's fresh pages untouched, because they are zero already, and the renderer then reads before writing: two faults per page, as in Step 1.
+Neither matters after the first frame, when the pages are resident.
 
 ### Summary
 

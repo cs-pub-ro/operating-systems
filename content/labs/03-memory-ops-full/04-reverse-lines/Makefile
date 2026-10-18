@@ -1,5 +1,5 @@
-CC = gcc
-CFLAGS = -Wall -Wextra -g
+CC     := gcc
+CFLAGS := -Wall -Wextra -g
 
 .PHONY: all clean
 
@@ -9,4 +9,4 @@ reverse_lines: reverse_lines.c
 	$(CC) $(CFLAGS) -o $@ $<
 
 clean:
-	rm -f reverse_lines
+	$(RM) reverse_lines

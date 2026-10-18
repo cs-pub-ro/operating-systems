@@ -1,11 +1,12 @@
-CC = gcc
-CFLAGS = -Wall -Wextra
+CC     := gcc
+CFLAGS := -Wall -Wextra -g
 
-# Default target: build the skeleton (copy your task-1 main.c here first).
+.PHONY: all clean
+
+all: db
+
 db: main.c
-	$(CC) $(CFLAGS) -o db main.c
+	$(CC) $(CFLAGS) -o $@ $<
 
 clean:
-	rm -f db
-
-.PHONY: clean
+	$(RM) db

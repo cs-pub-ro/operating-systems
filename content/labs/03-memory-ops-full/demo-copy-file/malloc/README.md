@@ -38,36 +38,47 @@ make clean
 ### Step 1 -- allocate the buffer
 
 ```C
-char *buffer = malloc(BUFFER_SIZE);
-
+buffer = malloc(BUFFER_SIZE);
 if (!buffer) {
 	perror("malloc");
-	return EXIT_FAILURE;
+	goto fail;
 }
 ```
+
+`buffer` is declared as `unsigned char *` with the other variables at the top of `main()`; the assignment is the line this variant is about.
 
 The `NULL` check is not optional.
 On Linux with default overcommit settings `malloc` rarely fails for a 1 MiB request, which is exactly why untested error paths rot.
 
-### Steps 2, 3 and 5 -- free on the early exits
+### Free on the early exits
 
-Every early return after the allocation must release it:
+Every way out of `main()` after the allocation must release it.
+The error paths do it through one more label at the end of the function:
 
 ```C
-free(buffer);
-return EXIT_FAILURE;
+fail_dst:
+	fclose(dst);
+fail_src:
+	fclose(src);
+fail_buffer:
+	free(buffer);
+fail:
+	return -1;
 ```
 
-**Count the TODOs in this file.** Four of the six are `free()` calls on paths out of the function, not the interesting part of the program.
-That imbalance is the lesson of the variant: the allocation is one line, and the bookkeeping it creates is spread across every exit.
+The failure of `fopen()` for the source file jumps to `fail_buffer`: the buffer exists and nothing else does.
+A failure of the write jumps to `fail_dst`, and falls through all three.
+The allocation is one line; the bookkeeping it creates is one more label, and a `goto` on every path that can reach it.
+Without the labels it would be a `free()` repeated before every `return`, which is exactly the code that rots when a new exit is added.
 
 This is what `goto cleanup:` exists for in C, and why RAII exists in C++ and `defer` in Go.
 
-### Step 4 -- the write
+### Step 2 -- the write
 
 The short-write path now has three things to close or free before it returns, instead of two.
+It jumps to `fail_dst`, and the labels do the rest.
 
-### Step 6 -- free on success
+### Step 3 -- free on success
 
 ```C
 free(buffer);
@@ -93,7 +104,8 @@ This is why leaks survive testing, and why the tool matters more than the inspec
 strace -e trace=brk,mmap,munmap ./copy_file input.bin output.bin
 ```
 
-Among the start-up mappings there is one extra `mmap()` of 1 MiB, and one extra `munmap()` at the end.
+Among the start-up mappings there is one extra `mmap()`, of 1,052,672 bytes, and one extra `munmap()` at the end.
+That is the megabyte plus the allocator's header, rounded up to whole pages.
 A request this large is above the allocator's threshold (128 KB by default), so `malloc()` did not carve it out of the heap: it asked the kernel for a fresh area, and `free()` gave the area back.
 Keep that in mind for the last variant, which makes those two calls itself.
 

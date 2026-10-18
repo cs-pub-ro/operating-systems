@@ -87,8 +87,7 @@ int main(void)
 	while (scanf("%d %31s", &id, name) == 2) {
 		if (db_add(&db, id, name) != 0) {
 			fprintf(stderr, "out of memory\n");
-			db_free(&db);
-			return 1;
+			goto fail;
 		}
 	}
 
@@ -96,4 +95,9 @@ int main(void)
 	db_free(&db);
 
 	return 0;
+
+fail:
+	db_free(&db);
+
+	return -1;
 }

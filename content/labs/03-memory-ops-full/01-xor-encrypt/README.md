@@ -54,12 +54,6 @@ Decrypt by running the ciphertext back through the same program:
 diff input.txt roundtrip.txt && echo "identical"
 ```
 
-`make test` does exactly this round-trip and checks the result:
-
-```console
-make test
-```
-
 ## Results and Explanations
 
 ### The encryption loop
@@ -86,6 +80,22 @@ Within a block `i` runs from 0 to `n - 1`, and since a block is never larger tha
 Only the final block is normally short, and the loop encrypts and writes exactly that many bytes.
 Using `BLOCK_SIZE` instead of `n` on the last block would encrypt and write leftover bytes from a previous iteration — bytes that were never part of the file — and the output would no longer round-trip.
 This is the one place the exercise can go subtly wrong while still "working" on inputs whose length happens to be a multiple of 32.
+
+### The error paths
+
+```c
+fail_out:
+	fclose(out);
+fail_in:
+	fclose(in);
+fail:
+	return -1;
+```
+
+There are two resources to give back, so there are two labels, in the reverse order of the acquisitions.
+A failing `fopen()` for the output jumps to `fail_in`: the input is open and the output is not.
+A failing `fwrite()` jumps to `fail_out` and falls through to the next label.
+The labels are written once, and no `fclose()` is repeated before a `return`.
 
 ### Where the memory is, and what Valgrind sees
 

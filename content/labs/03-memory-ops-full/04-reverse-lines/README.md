@@ -44,7 +44,10 @@ make
 ### Step 1 -- how large is the file
 
 ```c
-if (fstat(fd, &st) < 0) { ... }
+if (fstat(fd, &st) < 0) {
+	perror("fstat");
+	goto fail_fd;
+}
 size = (size_t)st.st_size;
 ```
 
@@ -56,20 +59,24 @@ Asking the descriptor rather than the path means the size belongs to the file th
 ```c
 if (size == 0) {
 	close(fd);
-	return EXIT_SUCCESS;
+	return 0;
 }
 ```
 
 `mmap()` with a length of zero fails with `EINVAL`: an area is at least one page.
 An empty file has no lines, so the program prints nothing and succeeds, without asking for a buffer.
-This is the case the TODO asks you to think about, and the one a first version usually gets wrong by reporting an error for a perfectly good file.
+The live skeleton already contains this guard.
+Delete it and run on an empty file to see the case a first version usually gets wrong: an error reported for a perfectly good file.
 
 ### Step 2 -- the buffer
 
 ```c
 buf = mmap(NULL, size, PROT_READ | PROT_WRITE,
 	   MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
-if (buf == MAP_FAILED) { ... }
+if (buf == MAP_FAILED) {
+	perror("mmap");
+	goto fail_fd;
+}
 ```
 
 The kernel creates a new area of `size` bytes rounded up to whole pages, zero-filled, and returns its start.
@@ -102,7 +109,19 @@ munmap(buf, size);
 ```
 
 Unlike `free()`, `munmap()` needs the length: the kernel keeps areas, not allocations, and an area can be released in part.
-The error path in `read_all()`'s caller unmaps too; the one for `fstat()` has nothing to unmap yet.
+The error paths unmap too, through the labels at the end of `main()`:
+
+```c
+fail_buf:
+	munmap(buf, size);
+fail_fd:
+	close(fd);
+fail:
+	return -1;
+```
+
+A failing `read_all()` jumps to `fail_buf` and falls through all three.
+A failing `fstat()` or `mmap()` jumps to `fail_fd`: there is a descriptor to close and nothing to unmap yet.
 
 ### What the kernel saw
 

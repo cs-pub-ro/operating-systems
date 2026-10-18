@@ -34,7 +34,8 @@ That is the argument for Valgrind being a required tool, and it is worth making 
 ## The TODOs say what, not how
 
 The skeletons' TODO comments describe what is needed and why, and deliberately not the lines to type; the READMEs likewise.
-Students are meant to work out `realloc`'s failure contract, `mmap`'s failure value and the empty-file case themselves, and to find out from the tests whether they did.
+Students are meant to work out `realloc`'s failure contract and `mmap`'s failure value themselves, and to find out whether they did by running the program, reading what Valgrind and `strace` report, and trying inputs of their own.
+There are no `make test` targets: choosing the inputs and the reference to compare with is part of the exercise.
 When a student asks "but what do I write", answer with the question the TODO poses, not with the code; the reference sources in this directory are for after.
 
 ## The bugs the session is built around
@@ -44,8 +45,8 @@ When a student asks "but what do I write", answer with the question the TODO pos
   `03-in-memory-db` is designed to provoke it.
 * **`count <= capacity - CHUNK` on a `size_t`** — when `capacity` is 0 this wraps to a huge value and the code attempts an 18-exabyte `realloc`.
   `bonus-in-mem-database` is designed to provoke it.
-* **`mmap()` of length 0** — `EINVAL`, so a `tac` that does not think about the empty file reports an error for a perfectly good input.
-  `04-reverse-lines` is designed to provoke it.
+* **`mmap()` of length 0** — `EINVAL`, so a `tac` that does not guard the empty file reports an error for a perfectly good input.
+  `04-reverse-lines` gives the guard and asks what it is for.
 * **"Fresh memory is zero"** — true of pages from the kernel, false of a reused heap block.
   `bonus-malloc-tuning` is designed to provoke it, by making the allocator reuse memory.
 
@@ -57,15 +58,15 @@ The demo has four variants.
 If time is short, do **global-buffer**, **malloc** and **mmap**, and describe the local one in a sentence while the global one is on screen (same thing, in `main()`'s frame; the one that can overflow).
 The malloc lesson is re-taught by `03-in-memory-db`; the mmap variant is what `04-reverse-lines` builds on and is not introduced anywhere else.
 
-The four core exercises fit a session for a group that has done sessions 01 and 02 properly; `04-reverse-lines` is short by design (three calls) and should not be dropped to save time, because it is the only place the `mmap` choice is practised.
+The four core exercises fit a session for a group that has done sessions 01 and 02 properly; `04-reverse-lines` is short by design (two calls) and should not be dropped to save time, because it is the only place the `mmap` choice is practised.
 
 `bonus-in-mem-database` requires the student's own finished `03-in-memory-db`, and `bonus-malloc-tuning` is mostly explaining measurements, so both are genuinely take-home tasks for most of the room.
 
 ## Demonstrations worth the time
 
-* In the demo, **`diff` two variants**: everything the demo is about is in the one changed line and the extra lines on the error paths.
-* In the `malloc` and `mmap` variants, **count the TODOs out loud** — four of six are a release on a path out of the function.
-  One line of allocation, bookkeeping at every exit. This is why `goto cleanup:`, RAII and `defer` exist.
+* In the demo, **`diff` two variants**: everything the demo is about is in the one changed line and the extra label at the end of `main()`.
+* In the `malloc` and `mmap` variants, **read the labels at the end of `main()` out loud**: one per resource, in reverse order, each failure jumping to the one that matches what is open.
+  One line of allocation, one more label. This is the `goto cleanup` idiom, and why RAII and `defer` exist.
 * **`strace -e trace=brk,mmap,munmap` on the `malloc` and `mmap` variants.**
   Same calls, at 1 MiB.
   That `malloc` is `mmap` for large blocks is the thread that runs through `04-reverse-lines` and the tuning bonus.
@@ -81,7 +82,7 @@ The four core exercises fit a session for a group that has done sessions 01 and 
 | `bonus-in-mem-database` with the shipped `input.txt` | count 3, capacity 4; records `alice`, `carol`, `grace` |
 | Both under Valgrind | 0 errors, all heap blocks freed |
 | `04-reverse-lines` | identical to `tac`; one `mmap()` of the file's size, one `munmap()` |
-| `bonus-malloc-tuning`, 100 frames | 1.6 s / 3.2 M faults default; 0.33 s / 32 k faults tuned; 0.5 s fixed |
+| `bonus-malloc-tuning`, 100 frames | 1.75 s / 3.2 M faults default; 0.35 s / 32 k faults tuned; 0.53 s fixed |
 | `mmap` failure value | `MAP_FAILED`, i.e. `(void *) -1` — **not** `NULL` |
 
 The bonus reference solution for the database uses **shift down**, so insertion order is preserved.

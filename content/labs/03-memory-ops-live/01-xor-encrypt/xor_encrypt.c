@@ -43,20 +43,19 @@ int main(int argc, char **argv)
 
 	if (argc != 3) {
 		fprintf(stderr, "usage: %s <input> <output>\n", argv[0]);
-		return 1;
+		exit(EXIT_FAILURE);
 	}
 
 	in = fopen(argv[1], "rb");
 	if (in == NULL) {
 		perror("fopen input");
-		return 1;
+		goto fail;
 	}
 
 	out = fopen(argv[2], "wb");
 	if (out == NULL) {
 		perror("fopen output");
-		fclose(in);
-		return 1;
+		goto fail_in;
 	}
 
 	/*
@@ -75,14 +74,19 @@ int main(int argc, char **argv)
 
 		if (fwrite(out_buf, 1, n, out) != n) {
 			perror("fwrite");
-			fclose(in);
-			fclose(out);
-			return 1;
+			goto fail_out;
 		}
 	}
 
-	fclose(in);
 	fclose(out);
+	fclose(in);
 
 	return 0;
+
+fail_out:
+	fclose(out);
+fail_in:
+	fclose(in);
+fail:
+	return -1;
 }

@@ -138,8 +138,7 @@ int main(void)
 				break;
 			if (db_add(&db, id, name) != 0) {
 				fprintf(stderr, "out of memory\n");
-				db_free(&db);
-				return 1;
+				goto fail;
 			}
 		} else if (strcmp(cmd, "del") == 0) {
 			if (scanf("%d", &id) != 1)
@@ -154,4 +153,9 @@ int main(void)
 	db_free(&db);
 
 	return 0;
+
+fail:
+	db_free(&db);
+
+	return -1;
 }

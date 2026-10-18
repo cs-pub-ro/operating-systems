@@ -39,7 +39,6 @@ make
 ./products products.txt
 ```
 
-`make run` does the same.
 The prices must come out in ascending order; `sort -c -n` on the price column is one way to confirm that without reading the list.
 
 ## Results and Explanations
@@ -56,9 +55,7 @@ len = strlen(name_buf);
 products[count].name = malloc(len + 1);
 if (products[count].name == NULL) {
 	perror("malloc");
-	free_products(products, count);
-	fclose(f);
-	return 1;
+	goto fail_products;
 }
 memcpy(products[count].name, name_buf, len + 1);
 ```
@@ -85,7 +82,19 @@ static void free_products(struct product *products, size_t count)
 }
 ```
 
-This runs on **both** ways out of the program: the normal path at the end, and the error path if a `malloc` fails partway through — where it frees exactly the names allocated so far, `count` of them, and no more.
+This runs on **both** ways out of the program: the normal path at the end, and the error path if a `malloc` fails partway through.
+The error path is a label at the end of `main()`:
+
+```c
+fail_products:
+	free_products(products, count);
+	fclose(f);
+fail:
+	return -1;
+```
+
+A failed allocation jumps to `fail_products`, which frees exactly the names allocated so far, `count` of them, and no more, because `count` is not incremented until a name is in place.
+Failing to open the file has nothing to free yet and jumps straight to `fail`.
 Freeing on every path is the habit this whole session is building.
 
 ### Sorting

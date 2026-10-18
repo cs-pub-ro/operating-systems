@@ -1,0 +1,18 @@
+Make updates to lab 3 contents.
+
+See the updates we did to demos and exercises 01 and 02. And apply to all exercises:
+
+1. Do not leave a blank line between function call and the if clause checking for an error.
+   Have them connected, without a blank line.
+2. Use exit(EXIT_FAILURE), instead of return EXIT_FAILURE or return 1 in case of error conditions.
+3. Use return -1 for main error condition (at the end).
+4. Use fallback error labels + goto statements for freeing resources at errors.
+5. Do not use -O2 nor -std=c11 in Makefiles. Use -g, for easy debugging.
+6. Do not use tests nor test targets in Makefiles.
+7. Do not use run targets in Makefiles.
+8. Update TODOs in source code and README, as order may change from changes in code.
+9. Be sure the reference solution and the future solution to be built on top of the skeleton works.
+   Update code where necessary.
+10. Make Makefiles uniform.
+
+Ask in case of any questions.

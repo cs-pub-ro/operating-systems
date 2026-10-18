@@ -8,13 +8,19 @@
 
 int main(int argc, char *argv[])
 {
+	const char *src_path;
+	const char *dst_path;
+	size_t bytes_read;
+	FILE *src;
+	FILE *dst;
+
 	if (argc != 3) {
 		fprintf(stderr, "Usage: %s <source> <destination>\n", argv[0]);
-		return EXIT_FAILURE;
+		exit(EXIT_FAILURE);
 	}
 
-	const char *src_path = argv[1];
-	const char *dst_path = argv[2];
+	src_path = argv[1];
+	dst_path = argv[2];
 
 	/*
 	 * TODO 1: obtain the copy buffer from the kernel: `buffer`, BUFFER_SIZE
@@ -24,53 +30,54 @@ int main(int argc, char *argv[])
 	 * value that means failure, which is not NULL.
 	 *
 	 * From this line on, the area is yours to give back, with munmap(),
-	 * on every way out of main().
+	 * on every way out of main().  Look at the labels at the end of the
+	 * function: which ways out do they already cover?
 	 */
 
 	/* Open source file for reading. */
-	FILE *src = fopen(src_path, "rb");
-
+	src = fopen(src_path, "rb");
 	if (!src) {
-		perror("fopen source");
-		/* TODO 2: this is one way out. */
-		return EXIT_FAILURE;
+		perror("fopen");
+		goto fail_buffer;
 	}
 
 	/* Open destination file for writing (create/truncate). */
-	FILE *dst = fopen(dst_path, "wb");
-
+	dst = fopen(dst_path, "wb");
 	if (!dst) {
-		perror("fopen destination");
-		fclose(src);
-		/* TODO 3: and another. */
-		return EXIT_FAILURE;
+		perror("fopen");
+		goto fail_src;
 	}
 
 	/* Read a block from the source into the buffer, write it out, repeat. */
-	size_t bytes_read;
-
 	while ((bytes_read = fread(buffer, 1, BUFFER_SIZE, src)) > 0) {
 		/*
-		 * TODO 4: write the `bytes_read` bytes now in `buffer` to `dst`.
+		 * TODO 2: write the `bytes_read` bytes now in `buffer` to `dst`.
 		 * fwrite() may write fewer than asked (a full disk, for one);
-		 * treat that as an error, and leave nothing open or mapped
-		 * behind you.
+		 * treat that as an error, and leave through the label that
+		 * undoes what is open at this point.
 		 */
 	}
 
 	if (ferror(src)) {
 		perror("fread");
-		fclose(src);
-		fclose(dst);
-		/* TODO 5: and another. */
-		return EXIT_FAILURE;
+		goto fail_dst;
 	}
 
-	fclose(src);
 	fclose(dst);
+	fclose(src);
 
-	/* TODO 6: give the area back. */
+	/* TODO 3: give the area back. */
 
 	printf("Copied '%s' -> '%s'\n", src_path, dst_path);
-	return EXIT_SUCCESS;
+
+	return 0;
+
+fail_dst:
+	fclose(dst);
+fail_src:
+	fclose(src);
+fail_buffer:
+	munmap(buffer, BUFFER_SIZE);
+fail:
+	return -1;
 }

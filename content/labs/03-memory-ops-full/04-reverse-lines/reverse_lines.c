@@ -73,27 +73,26 @@ int main(int argc, char *argv[])
 
 	if (argc != 2) {
 		fprintf(stderr, "Usage: %s <file>\n", argv[0]);
-		return EXIT_FAILURE;
+		exit(EXIT_FAILURE);
 	}
 
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 0) {
 		perror("open");
-		return EXIT_FAILURE;
+		goto fail;
 	}
 
 	/* The buffer has to be as large as the file: ask how large that is. */
 	if (fstat(fd, &st) < 0) {
 		perror("fstat");
-		close(fd);
-		return EXIT_FAILURE;
+		goto fail_fd;
 	}
 	size = (size_t)st.st_size;
 
 	/* An empty file has no lines; it also cannot back a mapping of 0 bytes. */
 	if (size == 0) {
 		close(fd);
-		return EXIT_SUCCESS;
+		return 0;
 	}
 
 	/*
@@ -107,15 +106,11 @@ int main(int argc, char *argv[])
 		   MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
 	if (buf == MAP_FAILED) {
 		perror("mmap");
-		close(fd);
-		return EXIT_FAILURE;
+		goto fail_fd;
 	}
 
-	if (read_all(fd, buf, size) < 0) {
-		munmap(buf, size);
-		close(fd);
-		return EXIT_FAILURE;
-	}
+	if (read_all(fd, buf, size) < 0)
+		goto fail_buf;
 	close(fd);
 
 	print_reversed(buf, size);
@@ -123,5 +118,12 @@ int main(int argc, char *argv[])
 	/* Done with the buffer: the area disappears from the address space. */
 	munmap(buf, size);
 
-	return EXIT_SUCCESS;
+	return 0;
+
+fail_buf:
+	munmap(buf, size);
+fail_fd:
+	close(fd);
+fail:
+	return -1;
 }

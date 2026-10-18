@@ -29,14 +29,14 @@ int munmap(void *addr, size_t length);
 ```
 
 Open `reverse_lines.c`.
-Reading the file into the buffer and walking it backwards are written; you provide the buffer, in three TODOs.
+Reading the file into the buffer and walking it backwards are written; you provide the buffer, in two TODOs.
 
 ## Your Task
 
 1. **TODO 1** -- obtain a buffer of that size from the kernel: an anonymous, private mapping that the program can read and write.
    Check the result the way `man 2 mmap` says to.
 1. **TODO 2** -- release the buffer once the output has been written.
-   Look at the error path above it too.
+   A failing run reaches the buffer through a label at the end of `main()`; look at where it leaves from.
 
 **Note:** the logic behind the reverse line printing is already implemented, you just need to add the buffer allocation.
 
@@ -52,7 +52,7 @@ make
 * The lines come out last to first.
   `tac input.txt` is the reference; compare the two outputs, and think about how to compare them without reading both by eye.
 * Try a file whose last line has no newline at the end, and an empty file (`: > empty.txt`).
-  Work out what `mmap()` does with a length of zero before you run the second one, and make the program behave sensibly.
+  The skeleton already stops before asking for a mapping when the file is empty; work out what `mmap()` would have done with a length of zero.
 * Run it under `strace -e trace=mmap,munmap,brk` on `input.txt`.
   Among the start-up calls, find the one mapping that is yours and the call that releases it; nothing else about the process's memory should have changed.
 * Make a large file (`seq 1 10000000 > big.txt`, about 80 MB) and run under `strace` again.

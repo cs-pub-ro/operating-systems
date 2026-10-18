@@ -46,7 +46,7 @@ make clean
 ### Step 1 -- the local buffer
 
 ```C
-char buffer[BUFFER_SIZE];
+unsigned char buffer[BUFFER_SIZE];
 ```
 
 Compare `size` with the global-buffer variant:
@@ -54,7 +54,7 @@ Compare `size` with the global-buffer variant:
 ```text
 $ size copy_file
    text    data     bss     dec     hex filename
-   3036     664      16    3716     e84 copy_file
+   3036     672      16    3724     e8c copy_file
 ```
 
 The megabyte is gone from the executable entirely.
@@ -62,7 +62,7 @@ The buffer is created at run time, by moving the stack pointer when `main()` is 
 
 ### Step 2 -- writing
 
-The write and its short-write check are the same as in the global-buffer variant, and so is the cleanup: two `fclose()` calls, nothing else.
+The write and its short-write check are the same as in the global-buffer variant, and so is the cleanup: the `fail_dst` and `fail_src` labels, two `fclose()` calls, nothing else.
 
 ### Where the stack runs out
 

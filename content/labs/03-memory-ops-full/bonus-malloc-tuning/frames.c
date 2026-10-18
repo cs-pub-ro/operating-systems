@@ -119,7 +119,7 @@ int main(int argc, char *argv[])
 
 		if (frame == NULL) {
 			perror("calloc");
-			return EXIT_FAILURE;
+			exit(EXIT_FAILURE);
 		}
 
 		render_frame(frame, n);
@@ -136,5 +136,5 @@ int main(int argc, char *argv[])
 	printf("  max RSS:         %ld MiB\n", ru.ru_maxrss >> 10);
 	printf("  corrupt pixels:  %zu\n", corrupt);
 
-	return EXIT_SUCCESS;
+	return 0;
 }

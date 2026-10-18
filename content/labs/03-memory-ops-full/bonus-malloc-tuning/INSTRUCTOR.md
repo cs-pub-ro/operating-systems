@@ -21,7 +21,7 @@ It is a take-home for most of the room: the measuring is quick, the explaining i
 ## Things worth drawing out
 
 * **Two faults per page in the default run.** Read of an untouched page maps the zero page; the write then takes a copy-on-write fault.
-  3.24 M faults for 1.62 M pages.
+  3.24 M faults for 1.62 M pages (16,200 per frame).
 * **`mmap_max=0` alone changes nothing.** The traffic moves from `mmap()`/`munmap()` to about 200 `brk()` calls and the faults stay: the heap is trimmed after every `free()`.
   Both knobs are needed, and the `brk()` count in `strace -c` is how a student tells which one is missing.
 * **Why the frame is 63 MiB.** glibc raises the mmap threshold by itself when an `mmap()`'d block is freed, up to 32 MiB; frames smaller than that would be served from the heap after the first `free()` and the default would already be fast (`FURTHER.md` item 5).
@@ -50,13 +50,17 @@ Expect the times to differ on the lab machines; the ratios and the counts should
 
 | Run | time | minor faults | corrupt pixels | `brk`/`mmap`/`munmap` |
 | --- | --- | --- | --- | --- |
-| skeleton, default | 1.64 s | 3,239,985 | 0 | 3 / 108 / 101 |
-| skeleton, `mmap_max=0` only | 1.69 s | 3,233,693 | small, nonzero | ~200 / 17 / 2 |
-| skeleton, both tunables, or `--tune` with TODO 1 | 0.33 s | 32,487 | 102,440,700 | 4 / 8 / 1 |
-| skeleton, default, `perturb=170` | 1.43 s | 1,620,188 | 103,680,000 | as default |
-| TODO 2 with `memset()`, `--tune` | 0.50 s | 32,452 | 0 | as tuned |
-| TODO 2 with `calloc()`, `--tune` | 0.51 s | 32,452 | 0 | as tuned |
-| TODO 2 with `calloc()`, default | 1.6 s | as default | 0 | as default |
+| skeleton, default | 1.75 s | 3,240,015 | 0 | 3 / 108 / 101 |
+| skeleton, `mmap_max=0` only | 1.75 s | 3,233,679 | 207,697 | 203 / 8 / 1 |
+| skeleton, both tunables, or `--tune` with TODO 1 | 0.35 s | 32,512 | 102,440,700 | 4 / 8 / 1 |
+| skeleton, default, `perturb=170` | 1.45 s | 1,620,213 | 103,680,000 | as default |
+| TODO 2 with `memset()`, `--tune` | 0.53 s | 16,313 | 0 | as tuned |
+| TODO 2 with `calloc()`, `--tune` | 0.53 s | 32,478 | 0 | as tuned |
+| TODO 2 with `calloc()`, default | 1.75 s | as default | 0 | as default |
+
+Built with the Makefile's `-g` and no optimisation.
+With `-O2` the same runs take 1.64 s, 0.33 s and 0.5 s: the compute shrinks, the kernel's share does not, and every ratio stays.
+The `memset()` row has half the faults of the `calloc()` row because `memset()` writes before the renderer reads (`README.md`, Step 5).
 
 `max RSS` is 64 MiB in every run; the difference between runs is what is held *between* frames, which `getrusage()` does not show (`FURTHER.md` item 3 does).
 

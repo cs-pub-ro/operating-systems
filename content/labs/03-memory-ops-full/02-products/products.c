@@ -66,7 +66,7 @@ int main(int argc, char **argv)
 	f = fopen(path, "r");
 	if (f == NULL) {
 		perror("fopen");
-		return 1;
+		goto fail;
 	}
 
 	/*
@@ -89,9 +89,7 @@ int main(int argc, char **argv)
 		products[count].name = malloc(len + 1);
 		if (products[count].name == NULL) {
 			perror("malloc");
-			free_products(products, count);
-			fclose(f);
-			return 1;
+			goto fail_products;
 		}
 		memcpy(products[count].name, name_buf, len + 1);
 
@@ -111,4 +109,10 @@ int main(int argc, char **argv)
 	free_products(products, count);
 
 	return 0;
+
+fail_products:
+	free_products(products, count);
+	fclose(f);
+fail:
+	return -1;
 }

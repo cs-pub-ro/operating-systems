@@ -6,21 +6,20 @@ The fourth core exercise, and the one that uses the demo's last variant.
 `01-xor-encrypt` had fixed sizes, `02-products` a fixed count with unknown lengths, `03-in-memory-db` an unknown count that grows; this one has a single block whose size is the input's and which is needed once, which is the case for `mmap()` rather than `malloc()`.
 Say that it is a case, not a rule: the question to leave with is *when* the kernel is the right place to ask, and the answer is "big, one-shot, run-time sized".
 
-It is short on purpose -- three calls -- so that the thinking is about the choice and the edge cases, not about the code.
+It is short on purpose -- two calls, `mmap()` and `munmap()` -- so that the thinking is about the choice and the edge cases, not about the code.
 
 ## Expected solution
 
-* **TODO 1** -- `fstat(fd, &st)`, `size = st.st_size`.
-  `lseek(fd, 0, SEEK_END)` is also fine.
-* **TODO 2** -- `mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0)`, compared against `MAP_FAILED`, with a `size == 0` guard before it.
-* **TODO 3** -- `munmap(buf, size)`, at the end and on the `read_all()` error path.
+* **TODO 1** -- `mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0)`, compared against `MAP_FAILED`, with `goto fail_fd` on failure.
+* **TODO 2** -- `munmap(buf, size)`, at the end and under the `fail_buf` label, which is where a failing `read_all()` jumps to.
 
-The reversal and the read loop are given.
+The `fstat()` call, the `size == 0` guard, the read loop and the reversal are given, and so are the labels.
+The live skeleton warns about nothing, because `fail_buf` is already used by the `read_all()` failure.
 
 ## The things worth drawing out
 
-* **The empty file.** `mmap()` of length 0 is `EINVAL`, so a first version prints `mmap: Invalid argument` for an empty file.
-  The README asks them to think about it beforehand; if they did not, run `: > empty.txt` and let them see it.
+* **The empty file.** `mmap()` of length 0 is `EINVAL`, so a version without the guard prints `mmap: Invalid argument` for an empty file.
+  The skeleton has the guard, so nobody hits this by accident; ask what it is for, then delete it and run `: > empty.txt` and let them see it.
   The right behaviour is to print nothing and exit 0, which is also what `tac` does.
 * **`MAP_FAILED` is not `NULL`.** A `NULL` check compiles and never fires.
 * **`munmap()` wants the length.** Ask who remembers the size of a `malloc()`'d block, and who remembers the size of a mapping.
@@ -35,8 +34,7 @@ The reversal and the read loop are given.
   It is the `FURTHER.md` item arriving early; say it is a valid other program, not this one.
 * **`close(fd)` before `read_all()`**, by analogy with the "close after mmap" habit from file mappings.
   Here there is no mapping of the file; the descriptor is needed until the read is done.
-* **Not unmapping on the `read_all()` error path.** Harmless at exit, but the habit is the point of the session.
-* **Checking `size` after `mmap()`** rather than before, so the empty file still fails.
+* **Not unmapping under `fail_buf`.** Harmless at exit, but the habit is the point of the session.
 
 ## Verified reference values
 

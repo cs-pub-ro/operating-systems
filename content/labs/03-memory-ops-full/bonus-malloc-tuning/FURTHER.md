@@ -10,11 +10,11 @@ With answers.
    About 200 `brk()` calls for 100 frames and the page faults do not move: every `malloc()` grows the heap by a frame, every `free()` leaves 63 MiB free at the top, which is above the trim threshold (128 KB), so the heap is cut back at once and the next frame faults all its pages in again.
    `mmap_max` only moves the traffic from `mmap()` to `brk()`; something has to stop the trim.
    `glibc.malloc.top_pad` with a value above a frame does that too: trimming always keeps `top_pad` bytes at the top of the heap, so a 64 MiB pad keeps the frame.
-   Same six `brk()` calls, same 0.33 s, by a different route.
+   Three `brk()` calls in the whole run and 0.36 s, by a different route.
 1. **The threshold instead of the maximum.**
    Try `M_MMAP_THRESHOLD` rather than `M_MMAP_MAX`, with a value above the frame size.
 
-   On glibc 2.41 `mallopt(M_MMAP_THRESHOLD, 64 << 20)` returns 1 and works: with the trim threshold raised as well, the run is the same 0.33 s as with `M_MMAP_MAX`.
+   On glibc 2.41 `mallopt(M_MMAP_THRESHOLD, 64 << 20)` returns 1 and works: with the trim threshold raised as well, the run takes the same 0.35 s as with `M_MMAP_MAX`.
    The manual page says the upper limit is `DEFAULT_MMAP_THRESHOLD_MAX`, 32 MiB on 64-bit; that is the ceiling of the *dynamic* adjustment (item 5), and older releases enforced it for `mallopt()` too.
    Whichever knob you turn, check the return value: a rejected value fails quietly, and so does a misspelt tunable.
 1. **Give it back on purpose.**

@@ -32,6 +32,7 @@ The struct, the fixed array, the read loop, the sort and the printing are writte
    You can `malloc` the right number of bytes and copy the string in yourself, or let `strdup` do both in one call.
    Either way the allocation can fail, and either way the block is yours to release later.
 1. **TODO 2** — after the products are printed, release every name you allocated.
+   A failed allocation in TODO 1 leaves `main()` through a label at the end; look at what that path still holds.
 
 ## Build & Run
 

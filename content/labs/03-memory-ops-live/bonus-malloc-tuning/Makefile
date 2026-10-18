@@ -1,5 +1,5 @@
-CC = gcc
-CFLAGS = -Wall -Wextra -O2 -g
+CC     := gcc
+CFLAGS := -Wall -Wextra -g
 
 .PHONY: all clean
 
@@ -9,4 +9,4 @@ frames: frames.c
 	$(CC) $(CFLAGS) -o $@ $<
 
 clean:
-	rm -f frames
+	$(RM) frames

@@ -20,14 +20,14 @@ The key, the file handling, and the read/write loop are all given.
 ## The one real trap
 
 Using `BLOCK_SIZE` instead of `n` in the encryption loop (or in `fwrite`).
-It passes every test whose input length is a multiple of 32 and corrupts the tail of everything else, because the last short block gets padded with stale buffer bytes.
+It passes every check whose input length is a multiple of 32 and corrupts the tail of everything else, because the last short block gets padded with stale buffer bytes.
 `input.txt` is deliberately not a multiple of 32 bytes, so this mistake fails the round-trip immediately — but a student who tests only with a 32-, 64- or 96-byte file will not see it.
 Ask them what happens on the last block.
 
 ## Other things students get wrong
 
 * **Reaching for `malloc` out of habit**, sizing the buffers with `malloc(BLOCK_SIZE)`.
-  It works, and it is exactly the wrong instinct for this problem. Ask what the allocation buys them when the size is a constant, and what it now obliges them to do (free it, on every error path — count them).
+  It works, and it is exactly the wrong instinct for this problem. Ask what the allocation buys them when the size is a constant, and what it now obliges them to do (free it, on every error path -- one more label).
 * **XORing the whole buffer regardless of `n`** — the trap above.
 * **Opening the files in text mode** (dropping the `b` from `"rb"`/`"wb"`).
   Harmless on Linux, wrong on Windows; worth a one-line mention, not a detour.
@@ -45,7 +45,7 @@ Measured on Ubuntu 24.04 / gcc 14.2 / x86-64.
 
 | Fact | Value |
 | --- | --- |
-| `make test` on the shipped `input.txt` | round-trip reproduces the original, byte for byte |
+| Round-trip of the shipped `input.txt` | reproduces the original, byte for byte (`cmp` or `diff`) |
 | Ciphertext vs plaintext | differ from the first byte |
 | Empty input file | empty output, exit 0, no crash |
 | Under Valgrind | a few stdio allocations, all freed; 0 errors |
@@ -54,5 +54,7 @@ The exercise's own code contains zero calls to `malloc`/`free`.
 
 ## Practical notes
 
-* `make test` writes `input.enc` and `roundtrip.txt` and `make clean` removes them; both are in `.gitignore`.
+* The round-trip in the README writes `input.enc` and `roundtrip.txt`; `make clean` removes them and both are in `.gitignore`.
+* There is no `make test`, on purpose.
+  Ask the students how they know the round-trip worked, and what they tried besides `input.txt`.
 * Nothing here is timing-sensitive, and nothing needs the file to be large.

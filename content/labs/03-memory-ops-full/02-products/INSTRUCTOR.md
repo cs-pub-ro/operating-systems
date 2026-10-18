@@ -12,7 +12,8 @@ Two TODOs:
 
 * **TODO 1** — inside the read loop: `len = strlen(name_buf); products[count].name = malloc(len + 1);`, NULL-check, `memcpy(products[count].name, name_buf, len + 1)`.
   `products[count].name = strdup(name_buf);` with the same NULL-check is equally right; the README hints at it, and it is the answer to prefer from a student who can say what `strdup` does inside.
-* **TODO 2** — after printing: a loop that `free`s `products[i].name` for `i` in `0..count-1`.
+* **TODO 2** — after printing: a loop that `free`s `products[i].name` for `i` in `0..count-1`, and the same loop at the `fail_products` label, which is where a failed allocation in TODO 1 jumps to.
+  The live skeleton has the label and an unused-label warning until TODO 1 jumps to it; say so if someone asks about the warning.
 
 The struct, the static array, the read loop, the `qsort` call and the printing are all given.
 
@@ -20,7 +21,7 @@ The struct, the static array, the read loop, the `qsort` call and the printing a
 
 * **Why the array is static but the name is not.** Two lines of the same struct, two different allocation strategies, chosen by what is known when. This is the point; if a student can explain it, they have the exercise.
 * **The `+ 1`.** `malloc(strlen(name) + 1)`. Leaving it off is a one-byte heap overflow — invisible on most runs, caught by Valgrind, and the identical bug to the session-04 JSON parser. Worth connecting forward.
-* **Free on every path.** The reference frees in the error branch as well as at the end. Students will do the end; ask them what happens to the names already allocated if the *next* `malloc` fails.
+* **Free on every path.** The reference frees at the `fail_products` label as well as at the end. Students will do the end; ask them what happens to the names already allocated if the *next* `malloc` fails.
 
 ## Common mistakes
 

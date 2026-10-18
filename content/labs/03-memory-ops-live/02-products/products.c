@@ -52,7 +52,7 @@ int main(int argc, char **argv)
 	f = fopen(path, "r");
 	if (f == NULL) {
 		perror("fopen");
-		return 1;
+		goto fail;
 	}
 
 	/*
@@ -70,7 +70,8 @@ int main(int argc, char **argv)
 		 * products[count].name has to be usable long after this loop.
 		 * Give the name a home that lasts, sized to this name.
 		 * (strdup() does in one call what malloc() and strcpy() do in
-		 * two.)  Allocation can fail; decide what happens then.
+		 * two.)  Allocation can fail; the labels at the end of main()
+		 * are where a failing run leaves.
 		 */
 
 		products[count].price = (unsigned int)strtoul(price_buf, NULL, 10);
@@ -91,4 +92,10 @@ int main(int argc, char **argv)
 	 */
 
 	return 0;
+
+fail_products:
+	/* TODO 2: a run that stops early has allocated names too. */
+	fclose(f);
+fail:
+	return -1;
 }

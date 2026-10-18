@@ -48,30 +48,38 @@ make clean
 ### Step 1 -- map the buffer
 
 ```C
-char *buffer = mmap(NULL, BUFFER_SIZE, PROT_READ | PROT_WRITE,
-		    MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
-
+buffer = mmap(NULL, BUFFER_SIZE, PROT_READ | PROT_WRITE,
+	      MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
 if (buffer == MAP_FAILED) {
 	perror("mmap");
-	return EXIT_FAILURE;
+	goto fail;
 }
 ```
 
 The check is against `MAP_FAILED`.
 Testing for `NULL` compiles, runs, and silently accepts a failed mapping; the first use of the buffer then faults.
 
-### Steps 2, 3, 5 and 6 -- unmap on every exit
+### Unmap on every exit
+
+```C
+fail_buffer:
+	munmap(buffer, BUFFER_SIZE);
+```
+
+The same bookkeeping as the `malloc` variant, with a different function name and a second argument: `munmap()` needs the length, because the kernel does not keep a size per allocation the way the allocator does.
+The label sits where `free(buffer)` sat, and the same `goto`s reach it.
+
+### Step 2 -- the write
+
+Unchanged: the short-write path jumps to `fail_dst` and falls through to the unmapping.
+
+### Step 3 -- unmap on success
 
 ```C
 munmap(buffer, BUFFER_SIZE);
 ```
 
-The same bookkeeping as the `malloc` variant, with a different function name and a second argument: `munmap()` needs the length, because the kernel does not keep a size per allocation the way the allocator does.
-Count the TODOs again: four of the six are this call.
-
-### Step 4 -- the write
-
-Unchanged, except that the short-write path unmaps instead of freeing.
+The path everyone remembers, same as `free()` in the other variant.
 
 ### What the kernel saw
 
@@ -84,7 +92,8 @@ munmap(0x7f1c6a8c1000, 1048576)         = 0
 Copied 'input.bin' -> 'output.bin'
 ```
 
-Run the `malloc` variant under the same `strace`, and the two traces are the same: one `mmap()` of 1 MiB, one `munmap()`.
+Run the `malloc` variant under the same `strace`, and the two traces have the same shape: one `mmap()` and one `munmap()`.
+The `malloc` one asks for 1,052,672 bytes, the megabyte plus the allocator's header rounded up to pages; this one asks for exactly 1,048,576.
 For a block this size, `malloc()` and `free()` were a thin wrapper around exactly these calls.
 The difference is what happens for smaller blocks, and who decides: with `malloc()` the allocator chooses between the heap and a mapping; with `mmap()` the program has chosen.
 

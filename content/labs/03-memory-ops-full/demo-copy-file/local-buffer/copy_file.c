@@ -14,59 +14,64 @@ int main(int argc, char *argv[])
 	 * small, though: `ulimit -s` says how much of it there is, 8 MiB by
 	 * default, and this one array takes an eighth of that.
 	 */
-	char buffer[BUFFER_SIZE];
+	unsigned char buffer[BUFFER_SIZE];
+	const char *src_path;
+	const char *dst_path;
+	size_t bytes_read;
+	FILE *src;
+	FILE *dst;
 
 	if (argc != 3) {
 		fprintf(stderr, "Usage: %s <source> <destination>\n", argv[0]);
-		return EXIT_FAILURE;
+		exit(EXIT_FAILURE);
 	}
 
-	const char *src_path = argv[1];
-	const char *dst_path = argv[2];
+	src_path = argv[1];
+	dst_path = argv[2];
 
 	/* Open source file for reading. */
-	FILE *src = fopen(src_path, "rb");
-
+	src = fopen(src_path, "rb");
 	if (!src) {
-		perror("fopen source");
-		return EXIT_FAILURE;
+		perror("fopen");
+		goto fail;
 	}
 
 	/* Open destination file for writing (create/truncate). */
-	FILE *dst = fopen(dst_path, "wb");
-
+	dst = fopen(dst_path, "wb");
 	if (!dst) {
-		perror("fopen destination");
-		fclose(src);
-		return EXIT_FAILURE;
+		perror("fopen");
+		goto fail_src;
 	}
 
 	/* Read a block from the source into the buffer, write it out, repeat. */
-	size_t bytes_read;
-
 	while ((bytes_read = fread(buffer, 1, BUFFER_SIZE, src)) > 0) {
-		size_t bytes_written = fwrite(buffer, 1, bytes_read, dst);
+		size_t bytes_written;
 
+		bytes_written = fwrite(buffer, 1, bytes_read, dst);
 		if (bytes_written != bytes_read) {
 			fprintf(stderr, "fwrite: short write\n");
-			fclose(src);
-			fclose(dst);
-			return EXIT_FAILURE;
+			goto fail_dst;
 		}
 	}
 
 	if (ferror(src)) {
 		perror("fread");
-		fclose(src);
-		fclose(dst);
-		return EXIT_FAILURE;
+		goto fail_dst;
 	}
 
-	fclose(src);
 	fclose(dst);
+	fclose(src);
 
 	/* Nothing to release: the buffer goes away with main()'s frame. */
 
 	printf("Copied '%s' -> '%s'\n", src_path, dst_path);
-	return EXIT_SUCCESS;
+
+	return 0;
+
+fail_dst:
+	fclose(dst);
+fail_src:
+	fclose(src);
+fail:
+	return -1;
 }
