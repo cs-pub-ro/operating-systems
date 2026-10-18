@@ -37,7 +37,7 @@ Measured on Ubuntu 24.04 / gcc 14.2 / x86-64.
 
 | Fact | Value |
 | --- | --- |
-| `make test` on the shipped `products.txt` | prices come out in ascending order |
+| Shipped `products.txt` | prices come out in ascending order |
 | Cheapest / dearest | `Cable organizer` at 7, `Standing desk` at 699 |
 | Under Valgrind | 35 allocs, 35 frees (32 names + stdio), 0 bytes in use at exit, 0 errors |
 | More than 32 products in the file | first 32 read, still leak-free |

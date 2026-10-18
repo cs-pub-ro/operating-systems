@@ -7,7 +7,8 @@ Choice made: a `tac`-like program that reads a whole file into one buffer sized
 to the file (so: run-time size, possibly very large, needed once, then gone),
 obtained as an anonymous mapping and released with munmap().  The reversal loop
 and the read loop are given; the student sizes, maps and unmaps the buffer, and
-has to think about the empty file.  `make test` compares with tac(1).
+has to think about the empty file.  No `make test`: students compare with
+tac(1) themselves.
 
 TODO comments state what is needed and why, not what to type (students should
 think about what they need to do, not follow instructions).

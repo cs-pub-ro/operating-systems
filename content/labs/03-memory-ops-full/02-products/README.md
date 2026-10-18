@@ -39,11 +39,8 @@ make
 ./products products.txt
 ```
 
-`make run` does the same, and `make test` checks the result:
-
-```console
-make test
-```
+`make run` does the same.
+The prices must come out in ascending order; `sort -c -n` on the price column is one way to confirm that without reading the list.
 
 ## Results and Explanations
 

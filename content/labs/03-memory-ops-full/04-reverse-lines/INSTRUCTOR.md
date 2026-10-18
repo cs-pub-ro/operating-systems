@@ -44,7 +44,7 @@ Measured on Ubuntu 25.04 / glibc 2.41 / x86-64.
 
 | Fact | Value |
 | --- | --- |
-| `make test` on `input.txt` | OK, identical to `tac` |
+| `input.txt` against `tac` | identical output |
 | `input.txt` | 282 bytes; `strace` shows `mmap(NULL, 282, ...)` and `munmap(..., 282)` |
 | `seq 1 10000000 > big.txt` | 78,888,897 bytes; one mapping of that size; 0.11 s warm |
 | File without a final newline | last line printed first, without a newline, like `tac` |
@@ -53,7 +53,8 @@ Measured on Ubuntu 25.04 / glibc 2.41 / x86-64.
 
 ## Practical notes
 
-* `make test` needs `tac`, which is coreutils, so it is everywhere.
+* There is no `make test`, on purpose: students compare with `tac` themselves.
+  Ask how they compared (`diff`, `cmp`, `md5sum`), not only whether.
 * `big.txt` is 79 MB; remind students to delete it, it is not in `.gitignore`.
 * `valgrind` has nothing to say about an `mmap()`'d buffer -- it tracks the heap -- so this is the one core exercise where a clean Valgrind run is not the check.
   `strace` is.

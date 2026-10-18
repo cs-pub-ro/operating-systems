@@ -44,14 +44,12 @@ Reading the file into the buffer and walking it backwards are written; you provi
 ```console
 make
 ./reverse_lines input.txt
-make test
 ```
-
-`make test` compares your output with `tac input.txt`.
 
 ## Check Your Work
 
-* The lines come out last to first, and `make test` agrees with `tac`.
+* The lines come out last to first.
+  `tac input.txt` is the reference; compare the two outputs, and think about how to compare them without reading both by eye.
 * Try a file whose last line has no newline at the end, and an empty file (`: > empty.txt`).
   Work out what `mmap()` does with a length of zero before you run the second one, and make the program behave sensibly.
 * Run it under `strace -e trace=mmap,munmap,brk` on `input.txt`.

@@ -34,10 +34,10 @@ Files:
 ```console
 make
 ./reverse_lines input.txt
-make test
+./reverse_lines input.txt | cmp - <(tac input.txt) && echo same
 ```
 
-`make test` compares the output with `tac input.txt`.
+`tac input.txt` is the reference.
 
 ## Results and Explanations
 
