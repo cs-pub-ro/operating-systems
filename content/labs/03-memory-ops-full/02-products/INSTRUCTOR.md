@@ -11,6 +11,7 @@ Say that pairing out loud — it is the whole reason both exercises exist, and i
 Two TODOs:
 
 * **TODO 1** — inside the read loop: `len = strlen(name_buf); products[count].name = malloc(len + 1);`, NULL-check, `memcpy(products[count].name, name_buf, len + 1)`.
+  `products[count].name = strdup(name_buf);` with the same NULL-check is equally right; the README hints at it, and it is the answer to prefer from a student who can say what `strdup` does inside.
 * **TODO 2** — after printing: a loop that `free`s `products[i].name` for `i` in `0..count-1`.
 
 The struct, the static array, the read loop, the `qsort` call and the printing are all given.

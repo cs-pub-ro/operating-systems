@@ -34,11 +34,11 @@ int main(int argc, char **argv)
 	size_t n;
 
 	/*
-	 * TODO 1: declare the two work buffers, in_buf and out_buf.
+	 * TODO 1: declare the two work buffers, in_buf and out_buf, one block
+	 * of `unsigned char` each.
 	 *
-	 * Each holds exactly one block -- BLOCK_SIZE bytes.  Their size is a
-	 * compile-time constant, so they are ordinary fixed-size arrays of
-	 * `unsigned char`; there is nothing to malloc and nothing to free.
+	 * Before choosing how to allocate them, ask what is known about their
+	 * size, and when it is known.
 	 */
 
 	if (argc != 3) {
@@ -67,12 +67,10 @@ int main(int argc, char **argv)
 		size_t i;
 
 		/*
-		 * TODO 2: encrypt the n bytes just read.
+		 * TODO 2: encrypt the bytes just read, from in_buf into out_buf,
+		 * with the key.
 		 *
-		 * For each byte i from 0 to n-1, set out_buf[i] to
-		 * in_buf[i] XOR key[i].  Encrypt exactly n bytes, never
-		 * BLOCK_SIZE -- the final block may be shorter, and touching
-		 * bytes past n would corrupt the output.
+		 * Not every block is a full one.
 		 */
 
 		if (fwrite(out_buf, 1, n, out) != n) {

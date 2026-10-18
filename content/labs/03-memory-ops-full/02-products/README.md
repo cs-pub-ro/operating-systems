@@ -70,6 +70,10 @@ memcpy(products[count].name, name_buf, len + 1);
 `malloc(len + 1)` reserves exactly the right amount — the `+ 1` is for the `'\0'` terminator, the classic off-by-one every C string allocation has to get right.
 `memcpy` of `len + 1` bytes copies the string and its terminator in one go.
 
+`strdup(name_buf)` does the same three steps -- measure, allocate, copy -- in one call, and returns `NULL` on the same failure.
+It is the idiomatic way once the pattern is understood, and the live README points it out; the block it returns is `free`'d like any other.
+The reference spells the steps out so that the `+ 1` is visible.
+
 ### Ownership: every `malloc` has a matching `free`
 
 Each product owns the block its `name` points at, so every one of them has to be released:

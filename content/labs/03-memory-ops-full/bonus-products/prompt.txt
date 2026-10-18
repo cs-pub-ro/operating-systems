@@ -1,4 +1,0 @@
-Create an exercise for an Operating Systems class session.
-The session topic is the memory operations: allocating, freeing, accessing memory.
-
-The exercise is a bonus variant of the 02-products exercise, except that now the products are to be stored in a linked list, and the input file can contain more than 32 products, as the list will be expanded dynamically.

@@ -1,7 +1,7 @@
-# Demo: Copy a File Using `mmap`
+# Demo: Copy a File Using an `mmap` Buffer
 
-The third and last variant of the file-copy program.
-Instead of reading into a buffer and writing back out, this one asks the kernel to map both files directly into the process address space, so that copying the file becomes a single `memcpy()` between two pointers — and the read/write loop disappears entirely.
+The fourth and last variant of the file-copy program.
+This one skips the allocator and asks the **kernel** for the buffer directly, with `mmap()`: an anonymous mapping, with no file behind it, that becomes a new area of the process address space and is handed back with `munmap()`.
 
-Together with the teaching assistant you will fill in the TODOs in `copy_file.c`, then build and verify the copy.
-Along the way you will meet `ftruncate()`, `msync()` and `munmap()`, and see that the actual I/O happens through page faults rather than through any call you wrote.
+Together with the teaching assistant you will fill in the TODOs in `copy_file.c`, build it and copy a file, then run the `malloc` variant and this one under `strace` and compare what reaches the kernel.
+The question to leave with: if `malloc()` ends up calling `mmap()` for a buffer this size anyway, what does calling it yourself buy, and what does it cost?

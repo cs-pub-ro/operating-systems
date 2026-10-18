@@ -2,16 +2,16 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 #define BUFFER_SIZE (1 * 1024 * 1024)  /* 1 MiB */
 
-/* TODO 1: Declare a static global char array named `buffer` of size
- * BUFFER_SIZE.  A static global variable is allocated in the BSS segment
- * (zero-initialised) and lives for the entire lifetime of the process —
- * no explicit allocation or deallocation is needed.
+/*
+ * TODO 1: declare the copy buffer the loop in main() reads into and writes
+ * from: `buffer`, BUFFER_SIZE bytes, here at file scope.
  *
- *   static char buffer[BUFFER_SIZE];
+ * A global like this is laid out by the compiler and exists from before
+ * main() runs until the process exits.  Nobody allocates it and nobody
+ * releases it.  After building, `size copy_file` shows where it went.
  */
 
 int main(int argc, char *argv[])
@@ -26,6 +26,7 @@ int main(int argc, char *argv[])
 
 	/* Open source file for reading. */
 	FILE *src = fopen(src_path, "rb");
+
 	if (!src) {
 		perror("fopen source");
 		return EXIT_FAILURE;
@@ -33,31 +34,21 @@ int main(int argc, char *argv[])
 
 	/* Open destination file for writing (create/truncate). */
 	FILE *dst = fopen(dst_path, "wb");
+
 	if (!dst) {
 		perror("fopen destination");
 		fclose(src);
 		return EXIT_FAILURE;
 	}
 
+	/* Read a block from the source into the buffer, write it out, repeat. */
 	size_t bytes_read;
-	while ((bytes_read = fread(buffer, 1, BUFFER_SIZE, src)) > 0) {
-		/* TODO 2: Declare a local char array `local` of size BUFFER_SIZE
-		 * and use memcpy() to copy `bytes_read` bytes from `buffer`
-		 * into `local`.
-		 *
-		 * memcpy(dst_ptr, src_ptr, n) copies n bytes from src_ptr to
-		 * dst_ptr.  The source and destination must NOT overlap.
-		 *
-		 *   char local[BUFFER_SIZE];
-		 *   memcpy(local, buffer, bytes_read);
-		 */
 
-		/* TODO 3: Write `bytes_read` bytes from `local` to the
-		 * destination file using fwrite(), and handle a short-write
-		 * error.
-		 *
-		 *   size_t bytes_written = fwrite(local, 1, bytes_read, dst);
-		 *   if (bytes_written != bytes_read) { ... }
+	while ((bytes_read = fread(buffer, 1, BUFFER_SIZE, src)) > 0) {
+		/*
+		 * TODO 2: write the `bytes_read` bytes now in `buffer` to `dst`.
+		 * fwrite() may write fewer than asked (a full disk, for one);
+		 * treat that as an error, and leave no file open behind you.
 		 */
 	}
 
@@ -70,6 +61,8 @@ int main(int argc, char *argv[])
 
 	fclose(src);
 	fclose(dst);
+
+	/* Nothing to release: the buffer was never allocated. */
 
 	printf("Copied '%s' -> '%s'\n", src_path, dst_path);
 	return EXIT_SUCCESS;

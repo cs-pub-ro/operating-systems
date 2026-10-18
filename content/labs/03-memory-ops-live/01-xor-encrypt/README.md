@@ -23,9 +23,8 @@ The key, the file opening/closing, and the read/write loop are already written; 
 1. **TODO 1** — declare the two work buffers, `in_buf` and `out_buf`.
    Each is exactly `BLOCK_SIZE` bytes of `unsigned char`.
    The size is a compile-time constant, so these are fixed-size arrays — do **not** use `malloc`.
-1. **TODO 2** — encrypt the `n` bytes that were just read.
-   For each byte `i` from `0` to `n - 1`, set `out_buf[i]` to `in_buf[i] ^ key[i]`.
-   Encrypt exactly `n` bytes, not `BLOCK_SIZE`: the last block is usually shorter.
+1. **TODO 2** — encrypt the `n` bytes that were just read, from `in_buf` into `out_buf`, byte by byte with the key.
+   Think about how many bytes the last block of a file holds before you write the loop.
 
 ## Build & Run
 

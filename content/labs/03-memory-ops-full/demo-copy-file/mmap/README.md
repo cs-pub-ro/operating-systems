@@ -1,38 +1,36 @@
-# Demo: Copy a File Using `mmap`
+# Demo: Copy a File Using an `mmap` Buffer
 
-**Tools:** GCC, Make
+**Tools:** GCC, Make, strace
 
 ## Goal
 
-Copy a file by mapping both source and destination into the process address space, so that the copy becomes a single `memcpy()` between two pointers and the read/write loop disappears entirely.
+Copy a file through a buffer obtained from the kernel directly, with `mmap()`, skipping the allocator -- and see what that buys and what it costs compared with `malloc()`.
 
 ## Background
 
 ```C
 void *mmap(void *addr, size_t length, int prot, int flags, int fd, off_t offset);
-```
-
-| Parameter | Meaning |
-| --- | --- |
-| `addr` | Preferred start address; `NULL` lets the kernel choose. |
-| `length` | Number of bytes to map. |
-| `prot` | `PROT_READ`, `PROT_WRITE`, or both. |
-| `flags` | `MAP_PRIVATE` — copy-on-write, changes never reach the file. `MAP_SHARED` — changes are written back. |
-| `fd` | File descriptor of the file to map. |
-| `offset` | Offset within the file; must be page-aligned. |
-
-Returns the mapped address, or `MAP_FAILED` (**not** `NULL`) on error.
-
-After a successful `mmap()` the file descriptor may be closed: the mapping holds its own reference to the file.
-
-```C
-int ftruncate(int fd, off_t length);
 int munmap(void *addr, size_t length);
-int msync(void *addr, size_t length, int flags);
 ```
 
-A file must already be at least `length` bytes long before it can back a mapping of that size, which is what `ftruncate()` is for.
-`munmap()` releases a mapping; `msync(..., MS_SYNC)` forces dirty pages of a `MAP_SHARED` mapping out to the file first.
+`mmap()` creates a new area in the process address space.
+Usually that area is a view of a file; with `MAP_ANONYMOUS` there is no file at all, and the area is plain zero-filled memory:
+
+| Parameter | For an anonymous buffer |
+| --- | --- |
+| `addr` | `NULL`: the kernel chooses the address. |
+| `length` | the size wanted; the kernel rounds it up to whole pages. |
+| `prot` | `PROT_READ \| PROT_WRITE`: the program reads and writes it. |
+| `flags` | `MAP_PRIVATE \| MAP_ANONYMOUS`: this process only, no file. |
+| `fd` | `-1`: there is no file. |
+| `offset` | `0`. |
+
+Returns the start of the area, or `MAP_FAILED` on error -- which is `(void *) -1`, **not** `NULL`.
+`munmap()` removes the area; the memory is given back to the kernel at once.
+
+This is what `malloc()` itself does for large requests (lecture 03: above 128 KB it stops using the heap and maps a fresh area per block).
+Calling it yourself takes the allocator out of the picture: no heap bookkeeping, no reuse of old blocks, pages that are guaranteed zero and cost nothing until touched, and a release that reaches the kernel immediately.
+The price is granularity -- the smallest area is a page, so it is no way to get 40 bytes -- and a system call for every allocation and every release.
 
 ## Build & Run
 
@@ -41,91 +39,69 @@ make
 dd if=/dev/urandom of=input.bin bs=1M count=4
 ./copy_file input.bin output.bin
 diff input.bin output.bin && echo "Files are identical"
+strace -e trace=brk,mmap,munmap ./copy_file input.bin output.bin
 make clean
 ```
 
 ## Results and Explanations
 
-### Step 1 — map the source, read-only
+### Step 1 -- map the buffer
 
 ```C
-void *src_map = mmap(NULL, file_size, PROT_READ, MAP_PRIVATE, src_fd, 0);
-if (src_map == MAP_FAILED) {
-	perror("mmap source");
-	close(src_fd);
+char *buffer = mmap(NULL, BUFFER_SIZE, PROT_READ | PROT_WRITE,
+		    MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+
+if (buffer == MAP_FAILED) {
+	perror("mmap");
 	return EXIT_FAILURE;
 }
-close(src_fd);
 ```
 
-`MAP_PRIVATE` because the source is only read; nothing should ever propagate back to it.
-The check is against `MAP_FAILED`, not `NULL` — a common mistake, and `MAP_FAILED` is `(void *) -1`.
+The check is against `MAP_FAILED`.
+Testing for `NULL` compiles, runs, and silently accepts a failed mapping; the first use of the buffer then faults.
 
-### Step 2 — unmap on the error paths
-
-Every error path created after this point must `munmap(src_map, file_size)`.
-The same bookkeeping burden as the `malloc` variant, with a different function name.
-
-### Step 3 — size the destination
+### Steps 2, 3, 5 and 6 -- unmap on every exit
 
 ```C
-if (ftruncate(dst_fd, (off_t)file_size) < 0) { ... }
+munmap(buffer, BUFFER_SIZE);
 ```
 
-Without this the destination is an empty file, and mapping `file_size` bytes of it would succeed but touching those pages would raise `SIGBUS`.
-This is the detail that catches people: `mmap` does not extend a file, and the failure arrives later, as a signal, rather than as an error return.
+The same bookkeeping as the `malloc` variant, with a different function name and a second argument: `munmap()` needs the length, because the kernel does not keep a size per allocation the way the allocator does.
+Count the TODOs again: four of the six are this call.
 
-### Step 4 — map the destination, read-write, shared
+### Step 4 -- the write
 
-```C
-void *dst_map = mmap(NULL, file_size, PROT_READ | PROT_WRITE,
-		     MAP_SHARED, dst_fd, 0);
+Unchanged, except that the short-write path unmaps instead of freeing.
+
+### What the kernel saw
+
+```text
+$ strace -e trace=brk,mmap,munmap ./copy_file input.bin output.bin
+...
+mmap(NULL, 1048576, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7f1c6a8c1000
+...
+munmap(0x7f1c6a8c1000, 1048576)         = 0
+Copied 'input.bin' -> 'output.bin'
 ```
 
-`MAP_SHARED` is what makes the writes reach the file.
-With `MAP_PRIVATE` the program would run, the `memcpy` would succeed, and the destination file would remain empty — a silent, complete failure.
+Run the `malloc` variant under the same `strace`, and the two traces are the same: one `mmap()` of 1 MiB, one `munmap()`.
+For a block this size, `malloc()` and `free()` were a thin wrapper around exactly these calls.
+The difference is what happens for smaller blocks, and who decides: with `malloc()` the allocator chooses between the heap and a mapping; with `mmap()` the program has chosen.
 
-### Step 5 — the copy
+### Comparing the four variants
 
-```C
-memcpy(dst_map, src_map, file_size);
-```
-
-**This one line is the entire copy.**
-Both mappings are ordinary pointers into the address space; no `read()`, no `write()`, no loop.
-
-The I/O still happens, of course — it happens as **page faults**.
-Touching an unmapped page of the source traps into the kernel, which reads that page from disk and resumes the instruction; touching a destination page allocates it in the page cache and marks it dirty.
-The interesting part is that this is invisible in the source code: the transfer is driven by the memory accesses themselves.
-
-### Step 6 — flush and release
-
-```C
-msync(dst_map, file_size, MS_SYNC);
-munmap(src_map, file_size);
-munmap(dst_map, file_size);
-```
-
-`munmap` alone does not guarantee the data has reached the disk; it only removes the mapping.
-The kernel would write the dirty pages back eventually, but `msync` with `MS_SYNC` is what makes the moment defined.
-
-### Comparing the three variants
-
-| | Where the buffer lives | Sized at | Cleanup | Copy loop |
+| | Where the buffer lives | Sized at | Created by | Released by |
 | --- | --- | --- | --- | --- |
-| global | BSS | compile time | none | yes |
-| `malloc` | heap | run time | `free()` on every path | yes |
-| `mmap` | the file itself, via the page cache | run time | `munmap()` on every path | **no** |
+| global | BSS | compile time | the loader, before `main()` | nobody; process exit |
+| local | the stack | compile time | entering `main()` | returning from `main()` |
+| `malloc` | the heap, or a mapping the allocator makes | run time | `malloc()` | `free()`, on every path |
+| `mmap` | a mapping | run time | `mmap()` | `munmap()`, on every path |
 
-The `mmap` version has one further property worth naming: the data is never copied into a buffer of the program's own at all.
-The source pages are the page cache; the destination pages are the page cache.
-The `memcpy` moves bytes from one part of the kernel's cache to another, with no user-space staging buffer in between.
-
-It also has a hard limitation the others do not: the whole file must fit in the address space at once.
-On 64-bit that is rarely a problem; on 32-bit, a 3 GB file cannot be copied this way.
+Two of the four cost nothing to manage and cannot change size; two can be any size the program finds out at run time and have to be given back by hand.
+The copy loop never noticed.
 
 ## References
 
-* `man 2 mmap`, `man 2 munmap`, `man 2 msync`, `man 2 ftruncate`
-* `man 7 signal` — on `SIGBUS` from touching pages past the end of a file
-* `man 5 proc` — `/proc/self/maps` shows the mappings of a running process
+* `man 2 mmap`, `man 2 munmap`
+* `man 3 mallopt` -- `M_MMAP_THRESHOLD`, the size above which `malloc()` turns into `mmap()`
+* `man 5 proc` -- `/proc/<pid>/maps` lists the areas of a running process, the anonymous buffer among them

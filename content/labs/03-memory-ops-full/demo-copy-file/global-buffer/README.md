@@ -5,9 +5,21 @@
 ## Goal
 
 Copy a file through a **static global buffer**, and see that this kind of memory needs no allocation, no release, and exists before `main()` is entered.
-The first of three variants of the same program; the other two obtain their buffer in different ways.
+The first of four variants of the same program; the other three obtain their buffer in other ways, and nothing else about them changes.
 
 ## Background
+
+The program is a small `cp`: it reads the source file one block at a time into a buffer and writes each block to the destination.
+
+```C
+while ((bytes_read = fread(buffer, 1, BUFFER_SIZE, src)) > 0) {
+	size_t bytes_written = fwrite(buffer, 1, bytes_read, dst);
+	...
+}
+```
+
+The loop is the same in all four variants.
+What differs is the one line that brings `buffer` into existence, and what that line obliges the rest of the program to do.
 
 ### Static global memory
 
@@ -18,20 +30,10 @@ static char buffer[BUFFER_SIZE];
 ```
 
 is placed by the compiler in the **BSS segment** if it is zero-initialised, or the **data segment** if given an explicit initialiser.
-Only BSS costs nothing on disk — it is a note in the executable saying "reserve this much, zeroed".
-The kernel maps the region into the address space before `main()` runs.
+BSS costs nothing on disk -- it is a note in the executable saying "reserve this much, zeroed" -- and the loader creates the area before `main()` runs.
 
 There is no `malloc()` and no `free()`: the memory is simply always there, for the entire lifetime of the process.
-That is its advantage and also its limitation — the size is fixed when the program is compiled, and the memory is occupied whether the program uses it or not.
-
-### `memcpy`
-
-```C
-void *memcpy(void *dest, const void *src, size_t n);
-```
-
-Copies exactly `n` bytes.
-The regions **must not overlap**; `memmove()` is the one that tolerates overlap.
+That is its advantage and its limitation: the size is fixed when the program is compiled, and the memory is occupied whether the program uses it or not.
 
 ## Build & Run
 
@@ -45,32 +47,28 @@ make clean
 
 ## Results and Explanations
 
-### Step 1 — the global buffer
+### Step 1 -- the global buffer
 
 ```C
 static char buffer[BUFFER_SIZE];
 ```
 
-`static` at file scope means "not visible outside this translation unit", not "allocated differently" — a plain global would live in the same place.
-Being zero-initialised, it lands in BSS and costs nothing in the executable file.
+`static` at file scope means "not visible outside this translation unit", not "allocated differently" -- a plain global would live in the same place.
+Being zero-initialised, it lands in BSS, and `size` shows it:
 
-### Step 2 — the copy through a staging array
-
-```C
-char local[BUFFER_SIZE];
-memcpy(local, buffer, bytes_read);
+```text
+$ size copy_file
+   text    data     bss     dec     hex filename
+   2761     656 1048608 1052025  100d79 copy_file
 ```
 
-This is deliberately redundant: a real program would call `fwrite()` straight from `buffer`.
-The extra copy exists so that `memcpy()` appears explicitly and so that there is a second buffer to compare against the heap variant.
+A megabyte of BSS, and `ls -l copy_file` is still about 16 KB: the buffer takes space in the running process, not in the file.
 
-Note where `local` lives: it is an automatic array, so it is on the **stack**, not in BSS.
-With `BUFFER_SIZE` at 1 MB this is already an uncomfortably large stack frame — the default thread stack is 8 MB — and it is worth pointing out that this is exactly the kind of declaration that causes a stack overflow when someone later raises `BUFFER_SIZE`.
-
-### Step 3 — writing, and the short-write check
+### Step 2 -- writing, and the short-write check
 
 ```C
-size_t bytes_written = fwrite(local, 1, bytes_read, dst);
+size_t bytes_written = fwrite(buffer, 1, bytes_read, dst);
+
 if (bytes_written != bytes_read) {
 	fprintf(stderr, "fwrite: short write\n");
 	fclose(src);
@@ -82,11 +80,10 @@ if (bytes_written != bytes_read) {
 `fwrite` returns the number of *items* written, which is why the item size is 1 and the count is `bytes_read`.
 Checking the result matters: a full disk reports itself here and nowhere else.
 
-Note that the two `fclose()` calls have to be repeated on this error path.
-There is nothing to `free()` in this variant, so that is the whole cleanup — which is precisely the contrast the `malloc` variant is about to draw.
+The two `fclose()` calls have to be repeated on this error path.
+There is nothing else to release in this variant, so that is the whole cleanup -- which is precisely the contrast the `malloc` and `mmap` variants are about to draw.
 
 ## References
 
-* `man 3 memcpy`, `man 3 memmove`
 * `man 3 fread`, `man 3 fwrite`
-* `man 1 size` — shows the text/data/bss breakdown of the built program
+* `man 1 size` -- the text/data/bss breakdown of the built program

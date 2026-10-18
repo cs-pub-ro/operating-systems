@@ -2,11 +2,14 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 #define BUFFER_SIZE (1 * 1024 * 1024)  /* 1 MiB */
 
-/* Static global buffer used for copying file contents. */
+/*
+ * The copy buffer: a static global array.  Zero-initialised, so it lands in
+ * the BSS segment: the executable records its size and nothing else, and the
+ * memory exists from before main() until the process exits.
+ */
 static char buffer[BUFFER_SIZE];
 
 int main(int argc, char *argv[])
@@ -21,6 +24,7 @@ int main(int argc, char *argv[])
 
 	/* Open source file for reading. */
 	FILE *src = fopen(src_path, "rb");
+
 	if (!src) {
 		perror("fopen source");
 		return EXIT_FAILURE;
@@ -28,23 +32,19 @@ int main(int argc, char *argv[])
 
 	/* Open destination file for writing (create/truncate). */
 	FILE *dst = fopen(dst_path, "wb");
+
 	if (!dst) {
 		perror("fopen destination");
 		fclose(src);
 		return EXIT_FAILURE;
 	}
 
-	/* Read source into global buffer, then write buffer to destination. */
+	/* Read a block from the source into the buffer, write it out, repeat. */
 	size_t bytes_read;
+
 	while ((bytes_read = fread(buffer, 1, BUFFER_SIZE, src)) > 0) {
-		/* Copy is implicit: buffer already holds the data.
-		 * Use memcpy to move data to a local staging variable
-		 * to illustrate memcpy usage (destination == buffer here). */
-		char local[BUFFER_SIZE];
+		size_t bytes_written = fwrite(buffer, 1, bytes_read, dst);
 
-		memcpy(local, buffer, bytes_read);
-
-		size_t bytes_written = fwrite(local, 1, bytes_read, dst);
 		if (bytes_written != bytes_read) {
 			fprintf(stderr, "fwrite: short write\n");
 			fclose(src);
@@ -62,6 +62,8 @@ int main(int argc, char *argv[])
 
 	fclose(src);
 	fclose(dst);
+
+	/* Nothing to release: the buffer was never allocated. */
 
 	printf("Copied '%s' -> '%s'\n", src_path, dst_path);
 	return EXIT_SUCCESS;

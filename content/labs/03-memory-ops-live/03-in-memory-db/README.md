@@ -34,6 +34,10 @@ struct database {
 
 The rule connecting the two counters is `count <= capacity`, and it must hold at every point in the program.
 
+`count` plays two roles at once.
+It is the number of records actually stored, and -- because the records are packed from index `0` with no holes -- it is also the index of the slot the next record goes into.
+That is why a store step reads `db->records[db->count].id = id;`: the slot at index `count` is the first free one, and only once the record is in place does `count` go up by one, so that it is the number of stored records again.
+
 The array grows in **constant chunks** of `CHUNK` records, never one record at a time, and it is only ever expanded, never shrunk:
 
 ```text

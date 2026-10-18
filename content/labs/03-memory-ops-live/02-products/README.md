@@ -28,10 +28,10 @@ The struct, the fixed array, the read loop, the sort and the printing are writte
 
 ## Your Task
 
-1. **TODO 1** — inside the read loop, give the name a home on the heap.
-   Measure its length, `malloc` exactly `strlen(name_buf) + 1` bytes (the `+ 1` is for the `'\0'`), copy the name in, and store the pointer in `products[count].name`.
-   Check `malloc`'s result for `NULL`.
-1. **TODO 2** — after the products are printed, `free` every name you allocated.
+1. **TODO 1** — inside the read loop, give the name a home on the heap, sized to that name, and store the pointer in `products[count].name`.
+   You can `malloc` the right number of bytes and copy the string in yourself, or let `strdup` do both in one call.
+   Either way the allocation can fail, and either way the block is yours to release later.
+1. **TODO 2** — after the products are printed, release every name you allocated.
 
 ## Build & Run
 

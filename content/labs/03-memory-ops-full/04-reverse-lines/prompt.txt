@@ -1,0 +1,13 @@
+Add an exercise `04-...` (choose a name) that uses `mmap()` to allocate memory.
+Use anonymous mapping, do not map files.
+Make it a short exercise, but ideally have a realistic use case for using
+`mmap()` as alternative to `malloc()` or a local or global buffer.
+
+Choice made: a `tac`-like program that reads a whole file into one buffer sized
+to the file (so: run-time size, possibly very large, needed once, then gone),
+obtained as an anonymous mapping and released with munmap().  The reversal loop
+and the read loop are given; the student sizes, maps and unmaps the buffer, and
+has to think about the empty file.  `make test` compares with tac(1).
+
+TODO comments state what is needed and why, not what to type (students should
+think about what they need to do, not follow instructions).

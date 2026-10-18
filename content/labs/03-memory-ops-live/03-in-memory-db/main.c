@@ -35,41 +35,29 @@ struct database {
 /*
  * TODO 1: start with an empty database.
  *
- * There is no memory allocated yet, so:
- *   - records must be NULL
- *   - count must be 0
- *   - capacity must be 0
- *
- * The first db_add() will notice capacity == count == 0 and allocate the
- * first chunk.
+ * An empty database owns no memory.  Set the three fields to say so, in a
+ * way that lets the first db_add() find out that it has to allocate.
  */
 void db_init(struct database *db)
 {
-	/* TODO: initialise the three fields. */
+	/* TODO 1 */
 }
 
 /*
- * TODO 2: add one record to the database, growing it if necessary.
+ * TODO 2: add one record to the database, growing the array by CHUNK
+ * records when there is no room left.
  *
- * Steps:
- *   1. If the array is full (count == capacity), make more room:
- *        - compute the new capacity: capacity + CHUNK
- *        - realloc() db->records to hold `new capacity` records
- *          (remember: realloc(NULL, size) behaves like malloc(size),
- *           so this also handles the very first allocation)
- *        - check that realloc() did not return NULL
- *        - store the new pointer and the new capacity back into db
- *   2. Copy the record into the slot at index db->count:
- *        - db->records[db->count].id = id;
- *        - copy `name` into db->records[db->count].name
- *          (use strncpy and make sure the string stays NUL-terminated)
- *   3. Increment db->count.
+ * db->count is where the new record goes and, once it is there, how many
+ * records there are.  Keep count <= capacity true at every step.
  *
- * Return 0 on success, -1 if the allocation failed.
+ * Before writing the grow step, read what realloc() does when it fails,
+ * and what that means for the pointer you passed it.
+ *
+ * Return 0 on success, -1 if memory ran out.
  */
 int db_add(struct database *db, int id, const char *name)
 {
-	/* TODO: grow the array if it is full, then store the record. */
+	/* TODO 2 */
 
 	return 0;
 }
@@ -85,14 +73,12 @@ void db_print(const struct database *db)
 }
 
 /*
- * TODO 3: release the memory owned by the database.
- *
- * free() the records array, then reset the database to the empty state
- * (records = NULL, count = 0, capacity = 0) so it can be reused safely.
+ * TODO 3: release everything the database owns, and leave it in a state
+ * in which another db_add() or db_free() would be safe.
  */
 void db_free(struct database *db)
 {
-	/* TODO: free db->records and reset the fields. */
+	/* TODO 3 */
 }
 
 /*

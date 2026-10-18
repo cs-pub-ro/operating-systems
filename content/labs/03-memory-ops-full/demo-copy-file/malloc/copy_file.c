@@ -2,7 +2,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 #define BUFFER_SIZE (1 * 1024 * 1024)  /* 1 MiB */
 
@@ -16,8 +15,12 @@ int main(int argc, char *argv[])
 	const char *src_path = argv[1];
 	const char *dst_path = argv[2];
 
-	/* Allocate a buffer on the heap using malloc(). */
+	/*
+	 * The copy buffer: a heap block obtained from the allocator at run
+	 * time.  From here on every way out of main() has to free it.
+	 */
 	char *buffer = malloc(BUFFER_SIZE);
+
 	if (!buffer) {
 		perror("malloc");
 		return EXIT_FAILURE;
@@ -25,6 +28,7 @@ int main(int argc, char *argv[])
 
 	/* Open source file for reading. */
 	FILE *src = fopen(src_path, "rb");
+
 	if (!src) {
 		perror("fopen source");
 		free(buffer);
@@ -33,6 +37,7 @@ int main(int argc, char *argv[])
 
 	/* Open destination file for writing (create/truncate). */
 	FILE *dst = fopen(dst_path, "wb");
+
 	if (!dst) {
 		perror("fopen destination");
 		fclose(src);
@@ -40,23 +45,11 @@ int main(int argc, char *argv[])
 		return EXIT_FAILURE;
 	}
 
-	/* Read source into heap buffer, copy with memcpy, write to destination. */
+	/* Read a block from the source into the buffer, write it out, repeat. */
 	size_t bytes_read;
+
 	while ((bytes_read = fread(buffer, 1, BUFFER_SIZE, src)) > 0) {
-		/* Allocate a temporary write buffer and copy into it. */
-		char *write_buf = malloc(bytes_read);
-		if (!write_buf) {
-			perror("malloc write_buf");
-			fclose(src);
-			fclose(dst);
-			free(buffer);
-			return EXIT_FAILURE;
-		}
-
-		memcpy(write_buf, buffer, bytes_read);
-
-		size_t bytes_written = fwrite(write_buf, 1, bytes_read, dst);
-		free(write_buf);
+		size_t bytes_written = fwrite(buffer, 1, bytes_read, dst);
 
 		if (bytes_written != bytes_read) {
 			fprintf(stderr, "fwrite: short write\n");
@@ -77,6 +70,8 @@ int main(int argc, char *argv[])
 
 	fclose(src);
 	fclose(dst);
+
+	/* The one release everybody remembers. */
 	free(buffer);
 
 	printf("Copied '%s' -> '%s'\n", src_path, dst_path);

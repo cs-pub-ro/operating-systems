@@ -234,6 +234,7 @@ check_session_02() {
 check_session_03() {
 	heading "Session 03 -- Memory Operations"
 	check_command valgrind
+	check_command strace
 }
 
 check_session_04() {

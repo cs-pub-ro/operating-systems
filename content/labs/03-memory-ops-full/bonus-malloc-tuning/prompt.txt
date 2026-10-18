@@ -1,0 +1,17 @@
+Add a new bonus exercise that focuses on fine tuning `malloc()` for performance,
+efficiency or security (or a combination of them).
+(Replaces `bonus-products`, which was more of the same.)
+
+Choice made: a toy video pipeline that mallocs, renders, checks and frees one
+63 MiB frame per iteration.  Default glibc turns every frame into an mmap() of
+fresh zero pages and an munmap(), 16 k page faults each.  The student measures
+that (the program reports time, minor faults, max RSS), then tunes the
+allocator twice -- first with GLIBC_TUNABLES, no code change, then with
+mallopt() in the code -- and sees the same program run about five times faster.
+Reusing memory exposes a hidden assumption in the renderer (a fresh frame is
+black), which is the correctness/security half: fix it with calloc()/memset(),
+measure what the fix costs, and use glibc.malloc.perturb to show the bug was
+there from the start.  The efficiency trade-off (memory kept resident versus
+system calls saved) is the discussion in FURTHER.md.
+
+TODO comments state what is needed and why, not what to type.

@@ -1,0 +1,26 @@
+We are preparing contents for a class on Operating Systems, part of a 4-years bachelor study program in a technical university.
+The class is part of the 2nd year, 1s semester.
+
+We are preparing the materials for the lab-03: Memory Operations.
+The materials will be of two types:
+- Materials to be used live, under `content/labs/03-memory-ops-live/`
+- Materials to be used before and after labs, with full information, details and explanations, including reference solutions, under content/labs/03-memory-ops-full/`
+
+Make the following updates:
+1. In the demo variants in `demo-copy-file/`, use a single buffer.
+   No need to use a secondary / local buffer, it doesn't make sense.
+2. Add another subdirectory in the demo called `local-buffer/` and allocate memory on the stack as a local buffer.
+3. In the demo allocate the buffer with `mmap` as anonymous mapping, do not go into file mapping.
+   We basically want to show 4 different ways of achieving the same thing.
+4. Add an exercise `04-...` (choose a name) that uses `mmap()` to allocate memory.
+   Use anonymous mapping, do not map files.
+   Make it a short exercise, but ideally have a realistic use case for using `mmap()` as alternative to `malloc()` or a local or global buffer.
+5. Remove the `bonus-products` exercise.
+   It's more of the same.
+6. Add a new bonus exercises that focuses on fine tuning `malloc()` for performance, efficiency or security (or a combination of them).
+7. Do not make TODO comments for exercises so explicit.
+   We want student to think about what they need to do, not just blindly follow instructions.
+   This is why we ask them to test themselves.
+8. At exercise 2, hint the student they can use `strdup()` as alternative to `malloc()` and `strcpy()`.
+9. At task 3, point out in the `README.md` that `db->count` has a double role: number of actually stored element and the index for the next inserstion.
+   Students may be confused about the more complex syntax of `db->records[db->count].id = id`.

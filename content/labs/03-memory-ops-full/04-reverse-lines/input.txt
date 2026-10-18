@@ -1,0 +1,7 @@
+First, know how big the input is.
+Second, get a buffer that size from the kernel.
+Third, read the whole file into it.
+Fourth, walk the buffer backwards, line by line.
+Fifth, write each line out as you find it.
+Sixth, give the buffer back.
+The last line of the file comes out first.
