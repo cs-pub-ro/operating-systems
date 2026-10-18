@@ -33,11 +33,12 @@ Reading the file into the buffer and walking it backwards are written; you provi
 
 ## Your Task
 
-1. **TODO 1** -- find out how large the file is, from the descriptor that is already open.
-1. **TODO 2** -- obtain a buffer of that size from the kernel: an anonymous, private mapping that the program can read and write.
+1. **TODO 1** -- obtain a buffer of that size from the kernel: an anonymous, private mapping that the program can read and write.
    Check the result the way `man 2 mmap` says to.
-1. **TODO 3** -- release the buffer once the output has been written.
+1. **TODO 2** -- release the buffer once the output has been written.
    Look at the error path above it too.
+
+**Note:** the logic behind the reverse line printing is already implemented, you just need to add the buffer allocation.
 
 ## Build & Run
 

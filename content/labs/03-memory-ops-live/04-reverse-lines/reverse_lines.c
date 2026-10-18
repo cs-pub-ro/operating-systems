@@ -65,7 +65,8 @@ static void print_reversed(const char *buf, size_t size)
 
 int main(int argc, char *argv[])
 {
-	char *buf;
+	struct stat st;
+	char *buf = NULL;
 	size_t size;
 	int fd;
 
@@ -80,14 +81,23 @@ int main(int argc, char *argv[])
 		return EXIT_FAILURE;
 	}
 
-	/*
-	 * TODO 1: the buffer has to hold the whole file, so find out how large
-	 * the file is.  The descriptor is already open; there is a system call
-	 * that answers the question for an open file.
+	/* The buffer has to be as large as the file.
+	 * The file size is saved in the "size" variable.
 	 */
+	if (fstat(fd, &st) < 0) {
+		perror("fstat");
+		close(fd);
+		return EXIT_FAILURE;
+	}
+	size = (size_t)st.st_size;
+
+	if (size == 0) {
+		close(fd);
+		return EXIT_SUCCESS;
+	}
 
 	/*
-	 * TODO 2: obtain the buffer from the kernel: `size` bytes, as an
+	 * TODO 1: obtain the buffer from the kernel using mmap: `size` bytes, as an
 	 * anonymous mapping that this program can read and write.
 	 *
 	 * Think about what happens here when the file is empty, and about the
@@ -103,7 +113,7 @@ int main(int argc, char *argv[])
 
 	print_reversed(buf, size);
 
-	/* TODO 3: the buffer has done its job. */
+	/* TODO 2: the buffer has done its job. */
 
 	return EXIT_SUCCESS;
 }
