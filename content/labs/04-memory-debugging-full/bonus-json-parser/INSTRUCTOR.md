@@ -4,9 +4,9 @@
 
 A bonus, and the cleanest single illustration of the session's second theme: **a program can produce perfect output on every run you try and still be undefined behaviour from end to end.**
 
-Its value is as the counterpart to `01-grade-histogram`.
-There, the write stayed inside an allocation, Valgrind was structurally blind, and only `gdb` could help.
-Here there is nothing for `gdb` to catch and Memcheck names the line.
+Its value is as the counterpart to `03-grade-histogram`.
+There, the write stayed inside an allocation, Valgrind was structurally blind, and only a print could help.
+Here there is nothing a print would show, and Memcheck names the line.
 If you get to do a debrief, put the two side by side — that pairing is the point, and neither exercise makes it alone.
 
 ## Expected answer

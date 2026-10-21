@@ -43,8 +43,8 @@ Optional.
   This program has undefined behaviour on every string it parses; it has simply not been unlucky yet.
 * **The comment on the buggy line was true.**
   The mistake was in what the code was trying to do, not in whether it did it — the caller needs one more byte than were written.
-* **This is the mirror image of `01-grade-histogram`.**
-  There, only `gdb` could help; here, only Valgrind.
+* **This is the mirror image of `03-grade-histogram`.**
+  There, only a print could help; here, only Valgrind.
   Neither tool is the debugger; the pair is.
 * **A tool only sees the boundaries it instruments.**
   Knowing what a tool models is the difference between trusting it and being misled by it.

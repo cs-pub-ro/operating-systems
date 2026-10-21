@@ -1,0 +1,8 @@
+From dev/prompt-rework-lab4.txt, item 6:
+
+Add a demo that show how to use valgrind to detect a memory leak.
+
+Written as the smallest realistic program with one leak: every input line is
+copied to the heap by a helper whose comment says the caller owns the copy,
+and the caller never frees it. The point of the demo is reading the
+--leak-check=full report, not the program.

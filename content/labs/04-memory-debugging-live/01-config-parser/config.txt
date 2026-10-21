@@ -1,0 +1,11 @@
+# Settings for the report server.
+# Lines starting with '#' are comments; blank lines are ignored.
+
+hostname = reports.example.org
+port = 8080
+log_level = warning
+
+# Storage
+data_dir = /var/lib/reports
+max_clients = 64
+retries = 3

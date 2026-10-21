@@ -15,7 +15,7 @@
    ```
 
    It catches this one instantly, and *aborts* on the first occurrence rather than logging all 49 and carrying on.
-   Contrast that with `01-grade-histogram`, where ASan was as blind as Valgrind: there the overflow stayed inside an object, here it crosses a redzone between blocks.
+   Contrast that with `03-grade-histogram`, where ASan was as blind as Valgrind: there the overflow stayed inside an object, here it crosses a redzone between blocks.
    The difference is not the size of the mistake — both are a single element past the end — it is whether anything was watching that boundary.
 1. **Make the corruption matter.**
    The overflow is harmless only because of where the allocator happens to put things.
@@ -77,9 +77,9 @@
   *"Trim the buffer down to exactly the bytes that were written"* is precisely what the code did.
   The mistake was in the specification, not the implementation — the caller needs one more byte than were written.
   Comments describe intent, and intent can be wrong.
-* **This is the mirror image of `01-grade-histogram`.**
-  There, the write stayed inside an allocation and Valgrind was structurally blind, so only `gdb` worked.
-  Here there is nothing for `gdb` to catch, and Valgrind names the line.
+* **This is the mirror image of `03-grade-histogram`.**
+  There, the write stayed inside an allocation and Valgrind was structurally blind, so only a print worked.
+  Here there is nothing a print would show, and Valgrind names the line.
   Neither tool is the debugger; the pair is.
 * **Tools that instrument boundaries only see the boundaries they instrument.**
   ASan puts redzones between blocks and catches this instantly; it puts nothing between fields and missed the histogram.

@@ -1,0 +1,31 @@
+We are preparing contents for a class on Operating Systems, part of a 4-years bachelor study program in a technical university.
+The class is part of the 2nd year, 1s semester.
+
+We are preparing the materials for the lab-04: Memory Debugging.
+The materials will be of two types:
+- Materials to be used live, under `content/labs/04-memory-debugging-live/`
+- Materials to be used before and after labs, with full information, details and explanations, including reference solutions, under content/labs/04-memory-debugging-full/`
+
+Make the following updates:
+1. Give up using GDB for debugging. It's convoluted and not user-friendly.
+   GDB is mostly useful for investigation, not actual debugging.
+   For actual debugging we can use print debugging.
+2. Use GDB for the backtracing and identifying the location of the issue.
+3. Simplify the demo to only feature 2 bugs.
+4. Move the 03-symbol-hash-table/ exercise as a bonus exercise.
+   Simplify it to only feature 2 bugs (instead of 3).
+5. Reorder exercises 01-grade-histogram and 02-longest-word.
+   They should be 01-longest-word and 02-grade-histogram.
+   Or another numbers, but longest-word should be before grade-histogram.
+6. Add a demo that show how to use valgrind to detect a memory leak.
+7. Add an exercise focused on using Valgrind to detect a memory leak, a build up from the demo.
+8. Add one further exercise in the spirit of the lab, for a total of 4: valgrind, longest-word, grade-historam, and this one.
+   Make exercises as much as possible connect to a realistic program. As much as possible aim to not have more the 150 lines of source code.
+9. Aim to simplify wording to make it more digestable to newcomers in the debugging and memory world.
+10. Make structure of exercises uniform. Consider the structure of other lab exercises.
+11. Bonus order should be symbol-hash-table, json-parser, binary-issue.
+    Make them appear as such in the lab exercise list.
+12. Introduce a section called "Debuggin Cheatsheet" in the live (and full part) and place it at the end.
+    Add simple and common information on using GDB and Valgrind and printf for debugging.
+    Keep it simple, not extensive for live.
+    You can expand it for full.

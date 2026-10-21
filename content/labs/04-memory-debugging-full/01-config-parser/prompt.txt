@@ -1,0 +1,11 @@
+From dev/prompt-rework-lab4.txt, items 7 and 8:
+
+Add an exercise focused on using Valgrind to detect a memory leak, a build up
+from the demo.
+Make exercises as much as possible connect to a realistic program. As much as
+possible aim to not have more the 150 lines of source code.
+
+Written as a key = value configuration reader with two leaks: a teardown that
+frees one of the two strings a setting owns, and a lookup function that
+returns a copy the caller never frees. Two loss records in one report, with
+block counts that identify them before any code is read.

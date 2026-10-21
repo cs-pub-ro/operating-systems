@@ -2,11 +2,14 @@
 
 ## Purpose
 
-The short, easy exercise of the session, and the deliberate opposite of the one before it.
+The short exercise of the session, and the deliberate opposite of the one after it.
 
-In `01-grade-histogram` the output was wrong and Valgrind was silent.
 Here the output is **right** and Valgrind is the only thing that objects.
+In `03-grade-histogram` the output is wrong and Valgrind is silent.
 Run the two together in the debrief; the pair is the lesson, and neither half makes the point on its own.
+
+It follows `01-config-parser`, which had two leaks with a `free()` missing outright.
+This one has the `free()` in the wrong place: the pointer is overwritten before the old block is released, which is the leak students write most often in their own code.
 
 ## Expected answer
 
@@ -81,7 +84,6 @@ Edge cases on the fixed version: `printf 'aaa\n'` gives one word and no leak; em
 
 ## Practical notes
 
-* This is the shortest exercise in the session — most groups finish it in well under half the time they spent on `01-grade-histogram`.
-  It is the natural place to catch up if the demo overran.
-* Needs Valgrind to work at all, unlike `01-grade-histogram`.
+* This is the shortest exercise in the session; most groups finish it quickly, and it is the natural place to catch up if the demos overran.
+* Needs Valgrind to work at all, unlike `03-grade-histogram` and `04-csv-report`.
   See the session-level notes for the `ulimit -n 1024` fix if Memcheck refuses to start.

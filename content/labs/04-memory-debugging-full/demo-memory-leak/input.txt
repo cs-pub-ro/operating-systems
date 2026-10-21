@@ -1,0 +1,6 @@
+the program printed the right answer
+and the teaching assistant said it was not finished
+so we ran it under valgrind
+and valgrind said: definitely lost
+every line we read was copied to the heap
+and not one of the copies was ever freed

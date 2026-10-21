@@ -1,13 +1,12 @@
 /*
  * Fixed version of the demo in-memory database.
  *
- * Three bugs were removed; each one is marked with a "FIX n" comment below.
+ * Two bugs were removed; each one is marked with a "FIX n" comment below.
  *
- *   FIX 1 (db_add)          -- the grow condition underflowed on an empty
- *                              database, so the array was never allocated
- *   FIX 2 (main)            -- a cached record pointer survived the array
- *                              being moved by db_grow()
- *   FIX 3 (db_print_sorted) -- the temporary sorted copy was never freed
+ *   FIX 1 (db_add) -- the grow condition underflowed on an empty database,
+ *                     so the array was never allocated
+ *   FIX 2 (main)   -- a cached record pointer survived the array being
+ *                     moved by db_grow()
  *
  * Build:  make
  * Run:    ./db < input.txt
@@ -148,7 +147,6 @@ void db_print_sorted(const struct database *db)
 	for (size_t i = 0; i < db->count; i++)
 		printf("  [%d] %s\n", sorted[i].id, sorted[i].name);
 
-	/* FIX 3: the scratch copy belongs to this function, free it here. */
 	free(sorted);
 }
 

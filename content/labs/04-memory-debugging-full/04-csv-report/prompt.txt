@@ -1,0 +1,15 @@
+From dev/prompt-rework-lab4.txt, items 1, 2 and 8:
+
+Give up using GDB for debugging. [...] GDB is mostly useful for
+investigation, not actual debugging. For actual debugging we can use print
+debugging.
+Use GDB for the backtracing and identifying the location of the issue.
+Add one further exercise in the spirit of the lab, for a total of 4:
+valgrind, longest-word, grade-historam, and this one.
+Make exercises as much as possible connect to a realistic program. As much as
+possible aim to not have more the 150 lines of source code.
+
+Written as the session's crash exercise: a CSV salary report where one line
+is short a field, strtok() returns NULL, and atoi() crashes three frames deep
+in the C library. GDB finds the frame and the NULL; a print before the parse
+finds the input line.

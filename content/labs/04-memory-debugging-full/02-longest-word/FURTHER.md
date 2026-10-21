@@ -77,9 +77,9 @@
   Freeing in the wrong order turns a leak into a use-after-free.
   A leak wastes memory; a use-after-free is a security vulnerability.
   Ordering the three statements as allocate, release, assign is not fussiness — each of the other orders is a distinct bug.
-* **This is the counterpart to `01-grade-histogram`.**
-  There, Valgrind was blind and only `gdb` worked.
-  Here there is nothing for `gdb` to break on, and only Valgrind works.
+* **This is the counterpart to `03-grade-histogram`.**
+  There, Valgrind is blind and only a print works.
+  Here there is nothing to print that would look wrong, and only Valgrind works.
   Neither tool is the debugger; the pair is.
 
 ## References

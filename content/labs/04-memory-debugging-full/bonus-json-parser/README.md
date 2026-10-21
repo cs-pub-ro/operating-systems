@@ -153,7 +153,7 @@ The difference is 18 bytes, which is 18 strings decoded, one extra byte each.
 There is no crash to break on, no wrong value to print, and no variable whose change you could watch — the write goes to memory that belongs to no variable at all.
 You can *confirm* the bug in `gdb` once you know where it is, by comparing the requested size against the number of bytes written, but you cannot find it that way.
 
-This is the exact mirror of `01-grade-histogram`, where Valgrind was structurally blind and only `gdb` could help.
+This is the exact mirror of `03-grade-histogram`, where Valgrind was structurally blind and only a print could help.
 Neither tool is the debugger; the pair is.
 
 ## References

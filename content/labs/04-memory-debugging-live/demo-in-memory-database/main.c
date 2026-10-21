@@ -137,6 +137,8 @@ void db_print_sorted(const struct database *db)
 	printf("Sorted by id:\n");
 	for (size_t i = 0; i < db->count; i++)
 		printf("  [%d] %s\n", sorted[i].id, sorted[i].name);
+
+	free(sorted);
 }
 
 /* Release the array and reset to the empty state. */
