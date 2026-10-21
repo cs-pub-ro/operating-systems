@@ -1,3 +1,3 @@
 #!/bin/sh
 
-pkill -f hello-
+pkill -f "^\./work/hello-"
