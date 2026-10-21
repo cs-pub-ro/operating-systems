@@ -9,6 +9,10 @@ Emulation translates every x86 instruction for the ARM processor, so the virtual
 
 Install UTM, either by downloading `UTM.dmg` from the [UTM website](https://mac.getutm.app/), opening it and dragging the app into the `Applications` folder.
 
+If you have already installed UTM, we recommend updating it to the latest version. To check the installed version, open the app, click on the UTM menu
+bar dropdown and select `About UTM`. The latest version of UTM is shown on the product's homepage. To replace the existing version, just follow
+the regular installation instructions. 
+
 UTM cannot import `.ova` files, so download the virtual machine as a disk image instead: [`VM-SO.qcow2`](https://repository.grid.pub.ro/cs/so/VM-SO.qcow2).
 You will need to log in using your `UPB` account.
 The image is large, so the download may take a while.
@@ -20,19 +24,16 @@ UTM has no "import a disk image" button, so you first create an empty virtual ma
 1. Open UTM and click **Create a New Virtual Machine**.
 1. Select **Emulate**, not **Virtualize**: virtualization only runs ARM systems.
 1. Select **Other** as the operating system.
-1. Check **None** for the boot device: there is no installer to boot, since the image already holds an installed system.
-1. On the hardware page, check that **Architecture** is `x86_64`, and give the machine at least 2 GB of RAM (4 GB is recommended) and at least 2 CPU cores.
+1. On the hardware page, check that **Machine** is `x86_64`, and give the machine at least 2 GB of RAM (4 GB is recommended) and at least 2 CPU cores.
+1. Check **None** for the boot device: there is no installer to boot, since the image already holds an installed system. Disable **UEFI Boot**; this image boots the traditional BIOS way, it does not start with UEFI enabled.
 1. Set the storage size to at least 20 GB.
-   This creates an empty disk; the image is attached as a second one below.
+   This creates an empty disk that serves as persistent storage for our VM. It will not occupy any space in the beginning, as it is a dynamic disk.
 1. Skip the shared directory page.
-1. Give the virtual machine a name, such as `VM-SO`, and save it.
+1. Give the virtual machine a name, such as `VM-SO`, check **Open VM Settings** and save it.
 
 The virtual machine exists now, but it has nothing to boot from.
 Edit it to attach the image:
 
-1. Right-click the virtual machine in the sidebar and select **Edit**.
-1. Go to **QEMU** and uncheck **UEFI Boot**.
-   The image boots the traditional BIOS way, and does not start with UEFI enabled.
 1. Go to **Drives**, select **New...**, click **Import** and choose the `VM-SO.qcow2` file you downloaded.
 1. Right-click the newly added drive and select **Move Up**, until it is the first drive in the list.
    The machine boots from the first drive, and the empty disk from the wizard would otherwise come first.
