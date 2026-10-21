@@ -11,7 +11,7 @@ Install UTM, either by downloading `UTM.dmg` from the [UTM website](https://mac.
 
 If you have already installed UTM, we recommend updating it to the latest version. To check the installed version, open the app, click on the UTM menu
 bar dropdown and select `About UTM`. The latest version of UTM is shown on the product's homepage. To replace the existing version, just follow
-the regular installation instructions. 
+the regular installation instructions.
 
 UTM cannot import `.ova` files, so download the virtual machine as a disk image instead: [`VM-SO.qcow2`](https://repository.grid.pub.ro/cs/so/VM-SO.qcow2).
 You will need to log in using your `UPB` account.
