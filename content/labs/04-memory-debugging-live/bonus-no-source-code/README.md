@@ -1,4 +1,4 @@
-# Bonus: Patch the Bug, No Source Code Allowed
+# Bonus: (Hard) No Source Code Allowed
 
 **Tools:** GDB, objdump, nm, readelf, Python
 
@@ -15,6 +15,7 @@ Your job is to:
 1. Figure out what the program does and where the bug is, using only the binary and the tools from this session (manual inspection, gdb, objdump, Valgrind).
 1. **Patch the binary itself** — a handful of bytes, in place — so the bug is fixed.
    You are not allowed to "cheat" by writing your own replacement program from scratch; the fix has to be a patch to the machine code that is already there.
+   You can use `hexedit` to patch the binary directly.
 
 ```console
 chmod +x vuln
@@ -84,7 +85,7 @@ Do they?
 Once you know which single instruction sets up the wrong size, you need to change the **immediate value** it loads — not the opcode, not any other byte.
 A few ways to do the actual patch, in increasing order of convenience:
 
-* **By hand with a hex editor / `xxd` + `printf`**: find the file offset of the instruction (`objdump -d` shows you the virtual address of every instruction on the left; for this non-PIE binary the file offset equals the virtual address minus a fixed base you can read off with `readelf -S vuln`, from the `.text` section's `Addr` and `Off` columns), then overwrite just the bytes of the immediate operand.
+* **By hand with a hex editor (e.g. `hexedit`)**: find the file offset of the instruction (`objdump -d` shows you the virtual address of every instruction on the left; for this non-PIE binary the file offset equals the virtual address minus a fixed base you can read off with `readelf -S vuln`, from the `.text` section's `Addr` and `Off` columns), then overwrite just the bytes of the immediate operand.
 * **With a short Python script**: open the file in `"r+b"` mode, `seek()` to the offset you found, and `write()` the corrected bytes.
   This is the recommended approach — it is reproducible and you can print out exactly what you changed and why.
 * **With gdb**, you can experiment on a *running* process with `set` to confirm your understanding of which byte controls what, but gdb's `set` only modifies the process's memory, not the file on disk — you still need to edit the file itself for the fix to survive after the process exits.

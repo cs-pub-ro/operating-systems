@@ -1,4 +1,4 @@
-# Bonus: Patch the Bug, No Source Code Allowed
+# Bonus: (Hard) No Source Code Allowed
 
 **Tools:** GDB, objdump, nm, readelf, Python
 

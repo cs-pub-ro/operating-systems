@@ -1,4 +1,4 @@
-# Bonus: The Symbol Table With Two Bugs
+# Bonus: (Hard) The Symbol Table With Two Bugs
 
 **Tools:** GCC, Make, GDB, Valgrind
 
