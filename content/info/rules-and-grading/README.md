@@ -218,14 +218,14 @@ All participating teams are **eligible** for equivalence in the OS subject (depe
 
 To reinforce knowledge, there will be 2 written lecture quizzes:
 
-1. Quiz 1 - covering questions from the [Software Stack chapter](https://cs-pub-ro.github.io/operating-systems/Software%20Stack) and [Data chapter](https://cs-pub-ro.github.io/operating-systems/Data/), will take place on the following dates:
+1. Quiz 1 - covering questions from the [Software Stack](https://cs-pub-ro.github.io/operating-systems/full/lectures/01-software-stack/), [Operating System Types and the OS Interface](https://cs-pub-ro.github.io/operating-systems/full/lectures/02-os-types-interface/), [Memory Operations](https://cs-pub-ro.github.io/operating-systems/full/lectures/03-memory-ops/), [Virtual Memory](https://cs-pub-ro.github.io/operating-systems/full/lectures/04-virtual-memory/), and [Paging](https://cs-pub-ro.github.io/operating-systems/full/lectures/05-paging/) courses, will take place on the following dates:
 
     * Series CA: 03.11.2026
     * Series CB: 04.11.2026
     * Series CC: 03.11.2026
     * Series CD: 03.11.2026
 
-1. Quiz 2 - covering questions from the [Compute chapter](https://cs-pub-ro.github.io/operating-systems/Compute/) and [I/O chapter](https://cs-pub-ro.github.io/operating-systems/IO/), will take place on the following dates:
+1. Quiz 2 - covering questions from the [Processes and Threads](https://cs-pub-ro.github.io/operating-systems/full/lectures/06-processes-threads/), [Scheduling](https://cs-pub-ro.github.io/operating-systems/full/lectures/07-scheduling/), [Concurrency](https://cs-pub-ro.github.io/operating-systems/full/lectures/08-concurrency/), [I/O Interface](https://cs-pub-ro.github.io/operating-systems/full/lectures/09-io-interface/), and [Inter-Process Communication](https://cs-pub-ro.github.io/operating-systems/full/lectures/10-ipc/) courses, will take place on the following dates:
 
     * Series CA: 15.12.2026
     * Series CB: 16.12.2026
