@@ -71,13 +71,15 @@
         cmd: update-locale LC_COLLATE=C
 
     - name: Trim Bash prompt when too large
-      command:
-        cmd: echo -e '\nexport PROMPT_DIRTRIM=3' >> /etc/bash.bashrc
+      lineinfile:
+        path: /etc/bash.bashrc
+        line: 'export PROMPT_DIRTRIM=3'
 
     - name: Fetch git repository for student
       git:
         repo: https://github.com/cs-pub-ro/operating-systems.git
         dest: /home/student/operating-systems
+      become_user: student
 
     - name: Clean command history for student and root
       shell: |
