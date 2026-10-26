@@ -74,7 +74,7 @@ Similarly, another announcement will follow the simulation, offering students th
 
 Those who meet the following requirements will not be required to be part of and pass the interview or the written part of the exam:
 
-* **4/5 points** for the home assignments - you will automatically get full marks for the interview part of the exam
+* **3.5/4 points** for the home assignments - you will automatically get full marks for the interview part of the exam
 * **1.5 points** for the lecture quizzes  (20/22 questions) - you will automatically get full marks for the written part of the exam
 
 In exceptional circumstances, when there is doubt on the correctness of getting the points, the student will still be requested to be part of the exam.
