@@ -72,6 +72,8 @@ locals {
       hard_drive_interface = "ide"
       iso_interface        = "ide"
       nic_type             = "82540EM"
+      use_usb_input        = ["modifyvm", "{{ .Name }}", "--usb", "off"]
+      use_ide_ctr          = []
     }
     arm64 = {
       iso_url              = "https://cdimage.ubuntu.com/ubuntu/releases/resolute/release/ubuntu-26.04.1-desktop-arm64.iso"
@@ -82,6 +84,8 @@ locals {
       hard_drive_interface = "virtio"
       iso_interface        = "virtio"
       nic_type             = "virtio"
+      use_usb_input        = ["modifyvm", "{{ .Name }}", "--usb-xhci", "on", "--keyboard", "usb", "--mouse", "usbtablet"]
+      use_ide_ctr          = ["storagectl", "{{ .Name }}", "--name", "IDE", "--remove"]
     }
   }
   p = local.platform[var.arch]
@@ -132,10 +136,11 @@ source "virtualbox-iso" "ubuntu-26-04" {
 
   vboxmanage = [
     ["modifyvm", "{{ .Name }}", "--boot1", "disk"],
-    ["modifyvm", "{{ .Name }}", "--usb", "off"],
     ["modifyvm", "{{ .Name }}", "--vram", "128"],
     ["modifyvm", "{{ .Name }}", "--nic1", "nat"],
     ["modifyvm", "{{ .Name }}", "--nictype1", local.p.nic_type],
+    local.p.use_usb_input,
+    local.p.use_ide_ctr,
   ]
 
   boot_command = [
