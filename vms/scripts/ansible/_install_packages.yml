@@ -1,6 +1,6 @@
 - name: Download latest Firefox
   get_url:
-    url: "https://download.mozilla.org/?product=firefox-latest-ssl&os={{ 'linux64-aarch64' if ansible_architecture == 'aarch64' else 'linux64' }}&lang=en-GB"
+    url: "https://download.mozilla.org/?product=firefox-latest-ssl&os={{ 'linux64-aarch64' if ansible_facts['architecture'] == 'aarch64' else 'linux64' }}&lang=en-GB"
     dest: /tmp/firefox.tar.bz2
     mode: '0644'
 
@@ -48,9 +48,12 @@
     mode: '0644'
 
 - name: Add Sublime Text repository
-  apt_repository:
-    repo: "deb [signed-by=/etc/apt/keyrings/sublimehq-pub.asc] https://download.sublimetext.com/ apt/stable/"
-    filename: sublime-text
+  deb822_repository:
+    name: sublime-text
+    types: deb
+    uris: https://download.sublimetext.com/
+    suites: apt/stable/
+    signed-by: /etc/apt/keyrings/sublimehq-pub.asc
     state: present
 
 - name: Install additional packages
@@ -132,4 +135,4 @@
   apt:
     pkg: gcc-multilib
     state: latest
-  when: ansible_architecture == 'x86_64'
+  when: ansible_facts['architecture'] == 'x86_64'
