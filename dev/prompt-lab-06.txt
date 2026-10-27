@@ -1,0 +1,65 @@
+We are preparing contents for a class on Operating Systems, part of a 4-years bachelor study program in a technical university.
+The class is part of the 2nd year, 1s semester.
+
+We are preparing the materials for the lab-06: Processes and Threads.
+The materials will be of two types:
+- Materials to be used live, under `content/labs/06-processes-threads-live/`
+- Materials to be used before and after labs, with full information, details and explanations, including reference solutions, under content/labs/06-processes-threads-full/`
+
+Generate a complete, comprehensive, and highly detailed 2-hour lab session on lab 06: Processes and Threads, following the structure of the other labs.
+
+**Context & Prerequisites:**
+
+* **Target Audience:** 2nd-year undergraduate CS students.
+* **Topics Covered So Far:** Software stack (syscalls, library calls, static/dynamic libraries, kernel types) and Memory (memory allocation, virtual memory, mmap).
+* **Missing Prerequisites:** No I/O topics have been covered yet (e.g., files, file descriptors). Therefore, ALL tasks that involve working with I/O must have the I/O boilerplate and helper functions pre-written in the skeleton code. The students should only call these functions, not implement them.
+* **Current Topic:** Processes and Threads. Synchronization primitives (mutexes, semaphores, etc.) have NOT been taught yet and will NOT be covered in this session, so all thread exercises must rely on independent memory regions to avoid race conditions.
+
+**Structure of the Output:**
+You must provide the contents, code, and Markdown documentation for two distinct directories based on the current lab session layout. Check the content/labs/ directory for the current file structure. You will need to populate the following directories:
+
+1. `06-processes-threads-live/`: This directory is for the live lab session. It should contain skeleton code and minimal markdown instructions (no in-depth explanations or step-by-step solutions, just the required information,  and goals to guide the students during the lab). See the current 1-5 *-live sessions in order to find out what is included in the live sessions.
+2. `06-processes-threads-full/`: This directory is the complete reference material. It should contain fully solved code, in-depth explanations of every task, step-by-step instructions, and the testing infrastructure/scripts used to validate the exercises.
+
+**Lab Session Contents:**
+The lab consists of "Demos" (solved collaboratively by the lab assistant and students) and "Exercises" (solved independently by students with assistant support). Generate the skeleton code, solution code, and instructional markdown for the following:
+
+**Demo 01: Minimal Shell**
+
+* **Goal:** Process spawning.
+* **Description:** A very minimal shell implementation using `fork` and `exec`. It should only be able to spawn simple processes with no arguments (e.g., running `ls` but not `ls -l`).
+
+**Demo 02: Multi-threaded Substring Search**
+
+* **Goal:** Thread creation and basic memory partitioning.
+* **Description:** Spawn multiple threads to search for a simple substring within a very large file.
+* **Constraints:** The file is already mapped into memory using `mmap` (this code must be provided). The string matching logic must also be provided.
+* **Student Task:** The assistant and students will write the `pthread_create` and `pthread_join` logic, and calculate the bounds of the memory regions so each thread searches a separate chunk of the mapped file.
+
+**Exercise 01: Shell with Arguments and Command Chaining**
+
+* **Goal:** Advanced `exec` usage and `wait` status parsing.
+* **Description:** Extend the shell from Demo 01 to parse and receive arguments (e.g., `ls -l -a ./file.txt`) and support basic command chaining using `;`, `||`, and `&&`.
+* **Constraints:** No I/O redirection or piping should be part of this task. Provide a VERY basic string tokenizer in the skeleton if necessary.
+
+**Exercise 02: Aggregating Thread Results**
+
+* **Goal:** Thread joining and returning data from threads.
+* **Description:** Extend Demo 02 so that the main thread aggregates the search results. Worker threads will count substring matches in their assigned memory regions and return the count.
+* **Constraints:** No concurrency mechanisms (like atomic variables or mutexes) are allowed. Threads must return their local counts (e.g., via `pthread_exit` or a passed struct), and the main thread will iterate over the results after `pthread_join` to compute the total number of matches.
+
+**Exercise 03: Multi-threaded File Encryptor**
+
+* **Goal:** Thread batch processing.
+* **Description:** A program that encrypts a large number of files using a simple XOR encryption. Threads will process batches of files.
+* **Constraints:** The functions for `mmap`-ing the file and performing the XOR encryption/decryption MUST be fully provided in the skeleton.
+* **Student Task:** Students must create the threads, divide the array of filenames into evenly sized batches, pass the correct batch struct to each thread, call the pre-written `mmap`/`encrypt` functions inside the thread routine, and `wait`/`join` them.
+
+**Bonus Exercises:**
+
+* **Bonus 1 (Extending Ex 03):** Implement logic to gracefully handle incomplete batches. If there are 57 files and the batch size is 10, the program should correctly assign the remainder (7 files) to the last thread.
+* **Bonus 2 (Extending Ex 01):** Extend the shell to support background processes. If a command ends with `&`, the shell should spawn the process but NOT `wait` for it, allowing the user to immediately type the next command. Provide an explanation on how to reap zombies (e.g., using `SIGCHLD` or `waitpid` with `NOHANG`) in the full directory. Add a hint to SIGCHLD or NOHANG withing the TODO items in the code.
+
+Please generate the complete file structures, `Makefile`s, `README.md` instructions for both `live` and `full` directories, C skeleton files, C solution files, and testing scripts. Ensure the C code is strictly POSIX compliant and well-commented.
+
+Generally follow the instructions and the structure of other labs.
