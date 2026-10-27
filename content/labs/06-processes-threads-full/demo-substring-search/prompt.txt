@@ -1,0 +1,17 @@
+From dev/prompt-lab-06.txt:
+
+Demo 02: Multi-threaded Substring Search
+
+* Goal: Thread creation and basic memory partitioning.
+* Description: Spawn multiple threads to search for a simple substring
+  within a very large file.
+* Constraints: The file is already mapped into memory using `mmap` (this
+  code must be provided). The string matching logic must also be provided.
+* Student Task: The assistant and students will write the `pthread_create`
+  and `pthread_join` logic, and calculate the bounds of the memory regions
+  so each thread searches a separate chunk of the mapped file.
+
+The file is produced by gen_text.c rather than shipped: 64 MiB of random
+words from a fixed sequence, with "kernel" planted across the 2-, 4- and
+8-way split points so that the matches lost at the boundaries are
+reproducible, and are the hand-over to 02-aggregate-matches.

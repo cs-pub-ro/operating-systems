@@ -1,0 +1,9 @@
+From dev/prompt-lab-06.txt:
+
+Bonus 1 (Extending Ex 03): Implement logic to gracefully handle incomplete
+batches. If there are 57 files and the batch size is 10, the program should
+correctly assign the remainder (7 files) to the last thread.
+
+The core exercise refuses a count that is not a multiple of the batch size;
+this bonus replaces that check with a rounded-up thread count and a
+clamped last batch.  gen_files.sh defaults to 57 files here.

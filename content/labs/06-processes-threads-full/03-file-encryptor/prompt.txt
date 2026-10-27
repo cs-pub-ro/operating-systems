@@ -1,0 +1,19 @@
+From dev/prompt-lab-06.txt:
+
+Exercise 03: Multi-threaded File Encryptor
+
+* Goal: Thread batch processing.
+* Description: A program that encrypts a large number of files using a
+  simple XOR encryption. Threads will process batches of files.
+* Constraints: The functions for `mmap`-ing the file and performing the XOR
+  encryption/decryption MUST be fully provided in the skeleton.
+* Student Task: Students must create the threads, divide the array of
+  filenames into evenly sized batches, pass the correct batch struct to
+  each thread, call the pre-written `mmap`/`encrypt` functions inside the
+  thread routine, and `wait`/`join` them.
+
+The file names come from the command line (a shell glob), so no directory
+I/O is needed.  The number of files must be a multiple of the batch size;
+the remainder case is bonus-incomplete-batches.  gen_files.sh makes the
+files and a reference copy, so that one pass and two passes can both be
+checked with cmp and diff.

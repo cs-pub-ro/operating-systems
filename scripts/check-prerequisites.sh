@@ -13,7 +13,7 @@
 
 set -u
 
-readonly LAST_SESSION=5
+readonly LAST_SESSION=6
 
 # Terminal colours, but only when the output is a terminal: piping the report
 # into a file or a pager should not fill it with escape sequences.
@@ -257,6 +257,12 @@ check_session_05() {
 	check_command nc optional "needed to reach a challenge deployed over the network"
 }
 
+check_session_06() {
+	heading "Session 06 -- Processes and Threads"
+	check_command strace
+	check_command ps
+}
+
 # The package that provides a tool, for the package manager this machine uses.
 # A tool with no entry is its own package, which is true of most of them.
 package_for() {
@@ -265,6 +271,12 @@ package_for() {
 	case "$tool" in
 	ar | nm | objdump | size | readelf)
 		echo binutils
+		;;
+	ps)
+		case "$manager" in
+		apt-get | zypper) echo procps ;;
+		*) echo procps-ng ;;
+		esac
 		;;
 	ldd)
 		case "$manager" in
@@ -358,6 +370,7 @@ main() {
 		check_session_03
 		check_session_04
 		check_session_05
+		check_session_06
 	else
 		check_common
 		"check_session_$(printf '%02d' "$session")"

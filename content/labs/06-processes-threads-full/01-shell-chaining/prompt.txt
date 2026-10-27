@@ -1,0 +1,15 @@
+From dev/prompt-lab-06.txt:
+
+Exercise 01: Shell with Arguments and Command Chaining
+
+* Goal: Advanced `exec` usage and `wait` status parsing.
+* Description: Extend the shell from Demo 01 to parse and receive arguments
+  (e.g., `ls -l -a ./file.txt`) and support basic command chaining using
+  `;`, `||`, and `&&`.
+* Constraints: No I/O redirection or piping should be part of this task.
+  Provide a VERY basic string tokenizer in the skeleton if necessary.
+
+The tokenizer splits at spaces and tabs only, so operators must be
+separate words.  The loop that cuts the token list into commands is given
+too; the student writes the fork/exec/wait with status unpacking, and the
+condition that implements the three operators.

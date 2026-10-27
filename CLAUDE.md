@@ -170,7 +170,7 @@ See `scripts/README.md` for the details.
 
 ## State of the content
 
-Labs 01–05 and lectures 01–05 are written; labs 06–12 and lectures 06–12 are skeleton directories holding nothing but a `README.md` with a title.
+Labs 01–06 and lectures 01–05 are written; labs 07–12 and lectures 06–12 are skeleton directories holding nothing but a `README.md` with a title.
 The three assignments and the `info/` pages are written; `extra/` is only a title.
 `dev/restructure-sessions.txt`, `dev/restructure-sessions-2.txt` and `dev/extra-prompt-restructure.txt` are the specifications of the layout, and they are the authority when this file is ambiguous.
 Use `content/labs/01-software-stack-*` as the model for everything.

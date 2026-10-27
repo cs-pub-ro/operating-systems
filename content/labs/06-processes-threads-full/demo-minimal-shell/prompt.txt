@@ -1,0 +1,11 @@
+From dev/prompt-lab-06.txt:
+
+Demo 01: Minimal Shell
+
+* Goal: Process spawning.
+* Description: A very minimal shell implementation using `fork` and `exec`.
+  It should only be able to spawn simple processes with no arguments
+  (e.g., running `ls` but not `ls -l`).
+
+Written so that the three TODOs can be done in the order exec, fork, wait,
+each one's absence visible in the shell's behaviour.
