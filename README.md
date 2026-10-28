@@ -54,6 +54,34 @@ This is the command the `.github/workflows/pages.yml` workflow runs to publish t
 Add `--strict` to it to turn warnings, such as a link that points nowhere, into a failed build.
 Leave the environment with `deactivate`; on later sessions, `source .venv/bin/activate` is enough.
 
+### Building the website with Docker
+
+The [`Dockerfile`](Dockerfile) and [`docker-compose.yaml`](docker-compose.yaml) build the site the way the GitHub Pages workflow does.
+
+Start it and open <http://localhost:3000>:
+
+```console
+docker compose up --build
+```
+
+The container renders the lecture slides first and then runs `mkdocs serve`, so the first start takes a little longer.
+The repository is mounted into the container rather than copied, so editing a `README.md` and saving it rebuilds the page and reloads the browser, just as without Docker.
+A new or changed slide deck is only rendered at start-up; restart the container, or run `make` in the deck's `slides/` directory, to see it.
+
+The container runs as user and group 1000, the first user on most Linux machines, so the rendered decks it writes under `content/` are yours and not root's.
+If `id -u` or `id -g` prints something else, run `export UID GID=$(id -g)` before starting it.
+If something else already holds port 3000, pick another one:
+
+```console
+PORT=3001 docker compose up
+```
+
+To build the site into `_site/` instead of serving it:
+
+```console
+docker compose run --rm site mkdocs build
+```
+
 ## Prerequisites
 
 Every session README lists the tools that session needs.
