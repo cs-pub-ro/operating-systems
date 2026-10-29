@@ -101,9 +101,9 @@ Byte totals, addresses and garbage values will differ elsewhere; the block count
 | `04-csv-report` | segfault inside `strtol()` via `atoi()`, exit 139 | one warning for line 7; engineering 4 / 21,600, marketing 3 / 11,700, support 2 / 5,900; top earner carol, 6,100 |
 | `bonus-symbol-hash-table` | six symbols listed under a header of twelve, then segfault in the dump after the removal, exit 139; 51 Memcheck errors from 20 contexts | 27 allocs, 27 frees, 4,722 bytes, 0 errors |
 | `bonus-json-parser` | exit 0 and perfect output; Memcheck reports "Invalid write of size 1" | 98 allocs, 98 frees, 7,753 bytes, 0 errors |
-| `bonus-binary-issue` | exit 139 on a 200-byte line | exit 0, input truncated to 63 characters |
+| `bonus-no-source-code` | exit 139 on a 200-byte line | exit 0, input truncated to 63 characters |
 
-For `bonus-binary-issue` the shipped binary is a fixed artefact, so these are exact for everyone: the buggy instruction is `mov esi,0x80` at virtual address `0x401221`, its immediate is at file offset `0x1222`, and the buffer is `lea rax,[rbp-0x40]`, i.e. 64 bytes.
+For `bonus-no-source-code` the shipped binary is a fixed artefact, so these are exact for everyone: the buggy instruction is `mov esi,0x80` at virtual address `0x401221`, its immediate is at file offset `0x1222`, and the buffer is `lea rax,[rbp-0x40]`, i.e. 64 bytes.
 
 ## Practical notes
 
@@ -113,6 +113,6 @@ For `bonus-binary-issue` the shipped binary is a fixed artefact, so these are ex
   Tell students to answer `n`; it only decorates the library frames they are going to walk past.
 * The database demo, the CSV report and the hash table crash.
   Check `ulimit -c` and the core-dump handling on the lab image if you plan to show core files; nothing in the material requires them.
-* `bonus-binary-issue` needs Python 3 and assumes x86-64.
+* `bonus-no-source-code` needs Python 3 and assumes x86-64.
   It will not work on an ARM laptop, and there is no fallback.
 * Nothing in this session is timing-sensitive.

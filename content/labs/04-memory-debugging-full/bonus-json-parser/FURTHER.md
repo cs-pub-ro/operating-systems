@@ -40,7 +40,7 @@
    A bug that Valgrind reports on every read is easier to live with than one it reports on a single write.
 1. **Look for the same shape elsewhere.**
    `strlen(s) + 1`, `snprintf` return values, and any `malloc(n)` followed by a write at index `n`.
-   The bug in `bonus-binary-issue` is the same mismatch, one level down: a buffer of 64 bytes and a read of up to 128.
+   The bug in `bonus-no-source-code` is the same mismatch, one level down: a buffer of 64 bytes and a read of up to 128.
 
 ## Questions to answer
 

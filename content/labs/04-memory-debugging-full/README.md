@@ -34,7 +34,7 @@ By the end of this session you should be able to:
 | [`04-csv-report`](04-csv-report) | Core | A crash inside the C library, a backtrace walked up to `main.c`, and the `NULL` behind it. |
 | [`bonus-symbol-hash-table`](bonus-symbol-hash-table) | Bonus | A bucket head left pointing at a freed node, and uninitialised memory that happens to be zero. |
 | [`bonus-json-parser`](bonus-json-parser) | Bonus | One missing byte: `malloc(len)` where the code writes `len + 1`. |
-| [`bonus-binary-issue`](bonus-binary-issue) | Bonus | A stack overflow found in disassembly and fixed by patching four bytes. |
+| [`bonus-no-source-code`](bonus-no-source-code) | Bonus | A stack overflow found in disassembly and fixed by patching four bytes. |
 
 Each task directory contains:
 
@@ -88,7 +88,7 @@ The allocation counts and line numbers quoted in these files were taken on Ubunt
 Addresses, process ids and the garbage values read through dangling pointers will differ on your machine.
 What should reproduce is the *shape* of every report: which line Valgrind names, how many blocks leak, and `0 errors from 0 contexts` once the bug is fixed.
 
-The one exception is [`bonus-binary-issue`](bonus-binary-issue), where the shipped binary is a fixed artefact: its addresses and file offsets are the same for everyone.
+The one exception is [`bonus-no-source-code`](bonus-no-source-code), where the shipped binary is a fixed artefact: its addresses and file offsets are the same for everyone.
 
 ## Debugging Cheatsheet
 

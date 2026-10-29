@@ -64,7 +64,7 @@ Bonus exercises are optional: start them if you finish the core exercises, or ta
 | 6 | [`04-csv-report`](04-csv-report) | Core | A crash inside the C library: read the backtrace up to your code, then find the input line behind it. |
 | 7 | [`bonus-symbol-hash-table`](bonus-symbol-hash-table) | Bonus | Two bugs in a hash table: half of the symbols quietly dropped, and a use of freed memory after a removal. |
 | 8 | [`bonus-json-parser`](bonus-json-parser) | Bonus | A one-byte heap overflow that never changes the output. |
-| 9 | [`bonus-binary-issue`](bonus-binary-issue) | Bonus | A stack overflow in a compiled binary, with no source code. |
+| 9 | [`bonus-no-source-code`](bonus-no-source-code) | Bonus | A stack overflow in a compiled binary, with no source code. |
 
 The two demos teach the routine every exercise uses afterwards: run the program, look at how it fails, pick the tool that matches the failure, go to the line it points at, and only then read the code.
 Two ideas to keep for the whole session: **the symptom tells you which tool to reach for**, and **correct output is not proof that a program is correct**.
