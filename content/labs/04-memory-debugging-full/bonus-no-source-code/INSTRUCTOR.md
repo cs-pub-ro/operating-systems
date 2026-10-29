@@ -10,7 +10,7 @@ It works well as a take-home, and the README is written to be followed unaided e
 
 ## What students get, and what they must not
 
-Students get **only `vuln`** — the binary in `04-memory-debugging-live/bonus-binary-issue/`.
+Students get **only `vuln`** — the binary in `04-memory-debugging-live/bonus-no-source-code/`.
 They do **not** get `vuln.c` or `patch_vuln.py`; both live here, in the `-full` half of the session, which the archive build never packs.
 If a student has the source, the exercise is pointless — the whole skill is working without it.
 
