@@ -64,7 +64,7 @@ static int tokenize(char *line, char *tokens[], int max)
 /*
  * Whether a word is one of the operators that end a command.
  *
- * TODO 3: `&` is one too.  Like `;`, it ends the command before it, and
+ * TODO 2: `&` is one too.  Like `;`, it ends the command before it, and
  * the next command runs whatever the status; unlike `;`, the shell does
  * not wait for the command before it.
  */
@@ -79,7 +79,7 @@ static int is_operator(const char *word)
  * time we looked, without waiting for the ones still running.  Called
  * before every prompt.
  *
- * TODO 5: a child that has finished stays around, as a zombie, until
+ * TODO 4: a child that has finished stays around, as a zombie, until
  * its parent waits for it, so waiting is not optional; it is only the
  * blocking that is.  waitpid() has a flag for that, WNOHANG, and a
  * first argument that means "any child"; call it in a loop until it
@@ -98,28 +98,45 @@ static void reap_background(void)
  * 127 if it could not be run, 128 plus the signal number if a signal killed
  * it.  In the background, return 0 at once.
  *
- * TODO 4: with `background` set, print the child's pid on stderr and
+ * TODO 3: with `background` set, print the child's pid on stderr and
  * return without waiting; reap_background() collects the child later.
  */
 static int run_command(char *argv[], int background)
 {
-	/*
-	 * TODO 1: fork, exec, wait, as in the demo, with two changes.
-	 *
-	 * The command now has arguments, so the child uses execvp(), which
-	 * takes the whole argv[] array: argv[0] is the program to look up
-	 * in PATH, and the array is what the program receives as its own
-	 * argv.  If exec returns, it failed: report it and leave the child
-	 * with status 127.
-	 *
-	 * The parent needs to know how the child ended, so waitpid() gets a
-	 * place to store the status.  The status is not the exit code; it
-	 * packs several things together.  `man 2 waitpid` has the macros
-	 * that take it apart: whether the child exited normally and with
-	 * what code, or whether a signal killed it and which one.  Print a
-	 * line on stderr for anything other than a normal exit with 0, and
-	 * return the value the comment above describes.
-	 */
+	pid_t pid;
+	int status;
+
+	pid = fork();
+	if (pid < 0) {
+		perror("fork");
+		return 127;
+	}
+
+	if (pid == 0) {
+		execvp(argv[0], argv);
+		perror(argv[0]);
+		exit(127);
+	}
+
+	if (background) {
+		fprintf(stderr, "[started %d]\n", (int) pid);
+		return 0;
+	}
+
+	if (waitpid(pid, &status, 0) < 0) {
+		perror("waitpid");
+		return 127;
+	}
+
+	if (WIFSIGNALED(status)) {
+		fprintf(stderr, "[killed by signal %d]\n", WTERMSIG(status));
+		return 128 + WTERMSIG(status);
+	}
+
+	if (WEXITSTATUS(status) != 0)
+		fprintf(stderr, "[exit status %d]\n", WEXITSTATUS(status));
+
+	return WEXITSTATUS(status);
 
 	return 0;
 }
@@ -154,14 +171,14 @@ static void run_line(char *tokens[], int ntokens)
 		tokens[end] = NULL;
 
 		/*
-		 * TODO 2: run the command, or skip it.  `op` is the operator in
+		 * TODO 1: run the command, or skip it.  `op` is the operator in
 		 * front of it and `status` is what the last command that ran
 		 * returned.  After `;` a command always runs; after `&&` only
 		 * if the previous one succeeded; after `||` only if it failed.
 		 * A command that runs updates `status`; one that is skipped
 		 * leaves it alone.  After `&` the next command always runs.
 		 * The command runs in the background when the operator after
-		 * it, `next_op`, is `&`.
+		 * it, `next_op` is `&`.
 		 */
 
 		if (next_op == NULL)

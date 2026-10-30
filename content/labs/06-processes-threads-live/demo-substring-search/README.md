@@ -5,3 +5,5 @@ Mapping the file and counting matches in a region are written; what is missing i
 
 Together with the teaching assistant you will generate a 64 MiB file with `gen_text`, fill in the three TODOs in `search.c`, and run the search with one, two, four and eight threads.
 Two things to look at: the order the threads report in, and whether the per-thread counts add up to what `grep -o` finds.
+
+Use the already existing `gen_text` file to create a new text file of a given size (`./gen_text out.txt 64`).

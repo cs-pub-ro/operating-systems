@@ -86,7 +86,8 @@ static int run_command(char *argv[])
 	 * that take it apart: whether the child exited normally and with
 	 * what code, or whether a signal killed it and which one.  Print a
 	 * line on stderr for anything other than a normal exit with 0, and
-	 * return the value the comment above describes.
+	 * return the value the comment above describes. Use `WEXITSTATUS`
+	 * to get the actual status of the child process.
 	 */
 
 	return 0;

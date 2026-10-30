@@ -88,17 +88,22 @@ static void xor_buffer(unsigned char *data, size_t size, const char *key)
 static void *encrypt_batch(void *arg)
 {
 	struct batch *b = arg;
+	unsigned char *data;
+	size_t size, i;
 
 	printf("thread %d: %zu files, %s .. %s\n", b->id, b->nfiles,
 	       b->files[0], b->files[b->nfiles - 1]);
 
-	/*
-	 * TODO 1: for every file in the batch: map it, XOR it with the key,
-	 * unmap it.  The three functions above do each step; none of them
-	 * knows about threads, and none needs to, because no two threads
-	 * ever touch the same file.  A file that cannot be mapped has
-	 * already been reported; go on with the next one.
-	 */
+	for (i = 0; i < b->nfiles; i++) {
+		/*
+		 * TODO 1: for every file in the batch: map it, XOR it with the key,
+		 * unmap it, using the functions already written above.
+		 * The three functions above do each step; none of them
+		 * knows about threads, and none needs to, because no two threads
+		 * ever touch the same file.  A file that cannot be mapped has
+		 * already been reported; go on with the next one.
+		 */
+	}
 
 	return NULL;
 }
@@ -143,6 +148,8 @@ int main(int argc, char *argv[])
 	 * `nfiles` names from the command line; batch i takes `batch_size`
 	 * of them, starting right after the ones batch i - 1 took.  Every
 	 * file has to be in exactly one batch.
+	 *
+	 * Batch i takes files[i * batch_size] .. files[(i + 1) * batch_size - 1].
 	 */
 
 	/*

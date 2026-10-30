@@ -104,7 +104,7 @@ int main(int argc, char *argv[])
 	struct region regions[MAX_THREADS];
 	pthread_t threads[MAX_THREADS];
 	const char *data, *needle;
-	size_t size;
+	size_t size, chunk;
 	int nthreads, i;
 
 	if (argc != 4) {
@@ -128,10 +128,13 @@ int main(int argc, char *argv[])
 	 * belong to exactly one part, including the few left over when the
 	 * size does not divide evenly; give those to the last part.
 	 */
+
+	/*TODO 1: calculate the chunk (nr of characters every thread will get)*/
+
 	for (i = 0; i < nthreads; i++) {
 		regions[i].id = i;
 		regions[i].needle = needle;
-		/* start and len */
+		/* TODO 1: compute start and len */
 	}
 
 	/*
