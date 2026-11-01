@@ -10,7 +10,7 @@ Solution script and a containerized solver environment for the "demo-heap-1" cha
    docker build -t demo-heap-1-solver .
    ```
 
-1. Ensure `../publish/chall` exists (for local solving) -- see `../build/README.md` and `../publish/README.md`.
+1. Ensure `../publish/chall` exists (for local solving) -- see `../build/README` and `../publish/README`.
 
 ## Running the solution
 
@@ -30,7 +30,7 @@ docker run --rm -it \
 
 ### 2. Solve against a local deployment
 
-Runs the exploit against the challenge service started via `../deploy/README.md` (listening on `localhost:31001`).
+Runs the exploit against the challenge service started via `../deploy/README` (listening on `localhost:31001`).
 
 > [!NOTE] **Linux:** `--network host` lets the container reach `localhost` on the host directly. **macOS/Windows:** use `host.docker.internal` instead of `127.0.0.1` and drop `--network host`.
 

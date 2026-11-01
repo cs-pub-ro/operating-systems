@@ -8,10 +8,10 @@ Docker is the only requirement; no host compiler, Python or pwntools install is 
 
 ## Stages
 
-* [`build/`](build/README.md) — compiles `chall.c` in a reproducible Debian image and copies out the exact `libc.so.6` and loader it linked against. This binary is built as a **PIE** (the default), on purpose: it is the one challenge that keeps ASLR in play.
-* [`publish/`](publish/README.md) — zips the binary and its libc/loader into the archive players receive.
-* [`deploy/`](deploy/README.md) — serves the binary under `xinetd` in a container, on host port **31021**, with ASLR left enabled.
-* [`solve/`](solve/README.md) — runs the reference `exploit.py` locally, against a local deployment, or against a remote target. This stage ships **only** `exploit.py`: the exploit must leak and compute an address at runtime, so there is no shell-script or by-hand form. The binary must be present so the exploit can read the two symbol offsets.
+* [`build/`](build/README) — compiles `chall.c` in a reproducible Debian image and copies out the exact `libc.so.6` and loader it linked against. This binary is built as a **PIE** (the default), on purpose: it is the one challenge that keeps ASLR in play.
+* [`publish/`](publish/README) — zips the binary and its libc/loader into the archive players receive.
+* [`deploy/`](deploy/README) — serves the binary under `xinetd` in a container, on host port **31021**, with ASLR left enabled.
+* [`solve/`](solve/README) — runs the reference `exploit.py` locally, against a local deployment, or against a remote target. This stage ships **only** `exploit.py`: the exploit must leak and compute an address at runtime, so there is no shell-script or by-hand form. The binary must be present so the exploit can read the two symbol offsets.
 
 ## Quick start
 

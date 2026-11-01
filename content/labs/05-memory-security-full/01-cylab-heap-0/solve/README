@@ -1,16 +1,16 @@
 # Solve
 
-Solution script and a containerized solver environment for the "heap-havoc" challenge.
+Solution script and a containerized solver environment for the "heap0" challenge.
 
 ## Prerequisites
 
 1. Build the solver image:
 
    ```console
-   docker build -t heap-havoc-solver .
+   docker build -t heap0-solver .
    ```
 
-1. Ensure `../publish/chall` exists (for local solving) -- see `../build/README.md` and `../publish/README.md`.
+1. Ensure `../publish/chall` exists (for local solving) -- see `../build/README` and `../publish/README`.
 
 ## Running the solution
 
@@ -24,21 +24,21 @@ docker run --rm -it \
     -v "$(pwd):/solve" \
     -v "$(pwd)/../publish:/publish" \
     -w /publish \
-    heap-havoc-solver \
+    heap0-solver \
     python3 /solve/exploit.py
 ```
 
 ### 2. Solve against a local deployment
 
-Runs the exploit against the challenge service started via `../deploy/README.md` (listening on `localhost:31020`).
+Runs the exploit against the challenge service started via `../deploy/README` (listening on `localhost:31010`).
 
 > [!NOTE] **Linux:** `--network host` lets the container reach `localhost` on the host directly. **macOS/Windows:** use `host.docker.internal` instead of `127.0.0.1` and drop `--network host`.
 
 ```console
 docker run --rm -it --network host \
     -v "$(pwd):/solve" \
-    heap-havoc-solver \
-    python3 /solve/exploit.py REMOTE HOST=127.0.0.1 PORT=31020
+    heap0-solver \
+    python3 /solve/exploit.py REMOTE HOST=127.0.0.1 PORT=31010
 ```
 
 ### 3. Solve against a remote target
@@ -46,6 +46,6 @@ docker run --rm -it --network host \
 ```console
 docker run --rm -it \
     -v "$(pwd):/solve" \
-    heap-havoc-solver \
-    python3 /solve/exploit.py REMOTE HOST=1.2.3.4 PORT=31020
+    heap0-solver \
+    python3 /solve/exploit.py REMOTE HOST=1.2.3.4 PORT=31010
 ```

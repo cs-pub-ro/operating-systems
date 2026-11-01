@@ -4,7 +4,7 @@ Packages the challenge artifacts (heap-havoc) for distribution to players.
 
 ## Prerequisites
 
-Build the challenge first (see `../build/README.md`), then copy the artifacts here:
+Build the challenge first (see `../build/README`), then copy the artifacts here:
 
 ```console
 cp ../build/chall ../build/libc.so.6 ../build/ld-linux.so.2 .

@@ -8,10 +8,10 @@ Docker is the only requirement; no host compiler, Python or pwntools install is 
 
 ## Stages
 
-* [`build/`](build/README.md) — compiles `chall.c` in a reproducible Debian image and copies out the exact `libc.so.6` and loader it linked against. Heap layout is a glibc detail, so the matching libc ships with the binary.
-* [`publish/`](publish/README.md) — zips the binary and its libc/loader into the archive players receive.
-* [`deploy/`](deploy/README.md) — serves the binary under `xinetd` in a container, on host port **31001**.
-* [`solve/`](solve/README.md) — runs the reference solution (`solve.sh` or `exploit.py`) locally, against a local deployment, or against a remote target.
+* [`build/`](build/README) — compiles `chall.c` in a reproducible Debian image and copies out the exact `libc.so.6` and loader it linked against. Heap layout is a glibc detail, so the matching libc ships with the binary.
+* [`publish/`](publish/README) — zips the binary and its libc/loader into the archive players receive.
+* [`deploy/`](deploy/README) — serves the binary under `xinetd` in a container, on host port **31001**.
+* [`solve/`](solve/README) — runs the reference solution (`solve.sh` or `exploit.py`) locally, against a local deployment, or against a remote target.
 
 ## Quick start
 

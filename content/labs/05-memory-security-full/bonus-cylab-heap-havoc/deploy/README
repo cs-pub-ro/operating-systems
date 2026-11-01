@@ -5,7 +5,7 @@ Uses `xinetd` inside a Docker container to serve the challenge over TCP.
 
 ## Prerequisites
 
-Ensure `../publish/` contains `chall`, `libc.so.6`, and `ld-linux.so.2` (see `../build/README.md` and `../publish/README.md`), and that `../flag` exists (the flag file for this challenge).
+Ensure `../publish/` contains `chall`, `libc.so.6`, and `ld-linux.so.2` (see `../build/README` and `../publish/README`), and that `../flag` exists (the flag file for this challenge).
 
 ## Building the image
 
