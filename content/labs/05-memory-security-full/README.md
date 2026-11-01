@@ -25,7 +25,7 @@ By the end of this session students should be able to:
 ## Prerequisites and required tools
 
 * Session 04 concepts: heap layout, and using `gdb` to inspect memory.
-* A Linux environment with `gdb`, `objdump` and `python3`; the exploits use [pwntools](https://docs.pwntools.com/).
+* A Linux environment with `gdb`, `objdump`, `nc` and `python3`; the scripted solution to the last challenge uses [pwntools](https://docs.pwntools.com/).
 * **Docker** — the only requirement to build, publish, deploy and solve every challenge. No compiler, Python or pwntools install is needed on the host.
 
 ## Contents
@@ -39,15 +39,19 @@ By the end of this session students should be able to:
 | [`03-cylab-heap-2`](03-cylab-heap-2) | Core | Heap overflow | Overwrite a function pointer with `win()`'s address. |
 | [`04-cylab-heap-3`](04-cylab-heap-3) | Core | Use-after-free | Reclaim a freed chunk via tcache and write through the dangling pointer. |
 | [`bonus-cylab-heap-havoc`](bonus-cylab-heap-havoc) | Bonus | Heap overflow (32-bit) | Cross from one struct into the next to set a hidden callback. |
+| [`bonus-pwntools-primer`](bonus-pwntools-primer) | Bonus | — | A short tutorial on pwntools tubes and address packing. |
 | [`bonus-heap-mayhem`](bonus-heap-mayhem) | Bonus | Heap overflow (PIE) | Leak a code pointer to beat ASLR, then overwrite a callback. |
 
 Each task directory contains:
 
-* `README.md` — the write-up: the bug, the exploit, and how to build, run and solve it.
+* `README.md` — the solving write-up: the bug, how to reach it, and the solution in three forms (step-by-step by hand, a shell script, and a pwntools script). It assumes the challenge is already deployed.
+* `README.chall.md` — how the challenge is *prepared*: build, publish, deploy and the solver container (the Docker pipeline).
 * `FURTHER.md` — extensions, variations, and discussion points, with answers.
 * `INSTRUCTOR.md` — notes for whoever runs the session.
 * `flag` — the challenge flag, copied into the container as `flag.txt` at deploy time.
-* `build/`, `publish/`, `deploy/`, `solve/` — the Docker pipeline (see below).
+* `build/`, `publish/`, `deploy/`, `solve/` — the Docker pipeline (see `README.chall.md`).
+
+`bonus-pwntools-primer` is a tutorial, not a challenge, so it has no `build/publish/deploy` pipeline and no flag.
 
 ## The through-line of the session
 
@@ -62,21 +66,92 @@ Every challenge is the same sentence with a different object: **a write the prog
 
 The progression is: corrupt a value → choose the value → choose the code → get the pointer without an overflow → reach across objects → beat ASLR to do it. Each challenge reuses the previous idea and adds exactly one thing.
 
-Every binary here is built deliberately weak — no stack canary, `heap-0..3` and `heap-havoc` with no PIE — because the point is the bug, not the mitigations. `heap-mayhem` turns PIE back on precisely so the last exercise has to deal with it.
+Every binary except `heap-mayhem` is built deliberately weak — no stack canary, and no PIE — because the point is the bug, not the mitigations. `heap-mayhem` turns PIE back on precisely so the last exercise has to deal with it.
+
+## Solving the challenges: three forms, by hand first
+
+Each challenge's `README.md` gives the solution in three forms, and they all work against both a local binary and the deployed service:
+
+1. **By hand** — the menu choices and inputs to type into `nc`. This is the intended way to solve most of the session; you should understand the bug well enough to drive it yourself.
+1. **A shell script** (`solve/solve.sh`) — the same inputs, scripted with `printf` and `nc`, so a solve is one command and repeatable.
+1. **A pwntools script** (`solve/exploit.py`) — the same again in Python, which is the only practical form once addresses must be computed at runtime.
+
+Only `heap-mayhem` genuinely *needs* a script: it is a PIE, so the exploit has to read a leaked address and do arithmetic on it live.
+`bonus-pwntools-primer` teaches exactly that, and is meant to be done before `heap-mayhem`.
 
 ## The challenge pipeline
 
-Each challenge is structured as four Docker stages, each with its own `README.md`:
+Each challenge is prepared as four Docker stages, each with its own `README.md`, and summarised in the task's `README.chall.md`:
 
 * **`build/`** — a reproducible Debian build image compiles `chall.c` and copies out the exact `libc.so.6` and loader it was linked against. Heap layout depends on the glibc version, so the matching libc ships with the binary.
 * **`publish/`** — zips the binary and its libc/loader into the archive handed to players.
 * **`deploy/`** — runs the binary under `xinetd` in a container, one TCP port per challenge, with the flag mounted as `flag.txt` owned by a separate user.
-* **`solve/`** — the reference `exploit.py` and a pwntools container to run it locally, against a local deployment, or against a remote target.
+* **`solve/`** — the reference `solve.sh` and `exploit.py`, and a pwntools container to run the latter locally, against a local deployment, or against a remote target.
 
-Start from `<task>/build/README.md` and follow `publish`, `deploy`, `solve` in order.
+Start from the task's `README.chall.md`, then follow `build`, `publish`, `deploy`, `solve` in order.
 
 ## A note on reproducibility
 
-The write-ups quote concrete addresses and offsets (heap deltas, symbol addresses).
-The *offsets between allocations* and the *struct layouts* are stable for a given build; absolute addresses are not, and under PIE (`heap-mayhem`) nothing is fixed at all — which is why that exploit measures every address at runtime instead of hardcoding it.
-All eight exploits were last run green against freshly built binaries on x86-64.
+The write-ups quote concrete offsets (the overflow distance between two allocations, struct layouts) and, for the non-PIE binaries, concrete symbol addresses.
+The *offsets between allocations* and the *struct layouts* are stable for a given build; the overflow distance is printed by the program itself or measured once and reused.
+Under PIE (`heap-mayhem`) nothing is fixed — which is why that exploit measures every address at runtime instead of hardcoding it.
+All exploits were last rebuilt and re-run green against freshly built binaries on x86-64 (glibc 2.41, Debian 13 build image).
+
+## Pwntools Cheatsheet
+
+Most of this session is solvable by hand or with a short shell script; `heap-mayhem` needs pwntools.
+A fuller, worked introduction is in [`bonus-pwntools-primer`](bonus-pwntools-primer); this is the quick reference.
+
+### Connecting
+
+```python
+from pwn import *
+
+io = process("./chall")                  # run the local binary
+io = remote("141.85.224.106", 31010)     # connect to the deployed service
+```
+
+### Talking to the program (tubes)
+
+```python
+io.recvuntil(b"Enter your choice: ")     # read until this text appears, and stop
+line = io.recvline()                     # read one line
+data = io.recvall(timeout=5)             # read everything until the program closes
+
+io.send(b"abc")                          # send bytes, no newline
+io.sendline(b"2")                        # send bytes plus a newline
+io.sendlineafter(b"choice: ", b"2")      # recvuntil(...) then sendline(...), in one call
+io.interactive()                         # hand the tube to your keyboard
+```
+
+### Building payloads
+
+```python
+payload  = b"A" * 48                     # filler to reach the neighbour
+payload += p64(0x401196)                 # 64-bit address, little-endian
+payload += p32(0x080491f6)               # 32-bit address, little-endian
+addr = u64(leak.ljust(8, b"\x00"))       # turn 8 leaked bytes back into a number
+```
+
+* Payloads are `bytes`. Build them with `b"..."` and `p64`/`p32`, never by typing hex digits in reading order — that gets the byte order wrong.
+* `p64`/`p32` pack a number into little-endian bytes; `u64`/`u32` unpack bytes back into a number.
+
+### Addresses from the binary
+
+```python
+exe = ELF("chall", checksec=False)
+win = exe.symbols["win"]                  # address of a symbol
+bss = exe.get_section_by_name(".bss").header.sh_addr
+```
+
+For a non-PIE binary these are the real runtime addresses.
+For a PIE, they are *offsets* from the load base: add them to a base you recovered from a leak.
+
+### Running a script
+
+```console
+python3 exploit.py                        # against the local ./chall
+python3 exploit.py REMOTE HOST=141.85.224.106 PORT=31010   # against the server
+```
+
+The reference `exploit.py` files read `args.REMOTE`, `args.HOST` and `args.PORT` so the same script does both.

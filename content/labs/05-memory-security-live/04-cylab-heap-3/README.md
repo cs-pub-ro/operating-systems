@@ -2,43 +2,51 @@
 
 **Tools:** GDB, pwntools
 
-This program mishandles memory — can you exploit it to get the flag?
+This program frees memory and then keeps using it. Can you turn that into a flag?
 
 ## Goal
 
-Exploit a use-after-free: make the allocator hand you back a chunk the program is still using, and write through it to reach a field you are not supposed to control.
-
-The service is deployed at `141.85.224.106:31013`.
+Make the allocator hand you back a chunk the program still points to, and write through it to set a field you are not supposed to control.
 
 ## Background
 
-The program keeps a heap object `x` with a `flag` field that must read `"pico"` to win — and it starts as `"bico"`.
-There is no overflow here.
-Instead, the *Free x* menu option frees `x` but never clears the pointer, and every other option keeps using it.
+The program keeps one heap object `x` with a `flag` field that must read `"pico"` to win.
+It starts as `"bico"`, and there is no overflow anywhere.
 
-The *Allocate object* option lets you request a chunk of your own chosen size and write a string into it.
-If that request matches the size class of the object you just freed, glibc's tcache hands the same memory straight back — and now your write lands inside the object `x` still points at.
+The trick is in two menu options:
+
+* *Free x* frees `x` but never clears the pointer, so `x` still points at the freed chunk.
+* *Allocate object* asks you for a size, allocates a chunk of that size, and reads a string into it.
+
+If you free `x` and then allocate a chunk of the **same size**, glibc's tcache hands the same memory straight back.
+Your string now lands inside the object `x` still points at, so you can write its `flag` field.
 
 ## Your Task
 
-1. Work out the size of the object (read the struct in `chall.c`), so your allocation reclaims the freed chunk.
-1. Free `x`, allocate a same-sized chunk, and write bytes that place `"pico"` exactly where the `flag` field sits.
-1. Trigger the win check and capture the flag, locally then remotely.
+1. Read `struct object` in `chall.c` and work out its size, so your allocation reclaims the freed chunk.
+1. Free `x`, then allocate a same-sized chunk and write bytes that place `"pico"` exactly where the `flag` field sits.
+1. Run the win check and read the flag, locally first, then on the server.
 
 ## Build & Run
+
+Run it locally:
 
 ```console
 ./chall
 ```
 
-It reads `flag.txt` from the current directory; create a placeholder to test locally.
+It reads `flag.txt` from the current directory.
+A placeholder `flag.txt` is included so this works right away; it is not the real flag.
+
+Connect to the deployed service with netcat and type the same menu choices:
+
+```console
+nc 141.85.224.106 31013
+```
 
 ## Check Your Work
 
 You have solved it when the win check reads `"pico"` out of the reclaimed chunk.
-Be ready to explain *why* the allocator returned the same address — the order of free-then-allocate and the size class are the whole trick.
+Be ready to explain *why* the allocator returned the same address: the order of free-then-allocate and the matching size are the whole trick.
 
-Submit the flag:
-
-- Link SO CTF: https://ctf.security.cs.pub.ro/so/challenges#04-cylab-heap-3-6
-- Link CyLab Academy: <https://learn.cylabacademy.org/library/440>
+Submit the flag: <https://ctf.security.cs.pub.ro/so>

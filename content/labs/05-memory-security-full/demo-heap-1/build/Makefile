@@ -1,4 +1,4 @@
-CFLAGS = -g -fno-stack-protector
+CFLAGS = -g -fno-stack-protector -no-pie
 
 .PHONY: all clean
 

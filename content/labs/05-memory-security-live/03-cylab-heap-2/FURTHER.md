@@ -25,3 +25,7 @@ Optional.
 
 * `man 1 objdump`, `man 1 nm`
 * [pwntools ELF](https://docs.pwntools.com/en/stable/elf/elf.html)
+
+## Credits
+
+Adapted from the CyLab Academy heap2 challenge: <https://learn.cylabacademy.org/library/435>.

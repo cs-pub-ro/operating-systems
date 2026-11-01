@@ -1,42 +1,72 @@
-# Demo: Flip the Lock (heap-0)
+# Demo: Flip the Lock (heap-0) — Solution
 
-**Tools:** GDB, pwntools, Docker
+**Tools:** nc, GDB, pwntools
+
+This is the solving write-up, for a challenge that is already deployed.
+How the challenge is built and deployed is in [`README.chall.md`](README.chall.md).
+It is a deliberate twin of [`01-cylab-heap-0`](../01-cylab-heap-0) — same bug, different overflow distance — so solving it together makes the first core challenge quick.
 
 ## Goal
 
-Reference solution for the demo-heap-0 warm-up.
-It is a deliberate near-clone of [`01-cylab-heap-0`](../01-cylab-heap-0) — same bug, same overflow distance, different names — so that solving it together makes the first core challenge quick.
+Overflow the diary buffer so it spills into `lock_state`, which wins as soon as it is no longer `"shut"`.
 
-## Background
+## The bug
 
-`init()` allocates two adjacent 5-byte buffers:
+`init()` allocates two adjacent heap buffers:
 
 ```c
 diary_entry = malloc(DIARY_ENTRY_SIZE);   /* "meh." */
 lock_state  = malloc(LOCK_STATE_SIZE);    /* "shut" */
 ```
 
-`lock_state` starts out `"shut"`, and `check_win()` prints the flag as soon as it is anything else.
+`write_diary()` copies your input into `diary_entry` with `scanf("%s", diary_entry)`, which stops at whitespace, never at the buffer size.
+So a long enough write runs off the end of `diary_entry` and into `lock_state`, which the allocator placed right after it.
+`check_win()` prints the flag as soon as `lock_state` is anything other than `"shut"`, and nothing in the program ever assigns to it — so any overwrite wins.
 
-## The bug
+## Finding the overflow distance
 
-`write_diary()` copies player input into `diary_entry` with `scanf("%s", diary_entry)` — no length limit — so writing past the usable chunk size overflows into `lock_state`, which sits right after it.
+Do not guess it. The program's *Print Heap* option prints both addresses:
 
-## The exploit
-
-Same shape as heap-0: 32 filler bytes reach `lock_state`, then anything non-empty overwrites `"shut"`:
-
-```python
-OVERFLOW_PAYLOAD = b"A" * 32 + b"XXXX"
+```text
+diary_entry @ 0x...2a0
+lock_state  @ 0x...2c0     (difference = 0x20 = 32 bytes)
 ```
 
-See `solve/exploit.py`.
+The gap is 32 bytes: glibc rounded each 5-byte request up to a usable chunk and added metadata.
+So 32 filler bytes reach `lock_state`, and anything after that overwrites `"shut"`.
 
-## Build, run and solve
+## Solving it
 
-Docker is the only requirement.
-Same four-stage pipeline as every challenge in the session — `build/` → `publish/` → `deploy/` (port `31000`) → `solve/` — each with its own README.
-The `flag` in this directory is copied into the container as `flag.txt` at deploy time.
+All three forms do the same thing: write `32` filler bytes plus a few more (menu option 2), then print the flag (option 4).
+
+### By hand, over nc
+
+```console
+nc 141.85.224.106 31000
+```
+
+1. Choose `1` (Print Heap) and subtract the two addresses to confirm the distance is 32.
+1. Choose `2` (Write to diary) and send 32 `A`s followed by `XXXX`:
+   `AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXXXX`
+1. Choose `4` (Print Flag).
+
+### Shell script
+
+`solve/solve.sh` builds that input with `printf` and sends it:
+
+```console
+./solve.sh                      # against a local ./chall (uses the placeholder flag.txt)
+./solve.sh 141.85.224.106 31000 # against the deployed service
+```
+
+### pwntools
+
+`solve/exploit.py` does the same in Python:
+
+```console
+python3 exploit.py                                   # local ./chall
+python3 exploit.py REMOTE HOST=141.85.224.106 PORT=31000
+```
 
 ## References
 

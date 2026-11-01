@@ -2,21 +2,35 @@
 
 A warm-up heap overflow, solved together with the teaching assistant at the start of the session.
 
-Same setup as [`demo-heap-0`](../demo-heap-0), with one difference that changes everything: this time you do not just need to *change* the neighbouring value on the heap, you need it to become one *specific* value — `access_level` must read exactly `"root"`.
+Same setup as [`demo-heap-0`](../demo-heap-0), with one difference that changes everything.
+This time you must not just *change* the neighbouring value, you must make it one *specific* value: `access_level` has to read exactly `"root"`.
+So the trailing bytes of your overflow have to spell the target precisely, not just be anything.
 
-Together with the teaching assistant you will find where `access_level` starts, then build an overflow whose trailing bytes spell the target string precisely.
-
-The service is deployed at `141.85.224.106:31001`.
+Together with the teaching assistant you will find where `access_level` starts and build an overflow whose tail is exactly `"root"`.
 
 ## Files
 
 * `chall.c` — the challenge source code.
-* `chall` — the compiled challenge binary.
-  Run it locally with `./chall`; it reads `flag.txt` from the current directory, so drop a placeholder there to test.
+* `chall` — the compiled binary.
+* `flag.txt` — a placeholder flag, so `./chall` works locally. It is not the real flag.
 
-## Hints
+## Running it
 
-1. How can you tell where `access_level` starts?
-1. What string does `check_win()` actually compare `access_level` against?
+Locally:
 
-Submit the flag: https://ctf.security.cs.pub.ro/so/challenges#demo-heap-1-2
+```console
+./chall
+```
+
+Against the deployed service, with netcat — type the same things you would type locally:
+
+```console
+nc 141.85.224.106 31001
+```
+
+## Hint
+
+What string does `check_win()` compare `access_level` against, and where does `access_level` start?
+Use "Print Heap", read the two addresses, and subtract.
+
+Submit the flag: <https://ctf.security.cs.pub.ro/so>

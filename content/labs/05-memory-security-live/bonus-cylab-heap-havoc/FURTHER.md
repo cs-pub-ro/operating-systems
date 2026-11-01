@@ -26,3 +26,7 @@ Optional.
 
 * `man 1 objdump`, `man 3 strcpy`
 * [pwntools packing helpers](https://docs.pwntools.com/en/stable/util/packing.html)
+
+## Credits
+
+Adapted from the CyLab Academy heap-havoc challenge: <https://learn.cylabacademy.org/library/763>.

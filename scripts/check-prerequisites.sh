@@ -254,7 +254,7 @@ check_session_05() {
 	check_command objdump
 	check_command python3
 	check_pwntools
-	check_command nc optional "needed to reach a challenge deployed over the network"
+	check_command nc
 }
 
 check_session_06() {

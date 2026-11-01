@@ -25,12 +25,14 @@ The flag is never in the binary — `chall` does `fopen("flag.txt", ...)` at run
 
 Two demos first, worked together; then four core challenges in order; two bonuses for whoever gets there, or as take-home.
 
-The demos (`demo-heap-0`, `demo-heap-1`) are deliberately near-clones of the first two core challenges (`01-cylab-heap-0`, `02-cylab-heap-1`) — same bug, different names and flavour text.
-Solve the demos together, slowly, showing the whole workflow: run it, use "Print Heap" to read the two addresses, subtract them to get the overflow distance, build the payload in pwntools, capture a local flag.
-Then the first two core challenges are the same moves again and should be quick wins. That is the intended morale curve; do not skip the demos to save time.
+The demos (`demo-heap-0`, `demo-heap-1`) use the **same bug** as the first two core challenges (`01-cylab-heap-0`, `02-cylab-heap-1`) — only the names, flavour text, and overflow distance differ.
+Solve the demos together, slowly, showing the whole workflow: run it, use "Print Heap" to read the two addresses, subtract them to get the overflow distance, build the payload (by hand is fine here), capture a local flag against the placeholder `flag.txt`.
+Then the first two core challenges are the same moves again and should be quick wins.
+The one thing students must redo rather than copy is the **distance**: the demos overflow 32 bytes, but `heap-0` needs 48 and `heap-1` needs 64 (the input buffers were made larger on purpose), so insist they re-measure from "Print Heap" instead of reusing 32. That is the intended morale curve; do not skip the demos to save time.
 
 Deliberately no fixed minute budget is published to students.
-If you must cut, cut bonuses: `heap-havoc` and `heap-mayhem` are real exploit-development exercises and most groups will take them home.
+If you must cut, cut bonuses: `heap-havoc`, `pwntools-primer` and `heap-mayhem` are real exploit-development material and most groups will take them home.
+`bonus-pwntools-primer` is a short tutorial, not a challenge; point students who have never used pwntools at it before they start `heap-mayhem`, which is the one task that genuinely needs a script.
 
 ## The through-line, and where each challenge adds one idea
 
@@ -45,10 +47,11 @@ Say the spine out loud; it is what makes six challenges feel like one:
 
 ## Skills to establish in the demos, because every later task reuses them
 
-* **Read the heap from the program itself.** "Print Heap" gives two addresses; their difference is the number of filler bytes to reach the neighbour. Nobody should be guessing 32.
-* **Why 32 and not the requested 5.** glibc rounds a small request up to a minimum usable chunk (0x20 bytes of usable space on 64-bit), and adds chunk metadata; the measured delta already accounts for all of it. Show the delta, do not derive it.
-* **pack, don't type.** Precise values go through `p64()`/`p32()`; this is where endianness is taught, once, on `heap-1`.
-* **Local first, remote second.** Every `exploit.py` runs against a local `./chall` with no arguments, and against a deployment with `REMOTE HOST=... PORT=...`. Establish that split on the first demo.
+* **Read the heap from the program itself.** "Print Heap" gives two addresses; their difference is the number of filler bytes to reach the neighbour. Nobody should be guessing the distance.
+* **Why the distance is bigger than the requested size.** glibc rounds a small request up to a usable chunk and adds metadata; the measured delta already accounts for all of it. Show the delta, do not derive it. The demos measure 32; `heap-0` measures 48 and `heap-1` measures 64, because their input buffers were made larger — this is exactly why "re-measure, do not reuse" matters.
+* **Order the bytes correctly.** A precise value (an exact word on `heap-1`, an address on `heap-2`) must go in little-endian order. By hand, `printf` emits the bytes; in pwntools, `p64()`/`p32()` do. This is where endianness is taught, once, on `heap-1`.
+* **Local first, remote second.** The placeholder `flag.txt` shipped in each challenge folder lets students confirm a solve locally before touching the server. Every `solve.sh` takes an optional `HOST PORT`, and every `exploit.py` runs locally with no arguments and remotely with `REMOTE HOST=... PORT=...`. Establish that split on the first demo.
+* **By hand before scripts.** The intended path for most challenges is typing into `nc`; `solve.sh` and `exploit.py` are there to confirm and to repeat. Only `heap-mayhem` truly needs the script.
 
 ## Deploying for the lab
 
@@ -61,7 +64,8 @@ Each challenge deploys independently over its own port; the internal `xinetd` po
 | `02-cylab-heap-1` | 31011 | `bonus-cylab-heap-havoc` | 31020 |
 | `03-cylab-heap-2` | 31012 | `bonus-heap-mayhem` | 31021 |
 
-Bring each up with its `build` → `publish` → `deploy` READMEs.
+Bring each up from its `README.chall.md`, which walks the `build` → `publish` → `deploy` stages (each stage still has its own README).
+`bonus-pwntools-primer` is a tutorial and deploys nothing, so it has no port.
 `heap-havoc` is **32-bit** (`-m32`), so its build image installs `gcc-multilib` and it ships the 32-bit `ld-linux.so.2`; it is also served through a wrapper that reads two lines and re-execs the binary with them as `argv[1]`/`argv[2]`, because the bug is in argument handling and a bare socket carries no argv.
 
 ## Things students get wrong

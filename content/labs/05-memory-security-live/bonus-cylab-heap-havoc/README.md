@@ -1,46 +1,53 @@
 # Bonus: Cross Two Structs (heap-havoc)
 
-**Tools:** GDB, objdump, pwntools
+**Tools:** nc, GDB, objdump
 
-A seemingly harmless program takes two names as arguments, but there's a catch.
-Overflowing one name on the heap can reach into the *other* name's struct — and one of its fields is a function pointer nobody ever checks before calling.
+A program takes two names as command-line arguments and copies each onto the heap.
+Overflowing the first name reaches into the *second* name's struct, where a function pointer sits that nobody checks before calling.
 
 ## Goal
 
-Overflow out of one heap object, across into the next struct, and set a callback field so the program calls a hidden `winner()` function.
+Overflow out of one heap object, across into the next struct, and set a callback so the program calls a hidden `winner()` function that prints the flag.
 
-The service is deployed at `141.85.224.106:31020`.
 ## Background
 
-The program allocates two `struct internet` objects back-to-back on the heap, each with an undersized 8-byte name buffer, and copies `argv[1]`/`argv[2]` into them with `strcpy()` — no bounds check.
-Each struct has a `callback` function pointer that `main()` calls if it is non-NULL, and both start out NULL.
-There is a `winner()` function that prints the flag; nothing in the visible control flow ever sets a callback to it.
+The program allocates two `struct internet` objects back-to-back on the heap.
+Each has an 8-byte `name` buffer, and the program copies `argv[1]` and `argv[2]` into them with `strcpy()`, which has no length check.
+Each struct ends with a `callback` function pointer that `main()` calls if it is not NULL; both start NULL.
+A `winner()` function prints the flag, and nothing in the normal flow ever points a callback at it.
 
-This binary is **32-bit**, so struct fields and pointers are 4 bytes.
+This binary is **32-bit**, so every field and pointer is 4 bytes.
 
 ## Your Task
 
-1. Work out the layout of `struct internet` and the distance from the first name buffer to the second struct's `callback` field.
-1. Find `winner()`'s address with `objdump -d`.
-1. Craft `argv[1]` so its overflow lands `winner()`'s address in the second struct's `callback`.
-   Mind the fields in between — one of them is a pointer the program dereferences with `strcpy()` *after* your overflow, so it must stay valid.
+1. Work out the layout of `struct internet`, and the distance from the first `name` buffer to the second struct's `callback` field.
+1. Find `winner()`'s address with `objdump -d` or `nm` (the binary is not a PIE, so it is fixed).
+1. Build `argv[1]` so the overflow lands `winner()`'s address on the second struct's `callback`.
+   One field in between is the second struct's `name` pointer, which `main()` passes to `strcpy()` *after* your overflow, so it must stay a valid writable address.
 1. Capture the flag locally, then against the remote service.
 
 ## Build & Run
+
+Locally, pass the two names as arguments:
 
 ```console
 ./chall <name1> <name2>
 ```
 
-It reads `flag.txt` from the current directory; create a placeholder to test locally.
-The deployment cannot take `argv` over a socket, so it reads two lines from you and re-execs the binary with them — send your two arguments as two lines.
+A placeholder `flag.txt` is included so this works out of the box; it is not the real flag.
+
+The deployed service cannot take `argv` over a socket, so it reads two lines from you and re-execs the binary with them as `argv[1]` and `argv[2]`.
+Connect with netcat and send your two arguments as two lines:
+
+```console
+nc 141.85.224.106 31020
+```
+
+Because `argv[1]` contains raw address bytes, build it with `solve/solve.sh` or `solve/exploit.py` rather than typing it.
 
 ## Check Your Work
 
 You have solved it when `winner()` runs and prints the flag, instead of "No winners this time".
-Have an explanation ready for why the field between the overflow start and the callback had to hold a valid writable address rather than filler.
+Be ready to explain why the second struct's `name` field had to hold a valid writable address rather than filler.
 
-Submit the flag:
-
-- Link SO CTF: https://ctf.security.cs.pub.ro/so/challenges#bonus-cylab-heap-havoc-7
-- Link CyLab Academy: <https://learn.cylabacademy.org/library/763>
+Submit the flag: <https://ctf.security.cs.pub.ro/so>

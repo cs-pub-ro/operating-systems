@@ -27,3 +27,7 @@ Optional.
 
 * `man 3 free`
 * [glibc tcache overview](https://sourceware.org/glibc/wiki/MallocInternals)
+
+## Credits
+
+Adapted from the CyLab Academy heap3 challenge: <https://learn.cylabacademy.org/library/440>.

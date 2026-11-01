@@ -15,7 +15,7 @@
 #define FLAGSIZE_MAX	64
 
 /* Requested allocation sizes; the allocator may round these up. */
-#define INPUT_DATA_SIZE	5
+#define INPUT_DATA_SIZE	48
 #define SAFE_VAR_SIZE	5
 
 static char *safe_var;
@@ -53,7 +53,7 @@ static void print_menu(void)
 	       "\n2. Write to buffer:\t(write to your own personal block of "
 	       "data on the heap)"
 	       "\n3. Print safe_var:\t(I'll even let you look at my variable "
-	       "on the heap, I'm confident it can't be modified)"
+	       "on the heap, I'm confident you cannot imitate me)"
 	       "\n4. Print Flag:\t\t(Try to print the flag, good luck)"
 	       "\n5. Exit\n\nEnter your choice: ");
 	fflush(stdout);

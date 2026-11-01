@@ -17,7 +17,7 @@
 #define FLAGSIZE_MAX	64
 
 /* Requested allocation sizes; the allocator may round these up. */
-#define INPUT_DATA_SIZE	5
+#define INPUT_DATA_SIZE	32
 #define SAFE_VAR_SIZE	5
 
 static char *safe_var;

@@ -25,3 +25,7 @@
 
 * `man 3 strcmp`
 * [pwntools packing helpers](https://docs.pwntools.com/en/stable/util/packing.html)
+
+## Credits
+
+Adapted from the CyLab Academy heap1 challenge: <https://learn.cylabacademy.org/library/439>.
