@@ -1,0 +1,37 @@
+We are preparing contents for a class on Operating Systems, part of a 4-years bachelor study program in a technical university.
+The class is part of the 2nd year, 1s semester.
+
+We are preparing the materials for the lab-05: Memory Security, which will be delivered as CTF format, with CTF challenges.
+Challenges are listed here: https://ctf.security.cs.pub.ro/so/challenges
+
+Deployment of challenges is done using the ubuntu@141.85.224.106, available via SSH.
+The operating-systems repositorye (the current working directory) is already cloned in the remote system to allow the Docker-based deployments.
+
+The materials will be of two types:
+- Materials to be used live, under `content/labs/05-memory-security-live/`
+- Materials to be used before and after labs, with full information, details and explanations, including reference solutions, under content/labs/05-memory-security-full/`
+
+Make the following updates:
+1. Deploy challenges remotely (connect via SSH) and use the deployment scripts / configuration in the 05-memory-security-full/ directory.
+2. Verify reference solutions against both local and remote deployments.
+3. Replace the comment in exercise 2 source code from "I'm confident it can't be modified" in "I'm confident you cannot imitate me".
+4. The first two current exercises are very similar to the demo. Update the number of bytes that to be filled to make them a little bit different.
+5. In the full directory have the `README.md` consist of the full instructions for solving the challenge. Move the current `README.md` that presents how to prepare, build, deploy the challenge in a file called `README.chall.md`.
+   The aim for the `README.md` is to be a full alternative to the `README.md` in live, that assumes deployment has already happened and we are now looking to solve the exercise.
+6. Unless absolutely necessary use Pwntools.
+   Otherwise, the official solution should be interactive work by students with the challenge.
+   The reference solution would be a) a list of instructions, inputs; b) a shell script; c) a pwntools script.
+   All formats of the solution must be working.
+   We don't expect students to need to use pwntools unless it's very complicated otherwise.
+7. If pwntools is required, have a simple 10-15 minutes tutorial on using pwntools, tubes and packing addresses / data. As an exercise (potentially bonus exercise) before the first exercise requiring it.
+8. Have dummy flag.txt file (different than the actual flag, deployed reply) should be part of the archive, for students try out the challenge locally.
+9. Expand the "How the challenges work" section with details on what students need to do to interact with the platform: register an account, see challenges, download archives, submit flags: https://ctf.security.cs.pub.ro/so
+10. Remove references to Cylab Academy. Add them as reference in FURTHER.md.
+11. In the demos, present how to connect to a remote end (i.e. via `netcat`).
+12. In 01-cylab-heap-0, the Background is complex / convolute. Simplify it, make simple / direct statements.
+13. Be more explicit in exercises and in demo about connecting remotely via `nc` / `netcat`.
+14. Aim to simplify wording to make it more digestable to newcomers in the memory and memory security world.
+15. Introduce a section called "Pwntools Cheatsheet" in the live (and full part) and place it at the end.
+    Add simple and common information on using Pwntools for security-challenges.
+    Keep it simple, not extensive for live.
+    You can expand it for full.
