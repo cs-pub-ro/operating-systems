@@ -73,11 +73,11 @@ NAV_FILE = "SUMMARY.md"
 
 # Where links to files that are not pages -- source code, headers, Makefiles --
 # are sent instead.
-REPO_BLOB_URL = "https://github.com/cs-pub-ro/operating-systems-sessions/blob/master"
+REPO_BLOB_URL = "https://github.com/cs-pub-ro/operating-systems/blob/main"
 
 # The same, for a directory that is not a page: the vendored `utils/printf`
 # tree, say, which is excluded from the site but still lives in the repository.
-REPO_TREE_URL = "https://github.com/cs-pub-ro/operating-systems-sessions/tree/master"
+REPO_TREE_URL = "https://github.com/cs-pub-ro/operating-systems/tree/main"
 
 # A Markdown link target: the `](target)` part, with an optional title.
 LINK_PATTERN = re.compile(r"(?<=\]\()([^)\s]+)(?=(?:\s+\"[^\"]*\")?\))")
