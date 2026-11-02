@@ -1,1 +1,1 @@
-../../../common/projects/grade.sh
+../../elf-loader/tests/grade.sh

@@ -41,8 +41,6 @@ jobs:
           # Scripts with known findings, whose fixes change code and so belong in
           # their own pull requests.  Remove an entry when its script is fixed.
           git ls-files -z '*.sh' '*.bash' \
-            ':!content/assignments/mini-libc/tests/grade.sh' \
-            ':!content/assignments/minishell/tests/grade.sh' \
             ':!content/assignments/minishell/tests/_test/run_test.sh' \
             ':!content/lectures/02-os-types-interface-full/demos/01-make-os/unikraft/do-all-unikraft-helloworld.sh' \
             ':!scripts/check-prerequisites.sh' \
