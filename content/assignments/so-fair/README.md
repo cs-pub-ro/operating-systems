@@ -44,7 +44,7 @@ Before getting to work, post your proposal on the [Moodle Forum dedicated to SO-
 
 Below is a list of projects, each with a few open issues that you can choose to start working on.
 
-These projects are only some suggestions we found. If you find a different project you want to work on, you are welcome to propose it.
+These projects are only some suggestions we found. If you find a different project you want to work on, you are welcome to propose it. If you want to look for another project, but don't know where, the Google Summer of Code (GSOC) [accepted organizations](https://summerofcode.withgoogle.com/programs/2026/organizations) is a good starting place.
 It should be open-source and operating-systems related.
 
 | Project | Language | Description | Repository |
