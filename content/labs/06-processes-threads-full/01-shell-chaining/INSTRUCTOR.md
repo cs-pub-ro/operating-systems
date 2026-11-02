@@ -29,7 +29,7 @@ The tokenizer and the loop that cuts the line into commands are given, and that 
 * **Precedence.**
   Students who know `&&` binds tighter than `||` in C expect the same here; shells do not do that, and `bash` is the reference.
 * **Operators without spaces around them.**
-  `a&&b` is one word to the tokenizer; say so once, up front.
+  `a&&b` is one word to the tokenizer, while `;` needs no spaces; say so once, up front.
 
 ## Verified reference values
 

@@ -93,7 +93,7 @@ Nothing in the session is timing-sensitive; the 512 MiB timings are for the curi
 
 ## Practical notes
 
-* **Operators need spaces around them** in the shell exercises: the tokenizer splits at whitespace only, so `a&&b` is one word.
+* **Operators need spaces around them** in the shell exercises: the tokenizer splits at whitespace, and in exercise 01 also at `;`, so `a&&b` is one word.
   Say it once at the start.
 * **The student's shell has no globbing**: `data/*.bin` has to be typed into `bash`, not into `./shell`.
 * **`-pthread` is in every Makefile** that needs it; a student compiling by hand on an older toolchain gets undefined references.
