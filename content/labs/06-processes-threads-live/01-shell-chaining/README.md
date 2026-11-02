@@ -28,8 +28,8 @@ The three operators decide whether the next command runs, from how the previous 
 The exit status comes from `waitpid()`, packed into an `int` together with other information: whether the child exited at all, or was killed by a signal, and which.
 `man 2 waitpid` has the macros that unpack it.
 
-`shell.c` has the reading, a tokenizer that splits the line into words at spaces and tabs, and the loop that cuts the word list into commands at the operators.
-Operators are words too, so they have to be surrounded by spaces: `a && b`, not `a&&b`.
+`shell.c` has the reading, a tokenizer that splits the line into words at spaces, tabs and `;`, and the loop that cuts the word list into commands at the operators.
+Operators are words too: `;` may touch its neighbours, `ls; pwd`, but `&&` and `||` have to be surrounded by spaces: `a && b`, not `a&&b`.
 
 ## Your Task
 

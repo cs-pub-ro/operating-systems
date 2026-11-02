@@ -37,19 +37,31 @@ static int read_line(char *line, size_t len)
 
 /*
  * Split `line` into words separated by spaces or tabs, in place: each word
- * gets a terminating '\0' and a pointer to it is stored in `tokens`.
+ * gets a terminating '\0' and a pointer to it is stored in `tokens`.  A `;`
+ * is a word of its own, with or without spaces around it.
  * Returns the number of words, at most `max`.  Already written.
  *
  *     "ls -l /tmp && echo done"  ->  "ls", "-l", "/tmp", "&&", "echo", "done"
+ *     "ls; pwd;"                 ->  "ls", ";", "pwd", ";"
  */
 static int tokenize(char *line, char *tokens[], int max)
 {
+	static char semicolon[] = ";";
 	int count = 0;
-	char *word;
+	char *word, *semi;
 
 	word = strtok(line, " \t");
 	while (word != NULL && count < max) {
-		tokens[count++] = word;
+		while ((semi = strchr(word, ';')) != NULL) {
+			*semi = '\0';
+			if (*word != '\0' && count < max)
+				tokens[count++] = word;
+			if (count < max)
+				tokens[count++] = semicolon;
+			word = semi + 1;
+		}
+		if (*word != '\0' && count < max)
+			tokens[count++] = word;
 		word = strtok(NULL, " \t");
 	}
 

@@ -9,7 +9,7 @@ Exercise 01: Shell with Arguments and Command Chaining
 * Constraints: No I/O redirection or piping should be part of this task.
   Provide a VERY basic string tokenizer in the skeleton if necessary.
 
-The tokenizer splits at spaces and tabs only, so operators must be
+The tokenizer splits at spaces, tabs and `;`, so `&&` and `||` must be
 separate words.  The loop that cuts the token list into commands is given
 too; the student writes the fork/exec/wait with status unpacking, and the
 condition that implements the three operators.
