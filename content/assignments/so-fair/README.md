@@ -1,8 +1,10 @@
 # Bonus - SO Fair
 
-!!! info "Moodle forums"
-    * [SO-Fair - Projects](https://curs.upb.ro/2026/mod/forum/view.php?id=57679): propose your project, get it approved and post your weekly updates.
-    * [SO-Fair - Need help?](https://curs.upb.ro/2026/mod/forum/view.php?id=60169): the simplest way to reach out to the SO-Fair team when you are stuck.
+!!! info "SO-Fair - Projects"
+    [SO-Fair - Projects](https://curs.upb.ro/2026/mod/forum/view.php?id=57679): propose your project, get it approved and post your weekly updates.
+
+!!! info "SO-Fair - Need help?"
+    [SO-Fair - Need help?](https://curs.upb.ro/2026/mod/forum/view.php?id=60169): the simplest way to reach out to the SO-Fair team when you are stuck.
 
 ## Objectives
 
@@ -21,13 +23,29 @@ Before getting to work, post your proposal on the [SO-Fair - Projects forum](htt
 ## Workflow
 
 1. Pick an issue from the [proposed projects below](#projects) or propose another open-source project,
-1. Create a thread on the [SO-Fair - Projects forum](https://curs.upb.ro/2026/mod/forum/view.php?id=57679) until **15 November**. In this thread, you should specify what's the project you're planning to contribute to, and what you're hoping to achieve. Include a brief, clear work breakdown structure with milestones and deadlines. Make sure to label deliverables as optional or required. You may want your plan to start by producing some kind of white paper, or planning the project in traditional Software Engineering style. It’s OK to include thinking time (“investigation”) in your work schedule. Deliverables should include investigation, coding and documentation.
+1.
+   Create a thread on the [SO-Fair - Projects forum](https://curs.upb.ro/2026/mod/forum/view.php?id=57679) until **15 November**.
+   In this thread, you should specify what's the project you're planning to contribute to, and what you're hoping to achieve.
+   Include a brief, clear work breakdown structure with milestones and deadlines.
+   Make sure to label deliverables as optional or required.
+   You may want your plan to start by producing some kind of white paper, or planning the project in traditional Software Engineering style.
+   It’s OK to include thinking time (“investigation”) in your work schedule.
+   Deliverables should include investigation, coding and documentation.
 1. Wait for approval from one of the assistants from the team. The team will get back to you up to **27 November**.
 1. Get to work - you should fork the project, start to work on the contribution, create commits, create PRs.
-1. Post the progress of your work in the thread you created on the [SO-Fair - Projects forum](https://curs.upb.ro/2026/mod/forum/view.php?id=57679). This is a weekly post that gives a brief summary description of the work done, with commits and/or PRs attached. The assistants should be able to track and review your work incrementally, week by week.
-1. Ideally, your contribution should be merged upstream, but we understand that sometimes this can take some time on the maintainers side. We expect to see multiple contributions (PRs) to the project of choice. Start by tackling small issues (typos, documentation, etc) and then move to more meaningful/challenging issues. Have a working, meaningful, contribution by **16 January**.
-1. Be ready to show and brag about your work on **16 January**. We will gather with the other students and the SO-Fair team to show your work and share thoughts on the experience together. This is also when you'll get graded.
-
+1.
+   Post the progress of your work in the thread you created on the [SO-Fair - Projects forum](https://curs.upb.ro/2026/mod/forum/view.php?id=57679).
+   This is a weekly post that gives a brief summary description of the work done, with commits and/or PRs attached.
+   The assistants should be able to track and review your work incrementally, week by week.
+1.
+   Ideally, your contribution should be merged upstream, but we understand that sometimes this can take some time on the maintainers side.
+   We expect to see multiple contributions (PRs) to the project of choice.
+   Start by tackling small issues (typos, documentation, etc) and then move to more meaningful/challenging issues.
+   Have a working, meaningful, contribution by **16 January**.
+1.
+   Be ready to show and brag about your work on **16 January**.
+   We will gather with the other students and the SO-Fair team to show your work and share thoughts on the experience together.
+   This is also when you'll get graded.
 
 !!! tip "Need Help?"
     Being stuck can happen and it's part of the process.
@@ -54,7 +72,7 @@ It should be open-source and operating-systems related.
 | Project | Language | Description | Repository |
 | --- | --- | --- | --- |
 | AQUA | C, Java | High performance communication cross-platform middleware | <https://github.com/ionut-mihalache/aqua> |
-| GOLD | Python | Framework for managing common code patterns | <https://github.com/ionut-mihalache/gold>
+| GOLD | Python | Framework for managing common code patterns | <https://github.com/ionut-mihalache/gold> |
 | Unikraft (GSoC) | C | Unikernel | <https://github.com/unikraft/unikraft> |
 | gVisor | Go | Application kernel in user space | <https://github.com/google/gvisor> |
 | Asterinas | Rust | Linux-compatible kernel | <https://github.com/asterinas/asterinas> |
@@ -74,13 +92,15 @@ It should be open-source and operating-systems related.
 
 There are 2 Moodle forums - Projects and Need Help - so that help requests are picked up fast.
 
-!!! note
-    * [SO-Fair - Projects](https://curs.upb.ro/2026/mod/forum/view.php?id=57679): propose the issues/contribution you want to work on, get your contribution approved and post periodical updates on your work.
-    * [SO-Fair - Need help?](https://curs.upb.ro/2026/mod/forum/view.php?id=60169): get help and ask questions if you are stuck.
+!!! note "SO-Fair - Projects"
+    [SO-Fair - Projects](https://curs.upb.ro/2026/mod/forum/view.php?id=57679): propose the issues/contribution you want to work on, get your contribution approved and post periodical updates on your work.
+
+!!! note "SO-Fair - Need help?"
+    [SO-Fair - Need help?](https://curs.upb.ro/2026/mod/forum/view.php?id=60169): get help and ask questions if you are stuck.
 
 Below is an example of a weekly update:
 
-```
+```text
 Week 1 update: fixing `kill()` with signal 0 in the project's POSIX layer.
 
 This week I reproduced the bug and wrote a first patch.
@@ -105,6 +125,7 @@ Next week: start on the zombie case.
 
 Before the final due date you should submit a write-up on Moodle.
 Provide the following information in it:
+
 * What problem you solved?
 * Attach links to PRs and/or commits
 * Write a small description of the changes you made
