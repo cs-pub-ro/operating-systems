@@ -20,7 +20,7 @@ Before getting to work, post your proposal on the [Moodle Forum dedicated to SO-
 1. Create a thread on the [Moodle Forum - SO Fair](https://curs.upb.ro/2026/mod/forum/view.php?id=57679) until **15 November**.
 1. Wait for approval from one of the assistants from the team. The team will get back to you up to **27 November**.
 1. Get to work - you should fork the project, start to work on the contribution, create commits, create PRs.
-1. Post the progress of your work in the Moodle thread you created. Ideally, this post would be a small description with commits and/or PRs attached. The assistants should be able to track and review your work incrementally, week by week.
+1. Post the progress of your work in the Moodle thread you created. This is a weekly post that gives a brief summary description of the work done, with commits and/or PRs attached. The assistants should be able to track and review your work incrementally, week by week.
 1. Ideally, your contribution should be merged upstream, but we understand that sometimes this can take some time on the maintainers side. Have a working contribution by **16 January**.
 1. Be ready to show and brag about your work on **16 January**. We will gather with the other students and the SO-Fair team to show your work and share thoughts on the experience together. This is also when you'll get graded.
 
