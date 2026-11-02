@@ -1,0 +1,45 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1309.88 763.00" width="1309.88" height="763.00">
+<!-- generated from .excalidraw by exc2svg.py (clean-line render) -->
+<defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="context-stroke"/></marker><marker id="ahs" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="context-stroke"/></marker></defs>
+<g transform="translate(-132.12 -94.00)">
+<rect x="132.12" y="94.00" width="1309.88" height="763.00" fill="#ffffff"/>
+<rect x="575.00" y="166.00" width="364.00" height="667.00" rx="32.00" ry="32.00" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+<rect x="611.00" y="193.00" width="285.00" height="62.00" rx="11.16" ry="11.16" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+<rect x="609.00" y="266.00" width="285.00" height="40.00" rx="7.20" ry="7.20" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+<rect x="613.50" y="314.00" width="285.00" height="62.00" rx="11.16" ry="11.16" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+<rect x="613.50" y="385.00" width="285.00" height="93.00" rx="16.74" ry="16.74" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+<rect x="616.50" y="706.50" width="285.00" height="93.00" rx="16.74" ry="16.74" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+<rect x="613.50" y="550.00" width="285.00" height="62.00" rx="11.16" ry="11.16" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+<rect x="1107.17" y="212.00" width="310.83" height="220.00" rx="32.00" ry="32.00" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+<rect x="1121.33" y="235.17" width="285.00" height="62.00" rx="11.16" ry="11.16" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+<rect x="1117.42" y="312.83" width="285.00" height="40.00" rx="7.20" ry="7.20" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+<rect x="1121.92" y="360.83" width="285.00" height="62.00" rx="11.16" ry="11.16" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+<polyline points="604.67,224.50 488.00,222.00" fill="none" stroke="#1e1e1e" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#ah)"/>
+<polyline points="599.67,287.86 499.67,289.50" fill="none" stroke="#1e1e1e" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#ah)"/>
+<polyline points="604.67,348.67 499.67,348.67" fill="none" stroke="#1e1e1e" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#ah)"/>
+<polyline points="597.17,440.33 497.17,440.33" fill="none" stroke="#1e1e1e" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#ah)"/>
+<polyline points="603.00,757.00 493.83,757.00" fill="none" stroke="#1e1e1e" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#ah)"/>
+<polyline points="1113.83,264.50 898.00,222.83" fill="none" stroke="#1e1e1e" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#ah)"/>
+<polyline points="1107.17,332.00 898.00,290.33" fill="none" stroke="#1e1e1e" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#ah)"/>
+<polyline points="1114.67,393.67 905.50,347.00" fill="none" stroke="#1e1e1e" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#ah)"/>
+<polyline points="907.17,445.33 1145.50,638.67" fill="none" stroke="#1e1e1e" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#ah)"/>
+<polyline points="918.00,766.17 1145.50,648.67" fill="none" stroke="#1e1e1e" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#ah)"/>
+<text x="753.50" y="227.90" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="20" fill="#1e1e1e" text-anchor="middle" style="white-space:pre">text / code</text>
+<text x="751.50" y="289.90" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="20" fill="#1e1e1e" text-anchor="middle" style="white-space:pre">rodata</text>
+<text x="756.00" y="348.90" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="20" fill="#1e1e1e" text-anchor="middle" style="white-space:pre">data</text>
+<text x="756.00" y="422.90" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="20" fill="#1e1e1e" text-anchor="middle" style="white-space:pre">heap</text><text x="756.00" y="447.90" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="20" fill="#1e1e1e" text-anchor="middle" style="white-space:pre">(dynamic)</text>
+<text x="759.00" y="744.40" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="20" fill="#1e1e1e" text-anchor="middle" style="white-space:pre">stack</text><text x="759.00" y="769.40" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="20" fill="#1e1e1e" text-anchor="middle" style="white-space:pre">(dynamic)</text>
+<text x="756.00" y="584.90" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="20" fill="#1e1e1e" text-anchor="middle" style="white-space:pre">other zones</text>
+<text x="749.00" y="134.40" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="20" fill="#1e1e1e" text-anchor="middle" style="white-space:pre">process virtual address space</text>
+<text x="357.00" y="221.73" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="20" fill="#1e1e1e" text-anchor="middle" style="white-space:pre">code / instructions</text>
+<text x="372.83" y="281.73" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="20" fill="#1e1e1e" text-anchor="middle" style="white-space:pre">literals, constants</text>
+<text x="393.67" y="349.23" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="20" fill="#1e1e1e" text-anchor="middle" style="white-space:pre">general variables</text>
+<text x="354.67" y="441.73" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="20" fill="#1e1e1e" text-anchor="middle" style="white-space:pre">dynamic (runtime) variables</text>
+<text x="317.00" y="758.40" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="20" fill="#1e1e1e" text-anchor="middle" style="white-space:pre">function-related data / variables</text>
+<text x="1263.83" y="270.07" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="20" fill="#1e1e1e" text-anchor="middle" style="white-space:pre">text / code</text>
+<text x="1259.92" y="336.73" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="20" fill="#1e1e1e" text-anchor="middle" style="white-space:pre">rodata</text>
+<text x="1264.42" y="395.73" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="20" fill="#1e1e1e" text-anchor="middle" style="white-space:pre">data</text>
+<text x="1258.14" y="175.35" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="19.33333333333333" fill="#1e1e1e" text-anchor="middle" style="white-space:pre">executable binary</text>
+<text x="1005.33" y="225.90" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="20" fill="#1e1e1e" text-anchor="middle" style="white-space:pre">load time</text>
+<text x="1161.01" y="633.40" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="20" fill="#1e1e1e" text-anchor="start" style="white-space:pre">created at load time</text><text x="1161.01" y="658.40" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="20" fill="#1e1e1e" text-anchor="start" style="white-space:pre">initialized to 0</text>
+</g></svg>

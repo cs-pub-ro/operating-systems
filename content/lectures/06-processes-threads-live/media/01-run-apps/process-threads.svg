@@ -1,0 +1,39 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1136.50 1371.75" width="1136.50" height="1371.75">
+<!-- generated from .excalidraw by exc2svg.py (clean-line render) -->
+<defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="context-stroke"/></marker><marker id="ahs" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="context-stroke"/></marker></defs>
+<g transform="translate(-393.17 -132.17)">
+<rect x="393.17" y="132.17" width="1136.50" height="1371.75" fill="#ffffff"/>
+<rect x="527.50" y="214.83" width="293.00" height="565.00" rx="32.00" ry="32.00" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+<rect x="561.33" y="238.67" width="229.17" height="60.00" rx="10.80" ry="10.80" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+<rect x="556.75" y="312.83" width="229.17" height="103.33" rx="18.60" ry="18.60" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+<rect x="550.92" y="662.83" width="229.17" height="103.33" rx="18.60" ry="18.60" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+<rect x="956.33" y="206.17" width="175.00" height="575.83" rx="31.50" ry="31.50" fill="#ffc9c9" stroke="#1e1e1e" stroke-width="1"/>
+<rect x="1287.17" y="274.50" width="177.50" height="396.67" rx="31.95" ry="31.95" fill="#b2f2bb" stroke="#1e1e1e" stroke-width="1"/>
+<rect x="1289.67" y="943.67" width="138.33" height="134.17" rx="24.15" ry="24.15" fill="#b2f2bb" stroke="#1e1e1e" stroke-width="1"/>
+<rect x="988.00" y="924.50" width="147.50" height="169.17" rx="26.55" ry="26.55" fill="#ffc9c9" stroke="#1e1e1e" stroke-width="1"/>
+<rect x="982.58" y="1124.08" width="147.50" height="169.17" rx="26.55" ry="26.55" fill="#ffc9c9" stroke="#1e1e1e" stroke-width="1"/>
+<rect x="985.92" y="1310.75" width="147.50" height="169.17" rx="26.55" ry="26.55" fill="#ffc9c9" stroke="#1e1e1e" stroke-width="1"/>
+<rect x="1291.33" y="1137.42" width="138.33" height="134.17" rx="24.15" ry="24.15" fill="#b2f2bb" stroke="#1e1e1e" stroke-width="1"/>
+<rect x="1294.67" y="1317.42" width="138.33" height="134.17" rx="24.15" ry="24.15" fill="#b2f2bb" stroke="#1e1e1e" stroke-width="1"/>
+<rect x="417.17" y="997.00" width="157.50" height="173.33" rx="28.35" ry="28.35" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+<polyline points="833.00,468.67 942.17,468.67" fill="none" stroke="#1e1e1e" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#ah)"/>
+<polyline points="1151.33,453.67 1265.50,453.67" fill="none" stroke="#1e1e1e" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#ah)"/>
+<polyline points="1153.83,1008.91 1276.33,1009.76" fill="none" stroke="#1e1e1e" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#ah)"/>
+<polyline points="1141.33,1207.00 1273.00,1207.00" fill="none" stroke="#1e1e1e" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#ah)"/>
+<polyline points="1154.67,1384.50 1278.83,1384.50" fill="none" stroke="#1e1e1e" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#ah)"/>
+<polyline points="472.17,979.50 666.33,785.33" fill="none" stroke="#1e1e1e" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#ah)"/>
+<polyline points="590.50,1061.17 972.14,958.91" fill="none" stroke="#1e1e1e" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#ah)"/>
+<polyline points="590.50,1107.00 964.95,1207.33" fill="none" stroke="#1e1e1e" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#ah)"/>
+<polyline points="595.50,1155.33 974.04,1373.88" fill="none" stroke="#1e1e1e" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#ah)"/>
+<text x="528.00" y="172.57" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="20" fill="#1e1e1e" text-anchor="start" style="white-space:pre">process virtual address space</text>
+<text x="963.00" y="183.40" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="20" fill="#1e1e1e" text-anchor="start" style="white-space:pre">process page table</text>
+<text x="1279.67" y="243.40" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="20" fill="#1e1e1e" text-anchor="start" style="white-space:pre">system physical memory</text>
+<text x="1356.24" y="892.57" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="20" fill="#1e1e1e" text-anchor="middle" style="white-space:pre">processor(s)</text><text x="1356.24" y="917.57" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="20" fill="#1e1e1e" text-anchor="middle" style="white-space:pre">CPU(s)</text>
+<text x="1061.75" y="987.98" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="20" fill="#1e1e1e" text-anchor="middle" style="white-space:pre">thread</text><text x="1061.75" y="1012.98" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="20" fill="#1e1e1e" text-anchor="middle" style="white-space:pre">control block</text><text x="1061.75" y="1037.98" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="20" fill="#1e1e1e" text-anchor="middle" style="white-space:pre">(TCB)</text>
+<text x="1051.17" y="890.90" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="20" fill="#1e1e1e" text-anchor="middle" style="white-space:pre">thread(s)</text>
+<text x="1056.33" y="1187.57" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="20" fill="#1e1e1e" text-anchor="middle" style="white-space:pre">thread</text><text x="1056.33" y="1212.57" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="20" fill="#1e1e1e" text-anchor="middle" style="white-space:pre">control block</text><text x="1056.33" y="1237.57" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="20" fill="#1e1e1e" text-anchor="middle" style="white-space:pre">(TCB)</text>
+<text x="1059.67" y="1374.23" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="20" fill="#1e1e1e" text-anchor="middle" style="white-space:pre">thread</text><text x="1059.67" y="1399.23" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="20" fill="#1e1e1e" text-anchor="middle" style="white-space:pre">control block</text><text x="1059.67" y="1424.23" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="20" fill="#1e1e1e" text-anchor="middle" style="white-space:pre">(TCB)</text>
+<text x="495.92" y="1062.57" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="20" fill="#1e1e1e" text-anchor="middle" style="white-space:pre">process</text><text x="495.92" y="1087.57" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="20" fill="#1e1e1e" text-anchor="middle" style="white-space:pre">control block</text><text x="495.92" y="1112.57" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="20" fill="#1e1e1e" text-anchor="middle" style="white-space:pre">(PCB)</text>
+<text x="569.25" y="886.32" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="20" fill="#1e1e1e" text-anchor="middle" style="white-space:pre">code &amp; data storage</text>
+<text x="781.32" y="1001.44" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="20" fill="#1e1e1e" text-anchor="middle" style="white-space:pre">execution</text><text x="781.32" y="1026.44" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="20" fill="#1e1e1e" text-anchor="middle" style="white-space:pre">(execution context)</text>
+</g></svg>
