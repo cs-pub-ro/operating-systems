@@ -41,6 +41,7 @@ Before getting to work, post your proposal on the [SO-Fair - Projects forum](htt
 * Ideally, your PR should be merged upstream, that can take some time on certain projects. A **working** contribution or demo will do.
 * Follow the contribution guidelines of the project you chose (coding style, commit message format, tests). Show us that you tested all of these and your code is in pristine form.
 * Do not submit AI-generated code that you do not understand. We will know. You have to be able to explain every line of the code.
+* If you are planning to use AI to assist you, check the AI policy of the project you want to contribute to: some might have a setup in place (`AGENTS.md`, skills, etc), others might just provide guidelines, and others might straight up refuse AI assisted contributions.
 * Each student should work on a different issue/contribution. We don't accept duplicated proposals.
 
 ## Projects
