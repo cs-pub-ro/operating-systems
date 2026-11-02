@@ -43,8 +43,8 @@ make
 Otherwise you are timing the terminal drawing a million lines, not the program.
 Moreover, it affects how printf does buffering:
 
-- line buffering when printing to the terminal
-- full buffering when printing to a file (including `/dev/null`)
+* line buffering when printing to the terminal
+* full buffering when printing to a file (including `/dev/null`)
 
 Then comment out the `setvbuf()` line in `printf_demo.c`, change nothing else, rebuild and time it again:
 

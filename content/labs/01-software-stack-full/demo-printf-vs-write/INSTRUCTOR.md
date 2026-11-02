@@ -17,15 +17,15 @@ That has effect on time taken to run the functions, with `printf()` doing additi
 
 Give students a tour of the source code files as they are now:
 
-- Show the use of `clock_gettime()` to get current time.
-- Show the `diff_us()` macro to measure difference between two times, in milliseconds.
-- Show the call of `diff_us()` and the printing of the time duration.
-- Show the macro `NUM_ROUNDS` that will be used to repeat the copy operation multiple times.
+* Show the use of `clock_gettime()` to get current time.
+* Show the `diff_us()` macro to measure difference between two times, in milliseconds.
+* Show the call of `diff_us()` and the printing of the time duration.
+* Show the macro `NUM_ROUNDS` that will be used to repeat the copy operation multiple times.
   A single copy would not last enough to give meaningful times in milliseconds.
   Currently `NUM_ROUNDS` is set to `1,000,000`.
   In case some systems are slower (or faster), the value of `NUM_ROUNDS` can be decreased or increased (generally by removing or adding an extra `0`).
-- Explain the use of `setvbuf()` in the `printf_demo.c` file that forces `printf()` to always call `write()`, without buffering in libc.
-- Show the `line` string array containing the line to be printed.
+* Explain the use of `setvbuf()` in the `printf_demo.c` file that forces `printf()` to always call `write()`, without buffering in libc.
+* Show the `line` string array containing the line to be printed.
 
 ## Running the demo
 
@@ -142,9 +142,9 @@ Make sure, at each step, that all students have done it.
 
 ## Practical notes
 
-- Present the three types of buffering: no buffering, full buffering, line buffering.
-- Numbers here are Ubuntu 24.04 / GCC 13.3 / x86-64 and wobble 10–20% between runs.
+* Present the three types of buffering: no buffering, full buffering, line buffering.
+* Numbers here are Ubuntu 24.04 / GCC 13.3 / x86-64 and wobble 10–20% between runs.
   Insist on ratios, not digits.
   Run anything surprising three times before believing it.
-- `strace` with `NUM_ROUNDS` at `1,000,000` takes several seconds.
-- `-O0` is deliberate - at higher optimisation levels GCC may turn `printf("%s", line)` into `fputs`, which muddies the comparison.
+* `strace` with `NUM_ROUNDS` at `1,000,000` takes several seconds.
+* `-O0` is deliberate - at higher optimisation levels GCC may turn `printf("%s", line)` into `fputs`, which muddies the comparison.

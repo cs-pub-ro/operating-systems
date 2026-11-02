@@ -33,14 +33,14 @@ That has effect on time taken to run the functions.
 
 Give students a tour of the source code files as they are now:
 
-- Show the use of `clock_gettime()` to get current time.
-- Show the `diff_us()` macro to measure difference bewteen two times, in milliseconds.
-- Show the call of `diff_us()` and the printing of the time duration.
-- Show the macro `NUM_ROUNDS` that will be used to repeat the copy operation multiple times.
+* Show the use of `clock_gettime()` to get current time.
+* Show the `diff_us()` macro to measure difference bewteen two times, in milliseconds.
+* Show the call of `diff_us()` and the printing of the time duration.
+* Show the macro `NUM_ROUNDS` that will be used to repeat the copy operation multiple times.
   A single copy would not last enough to give meaningful times in milliseconds.
   Currently `NUM_ROUNDS` is set to `100,000,000`.
   In case some systems are slower (or faster), the value of `NUM_ROUNDS` can be decreased or increased (generally by removing or adding an extra `0`).
-- Show the `big_string` global array variable used to store the resulting concatenated string in each round.
+* Show the `big_string` global array variable used to store the resulting concatenated string in each round.
 
 ## Running the demo
 
@@ -118,20 +118,20 @@ As note for the future, insist that, for performance or efficiency reasons, you 
 
 ## Points to hammer
 
-- A C string does not carry its length.
+* A C string does not carry its length.
   Every consequence in this demo follows from that one sentence.
-- Count the scanning out loud: 0, then 6, then 12, then 20 characters scanned, to write 25.
-- The fast version calls the *same library* as the slow one.
+* Count the scanning out loud: 0, then 6, then 12, then 20 characters scanned, to write 25.
+* The fast version calls the *same library* as the slow one.
   Nothing was optimized.
 
 ## Practical notes
 
-- The offsets in `copy-string-improved.c` are 6, 6 and 8 - the lengths of `"John, "`, `"Paul, "` and `"George, "`.
-- At `-O0` the comparison is honest.
+* The offsets in `copy-string-improved.c` are 6, 6 and 8 - the lengths of `"John, "`, `"Paul, "` and `"George, "`.
+* At `-O0` the comparison is honest.
   At `-O2` GCC may recognise the constant-length copies and fold them, at which point the compiler is being measured, not the code.
-- `100,000,000` iterations takes a few seconds;
+* `100,000,000` iterations takes a few seconds;
   if the room is on slow hardware, reduce `NUM_ROUNDS` rather than waiting.
-- Time shown is not actually the time taken solely by instructions.
+* Time shown is not actually the time taken solely by instructions.
   While running, the program will be scheduled, interrupts may be coming in, etc.
   But it is sufficiently close to reality to be relevant.
   To be rigorous, one would use the [`perf_event_open` system call](https://man7.org/linux/man-pages/man2/perf_event_open.2.html) (see the [example](https://man7.org/linux/man-pages/man2/perf_event_open.2.html#EXAMPLES)).

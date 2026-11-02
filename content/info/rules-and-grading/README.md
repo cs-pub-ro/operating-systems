@@ -106,8 +106,8 @@ Both components are verified and graded automatically by the assignment checker 
 The assignment checker system presents the final grade for the submission (the final grade for the assignment is described below).
 Coding style points are only provided if the assignment solution submission gets at least **60 points** for the correct implementation.
 
-
 #### Assignment Interviews
+
 **Two interview sessions will be organised for assignments***:
 
 1. First interview will cover Assignments 1 and 2 - 09.11.2026-13.11.2026.
@@ -206,26 +206,24 @@ Submissions will be uploaded on [Moodle](https://curs.upb.ro/).
 
 All participating teams are **eligible** for equivalence in the OS subject (depending on **implementation complexity and project stage developed during the hackathon**).
 
-
 ### SO Fair
 
 #### Equivalence
 
 All participating teams are **eligible** for equivalence in the OS subject (depending on **implementation complexity and project stage developed during the project**).
 
-
 ### Lecture Quizzes (1.5 points)
 
 To reinforce knowledge, there will be 2 written lecture quizzes:
 
-1. Quiz 1 - covering questions from the [Software Stack](https://cs-pub-ro.github.io/operating-systems/full/lectures/01-software-stack/), [Operating System Types and the OS Interface](https://cs-pub-ro.github.io/operating-systems/full/lectures/02-os-types-interface/), [Memory Operations](https://cs-pub-ro.github.io/operating-systems/full/lectures/03-memory-ops/), [Virtual Memory](https://cs-pub-ro.github.io/operating-systems/full/lectures/04-virtual-memory/), and [Paging](https://cs-pub-ro.github.io/operating-systems/full/lectures/05-paging/) courses, will take place on the following dates:
+1. Quiz 1 - covering questions from the [Software Stack](https://cs-pub-ro.github.io/operating-systems/full/lectures/01-software-stack/), [Operating System Types and the OS Interface](https://cs-pub-ro.github.io/operating-systems/full/lectures/02-os-types-interface/), [Memory Operations](https://cs-pub-ro.github.io/operating-systems/full/lectures/03-memory-ops/), [Virtual Memory](https://cs-pub-ro.github.io/operating-systems/full/lectures/04-virtual-memory/), and [Paging](https://cs-pub-ro.github.io/operating-systems/full/lectures/05-paging/) courses, will take place on the following dates: <!-- markdownlint-disable-line MD013 -->
 
     * Series CA: 03.11.2026
     * Series CB: 04.11.2026
     * Series CC: 03.11.2026
     * Series CD: 03.11.2026
 
-1. Quiz 2 - covering questions from the [Processes and Threads](https://cs-pub-ro.github.io/operating-systems/full/lectures/06-processes-threads/), [Scheduling](https://cs-pub-ro.github.io/operating-systems/full/lectures/07-scheduling/), [Concurrency](https://cs-pub-ro.github.io/operating-systems/full/lectures/08-concurrency/), [I/O Interface](https://cs-pub-ro.github.io/operating-systems/full/lectures/09-io-interface/), and [Inter-Process Communication](https://cs-pub-ro.github.io/operating-systems/full/lectures/10-ipc/) courses, will take place on the following dates:
+1. Quiz 2 - covering questions from the [Processes and Threads](https://cs-pub-ro.github.io/operating-systems/full/lectures/06-processes-threads/), [Scheduling](https://cs-pub-ro.github.io/operating-systems/full/lectures/07-scheduling/), [Concurrency](https://cs-pub-ro.github.io/operating-systems/full/lectures/08-concurrency/), [I/O Interface](https://cs-pub-ro.github.io/operating-systems/full/lectures/09-io-interface/), and [Inter-Process Communication](https://cs-pub-ro.github.io/operating-systems/full/lectures/10-ipc/) courses, will take place on the following dates: <!-- markdownlint-disable-line MD013 -->
 
     * Series CA: 15.12.2026
     * Series CB: 16.12.2026
