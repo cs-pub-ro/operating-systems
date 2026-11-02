@@ -17,7 +17,6 @@ UTM cannot import `.ova` files, so download the virtual machine as a disk image 
 You will need to log in using your `UPB` account.
 The image is large, so the download may take a while.
 
-
 ## Creating the VM
 
 UTM has no "import a disk image" button, so you first create an empty virtual machine and then attach the image to it as its disk.
@@ -61,9 +60,10 @@ Once the virtual machine boots from the image, you can delete it under **Drives*
 
 **It does not boot.**
 If the virtual machine shows a UEFI shell or reports that there is no bootable device, check the following:
-- **UEFI Boot** is unchecked under **QEMU**
-- the imported `VM-SO.qcow2` drive is the first one under **Drives**.
-- the interface of the `VM-SO.qcow2` drive under **Drives** is *VirtIO*
+
+* **UEFI Boot** is unchecked under **QEMU**
+* the imported `VM-SO.qcow2` drive is the first one under **Drives**.
+* the interface of the `VM-SO.qcow2` drive under **Drives** is *VirtIO*
 
 **GUI enabled/disabled**
 
@@ -77,6 +77,7 @@ sudo systemctl set-default multi-user.target
 ```
 
 To enable the GUI again, run, then restart the VM:
+
 ```console
     sudo systemctl set-default graphical.target
 ```

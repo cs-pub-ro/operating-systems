@@ -1,0 +1,3 @@
+# Scripts source their helpers through paths that are only known when they run,
+# or relative to the directory they are started from.
+disable=SC1091

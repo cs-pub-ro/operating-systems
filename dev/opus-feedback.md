@@ -107,11 +107,11 @@ Specific observations:
 1. **Mark every item with an explicit time budget in its README** (e.g. `**Estimated time:** 20 min`).
    The `bonus-static-vs-dynamic` README already has metadata-style items elsewhere in the repo (`**Duration**`, `**Platform**`, `**Difficulty**` are mentioned in `content-rules.md`) — apply that convention everywhere, consistently.
    This helps the TA pace the room and helps students self-triage.
-2. **Declare a "core path" per session.**
+1. **Declare a "core path" per session.**
    State explicitly which one demo and which one exercise every student must finish, and mark the rest as "if there is time".
    Right now everything reads as mandatory, which will make weaker students feel permanently behind — a significant motivation problem in this age group.
-3. **Rebalance across sessions**: move `02-stream-ciphers` out of session 1 (it fits session 2 or as bonus), move `mmap` out of session 3, split session 4 into two, and cut session 5 from 4 exercises to 2 + bonuses.
-4. **Take the long analytical write-ups out of the lab document.**
+1. **Rebalance across sessions**: move `02-stream-ciphers` out of session 1 (it fits session 2 or as bonus), move `mmap` out of session 3, split session 4 into two, and cut session 5 from 4 exercises to 2 + bonuses.
+1. **Take the long analytical write-ups out of the lab document.**
    See section 5.
 
 ## 3. Wording and presentation, and fit for ~20-year-olds
@@ -196,25 +196,25 @@ The ASCII diagrams that are present are good and should be the model for more:
    Sessions 3, 4 and 5 are all about memory and there is *not one picture of an address space anywhere*.
    Students are asked to reason about `.text`/`.data`/`.rodata`/`.bss` (session 4, exercise 3), the heap growing upwards, and heap chunk adjacency (session 5) with nothing but prose.
    One diagram, reused across three sessions, would carry an enormous amount of load.
-2. **A heap chunk diagram for session 5.**
+1. **A heap chunk diagram for session 5.**
    The entire session is "object A is `N` bytes before object B; overflow A to reach field `f` of B".
    Without a picture showing chunk header + user data + next chunk, and where the target field sits, students are guessing offsets by trial and error rather than by reasoning.
    This is the difference between the session teaching exploitation and the session teaching fuzzing.
-3. **A struct-layout diagram for `session-04/01-grade-histogram`.**
+1. **A struct-layout diagram for `session-04/01-grade-histogram`.**
    The bug *is* the adjacency of `counts[10]` and `total` in memory.
    A four-line box diagram showing `counts[0..9]` followed immediately by `total`, with an arrow at index 10, makes the whole exercise click instantly.
-4. **Plots for the benchmark tables.**
+1. **Plots for the benchmark tables.**
    `01-string-functions` presents O(N²) vs O(N) as a six-row table and then explains in prose that the ratio quadruples.
    A single log-log plot would make it self-evident.
    Same for the static/dynamic benchmark.
    Even ASCII bar charts would do.
-5. **Timeline diagram for the use-after-free bug** in `session-04/demo-in-memory-database` (bug 2): `first = &records[0]` → `realloc` moves the block → `first` dangles.
+1. **Timeline diagram for the use-after-free bug** in `session-04/demo-in-memory-database` (bug 2): `first = &records[0]` → `realloc` moves the block → `first` dangles.
    Three boxes and two arrows.
-6. **References are almost entirely absent.**
+1. **References are almost entirely absent.**
    There is no "further reading" anywhere.
    Suggested minimum, per session: the relevant man pages (already partly there), `ld.so(8)` and Levine's *Linkers and Loaders* for session 1, `syscall(2)` and the Linux syscall table for session 2, `malloc(3)` / `mmap(2)` and a glibc malloc internals write-up for session 3, the Valgrind and GDB manuals for session 4, and a heap-exploitation primer for session 5.
    Students at this level need to learn that primary documentation exists and is readable; right now the material *models* that (constant `man` references) but never names sources.
-7. **Screenshots or asciinema recordings of a gdb session** would materially help session 4.
+1. **Screenshots or asciinema recordings of a gdb session** would materially help session 4.
    The README has excellent transcripts, but seeing the TUI (`tui enable` is mentioned once, in a table, at the very end) is different from reading a transcript.
 
 ## 5. Structure, format and other improvements
@@ -313,10 +313,10 @@ The predictability itself is a feature: students learn where to look, and the TA
 ## Summary of priority actions
 
 1. **Fix the time budget.** Sessions 1, 3, 4 and 5 do not fit in 100 minutes. Declare a core path per task; move `02-stream-ciphers` and `mmap`; split session 4.
-2. **Add a session-level `README.md`** to each session with objectives, order, timings, prerequisites and tools.
-3. **Split long documents** into a short imperative lab sheet and a separate discussion piece, so the analysis survives contact with a time-pressed student.
-4. **Add the missing diagrams**: process address space (reused across sessions 3-5), heap chunk adjacency (session 5), `struct stats` layout (session 4).
-5. **Scaffold session 5**, which is currently the hardest content with the thinnest documentation, and reduce its exercise count.
-6. **Add a memory-layout orientation exercise** and **AddressSanitizer** to the session 3/4 toolkit.
-7. **Fix the naming and cross-reference errors** listed in section 3, and normalise everything against `content-rules.md`.
-8. **Add `make check` targets** so correctness validation does not depend entirely on the TA's attention.
+1. **Add a session-level `README.md`** to each session with objectives, order, timings, prerequisites and tools.
+1. **Split long documents** into a short imperative lab sheet and a separate discussion piece, so the analysis survives contact with a time-pressed student.
+1. **Add the missing diagrams**: process address space (reused across sessions 3-5), heap chunk adjacency (session 5), `struct stats` layout (session 4).
+1. **Scaffold session 5**, which is currently the hardest content with the thinnest documentation, and reduce its exercise count.
+1. **Add a memory-layout orientation exercise** and **AddressSanitizer** to the session 3/4 toolkit.
+1. **Fix the naming and cross-reference errors** listed in section 3, and normalise everything against `content-rules.md`.
+1. **Add `make check` targets** so correctness validation does not depend entirely on the TA's attention.
