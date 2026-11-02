@@ -17,7 +17,7 @@ Before getting to work, post your proposal on the [Moodle Forum dedicated to SO-
 ## Workflow
 
 1. Pick an issue from the [proposed projects below](#projects) or propose another open-source project,
-1. Create a thread on the [Moodle Forum - SO Fair](https://curs.upb.ro/2026/mod/forum/view.php?id=57679) until **15 November**.
+1. Create a thread on the [Moodle Forum - SO Fair](https://curs.upb.ro/2026/mod/forum/view.php?id=57679) until **15 November**. In this thread, you should specify what's the project you're planning to contribute to, and what you're hoping to achieve. Include a brief, clear work breakdown structure with milestones and deadlines. Make sure to label deliverables as optional or required. You may want your plan to start by producing some kind of white paper, or planning the project in traditional Software Engineering style. It’s OK to include thinking time (“investigation”) in your work schedule. Deliverables should include investigation, coding and documentation.
 1. Wait for approval from one of the assistants from the team. The team will get back to you up to **27 November**.
 1. Get to work - you should fork the project, start to work on the contribution, create commits, create PRs.
 1. Post the progress of your work in the Moodle thread you created. This is a weekly post that gives a brief summary description of the work done, with commits and/or PRs attached. The assistants should be able to track and review your work incrementally, week by week.
