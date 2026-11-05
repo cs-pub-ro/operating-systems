@@ -210,16 +210,30 @@ def read_title(readme_path, fallback):
     return fallback
 
 
+def is_walked_dir(name):
+    """Whether the tree walk descends into a directory of this name."""
+    return (
+        name not in EXCLUDED_DIRS
+        and not name.startswith(".")
+        and not name.endswith(EXCLUDED_DIR_SUFFIXES)
+    )
+
+
 def child_dirs(path):
     """The directories directly below `path` that the tree walk descends into."""
     return sorted(
-        entry
-        for entry in path.iterdir()
-        if entry.is_dir()
-        and entry.name not in EXCLUDED_DIRS
-        and not entry.name.startswith(".")
-        and not entry.name.endswith(EXCLUDED_DIR_SUFFIXES)
+        entry for entry in path.iterdir() if entry.is_dir() and is_walked_dir(entry.name)
     )
+
+
+def is_walked(path):
+    """Whether a path below `content/` is reached by the tree walk.
+
+    It is when no directory between `content/` and it is one the walk skips, so
+    a figure under `media/` is, and a file under `.vscode/` or `utils/` is not.
+    """
+    relative = Path(path).relative_to(CONTENT_ROOT)
+    return all(is_walked_dir(part) for part in relative.parent.parts)
 
 
 def has_readme(path):

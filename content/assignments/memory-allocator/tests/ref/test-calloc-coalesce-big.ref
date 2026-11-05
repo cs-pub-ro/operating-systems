@@ -1,0 +1,23 @@
+os_malloc (['131032'])                                                                    = HeapStart + 0x20
+  brk (['0'])                                                                             = HeapStart + 0x0
+  brk (['HeapStart + 0x20000'])                                                           = HeapStart + 0x20000
+os_calloc (['1', '10'])                                                                   = HeapStart + 0x20020
+  brk (['HeapStart + 0x20030'])                                                           = HeapStart + 0x20030
+os_calloc (['1', '25'])                                                                   = HeapStart + 0x20050
+  brk (['HeapStart + 0x20070'])                                                           = HeapStart + 0x20070
+os_calloc (['1', '40'])                                                                   = HeapStart + 0x20090
+  brk (['HeapStart + 0x200b8'])                                                           = HeapStart + 0x200b8
+os_calloc (['1', '80'])                                                                   = HeapStart + 0x200d8
+  brk (['HeapStart + 0x20128'])                                                           = HeapStart + 0x20128
+os_calloc (['1', '160'])                                                                  = HeapStart + 0x20148
+  brk (['HeapStart + 0x201e8'])                                                           = HeapStart + 0x201e8
+os_free (['HeapStart + 0x20020'])                                                         = <void>
+os_free (['HeapStart + 0x20050'])                                                         = <void>
+os_free (['HeapStart + 0x20090'])                                                         = <void>
+os_free (['HeapStart + 0x200d8'])                                                         = <void>
+os_free (['HeapStart + 0x20148'])                                                         = <void>
+os_calloc (['20', '30'])                                                                  = HeapStart + 0x20020
+  brk (['HeapStart + 0x20278'])                                                           = HeapStart + 0x20278
+os_free (['HeapStart + 0x20020'])                                                         = <void>
+os_free (['HeapStart + 0x20'])                                                            = <void>
++++ exited (status 0) +++

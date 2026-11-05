@@ -57,6 +57,7 @@ from sessions import (  # noqa: E402  (the path has to be set up first)
     CONTENT_ROOT,
     REPO_ROOT,
     find_assets,
+    is_walked,
     site_tree,
     walk_tasks,
 )
@@ -183,8 +184,14 @@ def rewrite_target(target, readme_dir, root_prefix="", view=None):
     # `media/03-kernel/os-syscall.svg` from the lecture page, `../../media/...`
     # from a demo page below it.  The same holds for a deck that has not been
     # rendered into the working tree yet, which is why this is decided by the
-    # suffix rather than by whether the file happens to exist.
-    if CONTENT_ROOT in resolved.parents and resolved.suffix.lower() in ASSET_SUFFIXES:
+    # suffix rather than by whether the file happens to exist.  A file the walk
+    # never reaches -- `.vscode/launch.json`, anything under `utils/` -- is not
+    # copied whatever its suffix, so it is sent to GitHub below instead.
+    if (
+        CONTENT_ROOT in resolved.parents
+        and resolved.suffix.lower() in ASSET_SUFFIXES
+        and is_walked(resolved)
+    ):
         return target
 
     if resolved.is_file():
