@@ -1,0 +1,1 @@
+../../elf-loader/tests/grade.sh
