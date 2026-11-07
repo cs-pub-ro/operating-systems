@@ -97,15 +97,12 @@ static void *count_region(void *arg)
 	struct region *r = arg;
 
 	/*
-	 * TODO 1: count the matches in this region, and return the result
-	 * to whoever joins this thread.  A thread returns a `void *`, and
-	 * the main thread reads what it points at after pthread_join(), so
-	 * it has to point at memory that is still there when the thread is
-	 * gone.  A local variable of this function is not; the region is.
+	 * TODO 1: count the matches in this region and return the result.
+	 * A thread returns a `void *`, read after pthread_join(), so it must
+	 * point at memory that outlives the thread -- the region, not a local.
 	 *
-	 * Call the `count_matches` function using the correct members of `r`
-	 * as arguments, save the result in a member of the `r` structure and
-	 * return the proper pointer to the saved result.
+	 * Call count_matches() with the right members of `r`, save the result
+	 * in a member of `r`, and return a pointer to it.
 	 */
 
 	return NULL;
@@ -163,13 +160,10 @@ int main(int argc, char *argv[])
 	}
 
 	/*
-	 * TODO 2: join every thread, take the count it returned, print it
-	 * and add it to `total`.  The second argument of pthread_join() is
-	 * where the thread's return value lands.  No thread touches
-	 * `total`; only this one does, after the other threads are gone.
-	 *
-	 * After you complete this task, run the program and find some
-	 * issues detailed more in TODO 3.
+	 * TODO 2: join every thread, take the count it returned, print it in
+	 * thread order, and add it to `total`.  pthread_join()'s second
+	 * argument is where the return value lands.  Only this thread touches
+	 * `total`, and only after the others are gone.  (Then see TODO 3.)
 	 */
 	total = 0;
 

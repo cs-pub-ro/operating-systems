@@ -5,7 +5,7 @@
 The first half of the session's material in the smallest program that shows it: a process is created by copying, programmed by replacing, and finished by waiting.
 Everything about processes in the exercises is this demo with details added.
 
-If you present only one demo, present this one; the thread demo can be described while `02-aggregate-matches` is introduced.
+If you present only one demo, present this one; the thread demo can be described while `03-aggregate-matches` is introduced.
 
 ## Sequencing
 
@@ -25,7 +25,7 @@ Do the three TODOs in the order that makes each one's absence visible, and run t
    The `perror()` and the `exit(127)` are the failure path of `exec()`; take the `exit()` out for a minute and let the room see two shells on one terminal.
 1. **Type `ls -l`.**
    `No such file or directory`, because the whole line is the command name.
-   This is the hand-over to `01-shell-chaining`.
+   This is the hand-over to `01-command-arguments`.
 
 ## Points to hammer
 
@@ -65,7 +65,7 @@ Do the three TODOs in the order that makes each one's absence visible, and run t
 
 ## Practical notes
 
-* The shell has no `cd` and no quoting; neither is needed in this session.
+* The demo's shell has no `cd` and no quoting; `cd` arrives in `02-shell-builtins`, quoting is not needed in this session.
 * The prompt is flushed explicitly in `read_line()`, so the duplicated-buffer problem with `exit()` in the child does not show on a terminal.
   It is in `FURTHER.md` for anyone who asks about `_exit()`.
 * Ctrl-D ends the shell cleanly; Ctrl-C kills it, and the foreground child with it, which is fine.

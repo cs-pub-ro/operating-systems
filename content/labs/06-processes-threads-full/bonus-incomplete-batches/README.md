@@ -9,12 +9,12 @@ Reference solution for the encryptor that accepts any number of files.
 
 ## Background
 
-Two numbers change with respect to `03-file-encryptor`: the number of threads, which is now a ceiling rather than an exact quotient, and the size of the last batch, which is whatever the others left.
+Two numbers change with respect to `04-file-encryptor`: the number of threads, which is now a ceiling rather than an exact quotient, and the size of the last batch, which is whatever the others left.
 Everything else, the thread routine, the create and join loops, the partition into contiguous slices of `argv`, is unchanged.
 
 Files:
 
-* `encryptor.c` — the solution, `03-file-encryptor`'s with the two TODOs filled in.
+* `encryptor.c` — the solution, `04-file-encryptor`'s with the two TODOs filled in.
 * `gen_files.sh` — the same generator, defaulting to 57 files.
 
 ## Build & Run

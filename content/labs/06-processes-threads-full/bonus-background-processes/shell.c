@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 /*
- * A small shell: commands with arguments, chained with `;`, `&&` and `||`,
- * and run in the background with `&`.
+ * A shell that can run a command in the background.  End a line with `&` and
+ * the shell starts the command without waiting, handing the prompt back at
+ * once.  Finished background children are collected before every prompt, so
+ * none is left as a zombie for long.
  *
  *     minish> sleep 5 &
  *     [started 12345]
@@ -41,9 +43,9 @@ static int read_line(char *line, size_t len)
 }
 
 /*
- * Split `line` into words separated by spaces or tabs, in place: each word
- * gets a terminating '\0' and a pointer to it is stored in `tokens`.
- * Returns the number of words, at most `max`.  Already written.
+ * Split `line` into words separated by spaces or tabs, in place, and leave
+ * the array ending in a NULL pointer so it can serve as an argv.  Returns
+ * the number of words, at most `max`.  Already written.
  */
 static int tokenize(char *line, char *tokens[], int max)
 {
@@ -55,22 +57,42 @@ static int tokenize(char *line, char *tokens[], int max)
 		tokens[count++] = word;
 		word = strtok(NULL, " \t");
 	}
+	tokens[count] = NULL;
 
 	return count;
 }
 
-/* Whether a word is one of the operators that end a command. */
-static int is_operator(const char *word)
+/*
+ * Handle the commands the shell runs itself: `cd` and `exit`.  Returns 1 if
+ * `argv` was a builtin, 0 otherwise.  From the previous exercise.
+ */
+static int run_builtin(char *argv[])
 {
-	return strcmp(word, ";") == 0 || strcmp(word, "&&") == 0 ||
-	       strcmp(word, "||") == 0 || strcmp(word, "&") == 0;
+	if (strcmp(argv[0], "exit") == 0)
+		exit(0);
+
+	if (strcmp(argv[0], "cd") == 0) {
+		const char *dir = argv[1] ? argv[1] : getenv("HOME");
+
+		if (dir == NULL)
+			dir = "/";
+		if (chdir(dir) < 0)
+			perror("cd");
+		return 1;
+	}
+
+	return 0;
 }
 
 /*
- * Collect the background children that have finished since the last
- * time we looked, without waiting for the ones still running.  Called
- * before every prompt, so a finished child is a zombie for one prompt
- * at most.
+ * Collect the background children that have finished since the last prompt,
+ * without waiting for the ones still running.
+ *
+ * A child that has finished stays in the process table as a zombie until its
+ * parent asks for its status, so waiting is not optional; only the blocking
+ * is.  waitpid() with WNOHANG and -1 ("any child") returns a finished child
+ * if there is one and 0 if there is not, so a loop collects them all and
+ * stops at once when there are none.
  */
 static void reap_background(void)
 {
@@ -81,20 +103,18 @@ static void reap_background(void)
 }
 
 /*
- * Run the command in `argv` as a new process.  In the foreground, wait for
- * it and return its exit status: 0 for success, 127 if it could not be run,
- * 128 plus the signal number if a signal killed it.  In the background,
- * return 0 at once; reap_background() collects the child later.
+ * Run the command in `argv` (a NULL-terminated array).  In the foreground,
+ * wait for it.  In the background, print the child's PID and return at once;
+ * reap_background() collects it later.
  */
-static int run_command(char *argv[], int background)
+static void run_command(char *argv[], int background)
 {
 	pid_t pid;
-	int status;
 
 	pid = fork();
 	if (pid < 0) {
 		perror("fork");
-		return 127;
+		return;
 	}
 
 	if (pid == 0) {
@@ -105,62 +125,11 @@ static int run_command(char *argv[], int background)
 
 	if (background) {
 		fprintf(stderr, "[started %d]\n", (int) pid);
-		return 0;
+		return;
 	}
 
-	if (waitpid(pid, &status, 0) < 0) {
+	if (waitpid(pid, NULL, 0) < 0)
 		perror("waitpid");
-		return 127;
-	}
-
-	if (WIFSIGNALED(status)) {
-		fprintf(stderr, "[killed by signal %d]\n", WTERMSIG(status));
-		return 128 + WTERMSIG(status);
-	}
-
-	if (WEXITSTATUS(status) != 0)
-		fprintf(stderr, "[exit status %d]\n", WEXITSTATUS(status));
-
-	return WEXITSTATUS(status);
-}
-
-/*
- * Run a whole line, one command after another.  The operator in front of a
- * command decides whether it runs; the operator after it decides whether
- * the shell waits for it.
- */
-static void run_line(char *tokens[], int ntokens)
-{
-	const char *op = ";";
-	int start = 0;
-	int status = 0;
-
-	while (start < ntokens) {
-		const char *next_op = NULL;
-		int end = start;
-
-		while (end < ntokens && !is_operator(tokens[end]))
-			end++;
-		if (end == start) {
-			fprintf(stderr, "syntax error near '%s'\n", tokens[end]);
-			return;
-		}
-
-		if (end < ntokens)
-			next_op = tokens[end];
-		tokens[end] = NULL;
-
-		if (strcmp(op, ";") == 0 || strcmp(op, "&") == 0 ||
-		    (strcmp(op, "&&") == 0 && status == 0) ||
-		    (strcmp(op, "||") == 0 && status != 0))
-			status = run_command(&tokens[start],
-					     next_op != NULL && strcmp(next_op, "&") == 0);
-
-		if (next_op == NULL)
-			break;
-		op = next_op;
-		start = end + 1;
-	}
 }
 
 int main(void)
@@ -168,6 +137,7 @@ int main(void)
 	char line[LINE_LEN];
 	char *tokens[MAX_TOKENS + 1];
 	int ntokens;
+	int background;
 
 	for (;;) {
 		reap_background();
@@ -177,10 +147,19 @@ int main(void)
 		ntokens = tokenize(line, tokens, MAX_TOKENS);
 		if (ntokens == 0)
 			continue;
-		if (strcmp(tokens[0], "exit") == 0)
-			break;
+		if (run_builtin(tokens))
+			continue;
 
-		run_line(tokens, ntokens);
+		/* A trailing `&` means: start the command, do not wait. */
+		background = 0;
+		if (strcmp(tokens[ntokens - 1], "&") == 0) {
+			background = 1;
+			tokens[--ntokens] = NULL;
+		}
+		if (ntokens == 0)
+			continue;
+
+		run_command(tokens, background);
 	}
 
 	if (feof(stdin))

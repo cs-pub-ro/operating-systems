@@ -14,4 +14,4 @@ Demo 02: Multi-threaded Substring Search
 The file is produced by gen_text.c rather than shipped: 64 MiB of random
 words from a fixed sequence, with "kernel" planted across the 2-, 4- and
 8-way split points so that the matches lost at the boundaries are
-reproducible, and are the hand-over to 02-aggregate-matches.
+reproducible, and are the hand-over to 03-aggregate-matches.

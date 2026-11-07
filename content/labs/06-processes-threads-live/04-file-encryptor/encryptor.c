@@ -97,11 +97,10 @@ static void *encrypt_batch(void *arg)
 	for (i = 0; i < b->nfiles; i++) {
 		/*
 		 * TODO 1: for every file in the batch: map it, XOR it with the key,
-		 * unmap it, using the functions already written above.
-		 * The three functions above do each step; none of them
-		 * knows about threads, and none needs to, because no two threads
-		 * ever touch the same file.  A file that cannot be mapped has
-		 * already been reported; go on with the next one.
+		 * unmap it, with the three functions written above.  None of them
+		 * knows about threads, and none needs to: no two threads ever
+		 * touch the same file.  A file that cannot be mapped has already
+		 * been reported; go on with the next one.
 		 */
 	}
 

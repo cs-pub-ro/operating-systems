@@ -1,0 +1,25 @@
+We are preparing contents for a class on Operating Systems, part of a 4-years bachelor study program in a technical university.
+The class is part of the 2nd year, 1s semester.
+
+We are preparing the materials for the lab-06: Process and Threads./
+
+The materials will be of two types:
+- Materials to be used live, under `content/labs/06-processes-threads-live/`
+- Materials to be used before and after labs, with full information, details and explanations, including reference solutions, under content/labs/06-processes-threads-full/`
+
+Take a look into the other labs for a model of structuring and implementing content.
+
+Make the following updates:
+1. Make the 1st exercise be one where students add arguments to a command to be run.
+   But nothing more.
+2. Make the 2nd exercise implement the builtin shell commands `cd` and `exit`.
+3. Make the 3rd exercise the current `02-aggregate-matches/` exercise.
+   Renumber accordingly
+4. Make the 4th exercise the current `03-file-encryptor/` exercise.
+5. The bonus exercises will be, in this order:
+   a) first bonus: the shell running a process in background
+   b) second bonus: the shell chaining commands with the ; , && and || operators
+   c) third bonus: the current `bonus-incomplete-batches/` exercise.
+6. Aim to reduce by a bit the verbosity of contents in `README.md` and in `TODO` comments in the source code for live materials.
+7. Be sure to have the linter rules in `.github/workflows/lint.yml` passed.
+8. Validate all solutions in the full materials.
