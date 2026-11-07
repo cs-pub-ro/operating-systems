@@ -208,9 +208,12 @@ All participating teams are **eligible** for equivalence in the OS subject (depe
 
 ### SO Fair
 
-#### Equivalence
+SO-Fair is a contribution-based activity - you work on contributions to open-source projects with support from the SO-Fair team.
 
-All participating teams are **eligible** for equivalence in the OS subject (depending on **implementation complexity and project stage developed during the project**).
+SO-Fair is graded like a bonus assignment, with a maximum of **1 point**.
+The score is based on **the contributions made and the stage of the work at the end of SO Fair**. Partial scores are possible.
+
+The score is added to your assignment score and counts towards the **3.5/4 points** threshold for [No Exam For SO Heroes](#no-exam-for-so-heroes).
 
 ### Lecture Quizzes (1.5 points)
 
