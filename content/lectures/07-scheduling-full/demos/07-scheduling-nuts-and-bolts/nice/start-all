@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Start 3 x N process, where N is the number of cores.
+for i in $(seq 1 $(nproc)); do
+    sudo nice -n -20 /usr/bin/time -v ./cpu 2> pri-20-v"$i".txt &
+done
+for i in $(seq 1 $(nproc)); do
+    /usr/bin/time -v ./cpu 2> pri0-v"$i".txt &
+done
+for i in $(seq 1 $(nproc)); do
+    nice -n 19 /usr/bin/time -v ./cpu 2> pri+19-v"$i".txt &
+done
