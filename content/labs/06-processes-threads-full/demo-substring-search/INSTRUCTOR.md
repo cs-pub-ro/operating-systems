@@ -21,7 +21,7 @@ That is why no mutex appears in this session, and students should hear that it i
    Run once without it, if the file is big enough to show missing output; then with it.
 1. **Run with 1, 2, 4, 8 threads.**
    Two things to notice: the output order is not thread order, and the counts add up to one less than `grep -o` per boundary.
-   Do not fix the second one here; it is `02-aggregate-matches`.
+   Do not fix the second one here; it is `03-aggregate-matches`.
 1. **`strace -f -e trace=clone3,mmap`**, thirty seconds: the same system call as `fork()`, with `CLONE_VM | CLONE_THREAD`, and one 8 MiB stack per thread.
 
 ## Points to hammer

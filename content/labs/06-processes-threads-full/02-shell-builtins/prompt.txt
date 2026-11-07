@@ -1,0 +1,12 @@
+From dev/prompt-rework-lab6.txt:
+
+Exercise 02: Builtin Commands
+
+* Goal: shell state that a child cannot change; the builtin concept.
+* Description: Implement the builtin shell commands `cd` and `exit`, handled
+  by the shell itself rather than by a forked child.
+
+Builds on exercise 01.  run_command() is given (unchanged); the student
+writes run_builtin(), which main() calls before run_command().  The teaching
+point is that chdir()/exit() must run in the shell's own process, because a
+child's copy of that state dies with the child.

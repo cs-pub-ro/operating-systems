@@ -1,10 +1,12 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 /*
- * A small shell: commands with arguments, chained with `;`, `&&` and `||`.
+ * A small shell: commands with arguments and builtins, run in the background
+ * with `&`, and chained with `;`, `&&` and `||`, which decide whether the
+ * next command runs from how the last one ended.
  *
- *     minish> ls -l /tmp
  *     minish> gcc -Wall main.c && ./a.out || echo "build failed"
+ *     minish> sleep 5 & echo meanwhile
  */
 
 #include <stdio.h>
@@ -36,17 +38,17 @@ static int read_line(char *line, size_t len)
 }
 
 /*
- * Split `line` into words separated by spaces or tabs, in place: each word
- * gets a terminating '\0' and a pointer to it is stored in `tokens`.  A `;`
- * is a word of its own, with or without spaces around it.
- * Returns the number of words, at most `max`.  Already written.
+ * Split `line` into words separated by spaces or tabs, in place; a `;` is a
+ * word of its own, with or without spaces around it.  Leaves the array
+ * ending in a NULL pointer.  Returns the number of words, at most `max`.
+ * Already written.
  *
- *     "ls -l /tmp && echo done"  ->  "ls", "-l", "/tmp", "&&", "echo", "done"
- *     "ls; pwd;"                 ->  "ls", ";", "pwd", ";"
+ *     "ls -l && echo done"  ->  "ls", "-l", "&&", "echo", "done"
+ *     "ls; pwd;"            ->  "ls", ";", "pwd", ";"
  */
 static int tokenize(char *line, char *tokens[], int max)
 {
-	static char semicolon[] = ";";
+	static const char semicolon[] = ";";
 	int count = 0;
 	char *word, *semi;
 
@@ -57,31 +59,66 @@ static int tokenize(char *line, char *tokens[], int max)
 			if (*word != '\0' && count < max)
 				tokens[count++] = word;
 			if (count < max)
-				tokens[count++] = semicolon;
+				tokens[count++] = (char *) semicolon;
 			word = semi + 1;
 		}
 		if (*word != '\0' && count < max)
 			tokens[count++] = word;
 		word = strtok(NULL, " \t");
 	}
+	tokens[count] = NULL;
 
 	return count;
+}
+
+/*
+ * Handle the commands the shell runs itself: `cd` and `exit`.  Returns 1 if
+ * `argv` was a builtin, 0 otherwise.  From exercise 02.
+ */
+static int run_builtin(char *argv[])
+{
+	if (strcmp(argv[0], "exit") == 0)
+		exit(0);
+
+	if (strcmp(argv[0], "cd") == 0) {
+		const char *dir = argv[1] ? argv[1] : getenv("HOME");
+
+		if (dir == NULL)
+			dir = "/";
+		if (chdir(dir) < 0)
+			perror("cd");
+		return 1;
+	}
+
+	return 0;
 }
 
 /* Whether a word is one of the operators that separate two commands. */
 static int is_operator(const char *word)
 {
 	return strcmp(word, ";") == 0 || strcmp(word, "&&") == 0 ||
-	       strcmp(word, "||") == 0;
+	       strcmp(word, "||") == 0 || strcmp(word, "&") == 0;
 }
 
 /*
- * Run the command in `argv` (terminated by a NULL pointer) as a new process
- * and wait for it.  Returns the command's exit status, 0 meaning success;
- * 127 if it could not be run at all; 128 plus the signal number if a signal
- * killed it, the way other shells report it.
+ * Collect the background children that have finished since the last prompt,
+ * without waiting for the ones still running.  From the background bonus.
  */
-static int run_command(char *argv[])
+static void reap_background(void)
+{
+	pid_t pid;
+
+	while ((pid = waitpid(-1, NULL, WNOHANG)) > 0)
+		fprintf(stderr, "[%d finished]\n", (int) pid);
+}
+
+/*
+ * Run the command in `argv` (a NULL-terminated array) as a new process.  In
+ * the foreground, wait for it and return its exit status: 0 for success, 127
+ * if it could not be run, 128 plus the signal number if a signal killed it.
+ * In the background, return 0 at once; reap_background() collects it later.
+ */
+static int run_command(char *argv[], int background)
 {
 	pid_t pid;
 	int status;
@@ -96,6 +133,11 @@ static int run_command(char *argv[])
 		execvp(argv[0], argv);
 		perror(argv[0]);
 		exit(127);
+	}
+
+	if (background) {
+		fprintf(stderr, "[started %d]\n", (int) pid);
+		return 0;
 	}
 
 	if (waitpid(pid, &status, 0) < 0) {
@@ -115,10 +157,9 @@ static int run_command(char *argv[])
 }
 
 /*
- * Run a whole line: one command after another, each one from the word after
- * the previous operator up to the next operator.  The operator in front of
- * a command decides whether it runs at all, given the status of the last
- * command that ran.
+ * Run a whole line, one command after another.  The operator in front of a
+ * command decides whether it runs, from the status of the last command that
+ * ran; the operator after it decides whether the shell waits for it.
  */
 static void run_line(char *tokens[], int ntokens)
 {
@@ -129,6 +170,7 @@ static void run_line(char *tokens[], int ntokens)
 	while (start < ntokens) {
 		const char *next_op = NULL;
 		int end = start;
+		int background;
 
 		/* The command is tokens[start] .. tokens[end - 1]. */
 		while (end < ntokens && !is_operator(tokens[end]))
@@ -143,10 +185,18 @@ static void run_line(char *tokens[], int ntokens)
 			next_op = tokens[end];
 		tokens[end] = NULL;
 
-		if (strcmp(op, ";") == 0 ||
+		/* A command is a background one when the operator after it is `&`. */
+		background = next_op != NULL && strcmp(next_op, "&") == 0;
+
+		/* After `;` or `&` always; after `&&` on success; after `||` on failure. */
+		if (strcmp(op, ";") == 0 || strcmp(op, "&") == 0 ||
 		    (strcmp(op, "&&") == 0 && status == 0) ||
-		    (strcmp(op, "||") == 0 && status != 0))
-			status = run_command(&tokens[start]);
+		    (strcmp(op, "||") == 0 && status != 0)) {
+			if (run_builtin(&tokens[start]))
+				status = 0;
+			else
+				status = run_command(&tokens[start], background);
+		}
 
 		if (next_op == NULL)
 			break;
@@ -161,12 +211,14 @@ int main(void)
 	char *tokens[MAX_TOKENS + 1];
 	int ntokens;
 
-	while (read_line(line, sizeof(line)) == 0) {
+	for (;;) {
+		reap_background();
+		if (read_line(line, sizeof(line)) < 0)
+			break;
+
 		ntokens = tokenize(line, tokens, MAX_TOKENS);
 		if (ntokens == 0)
 			continue;
-		if (strcmp(tokens[0], "exit") == 0)
-			break;
 
 		run_line(tokens, ntokens);
 	}

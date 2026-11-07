@@ -23,7 +23,7 @@ It is safe because the file sets are disjoint; the point of the exercise is that
   A file in nobody's batch is unchanged after one pass and unchanged after two, so `diff -r` after two passes says nothing is wrong.
   Students who did the one-pass check first catch this; the README asks them to explain why both checks are needed.
 * **Running `gen_files.sh` between the two passes**, then wondering why the files are not restored.
-* **`data/*.bin` typed into the student's own shell from `01-shell-chaining`.**
+* **`data/*.bin` typed into the student's own shell from `bonus-command-chaining`.**
   It has no globbing; use `bash`.
 
 ## Verified reference values

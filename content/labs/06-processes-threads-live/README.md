@@ -12,8 +12,9 @@ This session is about getting the operating system to run things for you: a seco
 By the end of this session you should be able to:
 
 * Start a program from your own with `fork()` and `execvp()`, and explain why it takes two calls rather than one.
-* Wait for a child process with `waitpid()`, take its exit status apart, and act on it.
-* Write a shell that runs commands with arguments and chains them with `;`, `&&` and `||`.
+* Pass a command its arguments as an `argv` array, and say why a shell must build that array itself.
+* Wait for a child process with `waitpid()`, take its exit status apart, and act on it with `;`, `&&` and `||`.
+* Explain why `cd` and `exit` must be builtins, run in the shell's own process.
 * Start threads with `pthread_create()`, pass each one its own work through a struct, and collect what it returns with `pthread_join()`.
 * Split a memory region, or an array of tasks, between threads so that each one works on its own part, with nothing shared for writing and therefore nothing to lock.
 * Say what a process and a thread each have of their own, and what they share.
@@ -60,15 +61,22 @@ Bonus exercises are optional: start them if you finish the core exercises, or ta
 | --- | --- | --- | --- |
 | 1 | [`demo-minimal-shell`](demo-minimal-shell) | Demo | Run a command as a new process: `fork()`, `exec()`, `waitpid()`. |
 | 2 | [`demo-substring-search`](demo-substring-search) | Demo | Search a mapped file with several threads, each on its own part of it. |
-| 3 | [`01-shell-chaining`](01-shell-chaining) | Core | Commands with arguments, and `;`, `&&`, `\|\|` driven by the exit status. |
-| 4 | [`02-aggregate-matches`](02-aggregate-matches) | Core | Threads that return a result, and a main thread that adds them up. |
-| 5 | [`03-file-encryptor`](03-file-encryptor) | Core | Threads that each take a batch of files. |
-| 6 | [`bonus-incomplete-batches`](bonus-incomplete-batches) | Bonus | 57 files in batches of 10: the last batch is smaller. |
+| 3 | [`01-command-arguments`](01-command-arguments) | Core | Pass a command its arguments with `execvp()` and an `argv` array. |
+| 4 | [`02-shell-builtins`](02-shell-builtins) | Core | `cd` and `exit` as builtins, run in the shell itself. |
+| 5 | [`03-aggregate-matches`](03-aggregate-matches) | Core | Threads that return a result, and a main thread that adds them up. |
+| 6 | [`04-file-encryptor`](04-file-encryptor) | Core | Threads that each take a batch of files. |
 | 7 | [`bonus-background-processes`](bonus-background-processes) | Bonus | `&`: run a command without waiting, and collect it later. |
+| 8 | [`bonus-command-chaining`](bonus-command-chaining) | Bonus | `;`, `&&`, `\|\|` driven by the exit status. |
+| 9 | [`bonus-incomplete-batches`](bonus-incomplete-batches) | Bonus | 57 files in batches of 10: the last batch is smaller. |
 
-The two demos each start a thread of their own through the session.
-The shell demo becomes `01-shell-chaining` and then `bonus-background-processes`; the search demo becomes `02-aggregate-matches`, and `03-file-encryptor` applies the same split to an array of files instead of a region of bytes.
-`bonus-incomplete-batches` starts from **your finished `encryptor.c`** of `03-file-encryptor`, and `bonus-background-processes` from **your finished `shell.c`** of `01-shell-chaining`, so do those core exercises first.
+The two demos each start a thread of work through the session.
+The shell demo grows into `01-command-arguments`, then `02-shell-builtins`, and then the two shell bonuses; the search demo becomes `03-aggregate-matches`, and `04-file-encryptor` applies the same split to an array of files instead of a region of bytes.
+
+Each bonus builds on a core exercise you should finish first:
+
+* `bonus-background-processes` starts from your finished `shell.c` of `02-shell-builtins`.
+* `bonus-command-chaining` starts from your finished `bonus-background-processes`.
+* `bonus-incomplete-batches` starts from your finished `encryptor.c` of `04-file-encryptor`.
 
 One rule holds for every thread in this session: **each thread works on memory that no other thread touches**, and the results are read only after the thread has been joined.
 That is why no mutex appears anywhere; sharing memory for writing, and the tools for it, are the subject of session 08.

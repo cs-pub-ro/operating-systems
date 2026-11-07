@@ -10,8 +10,9 @@ The corresponding directory used during the session, with skeletons and task des
 By the end of this session you should be able to:
 
 * Start a program from your own with `fork()` and `execvp()`, and explain why it takes two calls rather than one.
-* Wait for a child process with `waitpid()`, take its exit status apart, and act on it.
-* Write a shell that runs commands with arguments, chains them with `;`, `&&` and `||`, and runs them in the background with `&`.
+* Pass a command its arguments as an `argv` array, and say why a shell must build that array itself.
+* Wait for a child process with `waitpid()`, take its exit status apart, and act on it with `;`, `&&` and `||`.
+* Explain why `cd` and `exit` must be builtins, run in the shell's own process.
 * Say what a zombie process is, and collect finished children without blocking.
 * Start threads with `pthread_create()`, pass each one its own work through a struct, and collect what it returns with `pthread_join()`.
 * Split a memory region, or an array of tasks, between threads so that each one works on its own part, with nothing shared for writing and therefore nothing to lock.
@@ -31,11 +32,13 @@ By the end of this session you should be able to:
 | --- | --- | --- |
 | [`demo-minimal-shell`](demo-minimal-shell) | Demo | `fork()`, `exec()`, `waitpid()`: one command at a time, no arguments. |
 | [`demo-substring-search`](demo-substring-search) | Demo | `pthread_create()`, `pthread_join()`, and a mapped file cut into one region per thread. |
-| [`01-shell-chaining`](01-shell-chaining) | Core | `execvp()` with an argument array, the exit status unpacked, and `;`, `&&`, `\|\|`. |
-| [`02-aggregate-matches`](02-aggregate-matches) | Core | A result returned from each thread, collected in order, and the matches lost at the cuts. |
-| [`03-file-encryptor`](03-file-encryptor) | Core | An array of files partitioned into batches, one thread each, writing through shared mappings. |
-| [`bonus-incomplete-batches`](bonus-incomplete-batches) | Bonus | The thread count rounded up and the last batch clamped. |
+| [`01-command-arguments`](01-command-arguments) | Core | `execvp()` with an argument array; the shell builds the `argv`. |
+| [`02-shell-builtins`](02-shell-builtins) | Core | `cd` and `exit` run in the shell's own process, and why they must be. |
+| [`03-aggregate-matches`](03-aggregate-matches) | Core | A result returned from each thread, collected in order, and the matches lost at the cuts. |
+| [`04-file-encryptor`](04-file-encryptor) | Core | An array of files partitioned into batches, one thread each, writing through shared mappings. |
 | [`bonus-background-processes`](bonus-background-processes) | Bonus | `&`, zombies, and `waitpid()` with `WNOHANG`. |
+| [`bonus-command-chaining`](bonus-command-chaining) | Bonus | `;`, `&&`, `\|\|`, and the exit status unpacked. |
+| [`bonus-incomplete-batches`](bonus-incomplete-batches) | Bonus | The thread count rounded up and the last batch clamped. |
 
 Each task directory contains:
 
@@ -52,14 +55,17 @@ The session is about **two ways of getting a second thing to run**, and what eac
    The copy shares nothing with the original once it exists; what it inherits, it inherits as a copy.
 1. **`demo-substring-search`** starts threads: the same system call underneath, `clone`, with the flags that keep the memory, the files and the signal handlers shared.
    A pointer handed to a thread is the memory, not a copy, which is what makes threads useful and what makes them dangerous.
-1. **`01-shell-chaining`** is the process half with the two things the demo left out: the argument array, which is the convention between a shell and a program, and the exit status, which is the one byte a process says to its parent, and on which every `&&`, `||` and `if` is built.
-1. **`02-aggregate-matches`** is the thread half with the thing the demo could not do: use the results.
+1. **`01-command-arguments`** gives the demo's shell the thing it lacked: the argument array, the convention between a shell and a program, which the shell builds and `execvp()` hands over as the program's own `argv`.
+1. **`02-shell-builtins`** is the fork boundary seen from the other side: `cd` and `exit` change the shell's own state, so they cannot run in a child whose copy of that state dies with it.
+   They are builtins, run in the shell itself.
+1. **`03-aggregate-matches`** is the thread half with the thing the demo could not do: use the results.
    A thread returns a pointer, the pointer has to outlive the thread, and the join is what makes the result safe to read.
    The matches lost at the cuts are the first boundary problem.
-1. **`03-file-encryptor`** partitions an array of tasks instead of a region of bytes, and the threads write.
+1. **`04-file-encryptor`** partitions an array of tasks instead of a region of bytes, and the threads write.
    It is safe because the batches are disjoint, and that argument, not a lock, is what makes it correct.
-1. **`bonus-incomplete-batches`** is the second boundary problem: *n* items into batches of *k* when *k* does not divide *n*.
 1. **`bonus-background-processes`** closes the process half: a child that ends while nobody is waiting is a zombie, and a parent's duty to wait does not go away because it was busy.
+1. **`bonus-command-chaining`** reads the one byte a process says to its parent — the exit status — and builds `;`, `&&` and `||` on it, the foundation of every shell script.
+1. **`bonus-incomplete-batches`** is the second boundary problem: *n* items into batches of *k* when *k* does not divide *n*.
 
 The design rule that runs through every thread exercise is **partition, compute, reduce**: split the input so that each worker owns a part, let the workers run with nothing shared for writing, then combine the results in one place after the joins.
 No mutex, no atomic, no shared counter appears in this session, and students should hear that this is a choice that works whenever the partition is right, not an omission.

@@ -1,13 +1,13 @@
-From dev/prompt-lab-06.txt:
+From dev/prompt-rework-lab6.txt:
 
-Bonus 2 (Extending Ex 01): Extend the shell to support background processes.
-If a command ends with `&`, the shell should spawn the process but NOT
-`wait` for it, allowing the user to immediately type the next command.
-Provide an explanation on how to reap zombies (e.g., using `SIGCHLD` or
-`waitpid` with `NOHANG`) in the full directory. Add a hint to SIGCHLD or
-NOHANG within the TODO items in the code.
+Bonus (a): the shell running a process in the background.
 
-`&` is an operator like `;`, so the tokenizer and the command loop of the
-core exercise carry it.  The reference reaps with a WNOHANG loop before
-every prompt; the README explains why that is safe and the SIGCHLD handler
-is not without a job list, and FURTHER.md has the SIGCHLD experiment.
+If a command's line ends with `&`, the shell spawns the process but does NOT
+wait for it, so the user can type the next command at once.  The full
+directory explains how to reap zombies (WNOHANG loop, or SIGCHLD); the TODOs
+hint at both.
+
+Builds on 02-shell-builtins: run_command() gains a `background` flag, main()
+detects a trailing `&`, and reap_background() collects finished children with
+`waitpid(-1, WNOHANG)` before each prompt.  No `;`/`&&`/`||` here -- those are
+the next bonus, which builds on this one.

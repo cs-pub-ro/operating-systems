@@ -1,0 +1,12 @@
+From dev/prompt-rework-lab6.txt:
+
+Exercise 01: Commands With Arguments
+
+* Goal: exec with an argument array.
+* Description: Extend the minimal shell (Demo 01) so a command can take
+  arguments, e.g. `ls -l /tmp`.  Nothing more -- no builtins, no operators,
+  no background.
+
+The reading and a whitespace tokenizer (which NULL-terminates the array so
+it can serve as an argv) are given.  The student writes the fork / execvp /
+waitpid in run_command(), the one change from the demo being execlp -> execvp.

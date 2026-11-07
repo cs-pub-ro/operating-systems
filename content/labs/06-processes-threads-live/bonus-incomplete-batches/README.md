@@ -4,16 +4,16 @@
 
 ## Goal
 
-Make the encryptor from `03-file-encryptor` accept any number of files: 57 files in batches of 10 are five full batches and one of 7, and six threads.
+Make the encryptor from `04-file-encryptor` accept any number of files: 57 files in batches of 10 are five full batches and one of 7, and six threads.
 Afterwards you will be able to split *n* items into batches of *k* when *k* does not divide *n*, which is the usual case.
 
 ## Background
 
-`03-file-encryptor` refused a file count that was not a multiple of the batch size.
+`04-file-encryptor` refused a file count that was not a multiple of the batch size.
 The honest version rounds the number of threads up, and gives the last thread what is left.
 Two things change, and nothing else: how many threads there are, and how many files the last batch has.
 
-The shipped `encryptor.c` is the skeleton of `03-file-encryptor` with two TODOs added.
+The shipped `encryptor.c` is the skeleton of `04-file-encryptor` with two TODOs added.
 Start from your finished `encryptor.c` from that exercise, and copy the two new TODO comments into it, or paste your four finished pieces into the shipped file; either way, the first four TODOs are the ones you already did.
 
 ## Your Task

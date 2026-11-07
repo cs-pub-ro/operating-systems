@@ -1,0 +1,14 @@
+From dev/prompt-rework-lab6.txt:
+
+Bonus (b): the shell chaining commands with the ;, && and || operators.
+
+* Goal: exit-status parsing and the list operators.
+* Description: Extend the background shell so several commands go on one line,
+  joined by ;, && and ||, each deciding from the previous status whether the
+  next runs.  No I/O redirection or piping.
+
+Builds on bonus-background-processes (cumulative): arguments, cd/exit
+builtins, background `&` and reaping are already present.  The tokenizer
+(splitting at spaces, tabs and ;), is_operator() and the cutting loop are
+given; the student writes the status unpacking in run_command() and the
+run-or-skip + builtin dispatch in run_line().
