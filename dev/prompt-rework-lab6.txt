@@ -7,7 +7,7 @@ The materials will be of two types:
 - Materials to be used live, under `content/labs/06-processes-threads-live/`
 - Materials to be used before and after labs, with full information, details and explanations, including reference solutions, under content/labs/06-processes-threads-full/`
 
-Take a look into the other labs for a model of structuring and implementing content.
+Take a look into labs 01, 02, 03 and 04 for a model of structuring and implementing content.
 
 Make the following updates:
 1. Make the 1st exercise be one where students add arguments to a command to be run.
