@@ -1,39 +1,65 @@
-# Measure Load Average
+# Demo: The Load Average
 
-The load average is a metric of the load of the CPUs.
-A load average of 1 means that one CPU is used 100%.
-A load average of 4 means that 4 CPUs are used 100% or, in case of a single CPU, that there are an average of 4 threads continuously competing for access to the CPU.
+Twice as many CPU-bound threads as CPUs, and the load average climbing to meet them.
 
-This demo shows the variation of the load average.
+## Goal
 
-First, build it:
+Read the load average as what it is, a count of running and ready threads averaged over time, and watch it respond to load.
+
+## Background
+
+The **load average** is the number of threads that are running or ready to run, averaged over the last 1, 5 and 15 minutes.
+Linux also counts threads in uninterruptible sleep, state `D`, so that a machine waiting on a slow disk shows as loaded.
+`uptime`, `top`, `htop` and `/proc/loadavg` all print the three averages; `/proc/loadavg` adds the instantaneous count of runnable threads over the total.
+
+`load_average.c` starts N threads that each run a CPU loop for a while and exit.
+
+## Build and run
 
 ```console
 make
+./load_average $(( 2 * $(nproc) ))
 ```
 
-Now run the `load_average` executable.
-Pass it the number of cores as argument:
+In a second terminal, every few seconds:
 
 ```console
-./load_average $(nproc)
+cat /proc/loadavg
 ```
 
-On another console check the CPU usage:
+or keep `htop` open, which shows the three averages in its header.
 
-```console
-htop
+## Results and explanations
+
+With 48 threads on 24 CPUs, from a quiet machine:
+
+```text
+$ cat /proc/loadavg
+0.13 4.88 8.10 1/4726 1386866                   before
+7.49 6.30 8.53 50/4753 1386942                  after 10 s
+13.72 7.68 8.95 49/4761 1386985                 after 20 s
+19.07 9.02 9.37 49/4770 1387036                 after 30 s
+23.74 10.36 9.81 50/4761 1387492                after 40 s
+30.82 12.84 10.64 49/4776 1387673               after 60 s, just before the threads end
+28.96 18.12 12.78 3/4736 1388570                20 s after they ended
+15.09 15.92 12.26 2/4703 1388759                60 s after
 ```
 
-In the `htop` output check the load average.
-Or use the `uptime` command:
+The fourth field is the plain count: 50 threads running or ready out of 4,700-odd, which is the 48 workers plus whatever else was awake; it drops to 3 the moment they end.
+The one-minute average climbs towards 48 and would reach it if the program ran a few minutes; it decays just as slowly afterwards, which is the point of an average.
+The five- and fifteen-minute averages barely notice a one-minute burst.
 
-```console
-$ uptime
- 00:21:05 up 3 days, 23:09,  2 users,  load average: 10.34, 4.68, 1.99
-```
+A load of 48 on 24 CPUs means that, at a typical moment, 24 threads are running and 24 are waiting in the ready queue: the machine is overcommitted two to one.
+A load of 24 would mean every CPU busy and nobody waiting; 0.13 is an idle desktop.
 
-The load average is manifested as 3 numbers as averages of 1 minute, 5 minutes, 15 minutes.
-If the program `load_average` runs long enough (you can increase the internal `NUM_ROUNDS` variable), you will get to a situation where the load average reaches the number of cores, as that many threads are currently using the CPU cores.
+## Going further
 
-More details [here](https://superuser.com/a/1402102/937945).
+* Run with `nproc` threads and the average heads for the number of CPUs, not past it.
+* Increase `NUM_ROUNDS` so that the program runs several minutes and the one-minute average actually reaches 48.
+* `dd if=/dev/zero of=big bs=1M count=4000 oflag=direct` on a slow disk raises the load without using a CPU, through the `D` state; `vmstat 1` shows it in the `b` column.
+
+## References
+
+* `man 5 proc`, `/proc/loadavg`
+* `man 1 uptime`, `man 1 top`
+* Brendan Gregg, [Linux Load Averages: Solving the Mystery](https://www.brendangregg.com/blog/2017-08-08/linux-load-averages.html)
