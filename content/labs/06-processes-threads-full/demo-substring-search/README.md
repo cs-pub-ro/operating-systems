@@ -60,7 +60,7 @@ thread 0: 142195 matches in 16777216 bytes
 
 `grep -o kernel big.txt | wc -l` says 569,022.
 The four threads above add up to 569,019.
-Three matches went missing, one per boundary between parts; the second exercise is about them.
+Three matches went missing, one per boundary between parts; the third exercise is about them.
 
 ## Results and Explanations
 
@@ -122,7 +122,7 @@ thread 0: 142195 matches in 16777216 bytes
 Thread 0 was started first and reported last.
 Once started, the threads are scheduled independently, on different cores if there are any, and nothing in the program says who finishes first.
 The output is the only shared thing here, and `printf()` keeps whole lines together, so the lines are intact and their order is not.
-Any program that needs the results in order has to collect them in order, which is what the second exercise does.
+Any program that needs the results in order has to collect them in order, which is what the third exercise does.
 
 ### What the kernel saw
 
