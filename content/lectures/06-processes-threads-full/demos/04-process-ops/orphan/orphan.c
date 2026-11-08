@@ -11,7 +11,7 @@ int main(void)
 {
 	pid_t pid;
 	int rc;
-	char *args[] = {"/usr/bin/sleep", "100"};
+	char *const args[] = {"/usr/bin/sleep", "100", NULL};
 
 	rc = posix_spawn(&pid, "/usr/bin/sleep", NULL, NULL, args, NULL);
 	DIE(rc != 0, "posix_spawn");

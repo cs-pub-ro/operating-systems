@@ -25,6 +25,7 @@ static void wait_for_input(const char *msg)
 int main(void)
 {
 	char *p;
+	char value;
 	int status;
 	size_t i;
 	int page_size = getpagesize();
@@ -41,28 +42,25 @@ int main(void)
 	wait_for_input("init p before fork");
 
 	switch (fork()) {
-		case -1:    /* handle error */
-			perror("fork");
-			exit(EXIT_FAILURE);
+	case -1:    /* handle error */
+		perror("fork");
+		exit(EXIT_FAILURE);
 
-		case 0:     /* child process */
-			char value;
+	case 0:     /* child process */
+		wait_for_input("child begin");
 
-			wait_for_input("child begin");
+		for (i = 0; i < NUM_PAGES / 2; i++)
+			value = p[i*page_size];
+		wait_for_input("child after read");
 
-			for (i = 0; i < NUM_PAGES / 2; i++)
-				value = p[i*page_size];
-			wait_for_input("child after read");
+		for (i = NUM_PAGES / 2; i < NUM_PAGES; i++)
+			p[i*page_size] = page_size-i;
+		wait_for_input("child after write");
 
-			for (i = NUM_PAGES / 2; i < NUM_PAGES; i++)
-				p[i*page_size] = page_size-i;
-			wait_for_input("child after write");
+		exit(EXIT_SUCCESS);
 
-			exit(EXIT_SUCCESS);
-			break;
-
-		default:
-			break;
+	default:
+		break;
 	}
 
 	wait(&status);
