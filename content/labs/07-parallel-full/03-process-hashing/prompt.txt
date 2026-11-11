@@ -1,0 +1,23 @@
+From dev/prompt-lab-07.txt:
+
+Exercise 03: Multi-process File Hashing (Parallel `execve`)
+
+* Goal: Parallel process spawning and waiting.
+* Description: Write a program that receives an input file containing a
+  list of filenames (one per line).
+* Student Task: Instead of hashing them sequentially, the main program must
+  spawn multiple *processes* in parallel. For each filename, the parent
+  should `fork()`, and the child should use `execve` (or `execlp`) to run
+  the `md5sum` utility on that file.
+* Constraint: To achieve true parallelism, the parent must first spawn ALL
+  children in a loop, and only after all are spawned, use a second loop to
+  `wait()` for all of them to finish.
+Include all text processing in the skel, so students only have to worry
+about creating the processes and waiting on them.
+
+read_list() and the timing are provided; the two loops are the exercise.
+The skeleton therefore hashes nothing, the one exception to the session's
+"sequential and correct to start with".  The sequential version is reached
+by putting the wait in the first loop, on purpose, as a check.  The summary
+goes to standard error so that the digests can be sorted and compared with
+md5sum's.  gen_files.sh makes the files and the list.

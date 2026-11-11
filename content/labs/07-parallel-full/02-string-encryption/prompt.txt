@@ -1,0 +1,20 @@
+From dev/prompt-lab-07.txt:
+
+Exercise 02: Parallel String Encryption
+
+* Goal: Data partitioning across threads.
+* Description: Start with a sequential program that encrypts a very long
+  string (allocated in memory) using a simple XOR cipher.
+* Student Task: Students must rewrite the program to split the work across
+  multiple threads. They need to correctly calculate the string offsets and
+  lengths for each thread to ensure the entire string is encrypted without
+  threads overlapping or missing characters (handling remainders properly).
+  No mutexes are needed here since memory regions are distinct.
+
+The cipher is a repeating-key XOR, so that a part in the middle of the
+string has to start at the right place in the key: a second position-
+dependent detail besides the remainder, and one that a key of 1, 2, 4 or 8
+characters hides.  The program checks itself by decrypting sequentially and
+comparing with the original text, which gives the students a reference
+without giving them expected output.  No struct is provided, unlike in
+session 06.

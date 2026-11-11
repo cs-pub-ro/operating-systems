@@ -1,0 +1,19 @@
+From dev/prompt-lab-07.txt:
+
+Demo 01: Race Conditions and Mutexes
+
+* Goal: Demonstrate what a race condition is and how to fix it.
+* Description: Write a program where multiple threads increment a shared
+  global variable in a loop.
+* Flow: The `live` directory should have the threads incrementing the
+  variable without protection, so students can observe the final value
+  being incorrect. The `full` directory (and the live demonstration) must
+  show how to declare, initialize, and use a `pthread_mutex_t` to protect
+  the critical section, resulting in the correct final sum.
+
+The thread count and the number of increments are arguments, so that the
+race can be made to hide (2 threads, 1000 increments) as well as to show.
+The mutex is initialized with pthread_mutex_init() rather than with the
+static initializer, so that all three of declare, initialize and use are
+lines to type.  The cost of the lock, measured with time, is the hand-over
+to the second demo and to 01-substring-search.

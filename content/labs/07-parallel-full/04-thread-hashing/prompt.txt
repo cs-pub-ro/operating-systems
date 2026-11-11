@@ -1,0 +1,19 @@
+From dev/prompt-lab-07.txt:
+
+Exercise 04
+
+Same as the above but use threads, and functions that implement the
+equivalent md5sum() utility.
+
+("The above" is Exercise 03: a list of file names, one per line, hashed in
+parallel; all text processing provided in the skeleton.)
+
+MD5 is implemented in md5.c from RFC 1321, with md5_file() as the function
+equivalent of the md5sum utility; no library is needed, so nothing is added
+to the prerequisites.  The skeleton is a working sequential loop.  One
+thread per file, as one process per file in exercise 03, so that the two
+exercises differ only in the kind of worker; the fixed-size pool with a
+mutex-protected index is in FURTHER.md.  The threads leave their digests in
+per-file structs and the main thread prints after the joins, so the output
+is in list order: the contrast with exercise 03, where each child printed
+for itself.
