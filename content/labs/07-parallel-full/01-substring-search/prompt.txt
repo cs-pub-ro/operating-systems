@@ -1,0 +1,18 @@
+From dev/prompt-lab-07.txt:
+
+Exercise 01: Parallel Substring Search
+
+Same as below to show parallelism for substring searching.
+
+("Below" is Exercise 02: start with a sequential program, and have the
+students rewrite it to split the work across multiple threads, computing
+the offsets and lengths for each thread.)
+
+The skeleton is a working sequential search over a mapped file, with the
+generator of session 06.  Session 06's 03-aggregate-matches already did the
+split and the overlap with per-thread results collected at the join; here
+the threads add to one shared total under a mutex, so that the exercise
+applies the first demo, and the run is timed, so that it applies the
+second.  The search compares at every position, to be slow enough to time
+on 256 MiB.  The check that carries the lesson is one lock per match
+against one lock per thread.

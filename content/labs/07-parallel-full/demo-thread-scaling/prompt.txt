@@ -1,0 +1,21 @@
+From dev/prompt-lab-07.txt:
+
+Demo 02: Diminishing Returns in Parallelization
+
+* Goal: Demonstrate thread scaling and overhead.
+* Description: Parallelize a simple sequential program (e.g., a heavy
+  substring search or counting specific characters in a massive buffer).
+* Flow: The program should accept the number of threads as a command-line
+  argument. The documentation should instruct students to run the program
+  with 1, 4, 8, 32 threads, timing the execution (e.g., using the `time`
+  command). The `full` explanation must discuss why performance stops
+  improving and eventually degrades (context switching overhead, Amdahl's
+  Law, hardware limits).
+
+Counting a letter was chosen over the substring search, which is the first
+exercise.  The buffer is generated in memory, 256 MiB, and the generation
+is deliberately left sequential and timed separately: the program prints
+the time of the filling and of the counting, and `time` gives the whole, so
+that Amdahl's law can be read off the program's own output.  Up to 1024
+threads are accepted so that the degradation can be shown.  bench.sh, in
+the full directory only, prints the table of speed-ups.

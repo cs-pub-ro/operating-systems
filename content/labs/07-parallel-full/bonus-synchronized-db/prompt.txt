@@ -1,0 +1,27 @@
+From dev/prompt-lab-07.txt:
+
+Bonus: Synchronized In-Memory Database
+
+* Goal: Applying mutexes to complex shared data structures.
+* Description: Students will parallelize a sequential in-memory database.
+  (Note: The students already did a single-threaded version of this in
+  content/labs/03-memory-ops-full/03-in-memory-db/. Provide a skeleton that
+  resembles a basic single-threaded key-value store using the exercise in
+  lab 3 as a starting point).
+* Student Task: Students must modify the database to allow multiple threads
+  to perform operations concurrently. They must identify the critical
+  sections and introduce the minimum necessary `pthread_mutex_t` locks to
+  ensure data integrity without serializing the entire program (e.g.,
+  locking only during the actual data structure modification, not during
+  query parsing). Provide the skel for the task, starting from the
+  implementation in lab 3, so students are familiar with it.
+
+struct record, struct database, db_init(), db_add() and db_free() are the
+ones of the session 03 reference.  Added for this task, and provided:
+db_find(), which copies the record out; files of `add` and `find`
+commands; run_commands(), which parses one file and is shaped as a thread
+function.  The skeleton runs the files one after another.  "Query parsing"
+is the reading and parsing in run_commands(), which stays outside the
+lock because the mutex is inside the database functions.  Every find looks
+for a record its own file added earlier, so the expected output does not
+depend on the interleaving.
