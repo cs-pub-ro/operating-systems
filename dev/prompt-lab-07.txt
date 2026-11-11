@@ -1,0 +1,59 @@
+Generate a complete, comprehensive, and highly detailed lab session on "Parallelization and Basic Synchronization" for a 2nd-year Bachelor's level Operating Systems class.
+
+**Context & Prerequisites:**
+
+* **Target Audience:** 2nd-year undergraduate CS students.
+* **Topics Covered So Far:** Processes, thread creation/joining, memory management.
+* **Current Topic:** Turning sequential programs into parallel programs and introducing race conditions. The maximum level of synchronization allowed in this lab is a basic mutex (`pthread_mutex_lock` and `pthread_mutex_unlock`). Do not use semaphores, condition variables, or atomic variables.
+
+**Structure of the Output:**
+Provide the contents, C code (POSIX compliant), Makefiles, testing scripts, and Markdown documentation for two distinct directories:
+
+1. `content/07-parallel-live/`: Skeleton code and minimal instructions for the live lab session. It should contain sequential starting points where applicable, guiding comments, and goals.
+2. `content/07-parallel-full/`: Fully solved code, in-depth explanations of every task, step-by-step parallelization guides, and scripts/testing infrastructure to validate the exercises.
+
+Make the lab contents similar to the others, have them fit into a similar duration as the other labs.
+
+**Lab Session Contents:**
+
+The lab consists of "Demos" (collaborative) and "Exercises" (independent). Generate the required materials for the following:
+
+**Demo 01: Race Conditions and Mutexes**
+
+* **Goal:** Demonstrate what a race condition is and how to fix it.
+* **Description:** Write a program where multiple threads increment a shared global variable in a loop.
+* **Flow:** The `live` directory should have the threads incrementing the variable without protection, so students can observe the final value being incorrect. The `full` directory (and the live demonstration) must show how to declare, initialize, and use a `pthread_mutex_t` to protect the critical section, resulting in the correct final sum.
+
+**Demo 02: Diminishing Returns in Parallelization**
+
+* **Goal:** Demonstrate thread scaling and overhead.
+* **Description:** Parallelize a simple sequential program (e.g., a heavy substring search or counting specific characters in a massive buffer).
+* **Flow:** The program should accept the number of threads as a command-line argument. The documentation should instruct students to run the program with 1, 4, 8, 32 threads, timing the execution (e.g., using the `time` command). The `full` explanation must discuss why performance stops improving and eventually degrades (context switching overhead, Amdahl's Law, hardware limits).
+
+**Exercise 01: Parallel Substring Search**
+
+Same as below to show parallelism for substring searching.
+
+**Exercise 02: Parallel String Encryption**
+
+* **Goal:** Data partitioning across threads.
+* **Description:** Start with a sequential program that encrypts a very long string (allocated in memory) using a simple XOR cipher.
+* **Student Task:** Students must rewrite the program to split the work across multiple threads. They need to correctly calculate the string offsets and lengths for each thread to ensure the entire string is encrypted without threads overlapping or missing characters (handling remainders properly). No mutexes are needed here since memory regions are distinct.
+
+**Exercise 03: Multi-process File Hashing (Parallel `execve`)**
+
+* **Goal:** Parallel process spawning and waiting.
+* **Description:** Write a program that receives an input file containing a list of filenames (one per line).
+* **Student Task:** Instead of hashing them sequentially, the main program must spawn multiple *processes* in parallel. For each filename, the parent should `fork()`, and the child should use `execve` (or `execlp`) to run the `md5sum` utility on that file.
+* **Constraint:** To achieve true parallelism, the parent must first spawn ALL children in a loop, and only after all are spawned, use a second loop to `wait()` for all of them to finish.
+Include all text processing in the skel, so students only have to worry about creating the processes and waiting on them.
+
+**Exercise 04**
+
+Same as the above but use threads, and functions that implement the equivalent md5sum() utility.
+
+**Bonus: Synchronized In-Memory Database**
+
+* **Goal:** Applying mutexes to complex shared data structures.
+* **Description:** Students will parallelize a sequential in-memory database. (Note: The students already did a single-threaded version of this in content/labs/03-memory-ops-full/03-in-memory-db/. Provide a skeleton that resembles a basic single-threaded key-value store using the exercise in lab 3 as a starting point).
+* **Student Task:** Students must modify the database to allow multiple threads to perform operations concurrently. They must identify the critical sections and introduce the minimum necessary `pthread_mutex_t` locks to ensure data integrity without serializing the entire program (e.g., locking only during the actual data structure modification, not during query parsing). Provide the skel for the task, starting from the implementation in lab 3, so students are familiar with it.
