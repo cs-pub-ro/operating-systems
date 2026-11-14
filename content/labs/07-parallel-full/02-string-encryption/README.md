@@ -11,6 +11,7 @@ A very long string in memory is XORed with a repeating key by several threads, e
 
 The cipher XORs character *i* of the string with byte `i % klen` of the key.
 The sequential program is one call over the whole string, and the program's own check is another: it decrypts with one sequential call and compares the result with the original text.
+When the check fails, the program also says how many characters are wrong, where the first one is, and whether it was left in clear or XORed with the wrong byte of the key: the first is a mistake in the split, the second one in `xor_buffer()`.
 
 The threads write to the string, which is new compared with the search.
 They still need no mutex, because of what they write: thread *i* writes the characters of part *i* and no others, and the parts do not overlap.
@@ -19,7 +20,7 @@ A race needs two threads on the same memory, at least one of them writing; here 
 Files:
 
 * `encrypt.c` — the solution.
-* `test.sh` — the round trip for four keys and eight thread counts.
+* `test.sh` — the round trip for four keys, eight thread counts and three sizes, from 16 MiB down to one character.
 
 ## Build & Run
 
@@ -34,6 +35,20 @@ encrypted 256 MiB, 1 thread(s), 0.629 s
 round trip: ok
 encrypted 256 MiB, 4 thread(s), 0.164 s
 round trip: ok
+```
+
+A third argument sets the size of the string: a number of characters, or a number followed by `K` or `M`; the default is `256M`.
+A string of at most 64 characters is also shown character by character, with the key byte one pass over the string gives each character above the one the threads gave it:
+
+```console
+./encrypt secret 3 20
+```
+
+```text
+encrypted 20 characters, 3 thread(s), 0.000 s
+round trip: ok
+one pass: secretsecretsecretse
+threads:  secretsecretsecretse
 ```
 
 ## Results and Explanations
@@ -75,12 +90,14 @@ With 256 MiB and 4 threads the parts are 67,108,864 characters long:
 ```text
 $ ./encrypt secret 4          # key restarting in every part
 round trip: FAILED
+  134217728 of 268435456 characters are wrong; the first is at position 67108864, followed by 134217727 more in a row
+  position 67108864 was XORed with 's', where one pass gives it 'e': look at how the key byte is chosen
 $ ./encrypt abcd 4
 round trip: ok
 ```
 
 67,108,864 is a multiple of 4 and not of 6.
-With a 4-character key every part happens to start where the key does, and the mistake is invisible; with a 6-character key parts 1, 2 and 3 are encrypted with the key rotated.
+With a 4-character key every part happens to start where the key does, and the mistake is invisible; with a 6-character key parts 1 and 2 are encrypted with the key rotated, and only part 3 happens to start in step with it.
 A power-of-two size, a power-of-two thread count and a key of 1, 2, 4 or 8 characters is exactly the test a person writes first, and it passes on a wrong program.
 `test.sh` uses `secret`, and 3 and 7 threads, for that reason.
 
@@ -114,8 +131,19 @@ for (i = 0; i < nthreads; i++) {
 Part *i* starts `i * chunk` characters in and is `chunk` long, so part *i* ends exactly where part *i* + 1 starts: no gap, no overlap.
 The last part runs to the end of the string and so takes the remainder of the division, up to `nthreads - 1` characters.
 
-With 3 threads on 268,435,456 characters, `chunk` is 89,478,485 and one character is left over; with 7 threads, 3 are.
+With 3 threads on 268,435,456 characters, `chunk` is 89,478,485 and one character is left over; with 7 threads, 2 are.
 Without the special case those last characters stay in clear, and the round trip fails, because the sequential decryption then "decrypts" characters that were never encrypted.
+On a short string the mistake is visible at a glance:
+
+```text
+$ ./encrypt secret 3 20       # remainder dropped
+round trip: FAILED
+one pass: secretsecretsecretse
+threads:  secretsecretsecret..
+                            ^
+  2 of 20 characters are wrong; the first is at position 18, followed by 1 more in a row
+  position 18 was left in clear: no part encrypted it, or two parts did; look at the split
+```
 
 Unlike the search, there is **no overlap** between parts here, and there must not be.
 A character in two parts is XORed twice and comes out as plaintext.

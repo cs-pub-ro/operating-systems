@@ -19,6 +19,9 @@ The program then checks itself: it decrypts the string with **one** call over al
 `round trip: ok` therefore means that your threads, between them, produced exactly what the sequential encryption produces.
 That part of `main()` is the reference; leave it sequential.
 
+When the round trip fails, the program also says how many characters came out wrong and where the first of them is.
+It says whether that character was left in clear, which points at the split, or XORed with the wrong byte of the key, which points at `xor_buffer()`.
+
 Unlike the search, the threads **write** to the string.
 No mutex is needed, and none is to be used: think about what would have to be true of two threads' parts for one to be needed.
 
@@ -41,16 +44,19 @@ Then open `encrypt.c` and complete the five TODOs.
 ```console
 make
 ./encrypt secret 4
+./encrypt secret 3 20
 ```
 
-A third argument sets the size of the string in MiB; the default is 256.
+A third argument sets the size of the string: a number of characters, or a number followed by `K` or `M`; the default is `256M`.
+A string of at most 64 characters is also shown character by character: on one line the key byte one pass over the string gives each character, and under it the one your threads gave it.
 
 ## Check Your Work
 
+* Start with a string short enough to read, such as 20 characters with 3 threads, and go to the full size only once that one is right.
 * The round trip must succeed with 1, 2, 3, 4, 7, 8 and 64 threads.
   Which of these counts leave a remainder when the size is divided, and which of your lines deals with it?
 * It must also succeed with keys of different lengths: `secret`, `k`, `abcd`.
-* Undo your change to `xor_buffer()` for a moment, so that every part starts with the first byte of the key, and run with 4 threads and the key `secret`, then the key `abcd`.
+* Undo your change to `xor_buffer()` for a moment, so that every part starts with the first byte of the key, and run with 4 threads on the full-size string, with the key `secret`, then the key `abcd`.
   One of them fails and the other does not.
   Explain it, and say what it means for how you test a program like this one.
 * Make two parts overlap by one character, on purpose.

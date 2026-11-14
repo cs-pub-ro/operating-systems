@@ -35,7 +35,7 @@ With answers.
    A check has to be independent of what it checks; the sequential decryption is.
 1. **Ask for more parts than there are characters.**
 
-   With 10 characters and 64 threads, `chunk` is 0: 63 threads get an empty part and do nothing, and the last gets all 10.
+   With 10 characters and 64 threads, `./encrypt secret 64 10`, `chunk` is 0: 63 threads get an empty part and do nothing, and the last gets all 10.
    The result is right and the program is sequential, with 63 threads created for nothing.
    A real program would cap the thread count at the number of items.
 1. **Build with `-O2`.**

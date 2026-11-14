@@ -3,13 +3,13 @@ CFLAGS := -Wall -Wextra -g
 
 .PHONY: all test clean
 
-all: counter
+all: messages
 
-counter: counter.c
+messages: messages.c
 	$(CC) $(CFLAGS) -pthread -o $@ $<
 
 test: all
 	./test.sh
 
 clean:
-	$(RM) counter
+	$(RM) messages messages.txt

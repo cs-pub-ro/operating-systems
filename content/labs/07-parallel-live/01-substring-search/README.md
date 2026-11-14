@@ -13,7 +13,7 @@ Afterwards you will be able to parallelize a loop over a block of memory, protec
 It takes a thread count and, for now, ignores it.
 
 In session 06 each thread kept its count in its own struct and the main thread added the counts up after the joins.
-Here the threads add to **one global `total`**, as in the first demo, and so the addition needs a mutex:
+Here the threads add to **one global `total`**, and so the addition needs a mutex, as the writes of the first demo did:
 
 ```C
 pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
@@ -24,6 +24,19 @@ pthread_mutex_unlock(&lock);
 ```
 
 The initializer does for a global mutex what `pthread_mutex_init()` did in the demo.
+
+The split is the one of session 06: every region is `size / nthreads` bytes long, and the last one also takes what the division leaves over.
+A 10-byte file and 3 threads give regions of 3, 3 and 4 bytes; here they are, with the word `ab` written across the first cut:
+
+```text
+offset     0  1  2  3  4  5  6  7  8  9
+file       x  x  a  b  x  x  x  x  x  x
+region 0   x  x  a
+region 1            b  x  x
+region 2                     x  x  x  x
+```
+
+Neither region 0 nor region 1 holds all of `ab`, so neither of them finds it.
 
 A lock costs time, and while one thread holds it the others that want it wait.
 How often a thread takes the lock matters as much as taking it at all.

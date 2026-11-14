@@ -14,7 +14,7 @@ The first is short; the second needs its runs and a few minutes of discussion, a
 
 ## The through-line
 
-1. **`demo-race-condition`** — the unpartitionable case: lost updates, the critical section, `pthread_mutex_t`, and what the lock costs.
+1. **`demo-race-condition`** — the unpartitionable case: a shared file, broken lines, the critical section, `pthread_mutex_t`, and why four threads writing one file are no faster than one.
 1. **`demo-thread-scaling`** — the partitionable case, timed: cores, Amdahl's law, and the cost of threads.
 1. **`01-substring-search`** — both: a partition plus one shared total; lock once per thread, not once per match.
 1. **`02-string-encryption`** — threads that write disjoint parts; no lock; the remainder and the phase of the key.
@@ -46,7 +46,7 @@ A consequence to say out loud: until the TODOs are done, the summary line prints
 
 ## The bugs the session is built around
 
-* **`counter++` without a lock** — about two increments in three lost with four threads, none lost with a thousand increments.
+* **Three `write()` calls per line without a lock** (`demo-race-condition`) — most lines broken with four threads, often none with two threads and three messages.
 * **A lock taken once per item** (`01-substring-search`) — right, and slower with more threads.
 * **A match across a cut** — as in session 06; the overlap is `strlen(needle) - 1`.
 * **The remainder of the division** — in the search, the count and the encryption.
@@ -64,7 +64,7 @@ The four core exercises fit a session for a group that finished session 06's thr
 `03-process-hashing` and `04-thread-hashing` are short and are best done back to back, since the comparison between them is the point.
 The bonus is take-home for nearly everyone.
 
-If the demos ran long, compress the first: run the unprotected counter, show the wrong totals, add the three lines, and move on.
+If the demos ran long, compress the first: run the unprotected program, show the broken lines, add the mutex, and move on.
 The second should not be compressed below "four runs and the Amdahl question".
 
 ## Measurements need cores
@@ -78,10 +78,11 @@ With `-O2` the sequential times drop about four times over, and the speed-ups ar
 
 ## Demonstrations worth the time
 
-* **The counter with 2 threads and 1,000 increments, then 1,000,000.**
-  Right, then wrong: a race that does not show is still a race.
-* **`time ./counter 4 1000000` before and after the mutex.**
-  About 0.01 s against 0.23 s on the reference machine, and most of the difference is `sys`: the lock is not free, and a contended one involves the kernel.
+* **`./messages 2 3` several times, then `./messages 4 1000`.**
+  Usually whole, then broken: a race that does not show is still a race.
+* **`time ./messages 4 100000` before and after the mutex, then `time ./messages 1 400000`.**
+  About 1.1 s either way, and 0.7 s with one thread: the kernel lets one `write()` at a time into the file, so threads cannot speed this program up.
+  The cost of a lock taken too often is measured in `01-substring-search` instead.
 * **`./bench.sh` in the full `demo-thread-scaling`**, on the projector, next to `nproc`.
   The two speed-up columns side by side are Amdahl's law without the formula.
 * **`strace -e trace=clone,wait4 ./hash_files files.txt > /dev/null`**: sixteen `clone` lines, then sixteen `wait4` lines.
@@ -93,8 +94,8 @@ Measured on Ubuntu 24.04, gcc 13.3, glibc 2.39, x86-64, an Intel Core i5-12400: 
 
 | Fact | Value |
 | --- | --- |
-| `./counter 4 1000000`, no mutex | between about 1,000,000 and 1,500,000; 0.01 s |
-| `./counter 4 1000000`, mutex | 4,000,000 on every run; 0.23 s |
+| `./messages 4 1000`, no mutex | a few dozen to a few hundred whole lines of 4,000 (on the machine of the demo's notes) |
+| `./messages 4 1000`, mutex | 4,000 whole lines on every run |
 | `./count_chars`, 256 MiB | 10,457,088 occurrences of `e` |
 | `./count_chars`, counting, 1 / 2 / 4 / 8 / 16 / 32 / 1024 threads | 0.262 / 0.137 / 0.071 / 0.057 / 0.044 / 0.041 / 0.052 s |
 | `./count_chars`, whole program, 1 / 4 / 32 threads | 0.358 / 0.164 / 0.136 s |
@@ -113,7 +114,7 @@ The absolute times will differ on every machine; the shapes should not.
 
 * **Memory.**
   `count_chars` and `encrypt` allocate 256 MiB, and `big.txt` is 256 MiB on disk and in the page cache.
-  On a VM with 2 GiB or less, pass a smaller size: `./count_chars 4 64`, `./encrypt secret 4 64`, `./gen_text big.txt 64`.
+  On a VM with 2 GiB or less, pass a smaller size: `./count_chars 4 64`, `./encrypt secret 4 64M`, `./gen_text big.txt 64`.
 * **Disk.**
   `gen_files.sh` writes 256 MiB under `data/`, in each of the two hashing exercises; copying `data/` and `files.txt` from one to the other saves the second half.
 * **`time` is the shell keyword here**, and that is enough: `real` is the number to read, and `user` greater than `real` is the sign that several cores were used.

@@ -91,6 +91,8 @@ int main(int argc, char *argv[])
 	 * TODO 1: start one child process per file, each running
 	 * `md5sum <file>`, and remember its PID in `pids`.  Do not wait for
 	 * any of them here: when this loop ends, all of them are running.
+	 * If `execlp()` returns, it has failed: the child must end there,
+	 * with `_exit()`, and not go on with the parent's loop.
 	 */
 
 	/*

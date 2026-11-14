@@ -4,7 +4,7 @@ This session is about taking a program that does its work in one flow of control
 
 * Turning a sequential program into a parallel one, with threads and with processes.
 * Measuring the result: how much faster, and where it stops getting faster.
-* The race condition: what goes wrong when two threads write the same variable.
+* The race condition: what goes wrong when two threads use the same thing at the same time.
 * The mutex, the simplest tool against it.
 
 ## Learning objectives
@@ -12,7 +12,7 @@ This session is about taking a program that does its work in one flow of control
 By the end of this session you should be able to:
 
 * Take a sequential loop over a block of data and split it between threads, with every element in exactly one thread's part.
-* Recognize a race condition in a program, and in its output, and say which statement is the critical section.
+* Recognize a race condition in a program, and in its output, and say which statements form the critical section.
 * Protect a critical section with `pthread_mutex_lock()` and `pthread_mutex_unlock()`, and keep it as short as it can be.
 * Tell the data that needs a lock, because several threads write it, from the data that does not, because the partition gives each thread its own.
 * Measure a speed-up with `time`, and explain why it stops at some number of threads, and why it can turn into a slow-down.
@@ -61,7 +61,7 @@ The bonus exercise is optional: start it if you finish the core exercises, or ta
 
 | Order | Task | Type | Objective |
 | --- | --- | --- | --- |
-| 1 | [`demo-race-condition`](demo-race-condition) | Demo | Threads that increment one shared counter: the race, and the mutex that fixes it. |
+| 1 | [`demo-race-condition`](demo-race-condition) | Demo | Threads that write messages to one shared file: the race, and the mutex that fixes it. |
 | 2 | [`demo-thread-scaling`](demo-thread-scaling) | Demo | Count a letter in a large buffer with 1, 4, 8, 32 threads, and time it. |
 | 3 | [`01-substring-search`](01-substring-search) | Core | A sequential search made parallel, with a shared total behind a mutex. |
 | 4 | [`02-string-encryption`](02-string-encryption) | Core | A sequential XOR cipher made parallel: offsets, lengths and the remainder. |

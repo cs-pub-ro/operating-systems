@@ -17,3 +17,16 @@ The mutex is initialized with pthread_mutex_init() rather than with the
 static initializer, so that all three of declare, initialize and use are
 lines to type.  The cost of the lock, measured with time, is the hand-over
 to the second demo and to 01-substring-search.
+
+Revised after the first run of the session.  A teaching assistant pointed
+out that for a counter the right tool is an atomic increment
+(compare-and-swap), not a mutex, so a demo that fixes `counter++` with a
+mutex is not factually the best answer and invites the objection.  The
+shared thing is now a file: each thread writes a message as one line in
+three write() calls, and without a lock the calls of different threads
+interleave and break the lines.  For a critical section of three system
+calls there is no atomic instruction, and the mutex is the tool one would
+actually use.  The flow is the same: live without protection, full with
+the mutex declared, initialized and used, and the thread and message
+counts as arguments so that the race can be made to hide (2 threads, 3
+messages) as well as to show.

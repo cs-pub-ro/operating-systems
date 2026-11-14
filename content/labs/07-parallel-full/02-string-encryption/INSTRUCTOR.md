@@ -46,11 +46,17 @@ The two things to take away are the argument for why no mutex is needed, and the
 | `time`, whole program, 1 / 8 threads | 1.36 / 0.87 s |
 | `-O2`, 1 thread | 0.62 s, unchanged |
 | Loop without `%`, 1 thread, `-O0` / `-O2` | 0.34 / 0.14 s |
-| `make test` | 4 keys, 8 thread counts, 16 MiB, all `ok` |
+| Key restarted per part, `./encrypt secret 4 20` | `FAILED`; 13 of 20 wrong, the first at position 5, XORed with `s` instead of `t` |
+| Remainder dropped, `./encrypt secret 3 20` | `FAILED`; positions 18 and 19 left in clear |
+| `make test` | 4 keys, 8 thread counts, at 16 MiB, 20 characters and 1 character, all `ok` |
 
 ## Practical notes
 
-* The string is 256 MiB of `malloc()`; a third argument sets the size in MiB for small VMs, and for quick tests.
+* The string is 256 MiB of `malloc()`; a third argument sets the size, in characters or with a `K` or an `M`, for small VMs and for quick tests.
+  `16` means 16 characters; 16 MiB is `16M`.
+* Up to 64 characters the program prints the key byte each character should have got and the one it got, and on a failed round trip it says where the first wrong character is and whether it was left in clear or XORed with the wrong key byte.
+  That is what to point a student at who says only that it fails: it separates a split mistake from an `xor_buffer()` one.
+  The diagnosis is computed from the decrypted text and the regenerated original, after the timing, so it changes neither the times nor what students write.
 * The exit status is 0 for a good round trip and 1 for a failed one, so the program can be used in a shell loop.
 * The text is one 64 KiB block of pseudo-random letters, repeated; the check regenerates the block and compares, which is why it is fast.
 * The skeleton prints the thread count it was given even while it is sequential; the round trip succeeds from the start, so the first thing a student sees is `ok` with "4 thread(s)" and the one-thread time.
