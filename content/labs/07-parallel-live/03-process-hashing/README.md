@@ -34,7 +34,8 @@ Open `hash_files.c` and complete the two TODOs.
 
 1. **Start the children** — one loop over the files: `fork()`, and in the child `execlp()` to run `md5sum` on the file.
    Remember each child's PID in `pids`.
-   A child whose `execlp()` fails must not go on to run the parent's loop.
+   If `execlp()` returns, it has failed: report the error with `perror()` and end the child right there with `_exit()` and a non-zero status.
+   Otherwise the child, a copy of the parent in the middle of its loop, goes on to fork the remaining files itself.
 1. **Wait for the children** — a second loop, after the first one has ended.
    A child that did not exit with status 0 counts as failed.
 

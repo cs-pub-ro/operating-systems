@@ -73,7 +73,7 @@ The search itself runs with no lock held.
 It reads the mapping, which nobody writes, and counts in `count`, a local variable on the thread's own stack.
 Only the last step touches shared memory, and that step is the critical section: one addition, done once per thread.
 
-`total += count` is the `counter++` of the first demo, a load, an add and a store, and without the lock two threads finishing at the same moment can lose one of the two additions.
+`total += count` is three steps, a load, an add and a store, as a message of the first demo was three writes, and without the lock two threads finishing at the same moment can lose one of the two additions.
 With four threads that is four additions in the whole run and the loss is rare, which makes it the worst kind of bug: the program is wrong and the tests pass.
 
 ### TODO 3 — the split
@@ -132,7 +132,7 @@ if (memcmp(buf + i, needle, nlen) == 0) {
 }
 ```
 
-Without a lock this is the first demo again, and loses matches on every run:
+Without a lock, the load, add and store of `total++` from different threads interleave, and an addition written over by another thread is lost, on every run:
 
 ```text
 2241436 matches, 4 thread(s), 0.150 s

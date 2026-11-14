@@ -3,10 +3,10 @@ CFLAGS := -Wall -Wextra -g
 
 .PHONY: all clean
 
-all: counter
+all: messages
 
-counter: counter.c
+messages: messages.c
 	$(CC) $(CFLAGS) -pthread -o $@ $<
 
 clean:
-	$(RM) counter
+	$(RM) messages messages.txt

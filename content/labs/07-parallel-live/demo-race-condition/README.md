@@ -1,8 +1,9 @@
 # Demo: A Race Condition, and a Mutex
 
-`counter.c` starts several threads that each add one to the same global variable, a given number of times.
-Four threads adding a million times each should leave four million in the counter, and nothing in the program looks as if it could do anything else.
+`messages.c` starts several threads that each write messages to one shared file, a given number of times.
+A message is one line, `thread <t>: message <i>`, written in three calls to `write()`: the thread's name, the word `message`, and the number.
+Four threads writing a thousand messages each should leave four thousand whole lines in `messages.txt`, and nothing in the program looks as if it could do anything else.
 
-Together with the teaching assistant you will run it a few times, with different numbers of threads and of increments, and look at what the counter holds at the end.
-Then you will fill in the three TODOs in `counter.c`: declare a mutex, initialize it, and lock it around the one statement that needs it.
-Two things to look at afterwards: whether the result is now right on every run, and how much longer the program takes, with `time`.
+Together with the teaching assistant you will run it a few times, with different numbers of threads and of messages, and look at how many lines come out whole, and at the file itself.
+Then you will fill in the three TODOs in `messages.c`: declare a mutex, initialize it, and lock it around the statements that need it.
+Two things to look at afterwards: whether every line is now whole on every run, and how long the program takes, with `time`, next to the same messages written by one thread.

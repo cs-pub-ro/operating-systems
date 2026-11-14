@@ -37,7 +37,7 @@ With answers.
    This is a thread pool at its smallest.
 1. **Take the mutex out of that version.**
 
-   `i = next_job++` is the unprotected counter of the first demo.
+   `i = next_job++` is a load, an add and a store, like `total++` in `01-substring-search` without its lock.
    Two workers can read the same index, and then both hash the same file, both writing the same `jobs[i]`.
    The output is still right: the two write the same digest, and a lost update only ever holds the index back, so no file is skipped.
    The bug is work done twice, and it is invisible unless it is looked for.

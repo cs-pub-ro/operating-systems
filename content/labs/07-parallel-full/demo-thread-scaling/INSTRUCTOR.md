@@ -14,7 +14,7 @@ Students should leave able to give three separate reasons why a speed-up stops: 
    Point at the two lines it prints: filling and counting.
    Ask which of them threads could help with.
 1. **The four TODOs**, quickly: thread function, regions, create, join and add.
-   Ask why no mutex is needed, coming straight from the counter demo: nothing is written by two threads.
+   Ask why no mutex is needed, coming straight from the first demo: nothing is written by two threads.
    Check the total against the sequential run.
 1. **Run with 1, 2, 4, 8, 32 and `nproc` threads**, and have the room build the table: counting time, speed-up of the counting, `real` time, speed-up of the whole.
    `make bench` in the full directory prints the same table, and is the fallback if typing is slow.

@@ -10,7 +10,7 @@ The corresponding directory used during the session, with skeletons and task des
 By the end of this session you should be able to:
 
 * Take a sequential loop over a block of data and split it between threads, with every element in exactly one thread's part.
-* Recognize a race condition in a program, and in its output, and say which statement is the critical section.
+* Recognize a race condition in a program, and in its output, and say which statements form the critical section.
 * Protect a critical section with `pthread_mutex_lock()` and `pthread_mutex_unlock()`, and keep it as short as it can be.
 * Tell the data that needs a lock, because several threads write it, from the data that does not, because the partition gives each thread its own.
 * Measure a speed-up, and explain with Amdahl's law, the number of cores and the cost of the threads themselves why it stops growing and then falls.
@@ -28,7 +28,7 @@ By the end of this session you should be able to:
 
 | Task | Type | Objective |
 | --- | --- | --- |
-| [`demo-race-condition`](demo-race-condition) | Demo | A shared counter, lost updates, and `pthread_mutex_t` declared, initialized and used. |
+| [`demo-race-condition`](demo-race-condition) | Demo | A shared file written three calls per line, broken lines, and `pthread_mutex_t` declared, initialized and used. |
 | [`demo-thread-scaling`](demo-thread-scaling) | Demo | A counting loop split between threads and timed: the speed-up, where it stops, and why. |
 | [`01-substring-search`](01-substring-search) | Core | A sequential search made parallel; a shared total, one lock per thread rather than one per match. |
 | [`02-string-encryption`](02-string-encryption) | Core | Threads that write disjoint parts of one string: offsets, lengths, the remainder, the phase of the key. |
@@ -49,8 +49,8 @@ Each task directory contains:
 Session 06 started threads and processes; this session asks what they are **for**, and what they cost.
 Every program starts sequential and correct, is made parallel, and is then held to two standards: it has to print what the sequential one printed, and it has to be measured.
 
-1. **`demo-race-condition`** is the one program that cannot be partitioned: every thread writes the same variable.
-   The counter comes out wrong, differently on every run, and a mutex around one statement fixes it, at a price that `time` shows.
+1. **`demo-race-condition`** is the one program that cannot be partitioned: every thread writes to the same file.
+   The lines come out broken, differently on every run, and a mutex around the three calls that write one line fixes it; `time` shows that four threads writing one file are no faster than one.
 1. **`demo-thread-scaling`** is the opposite case: a loop over a buffer, cut into regions, with nothing shared for writing.
    The counting gets faster up to the number of cores and no further, and the program as a whole gets faster by much less, because filling the buffer is still one thread's work.
 1. **`01-substring-search`** puts the two demos together: a partition for the search, and a mutex for the one shared total.
