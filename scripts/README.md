@@ -177,6 +177,9 @@ The SVGs are committed next to the PDFs, so building the site needs no conversio
 Re-run the script after re-exporting a drawing; it skips whatever is already newer than its source.
 Diagrams made in [draw.io](https://www.drawio.com/) keep their `.drawio` source in the same directory, and are exported to SVG from the editor.
 
+From lecture 07 on, the figures are drawn from code: a Python program per lecture, under [`generate-images/`](generate-images), writes each figure as an `.excalidraw` file and renders the SVG beside it with rough.js, the library Excalidraw itself draws with.
+Both files are committed, so building the site still needs none of this; [`generate-images/README.md`](generate-images/README.md) says how to set the tools up and rebuild a lecture's figures.
+
 ### Slides
 
 A lecture's deck lives in `slides/`, written in [Quarto](https://quarto.org/docs/presentations/) and rendered to [reveal.js](https://revealjs.com/).
