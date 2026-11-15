@@ -13,7 +13,7 @@
     // EXCLUDED_DIRS in scripts/sessions.py -- so it is not held to the style.
     "content/**/old/**",
     "_site/**",
-    "node_modules/**",
+    "**/node_modules/**",
     ".venv/**",
     ".claude/**"
   ],
