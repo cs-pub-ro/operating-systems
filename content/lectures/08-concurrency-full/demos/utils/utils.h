@@ -20,6 +20,6 @@
 			perror(call_description);			\
 			exit(EXIT_FAILURE);				\
 		}							\
-	} while(0)
+	} while (0)
 
 #endif

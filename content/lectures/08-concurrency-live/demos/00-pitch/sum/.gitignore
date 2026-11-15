@@ -1,0 +1,6 @@
+/sum_serial
+/sum_threads
+/sum_partition
+/sum_atomic
+/sum_spinlock
+/sum_mutex
