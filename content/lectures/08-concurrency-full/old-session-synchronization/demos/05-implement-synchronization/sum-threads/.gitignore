@@ -1,0 +1,6 @@
+/sum_threads
+/sum_threads_32
+/sum_threads_32_longlong
+/sum_threads_atomic
+/sum_threads_atomic_32
+/sum_threads_atomic_32_longlong
