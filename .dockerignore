@@ -1,0 +1,4 @@
+# The image only needs dev/requirements.txt; the repository is mounted at run
+# time, so keep the build context small.
+*
+!dev/requirements.txt
