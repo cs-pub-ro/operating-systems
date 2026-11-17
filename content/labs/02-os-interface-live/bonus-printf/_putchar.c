@@ -19,6 +19,8 @@
  *   ssize_t write(int fd, const void *buf, size_t count);
  */
 void _putchar(char character)
-{
+{	
+	
+	write(1,&character,1);
 	/* TODO: call write() to output `character` to stdout (fd 1). */
 }

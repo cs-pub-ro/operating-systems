@@ -1,0 +1,44 @@
+make clean_src clean_snippets src snippets
+make[1]: Entering directory '/home/alex/HarnessAP/operating-systems/content/assignments/elf-loader/tests'
+make -C /home/alex/HarnessAP/operating-systems/content/assignments/elf-loader/src clean
+make[2]: Entering directory '/home/alex/HarnessAP/operating-systems/content/assignments/elf-loader/src'
+rm -f *.o elf-loader
+make[2]: Leaving directory '/home/alex/HarnessAP/operating-systems/content/assignments/elf-loader/src'
+make -C /home/alex/HarnessAP/operating-systems/content/assignments/elf-loader/tests/snippets clean
+make[2]: Entering directory '/home/alex/HarnessAP/operating-systems/content/assignments/elf-loader/tests/snippets'
+rm -f *.o pie no_pie_hello no_pie_argc no_pie_argv no_pie_auxv no_pie_envp nolibc_no_rwx_text nolibc_no_rwx_rodata nolibc
+make[2]: Leaving directory '/home/alex/HarnessAP/operating-systems/content/assignments/elf-loader/tests/snippets'
+make -C /home/alex/HarnessAP/operating-systems/content/assignments/elf-loader/src
+make[2]: Entering directory '/home/alex/HarnessAP/operating-systems/content/assignments/elf-loader/src'
+gcc -g -static-pie -o elf-loader elf-loader.c
+make[2]: Leaving directory '/home/alex/HarnessAP/operating-systems/content/assignments/elf-loader/src'
+make -C /home/alex/HarnessAP/operating-systems/content/assignments/elf-loader/tests/snippets
+make[2]: Entering directory '/home/alex/HarnessAP/operating-systems/content/assignments/elf-loader/tests/snippets'
+nasm -felf64 -o nolibc_no_rwx_rodata.o nolibc_no_rwx_rodata.asm
+ld -nostdlib -o nolibc_no_rwx_rodata nolibc_no_rwx_rodata.o
+nasm -felf64 -o nolibc_no_rwx_text.o nolibc_no_rwx_text.asm
+ld -nostdlib -o nolibc_no_rwx_text nolibc_no_rwx_text.o
+nasm -felf64 -o nolibc.o nolibc.asm
+ld -nostdlib -o nolibc nolibc.o
+gcc -g -static -fcf-protection=none -fno-PIC -o no_pie_hello hello.c -no-pie
+gcc -g -static -fcf-protection=none -fno-PIC -o no_pie_argc argc.c -no-pie
+gcc -g -static -fcf-protection=none -fno-PIC -o no_pie_argv argv.c -no-pie
+gcc -g -static -fcf-protection=none -fno-PIC -o no_pie_auxv auxv.c -no-pie
+gcc -g -static-pie -o pie hello.c 
+gcc -g -static -fcf-protection=none -fno-PIC -o no_pie_envp envp.c -no-pie
+make[2]: Leaving directory '/home/alex/HarnessAP/operating-systems/content/assignments/elf-loader/tests/snippets'
+make[1]: Leaving directory '/home/alex/HarnessAP/operating-systems/content/assignments/elf-loader/tests'
+./run_tests.sh
+error-bad-magic                  ........................ passed ...   5
+error-not-64                     ........................ passed ...   5
+nolibc                           ........................ passed ...  20
+nolibc_no_rwx_rodata             ........................ passed ...  10
+nolibc_no_rwx_text               ........................ passed ...  10
+no_pie_hello                     ........................ passed ...   5
+no_pie_argc                      ........................ passed ...   5
+no_pie_argv                      ........................ passed ...   5
+no_pie_envp                      ........................ passed ...   5
+no_pie_auxv                      ........................ passed ...  10
+pie                              ........................ passed ...  10
+
+Checker:                                                            90/100

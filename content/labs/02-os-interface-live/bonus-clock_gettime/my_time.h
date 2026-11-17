@@ -2,6 +2,9 @@
 #define MY_TIME_H
 
 #include <time.h>
+int my_clock_gettime(clockid_t clkid, struct timespec *tp);
+time_t my_time(time_t *tloc);
+
 
 /*
  * my_clock_gettime - wrapper around the clock_gettime(2) system call.

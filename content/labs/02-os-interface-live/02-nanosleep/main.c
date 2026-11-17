@@ -1,6 +1,7 @@
 #include <stddef.h>
 #include <stdio.h>
 #include <time.h>
+#include <sys/syscall.h>
 
 /**
  * Syscall wrapper, just like presented in the demo
@@ -25,7 +26,7 @@ long my_syscall(long number, long arg1, long arg2, long arg3,
 }
 
 /* TODO 1: define the x86-64 syscall number for nanosleep here. */
-#define SYS_nanosleep	/* ??? */
+//#define SYS_nanosleep	/* ??? */
 
 /*
  * TODO 2: nanosleep(2) wrapper.
@@ -42,7 +43,7 @@ long my_syscall(long number, long arg1, long arg2, long arg3,
 long my_nanosleep(const struct timespec *req, struct timespec *rem)
 {
 	/* TODO: replace this with a call to my_syscall(...). */
-	return -1;
+	return my_syscall(SYS_nanosleep,req, rem,0,0,0,0);
 }
 
 /*
@@ -58,7 +59,12 @@ long my_nanosleep(const struct timespec *req, struct timespec *rem)
 unsigned int my_sleep(unsigned int seconds)
 {
 	/* TODO: build a struct timespec and call my_nanosleep(). */
-	return 0;
+	struct timespec tv;
+	struct timespec tv2;
+	tv.tv_sec = seconds;
+	tv.tv_nsec = 0;
+
+	return my_nanosleep(&tv,&tv2);
 }
 
 int main(void)

@@ -24,22 +24,22 @@ nolibc.o: nolibc.asm
 nolibc: nolibc.o
 	ld -nostdlib -o $@ $?
 
-no_pie_hello: hello.c libc.a
+no_pie_hello: hello.c #libc.a
 	gcc $(CFLAGS_NO_PIE) $@ $? $(LDFLAGS_NO_PIE)
 
-no_pie_argc: argc.c libc.a
+no_pie_argc: argc.c #libc.a
 	gcc $(CFLAGS_NO_PIE) $@ $? $(LDFLAGS_NO_PIE)
 
-no_pie_argv: argv.c libc.a
+no_pie_argv: argv.c #libc.a
 	gcc $(CFLAGS_NO_PIE) $@ $? $(LDFLAGS_NO_PIE)
 
-no_pie_auxv: auxv.c libc.a
+no_pie_auxv: auxv.c #libc.a
 	gcc $(CFLAGS_NO_PIE) $@ $? $(LDFLAGS_NO_PIE)
 
-no_pie_envp: envp.c libc.a
+no_pie_envp: envp.c #libc.a
 	gcc $(CFLAGS_NO_PIE) $@ $? $(LDFLAGS_NO_PIE)
 
-pie: hello.c libc.a
+pie: hello.c #libc.a
 	gcc $(CFLAGS) $@ $? $(LDFLAGS)
 
 clean:
