@@ -1,0 +1,18 @@
+From dev/prompt-lab-06.txt:
+
+Exercise 02: Aggregating Thread Results
+
+* Goal: Thread joining and returning data from threads.
+* Description: Extend Demo 02 so that the main thread aggregates the search
+  results. Worker threads will count substring matches in their assigned
+  memory regions and return the count.
+* Constraints: No concurrency mechanisms (like atomic variables or mutexes)
+  are allowed. Threads must return their local counts (e.g., via
+  `pthread_exit` or a passed struct), and the main thread will iterate over
+  the results after `pthread_join` to compute the total number of matches.
+
+The skeleton is the demo solved, with a count field added to the region.
+The result is stored in the region and returned as a pointer to that field,
+so that pthread_join()'s second argument is used and the lifetime rule is
+visible.  The third TODO is the boundary overlap, which the demo's planted
+words make reproducible.
