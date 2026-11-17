@@ -12,7 +12,7 @@
 void consumer_thread(so_consumer_ctx_t *ctx)
 {
 	/* TODO: implement consumer thread */
-	//heheheheh
+	//hehehehehlnsflnlsen
 	(void) ctx;
 }
 
