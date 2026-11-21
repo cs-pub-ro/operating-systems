@@ -170,7 +170,7 @@ See `scripts/README.md` for the details.
 
 ## State of the content
 
-Labs 01–07 and lectures 01–08 are written; labs 08–12 and lectures 09–12 are skeleton directories holding nothing but a `README.md` with a title.
+Labs 01–08 and lectures 01–08 are written; labs 09–12 and lectures 09–12 are skeleton directories holding nothing but a `README.md` with a title.
 The three assignments and the `info/` pages are written; `extra/` is only a title.
 `dev/restructure-sessions.txt`, `dev/restructure-sessions-2.txt` and `dev/extra-prompt-restructure.txt` are the specifications of the layout, and they are the authority when this file is ambiguous.
 Use `content/labs/01-software-stack-*` as the model for everything.
@@ -178,6 +178,9 @@ Use `content/labs/01-software-stack-*` as the model for everything.
 * Session 05 (`content/labs/05-memory-security-*`) is a CTF session: `-live/` holds the public challenge files (`chall.c`, `chall`, task README), and `-full/<task>/` holds the write-up plus the whole `build`/`publish`/`deploy`/`solve` Docker pipeline, the `flag`, and the reference `exploit.py`.
   The flags and exploits are the one piece of secret material inside a task tree — see `content/labs/05-memory-security-full/INSTRUCTOR.md` before touching the archive tooling.
   They are safe on the website because only `README.md` files become pages and only the suffixes in `ASSET_SUFFIXES` are copied alongside them, so a `flag` file is neither.
+* Session 08 (`content/labs/08-concurrency-*`) is built of challenges: in each task a prebuilt `chall` runs the functions of a shared library that the student repairs, and prints an encrypted flag when the library is right.
+  `-live/<task>/` holds `chall`, its source with the key taken out of `flag.h`, the header and the broken library; `-full/<task>/` holds the reference library, the complete `flag.h`, the `flag`, and `make test`.
+  The live executables are produced from the full half by `content/labs/08-concurrency-full/utils/publish.sh`, and `flag.h` by `utils/gen_flag.py`; see that session's `INSTRUCTOR.md` before changing a `chall.c`, a header or a flag.
 * Lecture 01 (`content/lectures/01-software-stack-*`) is the model for a lecture, the way lab 01 is the model for a lab: seven parts, seven demos, fifteen figures, and a deck in each half.
   Its `-full/old/` staging directory has been harvested and deleted.
 * Lecture 02 (`content/lectures/02-os-types-interface-*`) follows the same layout; its demos are grouped into subdirectories per part (`02-os-interface/syscalls/`, `04-optimize-os-interface/sendfile/`, …), and the `-live/` half mirrors them with a command-sheet `README.md` each.

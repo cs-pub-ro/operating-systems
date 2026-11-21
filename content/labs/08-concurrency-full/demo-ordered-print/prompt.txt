@@ -1,0 +1,12 @@
+From dev/prompt-lab-08.txt:
+
+2. A demo as a simple program (not a challenge) showing how to use
+   condition variables to have 3 threads go in a loop and always print
+   messages orderly: 1, 2, 3, 1, 2, 1, 2, 3.  Each thread only prints one
+   message: 1, or 2, or 3.
+
+The sequence is taken to be 1, 2, 3 repeated.  One shared `turn`, one
+mutex, one condition variable, broadcast on every hand-over.  The skeleton
+leaves `if` or `while` and `signal` or `broadcast` as open decisions, to be
+tried both ways.  The number of rounds is an argument so that the wrong
+choices can be made to show.

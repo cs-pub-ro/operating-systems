@@ -13,7 +13,7 @@
 
 set -u
 
-readonly LAST_SESSION=7
+readonly LAST_SESSION=8
 
 # Terminal colours, but only when the output is a terminal: piping the report
 # into a file or a pager should not fill it with escape sequences.
@@ -156,8 +156,9 @@ check_time() {
 	fi
 }
 
-# The inline assembly of session 02 and the exploits of session 05 are written
-# for x86-64 Linux, and will not work anywhere else.
+# The inline assembly of session 02, the exploits of session 05 and the
+# prebuilt executables of session 08 are for x86-64 Linux, and will not work
+# anywhere else.
 check_arch() {
 	local machine
 	machine=$(uname -m)
@@ -269,6 +270,15 @@ check_session_07() {
 	check_command md5sum
 	check_command nproc
 	check_command valgrind optional "needed by the further work of the bonus task"
+}
+
+check_session_08() {
+	heading "Session 08 -- Troubleshooting Concurrency"
+	check_arch
+	check_command gdb
+	check_command ps
+	check_command nproc
+	check_command valgrind optional "needed for Helgrind, in the binary tree task and the further work"
 }
 
 # The package that provides a tool, for the package manager this machine uses.
@@ -383,6 +393,7 @@ main() {
 		check_session_05
 		check_session_06
 		check_session_07
+		check_session_08
 	else
 		check_common
 		"check_session_$(printf '%02d' "$session")"

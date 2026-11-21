@@ -1,0 +1,17 @@
+From dev/prompt-lab-08.txt:
+
+12. A bonus exercise as a challenge with a badly implemented
+    worker-threads scenario (as a build up of the previous bonus
+    exercise).
+
+A thread pool: pool_create(), pool_submit(), pool_wait(),
+pool_destroy(), over a linked-list queue.  It builds on the boss and the
+workers by keeping the threads alive between uses, letting any thread
+submit, including a running task, and adding the question of when the
+work is finished.  The executable's tasks split ranges and submit the
+halves, so that "the queue is empty" and "the work is done" differ.
+
+Three planted flaws: the worker runs the task with the pool's lock held
+(a task that submits deadlocks against its own worker), pool_wait()
+polls the head of the queue without the lock, and pool_destroy() repeats
+the single signal of the previous exercise.

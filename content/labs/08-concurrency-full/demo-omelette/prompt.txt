@@ -1,0 +1,18 @@
+From dev/prompt-lab-08.txt:
+
+3. A demo as a challenge showing a badly implemented synchronization where
+   one requires 3 eggs to create an omelette.  You have "egg creation"
+   threads (and function) and an "omelette making" thread (and function).
+
+The challenge format is the one the prompt gives for all challenges: a
+prebuilt executable that runs functions of a shared library and prints an
+encrypted flag if all went well; students get the executable, its source
+without the key, the Makefile and the header of the library, and a
+skeleton of the library.
+
+Here the executable owns the basket and the threads; the library has
+egg_create() and omelette_make(), and calls back basket_put_egg() and
+basket_take_eggs(), which detect two threads inside and an omelette
+started with fewer than three eggs.  Three planted bugs: the hens' side is
+unlocked, the cook waits with `if`, and the eggs are taken after the
+unlock.

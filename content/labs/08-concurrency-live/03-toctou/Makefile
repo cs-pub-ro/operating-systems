@@ -1,0 +1,15 @@
+CC     := gcc
+CFLAGS := -Wall -Wextra -g
+
+.PHONY: all clean
+
+all: libregistry.so
+
+# The library: position-independent code, linked as a shared object.
+# The executable, chall, is already built, and looks for the library in its
+# own directory.
+libregistry.so: registry.c registry.h
+	$(CC) $(CFLAGS) -fPIC -shared -pthread -o $@ $<
+
+clean:
+	$(RM) libregistry.so

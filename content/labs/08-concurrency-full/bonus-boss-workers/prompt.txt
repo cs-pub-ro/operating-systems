@@ -1,0 +1,12 @@
+From dev/prompt-lab-08.txt:
+
+11. A bonus exercise as a challenge with a badly implemented boss-workers
+    scenario.
+
+boss_run(work, nitems, nworkers): the calling thread is the boss, the
+library starts and joins the workers.  Between them is a desk for one
+item, so that the hand-over stays small and the exercise is about the
+end.  Three planted flaws: one condition variable shared by the boss and
+the workers and woken with signal; the end announced with signal; and a
+worker that leaves on `stop` without looking at the desk, which loses
+the last item in some rounds.

@@ -1,0 +1,12 @@
+From dev/prompt-lab-08.txt:
+
+5. An exercise as a challenge that requires 5 threads to print messages
+   orderly (as a build up from demo 2).
+
+The library has turns_init(count), turn_take(id) and turn_pass(id); the
+executable's threads call print_message(id) between the two, and
+print_message() records the sequence and detects two threads inside.  The
+skeleton is empty on purpose: this is the exercise where the wait is
+written rather than repaired.  Splitting the wait and the hand-over into
+two functions, with the print outside the library, means the mutex cannot
+simply be held across the print as in the demo.

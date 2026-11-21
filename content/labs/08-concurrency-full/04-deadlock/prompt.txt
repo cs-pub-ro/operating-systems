@@ -1,0 +1,11 @@
+From dev/prompt-lab-08.txt:
+
+7. An exercise as a challenge with a simple deadlock problem.
+
+Bank accounts with one mutex each, and a transfer that locks `from` and
+then `to`.  The executable's threads go both ways around a ring of four
+accounts, so two threads soon ask for the same pair in opposite orders.
+The transfers are fixed in advance and no balance is checked before
+money is moved, so the final balances do not depend on the interleaving.
+The alarm of the executable turns the hang into a message; `./chall 0`
+leaves the program stuck, for ps and GDB.

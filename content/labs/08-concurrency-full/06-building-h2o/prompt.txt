@@ -1,0 +1,14 @@
+From dev/prompt-lab-08.txt:
+
+9. An exercise as a challenge showing a badly implemented "Building H2O"
+   synchronization problem.
+
+hydrogen() and oxygen() in the library, each of which has to call the
+executable's release_hydrogen() or release_oxygen() once.  The skeleton
+has two semaphores, 2 and 1, around the release, which limit how many
+atoms are released at once and do not group them.  The reference adds a
+barrier of three and keeps the post after the release.
+
+The threads of the executable share a counter of atoms to bring instead
+of each bringing a fixed number: with fixed shares the last hydrogen
+thread can be left without a partner, and a correct library hangs.

@@ -1,0 +1,11 @@
+From dev/prompt-lab-08.txt:
+
+1. A demo as a simple program (not a challenge) showing how to use mutexes
+   to synchronize access to a linked list for linked list operations.
+   Copy as much as possible from the lecture demo in
+   content/lectures/08-concurrency-full/demos/04-partitioning-synchronization/list/.
+
+list.c, list.h and utils/utils.h are the lecture's files, unchanged.
+thread-list-app.c is the lecture's, with the USE_MUTEX compile-time switch
+taken out: the live copy has two TODOs where the mutex goes, the full copy
+has the mutex.  One binary per half instead of the lecture's two.

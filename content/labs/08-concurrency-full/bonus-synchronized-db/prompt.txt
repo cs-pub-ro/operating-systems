@@ -1,0 +1,16 @@
+From dev/prompt-lab-08.txt:
+
+13. A bonus exercise as a challenge with a badly implemented in-memory
+    database (copy as much as possible from here:
+    content/labs/07-parallel-full/bonus-synchronized-db).
+
+struct record, the growable array and db_add() are session 07's.  The
+database is a library behind an opaque pointer; db_update() and
+db_remove() were added, and the command files were replaced by the
+executable's own threads, each working on ids of its own.
+
+Session 07 solved this with one mutex, so the new element here is a
+read-write lock, used badly in three ways: db_add() takes it for
+reading, db_find() returns with it held when the record is not found,
+and db_update() searches under the read lock and writes under the write
+lock, with the index gone stale in between.

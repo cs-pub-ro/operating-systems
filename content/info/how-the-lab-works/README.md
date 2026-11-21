@@ -8,7 +8,7 @@ Whenever you are stuck, unsure what an exercise wants, or lost in an explanation
 ## What you need
 
 * A Linux environment on an x86-64 machine: your own installation, a virtual machine, WSL, a container, or one of the faculty's lab machines.
-  Sessions 02 and 05 depend on x86-64 specifically, so an ARM machine will not do for those.
+  Sessions 02, 05 and 08 depend on x86-64 specifically, so an ARM machine will not do for those.
 * The tools each session uses, listed in the *Prerequisites and required tools* section of that session's `README.md`.
 * A terminal you are comfortable in, and the habit of reading `man` pages.
 

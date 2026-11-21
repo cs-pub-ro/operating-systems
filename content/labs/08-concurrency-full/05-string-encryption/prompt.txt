@@ -1,0 +1,13 @@
+From dev/prompt-lab-08.txt:
+
+8. An exercise as a challenge with a badly implemented concurrent access
+   to a multithreaded encryption exercise (copy as much as possible from
+   here: content/labs/07-parallel-full/02-string-encryption).
+
+xor_buffer(), the text generator and the round-trip check are session
+07's.  Session 07's version shared nothing for writing, so to have
+something to synchronize the split was changed from one part per thread
+to a shared cursor over small blocks, which the threads advance as they
+take work.  The planted bug: the cursor is read outside the lock, and the
+lock is held around the encryption and the write of the cursor.  The
+result is wrong on every run, and slow.

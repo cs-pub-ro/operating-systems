@@ -1,0 +1,12 @@
+From dev/prompt-lab-08.txt:
+
+10. An exercise as a challenge showing a badly implemented
+    producer-consumer synchronization problem.
+
+A bounded queue over a circular buffer, behind an opaque pointer, with
+queue_put() and queue_get().  Two planted flaws, the two that the
+condition-variable demo warned about: the waits use `if`, and producers
+and consumers share one condition variable woken with signal.  The first
+gives duplicated and lost items; with it fixed, the second gives a hang.
+The capacity is 2, with four producers and four consumers, because with
+a larger buffer the second flaw did not show.

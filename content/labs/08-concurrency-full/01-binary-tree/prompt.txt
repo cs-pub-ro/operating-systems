@@ -1,0 +1,16 @@
+From dev/prompt-lab-08.txt:
+
+4. An exercise as a challenge that requires synchronizing access to a
+   binary tree for binary tree operations (as a build up from demo 1).
+
+A binary search tree of integers behind an opaque pointer, so that the
+mutex can be added to the structure without rebuilding the executable.
+The skeleton is correct for one thread and has no synchronization.
+Insertion and removal are recursive on purpose: the lock has to go in the
+interface functions, and a lock put in the recursion deadlocks a thread
+against itself.
+
+Every thread of the executable works on keys of its own, so that each
+call has one right result and the final tree is known in advance.  The
+executable does not reliably catch a missing lock in tree_contains(); the
+README uses that to introduce Helgrind and the limits of testing.

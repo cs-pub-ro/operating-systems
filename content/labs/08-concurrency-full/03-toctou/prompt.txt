@@ -1,0 +1,12 @@
+From dev/prompt-lab-08.txt:
+
+6. An exercise as a challenge with a simple TOCTOU problem.
+
+A registry of names with registry_contains() and a static registry_add(),
+each correctly locked, and registry_register() written as "if not
+contains, add".  The bug is the gap between the two critical sections.
+The story is deliberately not the ticket sale of the lecture's toctou
+demo.  The executable lines the threads up at a barrier before every
+name, so that the window is hit on every run.  A lock around the two
+calls, with the same mutex, deadlocks a thread against itself; that trap
+is intended.
