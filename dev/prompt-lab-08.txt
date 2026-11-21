@@ -1,0 +1,47 @@
+We are preparing contents for a class on Operating Systems, part of a 4-years bachelor study program in a technical university.
+The class is part of the 2nd year, 1s semester.
+
+We are preparing the materials for lab-08: Troubleshooting Concurrency.
+The materials will be of two types:
+- Materials to be used / delivered live, under `content/labs/08-concurrency-live/`
+- Materials to be used before and after lecture, with full information, details and explanations, under content/labs/08-concurrency-full/`
+
+The live / full split follows the similar split used for the lectures (the conceptual part of the class), as in `content/lectures/08-concurrency-live/` and `contents/lectures/08-concurrency-full/`.
+
+Your task is to generate the contents for the lab-08 session, both the live and the full part:
+
+- `content/labs/08-concurrency-live/`: Skeleton code and minimal instructions for the live lab session. It should contain sequential starting points where applicable, guiding comments, and goals.
+- `content/labs/08-concurrency-full/`: Fully solved code, in-depth explanations of every task, step-by-step parallelization guides, and scripts/testing infrastructure to validate the exercises.
+
+Follow the example of the preceding labs (lab-01, lab-02, lab-03, lab-04, ...).
+
+Similar to to other labs, it consists of:
+- demo exercises: to be built, run together with the teaching assistant
+- exercises: to be solved individually (or in teams)
+- bonus exercises: additional exercises for those who work faster
+
+We want exercises to be similar to challenges.
+If the challenge is correctly solved, an flag will be provided.
+
+For challenges, we want to have an executable that uses a shared dynamic library.
+The executable runs functions in the shared library.
+If all goes OK, the executable will decrypt a flag (kept encrypted internally) and then print it.
+The executable is to be run locally.
+Students need to implement / update / fix the source code used to build the shared / dynamic library.
+Students are provided with the pre-built executable, the source code for the executable with the encryption / decryption key removed, the build file (Makefile) for building the shared / dynamic library, the header file with the interface of the shared library and the skeleton of the source code implementing the library.
+
+Create the following exercises:
+1. A demo as a simple program (not a challenge) showing how to use mutexes to synchronize access to a linked list for linked list operations.
+   Copy as much as possible from the lecture demo in content/lectures/08-concurrency-full/demos/04-partitioning-synchronization/list/.
+2. A demo as a simple program (not a challenge) showing how to use condition variables to have 3 threads go in a loop and always print messages orderly: 1, 2, 3, 1, 2, 1, 2, 3. Each thread only prints one message: 1, or 2, or 3.
+3. A demo as a challenge showing a badly implemented synchronization where one requires 3 eggs to create an omelette. You have "egg creation" threads (and function) and an "omelette making" thread (and function).
+4. An exercise as a challenge that requires synchronizing access to a binary tree for binary tree operations (as a build up from demo 1).
+5. An exercise as a challenge that requires 5 threads to print messages orderly (as a build up from demo 2).
+6. An exercise as a challenge with a simple TOCTOU problem.
+7. An exercise as a challenge with a simple deadlock problem.
+8. An exercise as a challenge with a badly implemented concurrent access to a multithreaded encryption exercise (copy as much as possible from here: content/labs/07-parallel-full/02-string-encryption).
+9. An exercise as a challenge showing a badly implemented "Building H2O" synchronization problem.
+10. An exercise as a challenge showing a badly implemented producer-consumer synchronization problem.
+11. A bonus exercise as a challenge with a badly implemented boss-workers scenario.
+12. A bonus exercise as a challenge with a badly implemented worker-threads scenario (as a build up of the previous bonus exercise).
+13. A bonus exercise as a challenge with a badly implemented in-memory database (copy as much as possible from here: content/labs/07-parallel-full/bonus-synchronized-db).
