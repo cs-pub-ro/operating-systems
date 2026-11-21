@@ -8,6 +8,7 @@ The `.excalidraw` file stays the source: it opens in [Excalidraw](https://excali
 | `exlib.py` | The library: a `Fig` with `rect()`, `ellipse()`, `arrow()`, `text()`, `box()` and `save()`. |
 | `exlib_render.js` | The renderer `save()` calls: an `.excalidraw` file in, an SVG drawn with [rough.js](https://roughjs.com/) out. |
 | `build_media08.py` | The ten figures of lecture 08, written with `exlib.py`. |
+| `build_media09.py` | The twelve figures of lecture 09, the same way; `disk()`, `strip()` and `pointer()` in it draw a disk, a file as a row of bytes and a file pointer. |
 | `setup.sh` | Fetches rough.js and the font. |
 | `preview.sh` | Turns one SVG into a PNG, with the right font. |
 | `build_media07.py`, `exc2svg.js`, `exc2svg_clean.py`, `render.sh` | The lecture 07 figures and the renderers they were made with, kept as they were used. |
@@ -65,4 +66,4 @@ Three things to know:
 * The name given to `Fig()` seeds the hand-drawn wobble.
   Renaming a figure redraws every stroke slightly differently.
 
-For a new lecture, copy `build_media08.py`, keep `padlock()`, `tcircle()`, `panel()` and `storyline()` as a start, and change `FULL`, `LIVE` and the figures.
+For a new lecture, copy the latest `build_mediaNN.py`, keep `tcircle()`, `panel()` and `storyline()` as a start, and change `FULL`, `LIVE` and the figures.

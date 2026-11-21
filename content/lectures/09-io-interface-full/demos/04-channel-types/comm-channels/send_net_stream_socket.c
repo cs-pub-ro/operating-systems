@@ -1,36 +1,46 @@
-/* SPDX-License-Identifier: BSD-3-Clause */
+// SPDX-License-Identifier: BSD-3-Clause
 
-#include <stdlib.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <sys/stat.h>
-#include <sys/socket.h>
+/*
+ * Send a message through a network stream socket (TCP), to the port the
+ * receiver listens on, on this machine.
+ */
+
 #include <netinet/in.h>
+#include <stdio.h>
+#include <string.h>
+#include <sys/socket.h>
+#include <unistd.h>
 
 #include "utils.h"
-#include "sock/sock_util.h"
 
-unsigned short remote_port = 4242;
-static const char message[] = "Hello, world!";
+#define PORT	4242
+
+static const char message[] = "Hello, TCP socket!\n";
 
 int main(void)
 {
-	int rc;
+	struct sockaddr_in addr;
+	ssize_t n;
 	int fd;
-	int sockfd;
+	int rc;
 
-	/* Create socket. */
-	fd = socket(PF_INET, SOCK_STREAM, 0);
+	fd = socket(AF_INET, SOCK_STREAM, 0);
 	DIE(fd < 0, "socket");
+	printf("socket(AF_INET, SOCK_STREAM) = %d\n", fd);
 
-	sockfd = tcp_connect_to_server("localhost", remote_port);
-	DIE(sockfd < 0, "tcp_connect_to_server");
+	memset(&addr, 0, sizeof(addr));
+	addr.sin_family = AF_INET;
+	addr.sin_port = htons(PORT);
+	addr.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
+	rc = connect(fd, (struct sockaddr *)&addr, sizeof(addr));
+	DIE(rc < 0, "connect");
+	printf("connect(%d, 127.0.0.1, port %d) done\n", fd, PORT);
 
-	/* Write message to socket. */
-	rc = send(sockfd, message, sizeof(message), 0);
-	DIE(rc < 0, "send");
+	n = send(fd, message, sizeof(message) - 1, 0);
+	DIE(n < 0, "send");
+	printf("send(%d) = %zd\n", fd, n);
 
-	close(sockfd);
+	close(fd);
 
 	return 0;
 }

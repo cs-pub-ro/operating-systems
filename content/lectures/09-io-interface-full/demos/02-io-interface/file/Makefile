@@ -1,21 +1,19 @@
+CC = gcc
 CPPFLAGS = -I../../utils
-CFLAGS = -Wall -Wextra -Wno-unused -Wno-unused-parameter -g
+CFLAGS = -Wall -Wextra -g
 
 .PHONY: all clean
 
-all: read_file write_file
-
-read_file: read_file.o
-
-read_file.o: read_file.c ../../utils/utils.h
-	$(CC) $(CPPFLAGS) $(CFLAGS) -c -o $@ $<
+all: write_file read_file
 
 write_file: write_file.o
 
 write_file.o: write_file.c ../../utils/utils.h
-	$(CC) $(CPPFLAGS) $(CFLAGS) -c -o $@ $<
+
+read_file: read_file.o
+
+read_file.o: read_file.c ../../utils/utils.h
 
 clean:
-	-rm -f *~
-	-rm -f read_file.o read_file
-	-rm -f write_file.o write_file
+	-rm -f *~ file_channel
+	-rm -f write_file.o read_file.o write_file read_file

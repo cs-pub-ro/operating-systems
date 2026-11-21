@@ -1,41 +1,66 @@
-#include <stdio.h>
-#include <time.h>
+// SPDX-License-Identifier: BSD-3-Clause
+
+/*
+ * Write NUM_RECORDS records to a file with write(), one system call for
+ * each.  The flags the file is opened with decide how far a record has gone
+ * by the time write() returns:
+ *
+ *   (nothing)                  into the kernel's buffer cache, in memory
+ *   -DEXTRA_FLAGS=O_DIRECT     past the cache, handed to the disk
+ *   ... O_DIRECT | O_SYNC      on the disk, and the disk said so
+ */
+
+#define _GNU_SOURCE	/* for O_DIRECT */
+
 #include <fcntl.h>
+#include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
-#include <sys/types.h>
 
 #include "utils.h"
+#include "write.h"
 
-#define NUM_ROUNDS	1000
-#define NUM_BLOCKS	100
-#define NUM_BYTES	1024
+#ifndef EXTRA_FLAGS
+#define EXTRA_FLAGS	0
+#endif
 
-static const char buffer[NUM_BYTES] = {1, };
+#ifndef NAME
+#define NAME		"write"
+#endif
 
-#define diff_us(ta, tb)		\
-	(((ta).tv_sec - (tb).tv_sec) * 1000 * 1000 + \
-	 ((ta).tv_nsec - (tb).tv_nsec) / 1000)
+#define ALIGNMENT	4096
 
 int main(void)
 {
-	struct timespec time_before, time_after;
+	double start, stop;
+	char *record;
+	ssize_t n;
 	int fd;
+	int rc;
+	int i;
 
-	fd = open("f.dat", O_WRONLY | O_CREAT, 0644);
-	DIE(fd < 0, "fopen");
+	/*
+	 * O_DIRECT wants the buffer to start at a multiple of the disk's
+	 * block size; the other builds do not care.
+	 */
+	rc = posix_memalign((void **)&record, ALIGNMENT, RECORD_SIZE);
+	DIE(rc != 0, "posix_memalign");
+	memset(record, 0, RECORD_SIZE);
 
-	clock_gettime(CLOCK_REALTIME, &time_before);
-	for (unsigned int i = 0; i < NUM_ROUNDS; i++) {
-		lseek(fd, 0, SEEK_SET);
-		for (unsigned int j = 0; j < NUM_ROUNDS; j++) {
-			write(fd, buffer, 1024);
-		}
+	fd = open(FILE_NAME, O_WRONLY | O_CREAT | O_TRUNC | EXTRA_FLAGS, 0644);
+	DIE(fd < 0, "open");
+
+	start = now_ms();
+	for (i = 0; i < NUM_RECORDS; i++) {
+		n = write(fd, record, RECORD_SIZE);
+		DIE(n != RECORD_SIZE, "write");
 	}
-	clock_gettime(CLOCK_REALTIME, &time_after);
+	stop = now_ms();
 
-	printf("time passed %ld microseconds\n", diff_us(time_after, time_before));
+	report(NAME, stop - start);
 
 	close(fd);
+	free(record);
 
 	return 0;
 }

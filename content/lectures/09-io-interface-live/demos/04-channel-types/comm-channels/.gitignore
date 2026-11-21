@@ -1,0 +1,11 @@
+/pipe
+/receive_fifo
+/send_fifo
+/receive_unix_socket
+/send_unix_socket
+/receive_net_stream_socket
+/send_net_stream_socket
+/receive_net_dgram_socket
+/send_net_dgram_socket
+/fifo_channel
+/socket_channel

@@ -8,7 +8,8 @@ all: truncate
 
 truncate: truncate.o
 
-open.o: truncate.c ../../utils/utils.h
+truncate.o: truncate.c ../../utils/utils.h
 
 clean:
-	-rm -f *.o *~ truncate
+	-rm -f *~ fake-gargantua.dat
+	-rm -f truncate.o truncate

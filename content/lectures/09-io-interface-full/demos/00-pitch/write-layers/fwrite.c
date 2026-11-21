@@ -1,36 +1,36 @@
+// SPDX-License-Identifier: BSD-3-Clause
+
+/*
+ * Write NUM_RECORDS records to a file with fwrite(): the C library collects
+ * them in a buffer of its own, in the memory of the process, and calls
+ * write() only when the buffer is full.
+ */
+
 #include <stdio.h>
-#include <time.h>
 
 #include "utils.h"
+#include "write.h"
 
-#define NUM_ROUNDS	1000
-#define NUM_BLOCKS	100
-#define NUM_BYTES	1024
-
-static const char buffer[NUM_BYTES] = {1, };
-
-#define diff_us(ta, tb)		\
-	(((ta).tv_sec - (tb).tv_sec) * 1000 * 1000 + \
-	 ((ta).tv_nsec - (tb).tv_nsec) / 1000)
+static char record[RECORD_SIZE];
 
 int main(void)
 {
-	struct timespec time_before, time_after;
+	double start, stop;
+	size_t n;
 	FILE *f;
+	int i;
 
-	f = fopen("f.dat", "w");
+	f = fopen(FILE_NAME, "w");
 	DIE(f == NULL, "fopen");
 
-	clock_gettime(CLOCK_REALTIME, &time_before);
-	for (unsigned int i = 0; i < NUM_ROUNDS; i++) {
-		fseek(f, 0, SEEK_SET);
-		for (unsigned int j = 0; j < NUM_ROUNDS; j++) {
-			fwrite(buffer, 1024, 1, f);
-		}
+	start = now_ms();
+	for (i = 0; i < NUM_RECORDS; i++) {
+		n = fwrite(record, RECORD_SIZE, 1, f);
+		DIE(n != 1, "fwrite");
 	}
-	clock_gettime(CLOCK_REALTIME, &time_after);
+	stop = now_ms();
 
-	printf("time passed %ld microseconds\n", diff_us(time_after, time_before));
+	report("fwrite", stop - start);
 
 	fclose(f);
 

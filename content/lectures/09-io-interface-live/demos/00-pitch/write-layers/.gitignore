@@ -1,0 +1,5 @@
+/fwrite
+/write
+/write_o_direct
+/write_o_direct_o_sync
+/f.dat

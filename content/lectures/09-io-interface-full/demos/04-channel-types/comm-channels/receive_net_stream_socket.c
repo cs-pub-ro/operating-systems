@@ -1,46 +1,63 @@
-/* SPDX-License-Identifier: BSD-3-Clause */
+// SPDX-License-Identifier: BSD-3-Clause
 
-#include <stdlib.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <sys/stat.h>
-#include <sys/socket.h>
+/*
+ * Receive a message through a network stream socket (TCP).  The socket is
+ * found through an address and a port, and the sender may be on another
+ * machine.
+ */
+
 #include <netinet/in.h>
+#include <stdio.h>
+#include <string.h>
+#include <sys/socket.h>
+#include <unistd.h>
 
 #include "utils.h"
-#include "sock/sock_util.h"
 
-#ifndef BUFSIZ
-#define BUFSIZ		256
-#endif
-
-#define LISTEN_BACKLOG	10
-
-unsigned short port = 4242;
+#define PORT	4242
 
 int main(void)
 {
+	struct sockaddr_in addr;
+	int listen_fd, fd;
+	char buffer[256];
+	int on = 1;
+	ssize_t n;
 	int rc;
-	int listenfd, sockfd;
-	struct sockaddr_in raddr;
-	socklen_t raddrlen;
-	char buffer[BUFSIZ];
 
-	/* Create socket. */
-	listenfd = tcp_create_listener(port, LISTEN_BACKLOG);
-	DIE(listenfd < 0, "tpc_create_listener");
+	listen_fd = socket(AF_INET, SOCK_STREAM, 0);
+	DIE(listen_fd < 0, "socket");
+	printf("socket(AF_INET, SOCK_STREAM) = %d\n", listen_fd);
 
-	/* Accept connection. */
-	sockfd = accept(listenfd, (SSA *) &raddr, &raddrlen);
-	DIE(sockfd < 0, "accept");
+	/* Let the port be used again right after a previous run. */
+	rc = setsockopt(listen_fd, SOL_SOCKET, SO_REUSEADDR, &on, sizeof(on));
+	DIE(rc < 0, "setsockopt");
 
-	/* Read flag from socket. */
-	rc = recv(sockfd, buffer, BUFSIZ, 0);
-	DIE(rc < 0, "recv");
+	/* Give the socket its name: a port, on every address of the machine. */
+	memset(&addr, 0, sizeof(addr));
+	addr.sin_family = AF_INET;
+	addr.sin_port = htons(PORT);
+	addr.sin_addr.s_addr = htonl(INADDR_ANY);
+	rc = bind(listen_fd, (struct sockaddr *)&addr, sizeof(addr));
+	DIE(rc < 0, "bind");
+	printf("bind(%d, port %d) done\n", listen_fd, PORT);
 
-	printf("Message is: %s\n", buffer);
+	rc = listen(listen_fd, 1);
+	DIE(rc < 0, "listen");
 
-	close(sockfd);
+	/* Wait for a sender; the connection is a channel of its own. */
+	printf("accept(%d) ...\n", listen_fd);
+	fd = accept(listen_fd, NULL, NULL);
+	DIE(fd < 0, "accept");
+	printf("accept(%d) = %d\n", listen_fd, fd);
+
+	n = recv(fd, buffer, sizeof(buffer) - 1, 0);
+	DIE(n < 0, "recv");
+	buffer[n] = '\0';
+	printf("recv(%d) = %zd: %s", fd, n, buffer);
+
+	close(fd);
+	close(listen_fd);
 
 	return 0;
 }

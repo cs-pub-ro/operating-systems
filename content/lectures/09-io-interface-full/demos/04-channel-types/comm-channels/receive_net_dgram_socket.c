@@ -1,47 +1,47 @@
-/* SPDX-License-Identifier: BSD-3-Clause */
+// SPDX-License-Identifier: BSD-3-Clause
 
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <sys/stat.h>
-#include <sys/socket.h>
+/*
+ * Receive a message through a network datagram socket (UDP).  There is a
+ * port, as for TCP, and no connection: a message arrives, or it does not.
+ */
+
 #include <netinet/in.h>
+#include <stdio.h>
+#include <string.h>
+#include <sys/socket.h>
+#include <unistd.h>
 
 #include "utils.h"
 
-#ifndef BUFSIZ
-#define BUFSIZ		256
-#endif
-
-unsigned short port = 4242;
+#define PORT	4242
 
 int main(void)
 {
-	int rc;
-	int fd;
 	struct sockaddr_in addr;
-	socklen_t addrlen;
-	char buffer[BUFSIZ];
+	char buffer[256];
+	ssize_t n;
+	int fd;
+	int rc;
 
-	/* Create socket. */
-	fd = socket(PF_INET, SOCK_DGRAM, 0);
+	fd = socket(AF_INET, SOCK_DGRAM, 0);
 	DIE(fd < 0, "socket");
+	printf("socket(AF_INET, SOCK_DGRAM) = %d\n", fd);
 
-	/* Bind socket to address. */
+	/* Give the socket its name: a port, on every address of the machine. */
 	memset(&addr, 0, sizeof(addr));
 	addr.sin_family = AF_INET;
-	addr.sin_port = htons(port);
+	addr.sin_port = htons(PORT);
 	addr.sin_addr.s_addr = htonl(INADDR_ANY);
-
-	rc = bind(fd, (struct sockaddr *) &addr, sizeof(addr));
+	rc = bind(fd, (struct sockaddr *)&addr, sizeof(addr));
 	DIE(rc < 0, "bind");
+	printf("bind(%d, port %d) done\n", fd, PORT);
 
-	/* Read flag from socket. */
-	rc = recvfrom(fd, buffer, BUFSIZ, 0, (struct sockaddr *) &addr, &addrlen);
-	DIE(rc < 0, "recvfrom");
-
-	printf("Message is: %s\n", buffer);
+	/* No listen(), no accept(): wait for a message from anybody. */
+	printf("recvfrom(%d) ...\n", fd);
+	n = recvfrom(fd, buffer, sizeof(buffer) - 1, 0, NULL, NULL);
+	DIE(n < 0, "recvfrom");
+	buffer[n] = '\0';
+	printf("recvfrom(%d) = %zd: %s", fd, n, buffer);
 
 	close(fd);
 

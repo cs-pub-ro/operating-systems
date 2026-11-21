@@ -1,31 +1,56 @@
-#include <stdio.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
+// SPDX-License-Identifier: BSD-3-Clause
+
+/*
+ * Make a file of 20 GiB without writing a byte, then write one byte in the
+ * middle of it.  The size of a file is a number kept with the file; the
+ * space it takes on the disk is another.
+ */
+
 #include <fcntl.h>
+#include <stdio.h>
+#include <sys/stat.h>
+#include <unistd.h>
 
 #include "utils.h"
 
-#define FILENAME		"fake-gargantua.dat"
-#define SIZE_TO_TRUNCATE	(10*2048UL*1024*1024)	/* 20GB */
+#define FILE_NAME	"fake-gargantua.dat"
+#define SIZE		(20UL * 1024 * 1024 * 1024)	/* 20 GiB */
+
+static void show(int fd, const char *what)
+{
+	struct stat info;
+	int rc;
+
+	rc = fstat(fd, &info);
+	DIE(rc < 0, "fstat");
+
+	/* st_blocks counts units of 512 bytes, whatever the file system. */
+	printf("%-28s  size: %11ld bytes   on disk: %ld bytes\n", what,
+	       (long)info.st_size, (long)info.st_blocks * 512);
+}
 
 int main(void)
 {
+	ssize_t n;
+	off_t pos;
 	int fd;
-	int ret;
-	struct stat sbuf;
+	int rc;
 
-	fd = open(FILENAME, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	fd = open(FILE_NAME, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	DIE(fd < 0, "open");
+	show(fd, "open(O_CREAT | O_TRUNC)");
 
-	ret = ftruncate(fd, SIZE_TO_TRUNCATE);
-	DIE(ret < 0, "ftruncate");
+	rc = ftruncate(fd, SIZE);
+	DIE(rc < 0, "ftruncate");
+	show(fd, "ftruncate(20 GiB)");
 
-	ret = fstat(fd, &sbuf);
-	DIE(ret < 0, "ftruncate");
+	pos = lseek(fd, SIZE / 2, SEEK_SET);
+	DIE(pos < 0, "lseek");
+	n = write(fd, "x", 1);
+	DIE(n < 0, "write");
+	show(fd, "write(1) at 10 GiB");
 
-	printf("file size is: %ld\n", sbuf.st_size);
-	printf("number of blocks is: %ld\n", sbuf.st_blocks);
+	close(fd);
 
 	return 0;
 }
