@@ -30,7 +30,7 @@ It puts rough.js in `node_modules/` and the Latin part of Excalifont in `font/`;
 .venv/bin/python build_media08.py /tmp/out   # somewhere else, to look first
 ```
 
-With no argument the figures are written into the `-full/` half, and the SVGs are copied into the `-live/` half.
+With no argument the figures are written into the `-full/` half, and both files of each figure, the `.excalidraw` source and the SVG, are copied into the `-live/` half.
 The output is the same on every run: shapes are seeded from the figure's name and the embedded font carries no timestamp, so `git diff` after a rebuild shows only what was changed.
 
 To look at a figure without a browser:

@@ -5,8 +5,8 @@
     ./build_media08.py out-dir    # somewhere else, to look before overwriting
 
 Each figure is written as an .excalidraw file with its SVG beside it.  With no
-argument, the SVGs are also copied into the -live half, which carries the
-figures and not their sources.
+argument, both files are also copied into the -live half, so that each half
+carries its figures and their sources.
 """
 import os
 import shutil
@@ -515,8 +515,11 @@ FIGURES = [storyline, six_sums, thread_states, concurrency_parallelism, coherenc
 
 def copy_to_live():
     for part in sorted(os.listdir(FULL)):
+        # Hand-drawn sketches kept beside the figures are not built here.
+        if part == 'sketches':
+            continue
         for name in sorted(os.listdir(os.path.join(FULL, part))):
-            if name.endswith('.svg'):
+            if name.endswith(('.svg', '.excalidraw')):
                 os.makedirs(os.path.join(LIVE, part), exist_ok=True)
                 shutil.copy(os.path.join(FULL, part, name), os.path.join(LIVE, part, name))
 
