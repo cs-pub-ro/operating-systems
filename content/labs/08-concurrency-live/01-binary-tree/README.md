@@ -56,3 +56,5 @@ make
 * Run that same version under Helgrind, `valgrind --tool=helgrind ./chall 0`, and read the first report.
   Then run your final version under it.
 * Be ready to explain to the teaching assistant why the lock is not taken in `insert_node()`.
+
+Submit the flag: <https://ctf.security.cs.pub.ro/so/challenges>

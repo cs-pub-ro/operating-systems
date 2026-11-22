@@ -68,6 +68,8 @@ It checks what it can see from outside, and it is built so that what it sees doe
 The flag is decrypted with a key that is mixed with the numbers the run ended with, so a run with the wrong numbers cannot print it.
 That keeps honest people honest, and no more: the key is in the executable, for anyone who learned in session 05 how to look for it.
 
+The flags are submitted on the SO CTF platform, <https://ctf.security.cs.pub.ro/so/challenges>, where each of the eleven challenges has an entry and gives points.
+
 One thing an executable cannot do is prove that a library is correct.
 It reports the bugs that showed during one run.
 `01-binary-tree` has a bug that almost never shows, on purpose, and its tutorial is about that.

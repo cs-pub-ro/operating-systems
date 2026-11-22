@@ -55,3 +55,5 @@ make
 * If your `turn_take()` releases the mutex before it returns, `print_message()` is called with no lock held: explain to the teaching assistant what keeps the other threads from printing at that moment.
   If it returns with the mutex locked, say which function unlocks it, and what you think of a lock taken in one function and released in another.
 * Look at how many threads are woken up every time the turn is passed, and how many of them can go on.
+
+Submit the flag: <https://ctf.security.cs.pub.ro/so/challenges>

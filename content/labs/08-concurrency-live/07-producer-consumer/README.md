@@ -56,3 +56,5 @@ make
 * There are two ways to fix the second flaw.
   Say which one you chose and what the other costs.
 * Explain to the teaching assistant how an item can come out twice.
+
+Submit the flag: <https://ctf.security.cs.pub.ro/so/challenges>

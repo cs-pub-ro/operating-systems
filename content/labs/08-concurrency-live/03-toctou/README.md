@@ -50,3 +50,5 @@ make
 * If your first attempt ends with the time-out message, find out which thread is waiting for which lock before you change anything.
 * Be ready to show the teaching assistant the interleaving you wrote down in step 2.
 * Say why adding a second mutex, used only in `registry_register()`, would also work here, and what would break it later.
+
+Submit the flag: <https://ctf.security.cs.pub.ro/so/challenges>

@@ -59,3 +59,5 @@ make
 * Say what the boss does between putting the last item on the desk and setting `stop`, and whether it should do something more.
 * Check, by reading your code, that `work()` is called with the lock released.
   Say what the program would be if it were not.
+
+Submit the flag: <https://ctf.security.cs.pub.ro/so/challenges>

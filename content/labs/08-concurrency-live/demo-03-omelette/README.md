@@ -18,3 +18,5 @@ The library already has a mutex and a condition variable in it, and it is wrong 
 Together with the teaching assistant you will build it, run `./chall` a few times, and read what the basket complains about.
 Then you will go through the three TODOs in `kitchen.c`, one at a time, running the executable after each, until the flag is printed on every run.
 The question to carry out of this demo: when the cook is woken up, what does it know about the number of eggs?
+
+The flag is then submitted on the CTF platform, as for every challenge of this session: <https://ctf.security.cs.pub.ro/so/challenges>.

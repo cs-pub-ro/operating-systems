@@ -64,3 +64,5 @@ make
   Say which exercise of this session had the same bug.
 * Time your final version, and then replace the read-write lock with a plain mutex and time that.
   Explain the result to the teaching assistant; it may not be the one you expect.
+
+Submit the flag: <https://ctf.security.cs.pub.ro/so/challenges>

@@ -59,3 +59,5 @@ make
 * If the program times out, count: is there a moment when a molecule could be formed and no thread is going to call `form()`?
 * Explain to the teaching assistant why the three releases of one molecule cannot be mixed with those of the next.
 * Replace `pthread_cond_broadcast()` with `pthread_cond_signal()`, run it, and explain what you see.
+
+Submit the flag: <https://ctf.security.cs.pub.ro/so/challenges>

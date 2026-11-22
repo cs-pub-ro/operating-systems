@@ -60,3 +60,5 @@ make
 * "The queue is empty" and "the work is done" are different.
   Give the moment, in a run of this executable, at which the first is true and the second is not.
 * In your version, say where exactly a task counts as finished, relative to the tasks it submitted being counted, and why that order matters.
+
+Submit the flag: <https://ctf.security.cs.pub.ro/so/challenges>

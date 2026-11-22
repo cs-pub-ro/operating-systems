@@ -85,6 +85,7 @@ The directory of a challenge holds:
 
 * `chall` - an executable, already built.
   It starts threads, makes them call the functions of a shared library, checks what came out, and prints a **flag** if all of it was right.
+  The flag is what you submit on the CTF platform.
 * `chall.c` and `flag.h` - the source of the executable, for you to read.
   The flag is kept encrypted inside the executable, and the key was taken out of this copy of the source.
 * a header, such as `tree.h` - the interface of the library: the functions the executable calls.
@@ -116,8 +117,20 @@ Three habits make these challenges tractable.
   Every broken library here can be fixed by changing a handful of lines.
   The work is in finding out which.
 
-The flag is what you show the teaching assistant, together with the explanation of what was wrong.
-The flag without the explanation is worth nothing: the point of the session is the second.
+### Submitting the flags
+
+Every challenge of this session, the third demo, the seven exercises and the three bonus exercises, is also on the SO CTF platform: <https://ctf.security.cs.pub.ro/so/challenges>.
+A flag you submit there gets you the points of its challenge.
+
+1. Open <https://ctf.security.cs.pub.ro/so> and register an account, or log in if you already have one, for instance from session 05.
+1. Open the **Challenges** page, <https://ctf.security.cs.pub.ro/so/challenges>, and find the challenges of this session.
+1. Solve a challenge on your machine, as described above, until `./chall` prints the flag on every run.
+1. Paste the flag into the **submit** box of that challenge on the platform.
+
+The flag is the whole string the program prints after `flag:`, for example `SO{...}`.
+
+Be ready to explain to the teaching assistant what was wrong in the library and why your change repairs it.
+The points are for the flag; what you take out of the session is the explanation.
 
 Each exercise directory has a `README.md` with the task itself.
 Where there is also a `FURTHER.md`, it holds optional extensions and questions to dig into once the task is done.

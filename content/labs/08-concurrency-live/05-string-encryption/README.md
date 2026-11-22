@@ -52,3 +52,5 @@ make
 * There is a correct version that is as slow as the broken one: the lock around both the taking of the block and the encryption.
   Build it, time it, and say what the threads are doing in it.
 * Say what would go wrong, and how often, if only the write of `next` were locked and the read were not.
+
+Submit the flag: <https://ctf.security.cs.pub.ro/so/challenges>

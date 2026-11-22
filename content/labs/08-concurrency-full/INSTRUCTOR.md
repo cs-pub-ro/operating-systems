@@ -42,15 +42,18 @@ Explain it once, in `demo-03-omelette`, and write the cycle on the board: `make`
   The header is fixed: the executable was built against it.
 * `./chall` gives up after ten seconds (twenty for `05` and the database) with a message.
   `./chall 0` never gives up, for looking at a stuck program.
-* The flag is shown to the assistant **with the explanation**.
-  Make that rule explicit at the start; a flag with no account of what was wrong does not count.
+* The flag is submitted on the SO CTF platform, <https://ctf.security.cs.pub.ro/so/challenges>, where `demo-03-omelette`, the seven exercises and the three bonus exercises each have a challenge that gives points.
+  Students need an account; those who did session 05 have one.
+  Have them log in at the start, and submit the flag of the demo together, so that nobody meets the platform for the first time in the middle of an exercise.
+* The platform checks the flag and nothing else.
+  Keep asking for the explanation: every task README has questions for the assistant in *Check Your Work*, and they are where the session is.
 
 ### What the flag is worth
 
 The flag is kept encrypted in the executable.
 The key it is decrypted with is mixed with the numbers the run ended with, so skipping the check in a debugger is not enough, and the key bytes were taken out of the source students get.
 They are in the executable all the same.
-A student who dumps them and decrypts the flag by hand has done session 05's work, not this session's, and the explanation is what tells the two apart.
+A student who dumps them and decrypts the flag by hand has done session 05's work, not this session's, and gets the points on the platform all the same; the explanation is what tells the two apart.
 
 ### What a flag does not prove
 
@@ -74,6 +77,9 @@ For every task directory here that has a `flag`, the script runs `make`, and cop
 The skeleton of the library, the `Makefile` and the `README.md` of a live task are written by hand and are not touched.
 
 Run it after any change to a `chall.c`, a header or a `flag.h`, and commit the new `chall` files.
+
+The flags are also configured in the challenges of the CTF platform.
+A flag changed here has to be changed there as well, or correct submissions are refused.
 
 To change a flag, or after a change to the numbers a correct run ends with:
 

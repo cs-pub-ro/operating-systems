@@ -56,3 +56,5 @@ make
 * Say why your version cannot produce such a cycle, for any two accounts.
 * A single mutex for the whole bank would also end the deadlock.
   Say what it would cost, and when it would start to matter.
+
+Submit the flag: <https://ctf.security.cs.pub.ro/so/challenges>
