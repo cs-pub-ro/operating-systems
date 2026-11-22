@@ -1,6 +1,8 @@
-# Bonus: A Pool of Worker Threads
+# Bonus 02: A Pool of Worker Threads
 
 **Tools:** GCC, Make, ps, GDB
+
+**Directory**: `bonus-02-worker-threads/`
 
 ## Goal
 
@@ -9,7 +11,7 @@ Afterwards you will be able to say what "all the work is done" means when tasks 
 
 ## Background
 
-This builds on `bonus-boss-workers`, and changes three things.
+This builds on `bonus-01-boss-workers`, and changes three things.
 
 * **The workers stay.**
   `pool_create()` starts them, and they live until `pool_destroy()`; in between, the pool is used as many times as needed.
@@ -41,7 +43,7 @@ The pool is used like this for ten rounds, and then destroyed.
    Go on to the next two flaws in either order.
 1. **`pool_wait()`** — it polls, it reads shared data without the lock, and it waits for the wrong thing.
    Decide what the pool has to count for this function to have something to wait for, where that count goes up and where it goes down, and wait for it on a condition variable.
-1. **`pool_destroy()`** — the end of `bonus-boss-workers`, again.
+1. **`pool_destroy()`** — the end of `bonus-01-boss-workers`, again.
 
 ## Build & Run
 

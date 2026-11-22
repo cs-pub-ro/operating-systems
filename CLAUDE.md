@@ -35,6 +35,9 @@ Inside a **lab** session, the directory-name prefix is the task type, and it is 
 * `NN-<name>/` — core exercise, solved individually or in teams, in numeric order.
 * `bonus-<name>/` — optional; for students who finish early, or as homework.
 
+A demo or a bonus task may be numbered too, `demo-01-<name>/` and `bonus-01-<name>/`, as in session 08, where the titles carry the number as well (`Demo 01:`, `Exercise 01:`, `Bonus 01:`) and each task README names its directory in a `**Directory**:` line under the tools.
+The type is still the prefix; the number only orders the task among its kind.
+
 A **lecture** session is laid out by kind rather than by task type, and both halves use the same three directories:
 
 * `media/` — the figures the READMEs and the slides show, one subdirectory per part of the lecture (`02-software-stack/`, `03-kernel/`, …).

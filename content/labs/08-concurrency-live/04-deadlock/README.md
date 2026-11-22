@@ -1,6 +1,8 @@
-# Exercise: Transfers That Never End
+# Exercise 04: Transfers That Never End
 
 **Tools:** GCC, Make, ps, GDB
+
+**Directory**: `04-deadlock/`
 
 ## Goal
 

@@ -1,6 +1,8 @@
-# Bonus: A Pool of Worker Threads
+# Bonus 02: A Pool of Worker Threads
 
 **Tools:** GCC, Make, ps, GDB
+
+**Directory**: `bonus-02-worker-threads/`
 
 ## Goal
 
@@ -104,7 +106,7 @@ pool->stop = 1;
 pthread_cond_signal(&pool->has_work);
 ```
 
-The end of `bonus-boss-workers`, with both of its mistakes: `stop` is written without the lock, and one worker of eight is woken up.
+The end of `bonus-01-boss-workers`, with both of its mistakes: `stop` is written without the lock, and one worker of eight is woken up.
 The joins wait for ever for the second.
 
 ```C

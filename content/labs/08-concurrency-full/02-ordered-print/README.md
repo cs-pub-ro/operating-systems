@@ -1,6 +1,8 @@
-# Exercise: Five Threads That Take Turns
+# Exercise 02: Five Threads That Take Turns
 
 **Tools:** GCC, Make
+
+**Directory**: `02-ordered-print/`
 
 ## Goal
 

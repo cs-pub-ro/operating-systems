@@ -38,7 +38,7 @@ static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 
 static void *thread_fn(void *arg)
 {
-	unsigned int seed = (unsigned int)(size_t)arg;
+	unsigned int seed = (unsigned int) arg;
 	enum list_action action;
 	size_t size, pos;
 	size_t i;
@@ -99,8 +99,7 @@ int main(void)
 		list_add_item(head, rand_r(&seed) % MAX_ITEM);
 
 	for (i = 0; i < NUM_THREADS; i++) {
-		rc = pthread_create(th + i, NULL, thread_fn,
-				    (void *)(size_t)(seed + i));
+		rc = pthread_create(th + i, NULL, thread_fn, (void *) (seed + i));
 		DIE(rc != 0, "pthread_create");
 	}
 

@@ -53,11 +53,8 @@ static void on_alarm(int sig)
 {
 	static const char msg[] =
 		"\nTimed out: a thread is waiting for a turn that never comes.\n";
-	ssize_t rc;
 
-	(void)sig;
-	rc = write(STDERR_FILENO, msg, sizeof(msg) - 1);
-	(void)rc;
+	write(STDERR_FILENO, msg, sizeof(msg) - 1);
 	_exit(2);
 }
 

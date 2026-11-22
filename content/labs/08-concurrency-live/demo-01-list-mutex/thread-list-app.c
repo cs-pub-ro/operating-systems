@@ -27,7 +27,7 @@ enum list_action {
 static struct int_list *head;
 
 /*
- * TODO 1: declare a mutex that protects the whole list: the head, every
+ * TODO 1: Declare a mutex that protects the whole list: the head, every
  * node and the size.
  */
 
@@ -38,7 +38,7 @@ static struct int_list *head;
 
 static void *thread_fn(void *arg)
 {
-	unsigned int seed = (unsigned int)(size_t)arg;
+	unsigned int seed = (unsigned int) arg;
 	enum list_action action;
 	size_t size, pos;
 	size_t i;
@@ -50,7 +50,7 @@ static void *thread_fn(void *arg)
 		item = rand_r(&seed) % MAX_ITEM;
 
 		/*
-		 * TODO 2: lock the mutex before the first statement that uses the
+		 * TODO 2: Lock the mutex before the first statement that uses the
 		 * list, and unlock it after the last one.  Decide whether reading
 		 * the size is part of it.
 		 */
@@ -97,8 +97,7 @@ int main(void)
 		list_add_item(head, rand_r(&seed) % MAX_ITEM);
 
 	for (i = 0; i < NUM_THREADS; i++) {
-		rc = pthread_create(th + i, NULL, thread_fn,
-				    (void *)(size_t)(seed + i));
+		rc = pthread_create(th + i, NULL, thread_fn, (void *) (seed + i));
 		DIE(rc != 0, "pthread_create");
 	}
 

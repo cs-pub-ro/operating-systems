@@ -1,6 +1,8 @@
-# Exercise: Building H2O
+# Exercise 06: Building H2O
 
 **Tools:** GCC, Make
+
+**Directory**: `06-building-h2o/`
 
 ## Goal
 

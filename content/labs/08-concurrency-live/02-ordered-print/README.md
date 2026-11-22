@@ -1,11 +1,15 @@
-# Exercise: Five Threads That Take Turns
+# Exercise 02: Five Threads That Take Turns
 
 **Tools:** GCC, Make
+
+**Directory**: `02-ordered-print/`
 
 ## Goal
 
 Write, from an empty library, the synchronization that makes five threads print their numbers in order, round after round.
 Afterwards you will be able to build a wait on a condition variable without a model to copy from.
+
+This exercise is buildup of `demo-02-ordered-print`.
 
 ## Background
 

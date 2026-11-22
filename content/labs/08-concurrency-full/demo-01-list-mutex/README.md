@@ -1,6 +1,8 @@
-# Demo: A Linked List, and One Mutex
+# Demo 01: A Linked List, and One Mutex
 
 **Tools:** GCC, Make
+
+**Directory**: `demo-01-list-mutex/`
 
 ## Goal
 
@@ -27,9 +29,9 @@ A mutex makes the five lines, and every other group of lines that uses the list,
 
 Files:
 
-* `thread-list-app.c` — the threads, and the mutex.
-* `list.c`, `list.h` — the list; not changed, and not thread-safe by itself.
-* `utils/utils.h` — the `DIE()` macro.
+* `thread-list-app.c` - the threads, and the mutex.
+* `list.c`, `list.h` - the list; not changed, and not thread-safe by itself.
+* `utils/utils.h` - the `DIE()` macro.
 
 ## Build & Run
 
@@ -49,7 +51,7 @@ What does not change is that the two numbers are equal.
 
 ### Without the mutex
 
-Thirty runs of the program as it is in the live half, thirty segmentation faults, most of them after a few lines of this:
+Running the program without the mutex will typically result in a segmentation fault, after a few lines of this:
 
 ```text
 reached head when removing. not good.
@@ -87,7 +89,7 @@ The search is inside the lock too, although it changes nothing, because a node i
 
 The lock is taken before the size is read, not just before the list is changed.
 
-With the lock taken only around the `switch`, the program still gives equal numbers on every run: thirty out of thirty.
+With the lock taken only around the `switch`, the program is incorrect, and may give incorrect results.
 That is because `list_insert_item()` and `list_remove_item()` both cope with a position that is past the end, which is what a stale size produces.
 It is still wrong, twice over.
 
@@ -102,9 +104,9 @@ A critical section starts at the first thing the thread reads that its later ste
 
 Ten threads holding one lock around everything they do are not running in parallel: the program takes 0.09 s, and its `user` time is about the same as its `real` time, where ten threads that really ran side by side would show ten times more.
 The lock made the program correct, and sequential.
-That trade is the subject of lecture 08's part on granularity, and of `bonus-synchronized-db` at the end of this session.
+That trade is the subject of lecture 08's part on granularity, and of `bonus-03-synchronized-db` at the end of this session.
 
 ## References
 
 * `man 3 pthread_mutex_lock`, `man 3 pthread_mutex_init`
-* Lecture 08, part 04, *Partitioning and synchronization* — the demo this one is taken from
+* Lecture 08, part 04, *Partitioning and synchronization* - the demo this one is taken from

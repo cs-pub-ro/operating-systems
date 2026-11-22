@@ -1,4 +1,6 @@
-# Demo: A Linked List, and One Mutex
+# Demo 01: A Linked List, and One Mutex
+
+**Directory**: `demo-01-list-mutex/`
 
 `thread-list-app.c` starts ten threads that each do two thousand random actions on one doubly-linked list of integers: add at the front, add at the back, insert at a position, remove from a position, search.
 The list itself is in `list.c`, and is the one from the lecture: it keeps its size in a variable next to the nodes.

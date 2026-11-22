@@ -1,4 +1,6 @@
-# Demo: Three Eggs Make an Omelette
+# Demo 03: Three Eggs Make an Omelette
+
+**Directory**: `demo-03-omelette/`
 
 This is the first challenge of the session, and every challenge is laid out like this one.
 `chall` is an executable, already built, that calls the functions of a shared library and prints a flag if they behaved.

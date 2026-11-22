@@ -40,7 +40,7 @@ With answers.
   News that every waiter can act on is a broadcast.
 * **What happens to queued tasks at `pool_destroy()`?**
   They are run.
-  A worker leaves only when `stop` is set and the queue is empty, the rule of `bonus-boss-workers`.
+  A worker leaves only when `stop` is set and the queue is empty, the rule of `bonus-01-boss-workers`.
   Dropping them instead would be a legitimate design, as long as the documentation says so and something frees them.
 
 ## Discussion points

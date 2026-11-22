@@ -1,6 +1,8 @@
-# Bonus: A Boss and Its Workers
+# Bonus 01: A Boss and Its Workers
 
 **Tools:** GCC, Make, ps
+
+**Directory**: `bonus-01-boss-workers/`
 
 ## Goal
 

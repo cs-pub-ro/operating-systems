@@ -22,7 +22,7 @@ Optional.
   What would break if it went down earlier?
 * `pool_wait()` is woken by a broadcast, although usually one thread waits.
   Is a signal enough?
-* The workers of `bonus-boss-workers` were told to stop with a flag, and so are these.
+* The workers of `bonus-01-boss-workers` were told to stop with a flag, and so are these.
   What happens to tasks that are still in the queue when `pool_destroy()` is called, in your version?
 
 ## Discussion points

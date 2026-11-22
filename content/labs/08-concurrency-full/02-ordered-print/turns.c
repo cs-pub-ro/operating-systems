@@ -24,26 +24,25 @@ void turns_init(int count)
 }
 
 /*
- * Wait for the turn.  The lock is released when the function returns: what
- * keeps the other threads out while this one prints is not the mutex, it is
- * `turn`, which stays equal to `id` until this thread changes it.
+ * Wait for the turn.
+ * The lock is held at the end of the function, to be released by turn_pass().
  */
 void turn_take(int id)
 {
 	pthread_mutex_lock(&lock);
 	while (turn != id)
 		pthread_cond_wait(&turn_changed, &lock);
-	pthread_mutex_unlock(&lock);
 }
 
 /*
- * Pass the turn on.  Every waiting thread is woken up, because the one
- * condition variable has all of them on it and only one is the next; the
- * others test `turn`, find it is not theirs, and go back to sleep.
+ * Pass the turn on.
+ * Assume lock is held from previous call of turn_take.
+ * Every waiting thread is woken up, because the one condition variable has all
+ * of them on it and only one is the next; the others test `turn`, find it is
+ * not theirs, and go back to sleep.
  */
 void turn_pass(int id)
 {
-	pthread_mutex_lock(&lock);
 	turn = (id + 1) % num_threads;
 	pthread_cond_broadcast(&turn_changed);
 	pthread_mutex_unlock(&lock);

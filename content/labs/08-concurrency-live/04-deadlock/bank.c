@@ -52,7 +52,7 @@ long account_balance(struct account *account)
 }
 
 /*
- * TODO: nothing here is unprotected, and the program stops for ever.  Work
+ * TODO: Nothing here is unprotected, and the program stops for ever.  Work
  * out what two threads must be holding, and waiting for, when that happens,
  * and change the function so that it cannot.
  */

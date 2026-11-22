@@ -1,6 +1,8 @@
-# Exercise: A Queue That Loses Items
+# Exercise 07: A Queue That Loses Items
 
 **Tools:** GCC, Make, ps
+
+**Directory**: `07-producer-consumer/`
 
 ## Goal
 

@@ -12,7 +12,7 @@ Keep it short; the condition variable in the next demo is where the new material
 1. TODO 1 and TODO 2, typed with the room.
 1. Run again: two equal numbers.
 1. Move the lock below the two lines that read the size and choose the position, run again, and ask whether the program is now wrong.
-   It gives equal numbers; the discussion is the point.
+   It probably gives equal numbers; the discussion is the point.
 
 ## Expected answers
 
@@ -24,9 +24,11 @@ Keep it short; the condition variable in the next demo is where the new material
 * **A lock in every `case`.**
   Correct, and five times the typing; ask for one pair.
 * **No lock around the search**, "because it only reads".
-  The same conversation as session 07's bonus; a search can stand on a node that is being freed.
+  The same conversation as session 07's bonus;
+  a search can stand on a node that is being freed.
 * **`unlock` inside a `case` before the `break`**, and nothing in the other cases.
-  The next thread waits for ever; this is the first hang of the session, and worth showing with `ps -L`.
+  The next thread waits for ever;
+  this is the first hang of the session, and worth showing with `ps -L`.
 
 ## Verified reference values
 

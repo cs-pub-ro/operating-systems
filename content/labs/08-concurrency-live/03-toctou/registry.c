@@ -75,7 +75,7 @@ static int registry_add(struct registry *reg, const char *name)
 }
 
 /*
- * TODO: every access to the array below is made with the lock held, and
+ * TODO: Every access to the array below is made with the lock held, and
  * the function is still wrong.  Find the moment at which what this thread
  * knows about the registry stops being true, and close it.
  *

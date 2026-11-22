@@ -14,8 +14,8 @@
 static int num_threads;
 
 /*
- * TODO 1: declare what the threads share: whose turn it is, a mutex, and
- * one or more condition variables.
+ * TODO 1: Declare what the threads share: whose turn it is, a mutex, and
+ * a condition variable.
  */
 
 void turns_init(int count)
@@ -26,18 +26,20 @@ void turns_init(int count)
 }
 
 /*
- * TODO 2: return only when it is the turn of thread `id`.
+ * TODO 2: Return only when it is the turn of thread `id`.
+ * Think what to do with the mutex and the condition variable.
  */
 void turn_take(int id)
 {
-	(void)id;
+	/* ... */
 }
 
 /*
- * TODO 3: give the turn to the thread after `id`, and make sure that thread
+ * TODO 3: Give the turn to the thread after `id`, and make sure that thread
  * finds out.
+ * Think what to do with the mutex and the condition variable.
  */
 void turn_pass(int id)
 {
-	(void)id;
+	/* ... */
 }

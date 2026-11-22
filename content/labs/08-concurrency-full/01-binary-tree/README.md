@@ -1,6 +1,8 @@
-# Exercise: A Binary Search Tree for Eight Threads
+# Exercise 01: A Binary Search Tree for Eight Threads
 
 **Tools:** GCC, Make, Valgrind (Helgrind)
+
+**Directory**: `01-binary-tree/`
 
 ## Goal
 

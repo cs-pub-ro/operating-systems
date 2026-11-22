@@ -1,6 +1,8 @@
-# Demo: Three Threads That Take Turns
+# Demo 02: Three Threads That Take Turns
 
 **Tools:** GCC, Make
+
+**Directory**: `demo-02-ordered-print/`
 
 ## Goal
 

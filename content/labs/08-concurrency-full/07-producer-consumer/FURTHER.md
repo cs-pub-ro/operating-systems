@@ -35,7 +35,7 @@ With answers.
    `queue_close()` sets a `closed` flag under the lock and wakes up **every** waiting consumer, with `pthread_cond_broadcast(&queue->not_empty)`: all of them have to find out, not one.
    `queue_get()` waits `while (queue->count == 0 && !queue->closed)`, and afterwards returns the special value only if the queue is empty.
    An item that is still in a closed queue is delivered.
-   Both points, broadcast for news that concerns everybody and "drain before you leave", are the subject of `bonus-boss-workers`.
+   Both points, broadcast for news that concerns everybody and "drain before you leave", are the subject of `bonus-01-boss-workers`.
 
 ## Questions to answer
 

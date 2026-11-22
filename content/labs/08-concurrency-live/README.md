@@ -64,9 +64,9 @@ The bonus exercises are optional: start them if you finish the core exercises, o
 
 | Order | Task | Type | Objective |
 | --- | --- | --- | --- |
-| 1 | [`demo-list-mutex`](demo-list-mutex) | Demo | A linked list that ten threads change at once, and the one mutex that keeps it whole. |
-| 2 | [`demo-ordered-print`](demo-ordered-print) | Demo | Three threads that print 1 2 3 in order, with a condition variable. |
-| 3 | [`demo-omelette`](demo-omelette) | Demo, challenge | Hens, a cook and a basket: three eggs make an omelette, and the cook has to wait for them properly. |
+| 1 | [`demo-01-list-mutex`](demo-01-list-mutex) | Demo | A linked list that ten threads change at once, and the one mutex that keeps it whole. |
+| 2 | [`demo-02-ordered-print`](demo-02-ordered-print) | Demo | Three threads that print 1 2 3 in order, with a condition variable. |
+| 3 | [`demo-03-omelette`](demo-03-omelette) | Demo, challenge | Hens, a cook and a basket: three eggs make an omelette, and the cook has to wait for them properly. |
 | 4 | [`01-binary-tree`](01-binary-tree) | Core, challenge | Make a binary search tree safe for eight threads. |
 | 5 | [`02-ordered-print`](02-ordered-print) | Core, challenge | Five threads that take turns, written from an empty library. |
 | 6 | [`03-toctou`](03-toctou) | Core, challenge | A registry where every access is locked, and names still get two owners. |
@@ -74,22 +74,22 @@ The bonus exercises are optional: start them if you finish the core exercises, o
 | 8 | [`05-string-encryption`](05-string-encryption) | Core, challenge | The cipher of session 07 with threads that share out blocks, and a lock in the wrong place. |
 | 9 | [`06-building-h2o`](06-building-h2o) | Core, challenge | Two hydrogen and one oxygen at a time, with semaphores and a barrier. |
 | 10 | [`07-producer-consumer`](07-producer-consumer) | Core, challenge | A bounded queue that loses items, and sometimes sleeps for ever. |
-| 11 | [`bonus-boss-workers`](bonus-boss-workers) | Bonus, challenge | A boss that hands out work, and workers that have to be told when to go home. |
-| 12 | [`bonus-worker-threads`](bonus-worker-threads) | Bonus, challenge | A pool of worker threads, built up from the previous task. |
-| 13 | [`bonus-synchronized-db`](bonus-synchronized-db) | Bonus, challenge | The database of session 07 behind a read-write lock that is not used the way it should be. |
+| 11 | [`bonus-01-boss-workers`](bonus-01-boss-workers) | Bonus, challenge | A boss that hands out work, and workers that have to be told when to go home. |
+| 12 | [`bonus-02-worker-threads`](bonus-02-worker-threads) | Bonus, challenge | A pool of worker threads, built up from the previous task. |
+| 13 | [`bonus-03-synchronized-db`](bonus-03-synchronized-db) | Bonus, challenge | The database of session 07 behind a read-write lock that is not used the way it should be. |
 
 ## How a challenge works
 
 Most tasks of this session are challenges, and all of them are built the same way.
 The directory of a challenge holds:
 
-* `chall` — an executable, already built.
+* `chall` - an executable, already built.
   It starts threads, makes them call the functions of a shared library, checks what came out, and prints a **flag** if all of it was right.
-* `chall.c` and `flag.h` — the source of the executable, for you to read.
+* `chall.c` and `flag.h` - the source of the executable, for you to read.
   The flag is kept encrypted inside the executable, and the key was taken out of this copy of the source.
-* a header, such as `tree.h` — the interface of the library: the functions the executable calls.
+* a header, such as `tree.h` - the interface of the library: the functions the executable calls.
   Do not change it; the executable was built against it.
-* a C file, such as `tree.c` — the library itself.
+* a C file, such as `tree.c` - the library itself.
   **This is the file you work on.**
   It builds, and its synchronization is missing or wrong.
 * a `Makefile` that builds the library, `lib<name>.so`, from that file.

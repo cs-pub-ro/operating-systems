@@ -49,4 +49,4 @@ Spend a few minutes on the format, because nobody will explain it again: what is
 * Each hen sleeps 20 microseconds before every egg (`LAYING_TIME` in `chall.c`), which is what makes the cook wait at all.
   Without it the hens fill the basket before the cook wakes up once, and the `if` never shows.
 * With TODO 1 and 2 done, the run that times out is the one to keep on the screen: `eggs` was decremented outside the lock, an update was lost, and the cook is waiting for an egg that is already in the basket.
-* `flag.h` is regenerated with `../utils/gen_flag.py flag 3000 1000 0 > flag.h`, and the live copy with `../utils/publish.sh demo-omelette`.
+* `flag.h` is regenerated with `../utils/gen_flag.py flag 3000 1000 0 > flag.h`, and the live copy with `../utils/publish.sh demo-03-omelette`.

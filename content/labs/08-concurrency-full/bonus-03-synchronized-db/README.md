@@ -1,6 +1,8 @@
-# Bonus: A Database Behind a Read-Write Lock
+# Bonus 03: A Database Behind a Read-Write Lock
 
 **Tools:** GCC, Make, GDB
+
+**Directory**: `bonus-03-synchronized-db/`
 
 ## Goal
 

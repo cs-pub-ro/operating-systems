@@ -1,11 +1,15 @@
-# Exercise: A Binary Search Tree for Eight Threads
+# Exercise 01: A Binary Search Tree for Eight Threads
 
 **Tools:** GCC, Make, Valgrind (Helgrind)
+
+**Directory**: `01-binary-tree/`
 
 ## Goal
 
 Make a binary search tree safe to use from several threads at once, with a mutex that belongs to the tree.
 Afterwards you will be able to decide where a lock goes in a data structure whose functions are recursive, and which of its functions need it.
+
+This exercise is a build-up of `demo-01-list-mutex`.
 
 ## Background
 
@@ -28,12 +32,12 @@ A mutex of the default kind must not be locked again by the thread that already 
 Run the executable first, several times, and read what it reports.
 Then open `tree.c` and go through the TODOs.
 
-1. **The mutex** — a field of `struct tree`, initialized in `tree_create()`, destroyed in `tree_destroy()`.
-1. **`tree_insert()` and `tree_remove()`** — lock around what must not be interleaved.
+1. **The mutex** - a field of `struct tree`, initialized in `tree_create()`, destroyed in `tree_destroy()`.
+1. **`tree_insert()` and `tree_remove()`** - lock around what must not be interleaved.
    Decide whether the lock goes in these functions or in the recursive ones below them, and why.
-1. **`tree_contains()`** — decide whether a function that changes nothing needs the lock.
+1. **`tree_contains()`** - decide whether a function that changes nothing needs the lock.
    The function has more than one `return`.
-1. **`tree_size()` and `tree_walk()`** — the same question.
+1. **`tree_size()` and `tree_walk()`** - the same question.
 
 ## Build & Run
 

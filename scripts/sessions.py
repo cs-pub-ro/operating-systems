@@ -161,12 +161,16 @@ ACRONYMS = {
 # than by the alphabet, which would put the demos last.
 LAB_SECTION = "labs"
 
-# The task type of a lab task, from the prefix of its directory name.
+# The task type of a lab task, from the prefix of its directory name.  A demo
+# or a bonus task may be numbered as well, `demo-01-<name>/`: the type is still
+# the prefix, and the number only orders it among its kind, through the path.
 LAB_TASK_PATTERN = re.compile(r"^(?:(?P<demo>demo)|(?P<index>\d+)|(?P<bonus>bonus))[-_]")
 
 # The `Exercise:` lead-in of a lab exercise title, which the navigation label
-# replaces with the number of the exercise.
-EXERCISE_TITLE_PREFIX = re.compile(r"^exercise\s*:\s*", re.IGNORECASE)
+# replaces with the number of the exercise.  A title may carry the number
+# already, `Exercise 01:`, as those of session 08 do; it goes with the lead-in,
+# so the label does not say it twice.
+EXERCISE_TITLE_PREFIX = re.compile(r"^exercise(?:\s+\d+)?\s*:\s*", re.IGNORECASE)
 
 # The `Session NN:` lead-in of a session README title, which the heading built
 # from that title carries as its index instead.
@@ -183,7 +187,9 @@ VARIANT_TITLE_SUFFIX = re.compile(
 
 def prettify(name):
     """Turn a directory name such as `01-string-functions` into a label."""
-    without_prefix = re.sub(r"^(?:session-\d+|\d+|bonus|demo)[-_]", "", name)
+    without_prefix = re.sub(
+        r"^(?:session-\d+|\d+|(?:bonus|demo)(?:[-_]\d+)?)[-_]", "", name
+    )
     words = re.split(r"[-_]+", without_prefix.strip())
     return " ".join(ACRONYMS.get(word.lower(), word.title()) for word in words if word)
 

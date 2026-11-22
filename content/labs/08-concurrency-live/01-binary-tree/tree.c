@@ -34,7 +34,7 @@ struct tree *tree_create(void)
 
 	tree->root = NULL;
 	tree->size = 0;
-	/* TODO 1: initialize the mutex. */
+	/* TODO 1: Initialize the mutex. */
 
 	return tree;
 }
@@ -52,7 +52,7 @@ static void destroy_nodes(struct node *node)
 void tree_destroy(struct tree *tree)
 {
 	destroy_nodes(tree->root);
-	/* TODO 1: destroy the mutex. */
+	/* TODO 1: Destroy the mutex. */
 	free(tree);
 }
 
@@ -83,7 +83,7 @@ static struct node *insert_node(struct node *node, int key, int *inserted)
 }
 
 /*
- * TODO 2: the tree and its size change here.  Lock around what must not be
+ * TODO 2: The tree and its size change here.  Lock around what must not be
  * interleaved with another thread, in this function and in tree_remove().
  * Think about where the lock goes: here, or in the recursive function?
  */
@@ -151,7 +151,7 @@ int tree_remove(struct tree *tree, int key)
 }
 
 /*
- * TODO 3: this function changes nothing.  Does it need the lock?  If you
+ * TODO 3: This function changes nothing.  Does it need the lock?  If you
  * lock here, check every way out of the function.
  */
 int tree_contains(struct tree *tree, int key)
@@ -168,7 +168,7 @@ int tree_contains(struct tree *tree, int key)
 	return 0;
 }
 
-/* TODO 4: the size and the walk are read by one thread while others write. */
+/* TODO 4: The size and the walk are read by one thread while others write. */
 size_t tree_size(struct tree *tree)
 {
 	return tree->size;

@@ -2,7 +2,7 @@
 
 ## Purpose
 
-The classic, and the place where the two decisions of `demo-ordered-print` are made again, this time by finding them wrong in somebody else's code.
+The classic, and the place where the two decisions of `demo-02-ordered-print` are made again, this time by finding them wrong in somebody else's code.
 The task is staged on purpose: fixing the first flaw alone turns a wrong result into a hang, and students should see both before they see the flag.
 
 ## Expected answers

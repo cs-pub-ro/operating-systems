@@ -1,6 +1,8 @@
-# Exercise: A Lock in the Wrong Place
+# Exercise 05: A Lock in the Wrong Place
 
 **Tools:** GCC, Make, time
+
+**Directory**: `05-string-encryption/`
 
 ## Goal
 

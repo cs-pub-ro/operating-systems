@@ -21,7 +21,7 @@ void print_message(int id);
  *
  *     turn_take(id);
  *     print_message(id);
- *     turn_pass(id);
+ *     turn_pass();
  */
 
 /* Called once, before the threads start: `count` threads, ids 0 to count - 1. */

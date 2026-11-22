@@ -1,6 +1,8 @@
-# Exercise: A Name With Two Owners
+# Exercise 03: A Name With Two Owners
 
 **Tools:** GCC, Make
+
+**Directory**: `03-toctou/`
 
 ## Goal
 

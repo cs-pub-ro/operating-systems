@@ -1,6 +1,8 @@
-# Exercise: A Name With Two Owners
+# Exercise 03: A Name With Two Owners
 
 **Tools:** GCC, Make
+
+**Directory**: `03-toctou/`
 
 ## Goal
 
@@ -31,6 +33,7 @@ A bug of this kind has a name, **time of check to time of use**, or TOCTOU: a pr
    Mark the moment at which the first thread's knowledge stops being true.
 1. Change the library so that the check and the act cannot be separated.
    You may reorganize the functions of `registry.c` as you see fit, as long as the functions declared in `registry.h` keep doing what the header says.
+1. **Hint**: The `registry_register()` functions does two operations that are individually locked / atomic (`registry_contains()` and `registry_add()`), but they are not altogether atomis.
 
 A mutex of the default kind must not be locked again by the thread that holds it.
 

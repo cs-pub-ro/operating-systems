@@ -29,9 +29,9 @@ By the end of this session you should be able to:
 
 | Task | Type | Objective |
 | --- | --- | --- |
-| [`demo-list-mutex`](demo-list-mutex) | Demo | One mutex for a whole linked list; the critical section starts at the first read. |
-| [`demo-ordered-print`](demo-ordered-print) | Demo | `pthread_cond_wait()` in a `while`, and `broadcast` when the waiters are not alike. |
-| [`demo-omelette`](demo-omelette) | Demo, challenge | Waiting for "at least three": test, wait and act under one lock. |
+| [`demo-01-list-mutex`](demo-01-list-mutex) | Demo | One mutex for a whole linked list; the critical section starts at the first read. |
+| [`demo-02-ordered-print`](demo-02-ordered-print) | Demo | `pthread_cond_wait()` in a `while`, and `broadcast` when the waiters are not alike. |
+| [`demo-03-omelette`](demo-03-omelette) | Demo, challenge | Waiting for "at least three": test, wait and act under one lock. |
 | [`01-binary-tree`](01-binary-tree) | Core, challenge | The lock goes in the interface, not in the recursion; readers need it too. |
 | [`02-ordered-print`](02-ordered-print) | Core, challenge | Turn-taking for any number of threads, written from nothing. |
 | [`03-toctou`](03-toctou) | Core, challenge | Two critical sections where one is needed: the check goes stale. |
@@ -39,9 +39,9 @@ By the end of this session you should be able to:
 | [`05-string-encryption`](05-string-encryption) | Core, challenge | Lock the shared cursor, not the work. |
 | [`06-building-h2o`](06-building-h2o) | Core, challenge | Semaphores count places, a barrier makes threads leave together. |
 | [`07-producer-consumer`](07-producer-consumer) | Core, challenge | `while` instead of `if`, and a condition variable for each thing waited for. |
-| [`bonus-boss-workers`](bonus-boss-workers) | Bonus, challenge | Ending: the last item, and telling every worker. |
-| [`bonus-worker-threads`](bonus-worker-threads) | Bonus, challenge | A thread pool: tasks run outside the lock, and "done" is a count, not an empty queue. |
-| [`bonus-synchronized-db`](bonus-synchronized-db) | Bonus, challenge | A read-write lock: the right mode, one critical section, one way out. |
+| [`bonus-01-boss-workers`](bonus-01-boss-workers) | Bonus, challenge | Ending: the last item, and telling every worker. |
+| [`bonus-02-worker-threads`](bonus-02-worker-threads) | Bonus, challenge | A thread pool: tasks run outside the lock, and "done" is a count, not an empty queue. |
+| [`bonus-03-synchronized-db`](bonus-03-synchronized-db) | Bonus, challenge | A read-write lock: the right mode, one critical section, one way out. |
 
 Each task directory contains:
 
@@ -60,7 +60,7 @@ A challenge directory also holds the complete source of the executable: `chall.c
 The executable never looks inside the library.
 It checks what it can see from outside, and it is built so that what it sees does not depend on how the threads were interleaved, as long as the library is right.
 
-* Where the library guards something, the thing guarded is in the executable: the basket of `demo-omelette`, the printing of `02-ordered-print`, the release of atoms in `06-building-h2o`.
+* Where the library guards something, the thing guarded is in the executable: the basket of `demo-03-omelette`, the printing of `02-ordered-print`, the release of atoms in `06-building-h2o`.
   The library calls back into the executable, which notices two threads inside at once, or an action taken when its condition was false.
 * Where the library is a data structure, every thread works on keys of its own, so each call has one right answer and the final content is known in advance.
 * Every executable has an alarm: a run that has not finished in ten seconds is declared stuck.
@@ -77,11 +77,11 @@ It reports the bugs that showed during one run.
 Session 07 ended with a mutex and the sentence "the mutex is the only tool used".
 This session starts there and goes in two directions: more tools, and more ways for code that uses them to be wrong.
 
-1. **`demo-list-mutex`** is session 07's lesson once more, on a structure: a list that crashes within milliseconds without a lock and never with one.
+1. **`demo-01-list-mutex`** is session 07's lesson once more, on a structure: a list that crashes within milliseconds without a lock and never with one.
    The detail to argue about is where the critical section starts: at the change, or at the read of the size that the change relies on.
-1. **`demo-ordered-print`** introduces the condition variable, the tool for "wait until this is true".
+1. **`demo-02-ordered-print`** introduces the condition variable, the tool for "wait until this is true".
    The two choices in it come back in every later task: `while` or `if` around the wait, `signal` or `broadcast` for the wake-up.
-1. **`demo-omelette`** is the first challenge and the first piece of broken code: a wait that tests once, an update outside the lock, and an action taken after the lock was released.
+1. **`demo-03-omelette`** is the first challenge and the first piece of broken code: a wait that tests once, an update outside the lock, and an action taken after the lock was released.
 1. **`01-binary-tree`** applies the first demo to a structure with recursion and with functions that only read.
    It is also where the session admits that passing the test is not the same as being right.
 1. **`02-ordered-print`** applies the second demo, from an empty file.
@@ -90,7 +90,7 @@ This session starts there and goes in two directions: more tools, and more ways 
 1. **`05-string-encryption`** has a lock, in the wrong place: around the work, which needs none, instead of around the cursor the threads share.
 1. **`06-building-h2o`** brings the semaphore and the barrier, for a problem that is about groups of threads rather than about data.
 1. **`07-producer-consumer`** is the classic, with the two classic mistakes.
-1. **`bonus-boss-workers`**, **`bonus-worker-threads`** and **`bonus-synchronized-db`** are larger pieces of code with several bugs each, of the kinds already met, to be found by reading.
+1. **`bonus-01-boss-workers`**, **`bonus-02-worker-threads`** and **`bonus-03-synchronized-db`** are larger pieces of code with several bugs each, of the kinds already met, to be found by reading.
 
 Three questions carry the session, and are worth asking of every piece of code in it.
 

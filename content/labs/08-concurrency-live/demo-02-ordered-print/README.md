@@ -1,4 +1,6 @@
-# Demo: Three Threads That Take Turns
+# Demo 02: Three Threads That Take Turns
+
+**Directory**: `demo-02-ordered-print/`
 
 `ordered.c` starts three threads, each printing one number in a loop: the first prints 1, the second 2, the third 3.
 The output should be `1 2 3` on every line.

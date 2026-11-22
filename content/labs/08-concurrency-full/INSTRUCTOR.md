@@ -13,14 +13,14 @@ A group that follows the demos and does `01` to `04` has covered the session: th
 `05` to `07` are for the faster half of the room, and the bonuses are take-home.
 
 The demos together should take about a third of the session.
-`demo-ordered-print` is the one to protect: `while` against `if` and `broadcast` against `signal`, both tried both ways, are what seven later tasks are built on.
-`demo-list-mutex` can be compressed to "run, crash, two lines, run".
+`demo-02-ordered-print` is the one to protect: `while` against `if` and `broadcast` against `signal`, both tried both ways, are what seven later tasks are built on.
+`demo-01-list-mutex` can be compressed to "run, crash, two lines, run".
 
 ## The through-line
 
-1. **`demo-list-mutex`** — one mutex around a whole structure; where the critical section starts.
-1. **`demo-ordered-print`** — the condition variable: wait in a loop, wake everybody when the waiters differ.
-1. **`demo-omelette`** — the format of a challenge; test, wait and act under one lock.
+1. **`demo-01-list-mutex`** — one mutex around a whole structure; where the critical section starts.
+1. **`demo-02-ordered-print`** — the condition variable: wait in a loop, wake everybody when the waiters differ.
+1. **`demo-03-omelette`** — the format of a challenge; test, wait and act under one lock.
 1. **`01-binary-tree`** — the lock in the interface, not in the recursion; readers need it; a passing test is not a proof.
 1. **`02-ordered-print`** — the wait written from nothing.
 1. **`03-toctou`** — every access locked, and the operation still not atomic.
@@ -28,13 +28,13 @@ The demos together should take about a third of the session.
 1. **`05-string-encryption`** — the lock around the work instead of around the shared cursor: wrong and slow at once.
 1. **`06-building-h2o`** — the semaphore and the barrier.
 1. **`07-producer-consumer`** — `if` instead of `while`, one condition variable for two conditions.
-1. **`bonus-boss-workers`** — how waiting threads are told that it is over.
-1. **`bonus-worker-threads`** — a thread pool; "done" as a count.
-1. **`bonus-synchronized-db`** — a read-write lock, and three bugs of the three kinds.
+1. **`bonus-01-boss-workers`** — how waiting threads are told that it is over.
+1. **`bonus-02-worker-threads`** — a thread pool; "done" as a count.
+1. **`bonus-03-synchronized-db`** — a read-write lock, and three bugs of the three kinds.
 
 ## The format of a challenge
 
-Explain it once, in `demo-omelette`, and write the cycle on the board: `make`, `./chall`, read, change the library, again.
+Explain it once, in `demo-03-omelette`, and write the cycle on the board: `make`, `./chall`, read, change the library, again.
 
 * The executable is given built, and is linked to look for `lib<name>.so` in its own directory.
   Before the first `make` it fails with a loader error, which is the first thing to show.
@@ -59,7 +59,7 @@ Three versions that are wrong, or poor, and get a flag are known and deliberate,
 
 * `01-binary-tree` with no lock in `tree_contains()`: 47 flags in 50 runs.
 * `05-string-encryption` with the lock around the whole loop body: correct, and eight times slower.
-* `bonus-worker-threads` with a recursive mutex held across the task: correct, and sequential.
+* `bonus-02-worker-threads` with a recursive mutex held across the task: correct, and sequential.
 
 ## Producing the live half
 
@@ -133,16 +133,16 @@ That distinction is the main diagnostic skill of the session, and `04-deadlock` 
 
 ## The bugs the session is built around
 
-* **`if` around `pthread_cond_wait()`** — `demo-ordered-print`, `demo-omelette`, `07-producer-consumer`.
-* **`signal` where the waiters differ, or where all must hear** — `demo-ordered-print`, `07-producer-consumer`, both pool bonuses.
-* **Acting after the unlock on what was learned before it (TOCTOU)** — `demo-omelette`, `03-toctou`, `05-string-encryption`, `db_update()` in the database.
+* **`if` around `pthread_cond_wait()`** — `demo-02-ordered-print`, `demo-03-omelette`, `07-producer-consumer`.
+* **`signal` where the waiters differ, or where all must hear** — `demo-02-ordered-print`, `07-producer-consumer`, both pool bonuses.
+* **Acting after the unlock on what was learned before it (TOCTOU)** — `demo-03-omelette`, `03-toctou`, `05-string-encryption`, `db_update()` in the database.
 * **A `return` between lock and unlock** — `01-binary-tree`, `db_find()` in the database.
-* **Locking twice from one thread** — the lock in the recursion of `01`, the wrapper of `03`, the task of `bonus-worker-threads`.
+* **Locking twice from one thread** — the lock in the recursion of `01`, the wrapper of `03`, the task of `bonus-02-worker-threads`.
 * **Two locks in two orders** — `04-deadlock`.
 * **The lock around the wrong thing** — `05-string-encryption`.
 * **A read lock around a write** — `db_add()` in the database.
-* **Dropping work at the end** — `bonus-boss-workers`.
-* **"Empty" taken for "done"** — `bonus-worker-threads`.
+* **Dropping work at the end** — `bonus-01-boss-workers`.
+* **"Empty" taken for "done"** — `bonus-02-worker-threads`.
 
 ## Practical notes
 

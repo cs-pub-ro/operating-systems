@@ -57,7 +57,7 @@ With answers.
   The functions other code calls take the lock; the helpers below them assume it is held, and say so in a comment.
 * **One lock for the whole tree is correct and slow.**
   Finer locking, one lock per node, taken hand over hand on the way down, lets threads work in different subtrees at once, and is much harder to get right.
-  `bonus-synchronized-db` takes a smaller step in that direction, with a lock that readers can share.
+  `bonus-03-synchronized-db` takes a smaller step in that direction, with a lock that readers can share.
 
 ## References
 

@@ -1,6 +1,8 @@
-# Demo: Three Eggs Make an Omelette
+# Demo 03: Three Eggs Make an Omelette
 
 **Tools:** GCC, Make
+
+**Directory**: `demo-03-omelette/`
 
 ## Goal
 
