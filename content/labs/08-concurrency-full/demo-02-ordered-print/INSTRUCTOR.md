@@ -31,7 +31,7 @@ This is the demo to protect: seven of the challenges after it use `pthread_cond_
   The call does that itself, atomically, which is the whole point of its second argument.
 * **Thinking the condition variable remembers a signal.**
   A signal sent when nobody waits is gone.
-  This is the difference from a semaphore, and comes back in `06-building-h2o`.
+  It comes back in `07-producer-consumer`.
 
 ## Verified reference values
 

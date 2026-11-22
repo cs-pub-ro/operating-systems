@@ -3,11 +3,16 @@ From dev/prompt-lab-08.txt:
 9. An exercise as a challenge showing a badly implemented "Building H2O"
    synchronization problem.
 
+Reworked afterwards: no semaphores and no barrier, since the session does
+not introduce them; only a mutex and a condition variable.
+
 hydrogen() and oxygen() in the library, each of which has to call the
-executable's release_hydrogen() or release_oxygen() once.  The skeleton
-has two semaphores, 2 and 1, around the release, which limit how many
-atoms are released at once and do not group them.  The reference adds a
-barrier of three and keeps the post after the release.
+executable's release_hydrogen() or release_oxygen() once.  The library
+keeps counters of the atoms waiting and of the tickets handed out, under
+one mutex, with one condition variable.  The skeleton forms a molecule
+whether or not the one before has left, and releases the atom after the
+unlock.  The reference forms a molecule only when no ticket is left, and
+releases with the lock held, calling form() again afterwards.
 
 The threads of the executable share a counter of atoms to bring instead
 of each bringing a fixed number: with fixed shares the last hydrogen

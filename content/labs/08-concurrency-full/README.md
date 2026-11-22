@@ -14,7 +14,7 @@ By the end of this session you should be able to:
 * Recognize a check-then-act (TOCTOU) bug in code where every access is locked, and close it.
 * Recognize a deadlock, find which threads hold what with `ps` and GDB, and remove it by taking locks in one order.
 * Tell the symptoms apart: a wrong result, a crash, a program that never ends.
-* Use a semaphore and a barrier where they fit better than a mutex and a condition variable.
+* Make threads wait for each other, in groups, with a condition variable and counters that say who may go.
 * Read synchronization code that somebody else wrote, and say what is wrong with it before running it.
 * Say what a read-write lock adds to a mutex, and what it takes away.
 
@@ -37,7 +37,7 @@ By the end of this session you should be able to:
 | [`03-toctou`](03-toctou) | Core, challenge | Two critical sections where one is needed: the check goes stale. |
 | [`04-deadlock`](04-deadlock) | Core, challenge | Two locks taken in two orders, and the lock order that fixes it. |
 | [`05-string-encryption`](05-string-encryption) | Core, challenge | Lock the shared cursor, not the work. |
-| [`06-building-h2o`](06-building-h2o) | Core, challenge | Semaphores count places, a barrier makes threads leave together. |
+| [`06-building-h2o`](06-building-h2o) | Core, challenge | Threads that leave in groups: tickets say who may go, and when the next group may form. |
 | [`07-producer-consumer`](07-producer-consumer) | Core, challenge | `while` instead of `if`, and a condition variable for each thing waited for. |
 | [`bonus-01-boss-workers`](bonus-01-boss-workers) | Bonus, challenge | Ending: the last item, and telling every worker. |
 | [`bonus-02-worker-threads`](bonus-02-worker-threads) | Bonus, challenge | A thread pool: tasks run outside the lock, and "done" is a count, not an empty queue. |
@@ -88,7 +88,7 @@ This session starts there and goes in two directions: more tools, and more ways 
 1. **`03-toctou`** has a lock around every access and is wrong all the same: the check and the act are in different critical sections.
 1. **`04-deadlock`** is the opposite failure, too much locking in the wrong order, and the first task whose symptom is silence.
 1. **`05-string-encryption`** has a lock, in the wrong place: around the work, which needs none, instead of around the cursor the threads share.
-1. **`06-building-h2o`** brings the semaphore and the barrier, for a problem that is about groups of threads rather than about data.
+1. **`06-building-h2o`** uses the same mutex and condition variable for a problem that is about groups of threads rather than about data, where what a counter means depends on where the lock is released.
 1. **`07-producer-consumer`** is the classic, with the two classic mistakes.
 1. **`bonus-01-boss-workers`**, **`bonus-02-worker-threads`** and **`bonus-03-synchronized-db`** are larger pieces of code with several bugs each, of the kinds already met, to be found by reading.
 

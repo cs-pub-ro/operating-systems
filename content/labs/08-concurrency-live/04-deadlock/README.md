@@ -38,6 +38,9 @@ None of them can go on, so none of them will ever release what it holds.
 1. Change `bank_transfer()` so that this cannot happen, whatever the accounts are.
    Keep one mutex per account.
 
+   **Hint**: Get locks in order.
+   You can use the account memory addresses (`from` and `to`) and their order in memory.
+
 ## Build & Run
 
 ```console

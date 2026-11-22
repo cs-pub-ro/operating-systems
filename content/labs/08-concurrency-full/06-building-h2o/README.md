@@ -6,7 +6,7 @@
 
 ## Goal
 
-Reference solution of the H2O challenge: two semaphores give out the three places of a molecule, a barrier of three makes the threads that have a place leave together, and a place is given back only after the release.
+Reference solution of the H2O challenge, with a mutex and a condition variable: atoms are counted as they arrive, a molecule is formed by handing out three tickets, and the next one is formed only when the tickets of this one have been used and its atoms released.
 
 ## Background
 
@@ -31,7 +31,7 @@ make
 ```
 
 ```text
-first releases: OHH HOH HHO OHH HHO OHH HOH OHH HHO OHH HOH HOH HHO OHH HOH OHH HHO OHH HOH HHO ...
+first releases: OHH HHO OHH HHO OHH HHO OHH HHO OHH HHO HOH HHO OHH HHO HOH HOH OHH OHH HHO OHH ...
 atoms released: 30000 (expected 30000)
 molecules:      10000 (expected 10000)
 flag: SO{...}
@@ -42,108 +42,61 @@ flag: SO{...}
 ### The library as given
 
 ```C
+static void form(void)
+{
+	if (waiting_h >= 2 && waiting_o >= 1) {
+		waiting_h -= 2;
+		waiting_o -= 1;
+		tickets_h += 2;
+		tickets_o += 1;
+		pthread_cond_broadcast(&changed);
+	}
+}
+
 void hydrogen(void)
 {
-	sem_wait(&hydrogen_slots);
+	pthread_mutex_lock(&lock);
+	waiting_h++;
+	form();
+	while (tickets_h == 0)
+		pthread_cond_wait(&changed, &lock);
+	tickets_h--;
+	pthread_mutex_unlock(&lock);
+
 	release_hydrogen();
-	sem_post(&hydrogen_slots);
 }
 ```
 
 ```text
-first releases: HHH HHH HHH HHH HHH HHH HHH HHH HHH HHH HHH HHH HHH HHH HHH HHH HHH HHH HHH HHH ...
+first releases: OOH HHH HHO OOH HHH HHO HOH OHH HOH OHH OHO HHH OHH OHH HHH HOO OHH HHO OOH HHH ...
 atoms released: 30000 (expected 30000)
-molecules:      3959 (expected 10000)
-group 1 is "HHH": not a molecule of water
+molecules:      4958 (expected 10000)
+group 1 is "OOH": not a molecule of water
 No flag: the atoms did not leave as molecules.
 ```
 
-A hydrogen thread takes one of the two hydrogen places, releases, and gives the place back, all without waiting for anybody.
-The semaphore guarantees that no more than two hydrogen atoms are being released at the same instant.
-It says nothing about how many are released in a row: the same two places are taken and given back thousands of times before the first oxygen thread runs.
-The 3,000 to 4,000 groups that do come out right are luck.
+The counting is right: every ticket stands for an atom of a molecule that was formed, so 20,000 hydrogen and 10,000 oxygen leave, and none without a ticket.
+What is missing is any separation between one molecule and the next.
+
+* `form()` hands out tickets whenever there are atoms for a molecule.
+  With four hydrogen threads and two oxygen threads waiting, it is called once as each arrives and forms two molecules: six tickets are out, and the six threads leave in any order.
+  `OOH HHH` in the output is two correct molecules, released as one group of six.
+* A thread takes its ticket with the lock held and releases after the unlock.
+  Between the two it can be descheduled, and everything said about its molecule under the lock is said before its atom is out.
 
 ### The solution
 
 ```C
-static sem_t hydrogen_slots;		/* 2 */
-static sem_t oxygen_slots;		/* 1 */
-static pthread_barrier_t molecule;	/* 3 threads */
-
-void h2o_init(void)
-{
-	sem_init(&hydrogen_slots, 0, 2);
-	sem_init(&oxygen_slots, 0, 1);
-	pthread_barrier_init(&molecule, NULL, 3);
-}
-
-void hydrogen(void)
-{
-	sem_wait(&hydrogen_slots);
-	pthread_barrier_wait(&molecule);
-	release_hydrogen();
-	sem_post(&hydrogen_slots);
-}
-
-void oxygen(void)
-{
-	sem_wait(&oxygen_slots);
-	pthread_barrier_wait(&molecule);
-	release_oxygen();
-	sem_post(&oxygen_slots);
-}
-```
-
-Two lines were added to the skeleton's functions, and one to the initialization.
-Each of the three mechanisms answers one question.
-
-* **Who can be at the meeting point?**
-  The semaphores: at most two hydrogen threads and at most one oxygen thread are past their `sem_wait()` at any time.
-* **When may they go?**
-  The barrier: when there are three of them.
-  Three threads at the barrier, of which at most two are hydrogen and at most one oxygen, are exactly two hydrogen and one oxygen.
-  That is the whole argument for the composition of a molecule, and it needs both tools: the barrier counts to three and does not know what it is counting.
-* **When can the next molecule start?**
-  When the places are given back, and each thread gives its place back **after** it has released.
-  The next barrier needs three threads; they need three places; the three places are free only when all three threads of this molecule have released.
-  So the releases of one molecule are all recorded before any release of the next.
-
-### Taking the mechanisms away, one at a time
-
-| Version | Result |
-| --- | --- |
-| Semaphores only (the skeleton) | 3,000 to 4,000 molecules of 10,000 |
-| Barrier only | `HHH` groups, then a time-out |
-| Both, with `sem_post()` before the release | the flag in 1 run out of 30 |
-| Both, with `sem_post()` after the release (the reference) | the flag in 50 runs out of 50 |
-
-With the barrier alone, any three threads form a group, and with four hydrogen threads against two oxygen that is usually three hydrogen.
-The hydrogen runs out, the oxygen threads wait at a barrier that will never see a third thread, and the program stops.
-
-The third row is the subtle one.
-The three threads meet correctly, and then each gives its place back before it releases.
-A thread of the next molecule can take the place, and the next molecule can complete its barrier and release while a thread of this one has not got round to releasing yet.
-The atoms are the right ones; they are recorded in the wrong groups.
-The window is a few instructions wide, and on this machine it was hit in 29 runs out of 30, somewhere among the 10,000 molecules.
-
-### With a mutex and a condition variable
-
-The same problem can be solved with the tools of the earlier tasks.
-It needs explicit bookkeeping: how many atoms of each kind are waiting, how many of each have been told they may leave, and how many of the current molecule have not left yet.
-
-```C
-static int waiting_h, waiting_o;	/* arrived, no permission to leave yet */
-static int tickets_h, tickets_o;	/* permissions to leave                */
-static int leaving;			/* of this molecule, not yet released  */
-
 static void form(void)
 {
-	if (leaving == 0 && waiting_h >= 2 && waiting_o >= 1) {
+	if (tickets_h > 0 || tickets_o > 0)
+		return;
+
+	if (waiting_h >= 2 && waiting_o >= 1) {
 		waiting_h -= 2;
 		waiting_o -= 1;
 		tickets_h = 2;
 		tickets_o = 1;
-		leaving = 3;
 		pthread_cond_broadcast(&changed);
 	}
 }
@@ -157,21 +110,62 @@ void hydrogen(void)
 		pthread_cond_wait(&changed, &lock);
 	tickets_h--;
 	release_hydrogen();
-	leaving--;
 	form();
 	pthread_mutex_unlock(&lock);
 }
 ```
 
-It gets the flag in 20 runs out of 20 and takes the same 0.02 s.
-It is three times as long, and every line of it is a place to make one of the mistakes of the earlier exercises.
-The semaphore and the barrier are those counters and that waiting, written once, by somebody else, and tested.
+`oxygen()` is the same with the other two counters.
+Three changes, and each answers one question.
+
+* **Who may leave?**
+  The tickets: a thread leaves only with a ticket of its kind, and tickets are handed out two and one at a time.
+  The skeleton had this.
+* **When may the next molecule be formed?**
+  When no ticket of this one is left: the test at the top of `form()`.
+  So at most three tickets are ever out, two hydrogen and one oxygen.
+* **What does "no ticket left" mean?**
+  That depends on where the release is.
+  With the release inside the critical section that takes the ticket, a ticket that is gone is an atom that is out, and "no ticket left" means "all three released".
+  This is why the release moved under the lock: it makes the guard in `form()` say what it has to say.
+
+The third change is the second `form()`, after the release.
+A molecule can be formed when an atom arrives or when the last ticket is used.
+If only arrivals called `form()`, the last ticket could be used when all six threads are already waiting, and nobody would be left to arrive: the program would stop with atoms for a molecule and no thread to form it.
+It does, on about one run in three.
+
+The release is done with the lock held, which exercise 05 said not to do with work.
+The difference is that here the order of the releases is what is asked for.
+A release is one store into an array, so nothing is lost; if it were slow, the version in `FURTHER.md`, with one more counter, releases outside the lock.
+
+### Taking the changes away, one at a time
+
+| Version | Molecules of 10,000 | Flag, 30 runs |
+| --- | --- | --- |
+| The skeleton | 4,000 to 5,400 | 0 |
+| Release under the lock, no guard in `form()` | 5,200 to 6,700 | 0 |
+| Guard in `form()`, release after the unlock | 7,100 to 7,600 | 0 |
+| Both (the reference) | 10,000 | 30 |
+| The reference without the second `form()` | 10,000, or a time-out | 20 |
+| The reference with `pthread_cond_signal()` | time-out | 0 |
+| The reference with `if` around the wait | wrong groups, no time-out | 0 |
+
+The second row still has six tickets out at once, and it does not matter that each release is atomic: three hydrogen in a row is three correct releases.
+
+The third row is the subtle one.
+At most three tickets are out, and the right three threads take them.
+But a ticket taken is not an atom released: the third thread takes the last ticket, unlocks, and before it releases, the next molecule is formed and one of its threads releases first.
+The atoms are the right ones; they are recorded in the wrong groups, about a quarter of them.
+
+With `pthread_cond_signal()`, one thread is woken up where three have tickets waiting for them, and it may be of the kind whose ticket is already gone.
+With `if`, a hydrogen thread woken up by a broadcast it has no ticket for leaves all the same.
+Both are the mistakes of `demo-02-ordered-print`, in a place where they are harder to see.
 
 ### Why the threads share a counter of atoms
 
 If each hydrogen thread brought a fixed 5,000 atoms and each oxygen thread 5,000, the totals would match, and the program would still stop on some runs, with a correct library.
 A molecule needs two hydrogen threads inside `hydrogen()` at the same time.
-If three of the four finish their share early, the last one is left with atoms to bring and nobody to bring them with: it waits at the barrier for ever.
+If three of the four finish their share early, the last one is left with atoms to bring and nobody to bring them with: it waits for a second hydrogen for ever.
 A thread is in one call at a time.
 
 With a shared counter, a thread stops only when there is nothing left to bring, so as long as two hydrogen atoms are owed there are two threads to bring them.
@@ -179,6 +173,5 @@ The first version of this executable had the fixed shares, and the reference sol
 
 ## References
 
-* `man 7 sem_overview`, `man 3 sem_init`, `man 3 sem_wait`, `man 3 sem_post`
-* `man 3 pthread_barrier_init`, `man 3 pthread_barrier_wait`
+* `man 3 pthread_cond_wait`, `man 3 pthread_cond_broadcast`
 * Allen B. Downey, *The Little Book of Semaphores*, section 5.6, *Building H2O* — <https://greenteapress.com/wp/semaphores/>

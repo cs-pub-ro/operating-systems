@@ -13,7 +13,7 @@ libkitchen.so: kitchen.c kitchen.h
 # in its own directory ($ORIGIN).  -rdynamic lets the library call back the
 # functions the executable defines.
 chall: chall.c flag.h kitchen.h libkitchen.so
-	$(CC) $(CFLAGS) -pthread -rdynamic -o $@ $< -L. -lkitchen -Wl,-rpath,'$$ORIGIN'
+	$(CC) $(CFLAGS) -ffile-prefix-map=$(CURDIR)=. -pthread -rdynamic -o $@ $< -L. -lkitchen -Wl,-rpath,'$$ORIGIN'
 
 test: all
 	./test.sh

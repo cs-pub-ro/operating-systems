@@ -58,12 +58,13 @@ void queue_destroy(struct queue *queue)
 }
 
 /*
- * TODO 1: a producer that was woken up goes on to store its item.  What
- * does it know about the queue at that moment?  The same question for the
- * consumer in queue_get().
- * TODO 2: producers and consumers sleep on the same condition variable,
- * and one thread is woken up at a time.  Which thread?  Make sure that a
- * thread that can go on is never left asleep.
+ * TODO 1: A producer that was woken up (from pthread_cond_wait()) goes on to
+ * store its item.  What does it know about the queue at that moment?  The same
+ * question for the consumer in queue_get().
+ * TODO 2: Producers and consumers sleep on the same condition variable,
+ * and one thread is woken up at a time.  Which thread?  What if it wakes the
+ * same type of thread?  Make sure that a thread that can go on is never left
+ * asleep.
  */
 void queue_put(struct queue *queue, long item)
 {

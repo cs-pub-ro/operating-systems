@@ -7,7 +7,7 @@
 ## Goal
 
 Make threads leave in groups: two hydrogen and one oxygen, a molecule at a time.
-Afterwards you will be able to use a semaphore to count places and a barrier to make a fixed number of threads wait for each other, and to say what each of them guarantees and what it does not.
+Afterwards you will be able to make threads wait for each other with a mutex, a condition variable and counters, and to say what each counter guarantees and what it does not.
 
 ## Background
 
@@ -21,27 +21,29 @@ The release functions are in the executable and record the order.
 
 So far a thread waited for a **condition on data**: enough eggs, its turn.
 Here a thread waits for **other threads**: a hydrogen atom cannot leave until another hydrogen and an oxygen are there to leave with it.
-Two tools are made for this.
+The tools are the ones you know, a mutex and a condition variable; what is new is the data the condition is written on.
 
-* A **semaphore** (`sem_t`, `<semaphore.h>`) is a counter that cannot go below zero.
-  `sem_wait()` takes one from it, and sleeps while it is zero; `sem_post()` adds one, and wakes a sleeper up.
-  A semaphore that starts at `n` lets at most `n` threads be between their `sem_wait()` and their `sem_post()`.
-  Unlike a mutex, it has no owner: any thread may post.
-* A **barrier** (`pthread_barrier_t`) is a meeting point for a fixed number of threads.
-  `pthread_barrier_wait()` sleeps until that many threads are waiting, then lets all of them go at once, and is ready for the next group.
+`h2o.c` keeps four counters, all under one mutex.
 
-`h2o.c` uses two semaphores: one that lets in two hydrogen threads at a time, one that lets in one oxygen thread.
-That limits how many atoms of each kind are released at the same moment, and does nothing to make them leave together.
+* `waiting_h` and `waiting_o` count the atoms that have arrived and are not part of a molecule yet.
+* `tickets_h` and `tickets_o` count permissions to leave.
+  `form()` turns two waiting hydrogen and one waiting oxygen into two hydrogen tickets and one oxygen ticket, and wakes everybody up.
+  A thread waits until there is a ticket of its kind, takes it, and releases its atom.
+
+That makes sure an atom leaves only as part of a molecule.
+It does not make sure the molecules leave one after another.
 
 ## Your Task
 
 1. Run `./chall` and look at the first releases it shows.
-1. Read `hydrogen()` and `oxygen()`, and explain where the `HHH` comes from: follow one hydrogen thread through `sem_wait()`, the release and `sem_post()`, and ask what it waited for.
-1. Make the three threads of a molecule wait for each other before any of them releases.
-1. Make sure a thread of the **next** molecule cannot release before all three of this one have.
-   Look at where each thread gives its place back.
-
-`h2o_init()` is where anything you add is set up.
+1. Read `form()`, `hydrogen()` and `oxygen()`.
+   On paper, with four hydrogen threads and two oxygen threads waiting, follow the counters and find how six tickets can be out at once.
+   Which groups of three can the releases then come in?
+1. **`form()`** - form a molecule only when the one before it has left.
+   Decide what, among the counters, tells you that it has.
+1. **`hydrogen()` and `oxygen()`** - a thread takes its ticket in one place and releases its atom in another.
+   Find what can happen between the two, and close it.
+1. Make sure the next molecule is formed when one has left, and not only when a new atom arrives.
 
 ## Build & Run
 
@@ -52,7 +54,8 @@ make
 
 ## Check Your Work
 
-* The flag has to be printed on every run; run it at least thirty times, because one of the mistakes that can be made here shows only now and then.
-* If the program times out, count: how many threads of each kind can be waiting at your meeting point, and can that ever be three of the wrong mix?
-* Explain to the teaching assistant why the three threads that meet are always two hydrogen and one oxygen, and never three hydrogen.
-* Move the `sem_post()` to before the release, run thirty times, and explain what you see.
+* The flag has to be printed on every run; run it at least thirty times.
+* Do steps 3 and 4 one at a time and run `./chall` after each: neither is enough alone, and the number of molecules that come out right tells you how far each one goes.
+* If the program times out, count: is there a moment when a molecule could be formed and no thread is going to call `form()`?
+* Explain to the teaching assistant why the three releases of one molecule cannot be mixed with those of the next.
+* Replace `pthread_cond_broadcast()` with `pthread_cond_signal()`, run it, and explain what you see.

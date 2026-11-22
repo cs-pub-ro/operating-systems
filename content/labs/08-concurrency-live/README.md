@@ -17,7 +17,7 @@ By the end of this session you should be able to:
 * Recognize a check-then-act (TOCTOU) bug in code where every access is locked, and close it.
 * Recognize a deadlock, find which threads hold what with `ps` and GDB, and remove it by taking locks in one order.
 * Tell the symptoms apart: a wrong result, a crash, a program that never ends.
-* Use a semaphore and a barrier where they fit better than a mutex and a condition variable.
+* Make threads wait for each other, in groups, with a condition variable and counters that say who may go.
 * Read synchronization code that somebody else wrote, and say what is wrong with it before running it.
 
 ## Prerequisites and required tools
@@ -72,7 +72,7 @@ The bonus exercises are optional: start them if you finish the core exercises, o
 | 6 | [`03-toctou`](03-toctou) | Core, challenge | A registry where every access is locked, and names still get two owners. |
 | 7 | [`04-deadlock`](04-deadlock) | Core, challenge | Bank transfers that stop for ever. |
 | 8 | [`05-string-encryption`](05-string-encryption) | Core, challenge | The cipher of session 07 with threads that share out blocks, and a lock in the wrong place. |
-| 9 | [`06-building-h2o`](06-building-h2o) | Core, challenge | Two hydrogen and one oxygen at a time, with semaphores and a barrier. |
+| 9 | [`06-building-h2o`](06-building-h2o) | Core, challenge | Two hydrogen and one oxygen at a time, and one molecule after another. |
 | 10 | [`07-producer-consumer`](07-producer-consumer) | Core, challenge | A bounded queue that loses items, and sometimes sleeps for ever. |
 | 11 | [`bonus-01-boss-workers`](bonus-01-boss-workers) | Bonus, challenge | A boss that hands out work, and workers that have to be told when to go home. |
 | 12 | [`bonus-02-worker-threads`](bonus-02-worker-threads) | Bonus, challenge | A pool of worker threads, built up from the previous task. |

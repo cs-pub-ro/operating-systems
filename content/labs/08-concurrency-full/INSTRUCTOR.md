@@ -26,7 +26,7 @@ The demos together should take about a third of the session.
 1. **`03-toctou`** — every access locked, and the operation still not atomic.
 1. **`04-deadlock`** — two locks, two orders; `ps` and GDB on a stuck program.
 1. **`05-string-encryption`** — the lock around the work instead of around the shared cursor: wrong and slow at once.
-1. **`06-building-h2o`** — the semaphore and the barrier.
+1. **`06-building-h2o`** — waiting for other threads: counters, tickets, and what "no ticket left" proves.
 1. **`07-producer-consumer`** — `if` instead of `while`, one condition variable for two conditions.
 1. **`bonus-01-boss-workers`** — how waiting threads are told that it is over.
 1. **`bonus-02-worker-threads`** — a thread pool; "done" as a count.

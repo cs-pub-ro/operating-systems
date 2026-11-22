@@ -48,9 +48,9 @@ static void xor_buffer(char *buf, size_t len, size_t pos, const char *key)
 /*
  * What every thread runs: take a block, encrypt it, repeat.
  *
- * TODO 1: find what the threads share for writing here, and what they do
+ * TODO 1: Find what the threads share for writing here, and what they do
  * not.
- * TODO 2: put the lock around the first, all of it, and only around it.
+ * TODO 2: Put the lock around the data shared by threads.
  */
 static void *encrypt_blocks(void *arg)
 {
