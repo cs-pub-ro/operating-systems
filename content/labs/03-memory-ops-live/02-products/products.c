@@ -65,6 +65,12 @@ int main(int argc, char **argv)
 		/* fgets keeps the newline; drop it. */
 		name_buf[strcspn(name_buf, "\n")] = '\0';
 
+
+			char *p = malloc(strlen(name_buf) + 1);
+			if (p == NULL) return 1;
+			strcpy(p, name_buf);
+			products[count].name = p;
+
 		/*
 		 * TODO 1: name_buf is overwritten by the next line read, but
 		 * products[count].name has to be usable long after this loop.
@@ -83,9 +89,12 @@ int main(int argc, char **argv)
 	qsort(products, count, sizeof(products[0]), by_price);
 
 	printf("Sorted %zu products by price:\n", count);
-	for (i = 0; i < count; i++)
-		printf("  %6u  %s\n", products[i].price, products[i].name);
+	for (i = 0; i < count; i++) {
+		printf("  %6u  %s\n", products[i].price, products[i].name);}
 
+		for (int i = 0; i < count; i++) {
+			free(products[i].name);
+		}
 	/*
 	 * TODO 2: everything the loop allocated is still allocated.
 	 * Valgrind will tell you whether you got all of it.

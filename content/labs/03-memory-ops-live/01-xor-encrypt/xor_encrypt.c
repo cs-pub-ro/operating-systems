@@ -32,7 +32,8 @@ int main(int argc, char **argv)
 {
 	FILE *in, *out;
 	size_t n;
-
+	unsigned char in_buf[BLOCK_SIZE];
+	unsigned char out_buf[BLOCK_SIZE];
 	/*
 	 * TODO 1: declare the two work buffers, in_buf and out_buf, one block
 	 * of `unsigned char` each.
@@ -65,6 +66,9 @@ int main(int argc, char **argv)
 	while ((n = fread(in_buf, 1, BLOCK_SIZE, in)) > 0) {
 		size_t i;
 
+		for (i = 0; i < n; i++) {
+			out_buf[i] = in_buf[i] ^ key[i]; 
+		}
 		/*
 		 * TODO 2: encrypt the bytes just read, from in_buf into out_buf,
 		 * with the key.

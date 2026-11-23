@@ -1,5 +1,6 @@
 #include <stddef.h>
 #include <time.h>
+#include <sys/syscall.h>
 
 #include "my_time.h"
 
@@ -27,7 +28,7 @@ static long my_syscall(long number, long arg1, long arg2, long arg3,
 }
 
 /* TODO 1: define the x86-64 syscall number for clock_gettime here. */
-#define SYS_clock_gettime	/* ??? */
+//#define SYS_clock_gettime	/* ??? */
 
 /*
  * TODO 2: my_clock_gettime() — clock_gettime(2) wrapper.
@@ -39,9 +40,9 @@ static long my_syscall(long number, long arg1, long arg2, long arg3,
  * Return the value returned by my_syscall().
  */
 int my_clock_gettime(clockid_t clkid, struct timespec *tp)
-{
+{	
 	/* TODO: replace this with a call to my_syscall(...). */
-	return -1;
+	return my_syscall(SYS_clock_gettime, clkid, tp,0,0,0,0);
 }
 
 /*
@@ -57,6 +58,9 @@ int my_clock_gettime(clockid_t clkid, struct timespec *tp)
  */
 time_t my_time(time_t *tloc)
 {
+	struct timespec tv;
+	my_clock_gettime(CLOCK_REALTIME,&tv);
+	if (tloc != NULL) *tloc = tv.tv_sec;
 	/* TODO: implement using my_clock_gettime(). */
-	return (time_t)-1;
+	return tv.tv_sec;
 }

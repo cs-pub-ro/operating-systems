@@ -1,5 +1,7 @@
 #include <stddef.h>
 #include <stdio.h>
+#include <sys/syscall.h>
+#include <unistd.h>
 
 long my_syscall(long number, long arg1, long arg2, long arg3,
 		long arg4, long arg5, long arg6)
@@ -21,7 +23,7 @@ long my_syscall(long number, long arg1, long arg2, long arg3,
 }
 
 /* TODO 1: define the x86-64 syscall number for getpid here. */
-#define SYS_getpid	/* ??? */
+//#define SYS_getpid	2/* ??? */
 
 /*
  * TODO 2: getpid(2) wrapper.
@@ -34,8 +36,9 @@ long my_syscall(long number, long arg1, long arg2, long arg3,
  */
 long my_getpid(void)
 {
+	
 	/* TODO: replace this with a call to my_syscall(...). */
-	return -1;
+	return my_syscall(SYS_getpid,0,0,0,0,0,0);
 }
 
 

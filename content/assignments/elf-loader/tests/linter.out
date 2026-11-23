@@ -1,0 +1,9 @@
+cd .. && checkpatch.pl -f src/*.c tests/snippets/*.c
+/bin/sh: 1: checkpatch.pl: not found
+make: [Makefile:39: lint] Error 127 (ignored)
+cd .. && checkpatch.pl -f checker/*.sh tests/*.sh
+/bin/sh: 1: checkpatch.pl: not found
+make: [Makefile:40: lint] Error 127 (ignored)
+cd .. && shellcheck checker/*.sh tests/*.sh
+/bin/sh: 1: shellcheck: not found
+make: [Makefile:41: lint] Error 127 (ignored)

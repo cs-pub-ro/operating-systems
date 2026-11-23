@@ -1,0 +1,29 @@
+#include <elf.h>
+typedef struct {
+    unsigned char e_ident[16];  /*  0: magic + class + data + version + OS ABI */
+    Elf64_Half    e_type;       /* 16: ET_EXEC, ET_DYN, ... */
+    Elf64_Half    e_machine;    /* 18: EM_X86_64 = 62 */
+    Elf64_Word    e_version;    /* 20: EV_CURRENT = 1 */
+    Elf64_Addr    e_entry;      /* 24: virtual address of entry point */
+    Elf64_Off     e_phoff;      /* 32: file offset of program header table */
+    Elf64_Off     e_shoff;      /* 40: file offset of section header table */
+    Elf64_Word    e_flags;      /* 48 */
+    Elf64_Half    e_ehsize;     /* 52: sizeof(Elf64_Ehdr) = 64 */
+    Elf64_Half    e_phentsize;  /* 54: sizeof(Elf64_Phdr) = 56 */
+    Elf64_Half    e_phnum;      /* 56: number of program headers */
+    Elf64_Half    e_shentsize;  /* 58 */
+    Elf64_Half    e_shnum;      /* 60 */
+    Elf64_Half    e_shstrndx;   /* 62 */
+} Elf64_Ehdr;
+
+
+typedef struct {
+	Elf64_Word  p_type;    /* 0x00: PT_LOAD, PT_DYNAMIC, ... */
+	Elf64_Word  p_flags;   /* 0x04: PF_R / PF_W / PF_X */
+	Elf64_Off   p_offset;  /* 0x08: offset of segment in the file */
+	Elf64_Addr  p_vaddr;   /* 0x10: virtual address to load it at */
+	Elf64_Addr  p_paddr;   /* 0x18: physical address (unused on Linux) */
+	Elf64_Xword p_filesz;  /* 0x20: bytes to copy from the file */
+	Elf64_Xword p_memsz;   /* 0x28: bytes the segment occupies in memory */
+	Elf64_Xword p_align;   /* 0x30: alignment / page congruence */
+} Elf64_Phdr;
